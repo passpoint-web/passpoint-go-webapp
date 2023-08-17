@@ -54,6 +54,10 @@
   --sky-blue: #009EC4;
   --sky-blue-bg: #E6F5F980;
 
+  --negative: #FF3B2D;
+  --negative-box-shadow: #FFC7C3;
+  --negative-bg: #FFE6E4;
+
   --input-height: 48px;
   --input-br: 8px;
   --input-padding: 16px;
@@ -62,12 +66,16 @@
   --input-focus-bg:  #E6F5F9;
   --input-box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.10), 0px 0px 1px 0px rgba(12, 26, 75, 0.20);
   --input-focus-box-shadow: #96D7E7;
+  --input-error-border: var(--negative);
+  --input-error-box-shadow: var(--negative-box-shadow);
+  --input-error-bg: var(--negative-bg);
 
   --form-font-size: 14px;
   --form-component-mg: 48px;
 
   --btn-padding: 24px;
   --btn-disabled: var(--grey-5);
+  --btn-secondary-height: 40px;
   --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
 }
 
@@ -195,7 +203,7 @@ button:disabled {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: var(--input-height);
+  height: var(--btn-secondary-height);
   padding: 0 var(--btn-padding);
   border-radius: var(--input-br);
   border: none;
@@ -226,7 +234,7 @@ button:disabled {
   width: fit-content;
   height: var(--input-height);
   padding: 0 var(--btn-padding);
-  border-radius: var(--input-br);
+  border-radius: var(--btn-secondary-height);
   border: 1px solid var(--grey-5);
   background-color: #fff;
   display: flex;

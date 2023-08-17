@@ -2,12 +2,20 @@ import AuthLayout from "@/app/auth-layout"
 import styles from '@/assets/styles/auth-screens.module.css'
 import { useState } from "react"
 import PrimaryBtn from "@/components/Btn/Primary"
+import PasswordField from "@/components/Auth/PasswordField"
+import PasswordStrength from "@/components/Auth/PasswordStrength"
+
 const Signup = () => {
 
   const [allFieldsValid, setAllFieldsValid] = useState(false)
+  const [ctaClicked, setCtaClicked] = useState(false)
+  const [country, setCountry] = useState(undefined)
+  const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setCtaClicked(true)
   }
 
   return (
@@ -20,7 +28,7 @@ const Signup = () => {
         </h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inner}>
-          <div className={styles.form_group}>
+          <div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
             <label htmlFor="country">
               Country
             </label>
@@ -31,11 +39,11 @@ const Signup = () => {
             </select>
           </div>
           <div className={styles.form_row}>
-            <div className={styles.form_group}>
+            <div className={`${styles.form_group} ${ctaClicked && !lastName ? styles.error : ''}`}>
               <label htmlFor="last-name">Last name</label>
               <input placeholder="Doe" id="last-name" />
             </div>
-            <div className={styles.form_group}>
+            <div className={`${styles.form_group} ${ctaClicked && !firstName ? styles.error : ''}`}>
               <label htmlFor="first-name">First name</label>
               <input placeholder="John" id="first-name" />
             </div>
@@ -55,7 +63,9 @@ const Signup = () => {
             </div>
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
-              <input placeholder="****" id="password" type="password" />
+              <PasswordField />
+              <PasswordStrength />
+              {/* <input placeholder="****" id="password" type="password" /> */}
             </div>
             </div>
           </div>
