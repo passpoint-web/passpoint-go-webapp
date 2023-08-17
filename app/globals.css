@@ -71,7 +71,9 @@
   --input-error-bg: var(--negative-bg);
 
   --form-font-size: 14px;
-  --form-component-mg: 48px;
+
+  --outer-component-mg: 48px;
+  --inner-component-mg: 24px;
 
   --btn-padding: 24px;
   --btn-disabled: var(--grey-5);
@@ -132,6 +134,7 @@ h1 {
   font-size: 34px;
   line-height: 44px;
   margin-bottom: 8px;
+  /* letter-spacing:  -1.5px; */
   animation: slide-in-fr 0.7s forwards;
   -webkit-animation: slide-in-fr 0.7s forwards;
 }

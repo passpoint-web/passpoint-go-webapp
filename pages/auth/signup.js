@@ -24,7 +24,7 @@ const Signup = () => {
        <div className={styles.inner}>
        <div className={styles.lhs}>
        <h1>
-       <span>Hi,</span> 👋🏾 Give your customers the best traveling experience 
+       <span>Hi,</span> 👋🏾 Give your customers the <br/> best traveling experience 
         </h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inner}>
@@ -64,7 +64,6 @@ const Signup = () => {
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
               <PasswordField />
-              <PasswordStrength />
               {/* <input placeholder="****" id="password" type="password" /> */}
             </div>
             </div>

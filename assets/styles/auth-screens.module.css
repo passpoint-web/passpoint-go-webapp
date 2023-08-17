@@ -223,13 +223,32 @@
 .form .terms {
   display: flex;
   gap: 1rem;
-  margin: var(--form-component-mg) 0;
+  margin: var(--outer-component-mg) 0;
 }
 
 /* verify email */
 
 .form .form_inline_centered_text {
   text-align: center;
+}
+
+/* password strength */
+.password_strength_ctn {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 24px;
+}
+
+.password_strength {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.password_strength span {
+  font-size: 12px;
 }
 
 @media screen and (max-width: 700px) {

@@ -4,6 +4,7 @@ import PrimaryBtn from "@/components/Btn/Primary"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import PasswordField from "@/components/Auth/PasswordField"
 const Login = () => {
   const router = useRouter()
   const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -29,7 +30,8 @@ const Login = () => {
             </div>
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
-              <input placeholder="****" id="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+              <PasswordField passwordStrengthNeeded={false} />
+              {/* <input placeholder="****" id="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} /> */}
             </div>
           </div>
           <div className={styles.action_ctn}>
