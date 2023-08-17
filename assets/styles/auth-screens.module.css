@@ -32,6 +32,7 @@
 .form {
   padding-top: 48px;
   max-width: 600px;
+
 }
 
 .auth > .inner.business_type .form {
@@ -65,7 +66,8 @@
 }
 
 .form_group input,
-.form_group select {
+.form_group select,
+.form_group .custom_country_select button {
   background-color: #fff;
   font-size: var(--form-font-size);
   border: 1px solid var(--input-border);
@@ -76,6 +78,77 @@
   display: block;
   width: 100%;
   transition: 0.3s ease-in;
+}
+
+.form_group .custom_country_select {
+  position: relative;
+}
+
+.form_group .custom_country_select button {
+  transition: 0.3s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--input-height);
+}
+
+.form_group .custom_country_select button:hover {
+  border-color: var(--sky-blue);
+}
+
+.form_group .custom_country_select button:focus {
+  border: 1px solid var(--sky-blue);
+  outline: transparent;
+  box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
+  background-color: var(--input-focus-bg);
+}
+
+.form_group .custom_country_select .content {
+  width: 100%;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.form_group .custom_country_select button .content .country_flag_ctn {
+  height: 100%;
+  display: grid;
+  place-items: center;
+
+}
+
+.form_group .custom_country_select button .content p,
+.form_group .custom_country_select .countries .content p {
+  color: var(--grey-1);
+}
+
+.form_group .custom_country_select .countries {
+  padding: var(--sm-inner-component-mg) 0;
+  /* border: 1px solid var(--grey-4); */
+  border-radius: var(--input-br);
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.10), 0px 0px 1px 0px rgba(12, 26, 75, 0.20);
+  max-height: calc(var(--input-height)*5);
+  overflow-y: auto;
+  margin-top: var(--sm-inner-component-mg);
+  position: absolute;
+  top: var(--input-height);
+  width: 100%;
+  z-index: 10;
+  background-color: #fff;
+}
+
+.form_group .custom_country_select .countries .content {
+  padding: 0 var(--input-padding);
+  height: var(--input-height);
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.form_group .custom_country_select .countries .content:hover {
+  background-color: var(--grey-6);
 }
 
 .form_group input:not(:disabled):hover,

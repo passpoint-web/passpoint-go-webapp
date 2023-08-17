@@ -4,6 +4,7 @@ import { useState } from "react"
 import PrimaryBtn from "@/components/Btn/Primary"
 import PasswordField from "@/components/Auth/PasswordField"
 import PasswordStrength from "@/components/Auth/PasswordStrength"
+import CountrySelect from "@/components/Custom/CountrySelect"
 
 const Signup = () => {
 
@@ -32,11 +33,12 @@ const Signup = () => {
             <label htmlFor="country">
               Country
             </label>
-            <select id="country">
+            {/* <select id="country">
               <option>
                 Nigeria
               </option>
-            </select>
+            </select> */}
+            <CountrySelect />
           </div>
           <div className={styles.form_row}>
             <div className={`${styles.form_group} ${ctaClicked && !lastName ? styles.error : ''}`}>
