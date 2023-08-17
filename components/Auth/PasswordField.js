@@ -30,7 +30,7 @@ const PasswordField = ({passwordStrengthNeeded = true}) => {
     const regexString = /\d/
     return regexString.test(password)
   }
-  const passwordStyles = {fontSize: `${type === 'password' ? '30px' : '14px'}`, transition: 'none'}
+  // const passwordStyles = {fontSize: `${type === 'password' ? '30px' : '14px'}`, transition: 'none'}
 
   useEffect(()=>{
     isUpToEightChars()
