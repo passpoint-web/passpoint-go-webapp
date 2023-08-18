@@ -82,18 +82,6 @@
   --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
 }
 
-@media screen and (max-width: 700px) {
-  :root {
-    --header-padding: 40px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  :root {
-    --header-padding: 20px;
-  }
-}
-
 /* @media (prefers-color-scheme: dark) {} */
 
 html,
@@ -234,15 +222,16 @@ button:disabled {
 }
 
 .back_btn {
-  margin: 0 0 48px;
+  margin: 0 0 var(--outer-component-mg);
   width: fit-content;
   height: var(--input-height);
   padding: 0 var(--btn-padding);
-  border-radius: var(--btn-secondary-height);
+  border-radius: var(--input-br);
   border: 1px solid var(--grey-5);
   background-color: #fff;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   box-shadow: var(--btn-secondary-shadow);
 }
@@ -274,6 +263,37 @@ form {
   /* background: rgb(112, 112, 112); */
   z-index: 50;
   cursor: default;
+}
+
+/* SCREEN RESOLUTIONS */
+@media screen and (max-width: 700px) {
+  :root {
+    --header-padding: 40px;
+    --outer-component-mg: 32px;
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 36px;
+  }
+  
+  h1 br {
+    display: none;
+  }
+  .back_btn {
+    width: var(--input-height);
+    padding: 0;
+  }
+
+  .back_btn span:last-child {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  :root {
+    --header-padding: 16px;
+  }
 }
 
 /* ANIMS */

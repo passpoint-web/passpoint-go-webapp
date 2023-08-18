@@ -16,6 +16,10 @@ const Login = () => {
     router.push('/auth/business-kind')
   }
 
+  const onSetPassword = (e) => {
+    console.log(e)
+  }
+
   return (
     <AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}}>
        <div className={styles.auth}>
@@ -30,12 +34,11 @@ const Login = () => {
             </div>
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
-              <PasswordField passwordStrengthNeeded={false} />
-              {/* <input placeholder="****" id="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} /> */}
+              <PasswordField passwordStrengthNeeded={false} emitPassword={(e)=>setPassword(e)} />
             </div>
           </div>
           <div className={styles.action_ctn}>
-            <PrimaryBtn disabled={!email || !password} text='Log in' />
+            <PrimaryBtn disabled={!email || password.length < 7} text='Log in' />
             <p>Forgot password? <Link href="/auth/forgot-password" text='Reset it'>Reset it</Link></p>
           </div>
         </form>

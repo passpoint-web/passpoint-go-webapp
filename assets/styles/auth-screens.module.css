@@ -30,9 +30,8 @@
 }
 
 .form {
-  padding-top: 48px;
+  padding-top: var(--outer-component-mg);
   max-width: 600px;
-
 }
 
 .auth > .inner.business_type .form {
@@ -96,6 +95,7 @@
   border-color: var(--sky-blue);
 }
 
+.form_group .custom_country_select button.active,
 .form_group .custom_country_select button:focus {
   border: 1px solid var(--sky-blue);
   outline: transparent;
@@ -105,7 +105,6 @@
 
 .form_group .custom_country_select .content {
   width: 100%;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-start;
   gap: 10px;
@@ -115,7 +114,6 @@
   height: 100%;
   display: grid;
   place-items: center;
-
 }
 
 .form_group .custom_country_select button .content p,
@@ -136,6 +134,23 @@
   width: 100%;
   z-index: 10;
   background-color: #fff;
+}
+
+.form_group .custom_country_select .countries .input_wrapper {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+
+
+.form_group .custom_country_select .countries input[type=search] {
+  height: 40px;
+  margin: 0 var(--sm-inner-component-mg);
+  width: calc(100% - var(--sm-inner-component-mg)*2);
+}
+
+.form_group .custom_country_select .countries input[type=search]:focus {
+  box-shadow: none;
 }
 
 .form_group .custom_country_select .countries .content {
@@ -178,10 +193,10 @@
 }
 
 .form .action_ctn {
-  margin: 48px 0 24px;
+  margin: var(--outer-component-mg) 0 var(--inner-component-mg);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--inner-component-mg);
 }
 
 .form .action_ctn.end {
@@ -274,8 +289,9 @@
   stroke: var(--input-border);
 }
 
+.input_wrapper button:focus svg path,
 .input_wrapper input:focus + button svg path {
-  stroke: #000 !important;
+  stroke: var(--grey-1) !important;
 }
 
 .form input::placeholder {
@@ -325,13 +341,17 @@
 }
 
 @media screen and (max-width: 700px) {
+  /* .auth {
+    padding-top: 40px;
+  } */
   .auth > .inner {
     padding-left: 0;
+    padding: 0 var(--header-padding);
   }
-
   .auth .lhs {
     width: 100%;
     min-width: 100%;
+    padding: 0;
   }
 
   .form {
@@ -356,5 +376,12 @@
   
   .form .action_ctn.end button {
     min-width: 100%;
+  }
+
+  .form_group .otp_input > div input {
+    height: 48px;
+    width: 14% !important;
+    max-width: 48px;
+    font-size: 20px;
   }
 }
