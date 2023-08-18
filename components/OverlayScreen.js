@@ -1,8 +1,7 @@
-import React from 'react'
 
 const OverlayScreen = () => {
   return (
-      <div className="overlay-screen" />
+      <div className="overlay_screen" />
   )
 }
 

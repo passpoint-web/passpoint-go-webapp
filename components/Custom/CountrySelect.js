@@ -3,9 +3,14 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import OverlayScreen from '../OverlayScreen'
+import Search from './Search'
 const Select = ({emitCountry, countriesSelectProps}) => {
   const [country, setCountry] = useState({})
+  const [unfilteredCountries, setUnfilteredCountries] = useState([])
   const [countries, setCountries] = useState([])
+  const [search, setSearch] = useState('')
+  const [filteredCountris, setFilteredCountries] = useState([])
+  const [filteredCountries, setCountryFilter] = useState({})
   const [showCountriesSelect, setShowCountriesSelect] = useState(false)
 
   const handleClick = (e) => {
@@ -38,7 +43,9 @@ const Select = ({emitCountry, countriesSelectProps}) => {
         }
         return 0;
       });
-      setCountries(data)
+      const africa = data.filter(e=>e.region === 'Africa')
+      setCountries(africa)
+      setUnfilteredCountries(africa)
       const defaultCountry = data.find((e)=>e.name.common === 'Nigeria')
       setCountry(defaultCountry)
       emitCountry(defaultCountry)
@@ -47,6 +54,22 @@ const Select = ({emitCountry, countriesSelectProps}) => {
       console.log(e)
     })
     .finally(()=>{})
+  }
+
+  const searchCountry = (item)=> {
+    setSearch(item)
+    // setCountryFilter(countries.filter((c) => { 
+    //   return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
+    //   }
+    // ))
+    if (item) {
+      setCountries(countries.filter((c) => { 
+        return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
+        }
+      ))
+    } else {
+      setCountries(unfilteredCountries)
+    }
   }
   
   useEffect(()=>{
@@ -65,11 +88,11 @@ const Select = ({emitCountry, countriesSelectProps}) => {
     <>
     <div className={styles.custom_country_select }>
     {/* {showCountriesSelect ? <OverlayScreen onClick={hideCountrySelect} /> : <></>} */}
-      <button className={`${styles.selected} ${showCountriesSelect ? styles.active : ''}`} onClick={handleClick}>
+      <button className={`${showCountriesSelect ? styles.active : ''}`} onClick={handleClick}>
         {!countries?.name ? 
           <div className={styles.content}>
             <div className={styles.country_flag_ctn}>
-              <Image src={country?.flags?.svg} alt={country?.name?.common} width="20" height="20" />
+              <Image src={country?.flags?.png} alt={country?.name?.common} width="20" height="20" className={styles.img} />
             </div>
             <p>{country?.name?.common}</p>
           </div> :
@@ -84,19 +107,11 @@ const Select = ({emitCountry, countriesSelectProps}) => {
       { showCountriesSelect ?
       <div className={styles.countries}>
         {/* <div className={styles.content}> */}
-          {/* <div className={styles.inner_wrapper}>
-            <div className={styles.absolute_side}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M12.9833 10C12.9833 11.65 11.65 12.9833 10 12.9833C8.35 12.9833 7.01666 11.65 7.01666 10C7.01666 8.35 8.35 7.01666 10 7.01666C11.65 7.01666 12.9833 8.35 12.9833 10Z" stroke="#565C69" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M9.99999 16.8916C12.9417 16.8916 15.6833 15.1583 17.5917 12.1583C18.3417 10.9833 18.3417 9.00831 17.5917 7.83331C15.6833 4.83331 12.9417 3.09998 9.99999 3.09998C7.05833 3.09998 4.31666 4.83331 2.40833 7.83331C1.65833 9.00831 1.65833 10.9833 2.40833 12.1583C4.31666 15.1583 7.05833 16.8916 9.99999 16.8916Z" stroke="#565C69" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            </div>
-          <input type="search" />
-          </div> */}
+          <Search search={search} id={'country'} placeholder={'Search country'} searchCountry={(e)=>searchCountry(e)} />
         {/* </div> */}
       {countries.map((c, index)=>(
          <div key={index} className={styles.content} onClick={(e) => handleCountrySelect(e, c)}>
-          <Image src={c?.flags?.svg} alt={c?.name?.common} width="20" height="20" />
+          <Image src={c?.flags?.png} alt={c?.name?.common} width="20" height="20" className={styles.img} />
           <p>{c?.name?.common}</p>
         </div>
       ))}

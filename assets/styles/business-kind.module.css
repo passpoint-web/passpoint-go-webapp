@@ -20,13 +20,15 @@
 
 /* button */
 .option {
+  --check-size: 20px;
+  --box-border: var(--warning-300);
+  --box-bg: var(--warning-bg);
   padding: 24px;
   border-radius: 12px;
   width: 50%;
   min-width: 300px;
   transition: 0.3s ease-in-out;
-  --check-size: 20px;
-  border: 1px solid var(--grey-5);
+  border: 1px solid var(--grey-4);
   cursor: pointer;
   box-shadow: var(--btn-secondary-shadow);
 }
@@ -46,16 +48,16 @@
 }
 
 .option:hover {
-  border-color: var(--sky-blue);
+  border-color: var(--box-border);
 }
 
 .option:hover .check_circle {
-  border: 1px solid var(--sky-blue);
+  border: 1px solid var(--box-border);
 }
 
 .option.active {
-  border-color: var(--sky-blue);
-  background-color: var(--sky-blue-bg);
+  border-color: var(--box-border);
+  background-color: var(--box-bg);
 }
 .option.active .check_circle,
 .option .check {
@@ -85,7 +87,7 @@
   width: var(--check-size);
   min-width: var(--check-size);
   height: var(--check-size);
-  border: 1px solid #bcc7d3;
+  border: 1px solid var(--grey-4);
   border-radius: 50%;
 }
 

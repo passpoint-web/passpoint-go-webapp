@@ -39,6 +39,7 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
@@ -54,9 +55,17 @@
   --sky-blue: #009EC4;
   --sky-blue-bg: #E6F5F980;
 
+  --cta-bg: #121212;
+
   --negative: #FF3B2D;
   --negative-box-shadow: #FFC7C3;
   --negative-bg: #FFE6E4;
+
+  --warning-200: #DF752B;
+  --warning-300: #D85900;
+  --warning-400: #973E00;
+  --warning-500: #843600;
+  --warning-bg: #FBEEE680;
 
   --input-height: 48px;
   --input-br: 8px;
@@ -148,6 +157,7 @@ h6.center {
 
 h2 {
   font-size: 20px;
+  letter-spacing: -0.5px;
 }
 
 p {
@@ -180,7 +190,7 @@ button:disabled {
   padding: 0 var(--btn-padding);
   border-radius: var(--input-br);
   border: none;
-  background-color: var(--sky-blue);
+  background-color: var(--cta-bg);
   color: #fff;
 }
 
@@ -253,13 +263,13 @@ form {
   -webkit-animation: slide-in-fr 0.7s forwards;
 }
 
-.overlay-screen {
+.overlay_screen {
   width: 100vw;
   max-width: 100vw;
   min-height: 100vh;
   position: fixed;
   inset: 0;
-  background: rgb(0, 0, 0, 0);
+  background: rgb(0, 0, 0, 0.3);
   /* background: rgb(112, 112, 112); */
   z-index: 50;
   cursor: default;
