@@ -46,15 +46,12 @@ const Signup = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inner}>
           <div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
-            <label htmlFor="country" onClick={()=>setCountriesSelectProps(true)}>
+            {/* <label htmlFor="country" onClick={()=>setCountriesSelectProps(true)}> */}
+            <label htmlFor="country">
               Country
             </label>
-            {/* <select id="country">
-              <option>
-                Nigeria
-              </option>
-            </select> */}
-            <CountrySelect countriesSelectProps={countriesSelectProps} emitCountry={(e)=>setCountry(e)} />
+            {/* <CountrySelect countriesSelectProps={countriesSelectProps} emitCountry={(e)=>{setCountry(e); setCountriesSelectProps(false)}} /> */}
+            <CountrySelect emitCountry={(e)=>setCountry(e)} />
           </div>
           <div className={styles.form_row}>
             <div className={`${styles.form_group} ${ctaClicked && !lastName ? styles.error : ''}`}>
