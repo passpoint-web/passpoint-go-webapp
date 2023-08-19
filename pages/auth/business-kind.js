@@ -15,7 +15,7 @@ const BusinessKind = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push('/auth/business-type')
+    router.push('/kyc/business-type')
   }
   
   return (
