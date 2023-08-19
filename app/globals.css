@@ -70,6 +70,7 @@
   --input-height: 48px;
   --input-br: 8px;
   --input-padding: 16px;
+  --input-transition: 0.3s ease-in;
   --input-border: var(--grey-5);
   --input-border-disabled: var(--grey-5);
   --input-focus-bg:  #E6F5F9;

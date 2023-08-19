@@ -76,7 +76,7 @@
   box-shadow: var(--input-box-shadow);
   display: block;
   width: 100%;
-  transition: 0.3s ease-in;
+  transition: var(--input-transition);
 }
 
 /* countries select */
@@ -86,7 +86,7 @@
 }
 
 .form_group .custom_country_select button {
-  transition: 0.3s ease-in;
+  transition: var(--input-transition);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,15 +128,29 @@
   /* border: 1px solid var(--grey-4); */
   border-radius: var(--input-br);
   box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.10), 0px 0px 1px 0px rgba(12, 26, 75, 0.20);
-  max-height: calc(var(--input-height)*5);
+  max-height: calc(var(--input-height)*5 - var(--sm-inner-component-mg));
   overflow-y: auto;
-  margin-top: var(--sm-inner-component-mg);
+  margin-top: calc(var(--sm-inner-component-mg)*2);
   position: absolute;
   top: var(--input-height);
   width: 100%;
   z-index: 10;
   background-color: #fff;
 }
+
+/* hide countries container scroll bar */
+.form_group .custom_country_select .countries::-webkit-scrollbar { 
+  width: 0 !important;
+}
+
+.form_group .custom_country_select .countries { 
+  overflow: -moz-scrollbars-none;
+}
+
+.form_group .custom_country_select .countries { 
+  -ms-overflow-style: none;
+}
+/* end */
 
 .form_group .custom_country_select .countries .input_wrapper {
   position: sticky;
@@ -156,18 +170,22 @@
   box-shadow: none;
 }
 
+.form_group .custom_country_select .countries input[type=search]:focus + label svg path {
+  stroke: var(--grey-1);
+}
+
 .form_group .custom_country_select .countries .content {
   padding: 0 var(--input-padding);
   height: var(--input-height);
   display: flex;
   align-items: center;
-  transition: 0.3s;
+  transition: var(--input-transition);
   cursor: pointer;
 }
 
 .form_group .custom_country_select .content .img,
 .form_group .custom_country_select .countries .content .img {
-  border-radius: 5px;
+  border-radius: 50%;
   border: 0.2px solid var(--grey-6);
 }
 
@@ -175,7 +193,7 @@
   background-color: var(--grey-6);
 }
 
-/* end of country select */
+/* end */
 
 .form_group input:not(:disabled):hover,
 .form_group select:not(:disabled):hover {
@@ -281,7 +299,7 @@
   position: absolute;
   right: 16px;
   bottom: 16px;
-  transition: all 0.25s ease-in-out;
+  transition: var(--input-transition);
   transform: translateY(15px);
   z-index: 50;
   height: calc(100% - var(--sm-inner-component-mg));
@@ -294,7 +312,7 @@
 }
 
 .input_wrapper.left input {
-  padding-left: 30px !important;
+  padding-left: 35px !important;
 }
 
 .input_wrapper.left input:focus label svg path {
@@ -302,7 +320,7 @@
 }
 
 .absolute_side svg path {
-  transition: all 0.25s ease-in-out;
+  transition: var(--input-transition);
 }
 
 .absolute_side.show {

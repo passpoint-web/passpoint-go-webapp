@@ -2,8 +2,11 @@ import axios from 'axios'
 import styles from '@/assets/styles/auth-screens.module.css'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import COUNTRIES from '@/utils/countries'
 import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
+
+
 const Select = ({emitCountry, countriesSelectProps}) => {
   const [showCountriesSelect, setShowCountriesSelect] = useState(false)
   
@@ -27,7 +30,7 @@ const Select = ({emitCountry, countriesSelectProps}) => {
 
   const hideCountrySelect = (e) => {}
 
-  const retrieveCountries = () => {
+  const retrieveCountriesFromAPI = () => {
     axios.get('https://restcountries.com/v3.1/all')
     .then((response)=>{
       let {data} = response
@@ -51,6 +54,24 @@ const Select = ({emitCountry, countriesSelectProps}) => {
       console.log(e)
     })
     .finally(()=>{})
+  }
+  const retrieveCountries = () => {
+      const data = COUNTRIES
+      data.sort(function (a, b) {
+        if (a.name.common < b.name.common) {
+          return -1;
+        }
+        if (a.name.common > b.name.common) {
+          return 1;
+        }
+        return 0;
+      });
+      const africa = data.filter(e=>e.region === 'Africa')
+      setCountries(africa)
+      setFilteredCountries(africa)
+      const defaultCountry = data.find((e)=>e.name.common === 'Nigeria')
+      setCountry(defaultCountry)
+      emitCountry(defaultCountry)
   }
 
   const searchCountry = (item)=> {
