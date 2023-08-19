@@ -1,6 +1,7 @@
-import styles from '@/assets/styles/business-kind.module.css'
+import styles from './business-kind.module.css'
 
-const BusinessChoiceBtn = ({onSelectOption, currentOption, option, children}) => {
+const BusinessKindBtn = ({onSelectOption, currentOption, option, children}) => {
+
   const selectOption = () => {
     onSelectOption(option)
   }
@@ -25,4 +26,4 @@ const BusinessChoiceBtn = ({onSelectOption, currentOption, option, children}) =>
   )
 }
 
-export default BusinessChoiceBtn
+export default BusinessKindBtn

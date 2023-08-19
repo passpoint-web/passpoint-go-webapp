@@ -1,9 +1,9 @@
 
 import { useState } from "react"
-import BusinessChoiceBtn from "@/components/Btn/BusinessChoice"
-import styles from '@/assets/styles/business-kind.module.css'
+import BusinessKindBtn from "./Btn"
+import styles from './business-kind.module.css'
 
-const BusinessChoice = ({emitSetOption}) => {
+const ChoiceCard = ({emitSetOption}) => {
   const [option, setOption] = useState(undefined)
   const [currentOption, setCurrentOption] = useState({})
   const options = [
@@ -113,7 +113,7 @@ const BusinessChoice = ({emitSetOption}) => {
   }
 
   const listOptions = options.map((option, index)=> 
-    <BusinessChoiceBtn key={index} onSelectOption={selectOption} option={option} currentOption={currentOption}>
+    <BusinessKindBtn key={index} onSelectOption={selectOption} option={option} currentOption={currentOption}>
       {option.icon}
       <h2>{option.heading}</h2>
       <div className={styles.content}>
@@ -126,7 +126,7 @@ const BusinessChoice = ({emitSetOption}) => {
           )}
         </ol>
       </div>
-    </BusinessChoiceBtn>)
+    </BusinessKindBtn>)
 
   return (
     <div className={styles.business_type_ctn}>
@@ -135,4 +135,4 @@ const BusinessChoice = ({emitSetOption}) => {
   )
 }
 
-export default BusinessChoice
+export default ChoiceCard

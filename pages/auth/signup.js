@@ -7,6 +7,7 @@ import PasswordField from "@/components/Auth/PasswordField"
 import PasswordStrength from "@/components/Auth/PasswordStrength"
 import CountrySelect from "@/components/Custom/CountrySelect"
 import PhoneSelect from "@/components/Custom/PhoneSelect"
+import PhoneInput from 'react-phone-number-input'
 
 const Signup = () => {
   const router = useRouter()
@@ -26,6 +27,11 @@ const Signup = () => {
     e.preventDefault()
     setCtaClicked(true)
     router.push('/auth/business-kind')
+  }
+
+  const handlePhoneValue= (e) => {
+    // e.preventDefault()
+    console.log(e)
   }
 
   useEffect(()=>{
@@ -73,9 +79,16 @@ const Signup = () => {
               <label htmlFor="email-address">Email address</label>
               <input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
             </div>
-          <div className={styles.form_group}>
+          <div className={`${styles.form_group} ${ctaClicked && !phone ? styles.error : ''}`}>
               <label htmlFor="phone-number">Phone number</label>
-              <PhoneSelect emitCountry={(e)=>setCountry(e)} />
+              {/* <PhoneSelect emitCountry={(e)=>setCountry(e)} /> */}
+              <PhoneInput
+                international
+                placeholder="Enter phone number"
+                defaultCountry="NG"
+                value={phone}
+                onChange={handlePhoneValue}
+              />
               {/* <input placeholder="234987654321" id="phone-number" type="text" value={phone} onChange={(e)=>setPhone(e.target.value)} /> */}
             </div>
             <div className={styles.form_group}>

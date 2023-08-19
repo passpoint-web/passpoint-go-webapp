@@ -2,7 +2,7 @@ import AuthLayout from "@/app/auth-layout"
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from "@/components/Btn/Primary"
 import { useState } from "react"
-import BusinessChoice from "@/components/BusinessChoice"
+import ChoiceCard from "@/components/BusinessKind/ChoiceCard"
 import { useRouter } from "next/router"
 
 const BusinessKind = () => {
@@ -26,7 +26,7 @@ const BusinessKind = () => {
        <h1 className="center">What kind of business are you?</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inner}>
-            <BusinessChoice emitSetOption={onSetOption} />
+            <ChoiceCard emitSetOption={onSetOption} />
           </div>
           <div className={`${styles.action_ctn} ${styles.end}`}>
             <PrimaryBtn disabled={option === undefined} text='Continue' />

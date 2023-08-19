@@ -44,6 +44,7 @@
 
 :root {
   --header-padding: 80px;
+  --header-height: 100px;
 
   --grey-1: #1C1132;
   --grey-2: #565C69;
@@ -84,16 +85,17 @@
   --select-dropdown-z-index: 20;
   --overlay-z-index: 10;
 
-  --form-font-size: 14px;
-
   --outer-component-mg: 48px;
   --inner-component-mg: 24px;
+  --inner-component-gap: 16px;
   --sm-inner-component-mg: 8px;
 
   --btn-padding: 24px;
   --btn-disabled: var(--grey-5);
   --btn-secondary-height: 40px;
   --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
+
+  --screen-top-padding: 64px;
 }
 
 /* @media (prefers-color-scheme: dark) {} */
@@ -220,6 +222,21 @@ button:disabled {
   box-shadow: var(--btn-secondary-shadow);
 }
 
+.close_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--input-br);
+  border: none;
+  color: var(--grey-1);
+  border: 1px solid var(--grey-5);
+  background-color: unset;
+  box-shadow: var(--btn-secondary-shadow);
+}
+
+
 .secondary_link:hover {
   text-decoration: none;
 }
@@ -275,10 +292,25 @@ input[type=number] {
   min-height: 100vh;
   position: fixed;
   inset: 0;
-  background: rgb(0, 0, 0, 0);
-  /* background: rgb(112, 112, 112); */
+  /* background: rgb(0, 0, 0, 0); */
   z-index: var(--overlay-z-index);
   cursor: default;
+}
+
+ol, ul {
+  margin-left: 16px;
+}
+
+/* React phone input */
+
+.PhoneInput {
+  display: flex;
+  gap: var(--sm-inner-component-mg);
+}
+
+.PhoneInputCountry {
+  display: flex;
+  width: 40%;
 }
 
 /* SCREEN RESOLUTIONS */
@@ -287,6 +319,8 @@ input[type=number] {
     --header-padding: 40px;
     --outer-component-mg: 32px;
     --inner-component-mg: 12px;
+    --inner-component-gap: 8px;
+    --screen-top-padding: 32px;
   }
 
   h1 {

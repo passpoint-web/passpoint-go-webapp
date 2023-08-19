@@ -1,4 +1,4 @@
-import AuthLayout from "@/app/auth-layout"
+import KYCLayout from "@/app/kyc-layout"
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from "@/components/Btn/Primary"
 import Link from "next/link"
@@ -14,7 +14,7 @@ const BusinessType = () => {
   }
 
   return (
-    <AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Business Type'}>
+    <KYCLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Business Type'}>
        <div className={styles.auth}>
        <div className={styles.inner}>
        <div className={styles.center}>
@@ -49,7 +49,7 @@ const BusinessType = () => {
        </div>
        </div>
       </div>
-    </AuthLayout>
+    </KYCLayout>
   )
 }
 

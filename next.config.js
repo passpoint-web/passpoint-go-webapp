@@ -7,6 +7,11 @@ const nextConfig = {
         destination: '/auth/login',
         permanent: true,
       },
+      {
+        source: '/kyc',
+        destination: '/kyc/business-type',
+        permanent: true,
+      },
     ]
   },
   images: {

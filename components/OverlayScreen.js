@@ -1,7 +1,7 @@
 
 const OverlayScreen = ({emitClick}) => {
   return (
-      <div className="overlay_screen" onClick={emitClick} />
+    <div className="overlay_screen" onClick={emitClick} />
   )
 }
 

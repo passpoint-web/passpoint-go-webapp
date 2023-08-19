@@ -1,5 +1,5 @@
 
-import styles from '@/assets/styles/auth-header.module.css'
+import styles from '@/assets/styles/auth-screens.module.css'
 import PasspointLogo from '../Passpoint/Logo'
 import ProductStage from '../ProductStage'
 import SecondaryLink from '../Link/Secondary'

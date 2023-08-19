@@ -1,6 +1,52 @@
 
+/* Auth Header */
+.header {
+  width: 100%;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--grey-5);
+}
+
+.header .inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--header-padding);
+  justify-content: space-between;
+}
+
+.header .inner .lhs {
+  display: flex;
+  align-items: center;
+  gap: var(--inner-component-gap);
+}
+
+/* .header .inner .rhs a {
+  display: flex;
+  height: 2.5rem;
+  padding: 1rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--grey-5);
+  box-shadow: 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
+} */
+
+.product_stage {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 10px;
+  padding: 0px 8px;
+  border-radius: 30px;
+  font-family: 'GraphikMedium';
+  height: 18px;
+  background-color: var(--sky-blue);
+}
+
+/* end */
+
 .auth {
-  padding-top: 80px;
+  padding-top: var(--screen-top-padding);
 }
 
 .auth > .inner {
@@ -60,14 +106,12 @@
   align-items: center;
   line-height: 21px;
   margin-bottom: 8px;
-  font-size: var(--form-font-size);
 }
 
 .form_group input,
 .form_group select,
 .form_group .custom_country_select button {
   background-color: #fff;
-  font-size: var(--form-font-size);
   border: 1px solid var(--input-border);
   height: var(--input-height);
   border-radius: var(--input-br);
