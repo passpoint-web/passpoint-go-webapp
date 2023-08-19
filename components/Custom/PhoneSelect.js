@@ -7,7 +7,7 @@ import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
 
 
-const CountrySelect = ({emitCountry, countriesSelectProps}) => {
+const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
   const [showCountriesSelect, setShowCountriesSelect] = useState(false)
   
   const [countries, setCountries] = useState([])
@@ -131,4 +131,4 @@ const CountrySelect = ({emitCountry, countriesSelectProps}) => {
   )
 }
 
-export default CountrySelect
+export default PhoneSelect

@@ -80,6 +80,9 @@
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
 
+  --input-icon-z-index: 5;
+  --select-dropdown-z-index: 10;
+
   --form-font-size: 14px;
 
   --outer-component-mg: 48px;
@@ -281,6 +284,7 @@ form {
   :root {
     --header-padding: 40px;
     --outer-component-mg: 32px;
+    --inner-component-mg: 12px;
   }
 
   h1 {
@@ -345,3 +349,29 @@ form {
     -o-transform: translateX(0vw);
   }
 }
+
+
+.dropdown {
+  animation: dropdown 0.5s ease-in-out forwards;
+  -webkit-animation: dropdown 0.5s ease-in-out forwards;
+  transform-origin: top;
+}
+
+@keyframes dropdown {
+  to {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+  }
+  from {
+    transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -o-transform: scaleY(0);
+  }
+}
+
+/* end */

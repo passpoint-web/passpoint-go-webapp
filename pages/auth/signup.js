@@ -6,6 +6,7 @@ import PrimaryBtn from "@/components/Btn/Primary"
 import PasswordField from "@/components/Auth/PasswordField"
 import PasswordStrength from "@/components/Auth/PasswordStrength"
 import CountrySelect from "@/components/Custom/CountrySelect"
+import PhoneSelect from "@/components/Custom/PhoneSelect"
 
 const Signup = () => {
   const router = useRouter()
@@ -74,7 +75,8 @@ const Signup = () => {
             </div>
           <div className={styles.form_group}>
               <label htmlFor="phone-number">Phone number</label>
-              <input placeholder="234987654321" id="phone-number" type="text" value={phone} onChange={(e)=>setPhone(e.target.value)} />
+              <PhoneSelect emitCountry={(e)=>setCountry(e)} />
+              {/* <input placeholder="234987654321" id="phone-number" type="text" value={phone} onChange={(e)=>setPhone(e.target.value)} /> */}
             </div>
             <div className={styles.form_group}>
               <label htmlFor="password">Password</label>
