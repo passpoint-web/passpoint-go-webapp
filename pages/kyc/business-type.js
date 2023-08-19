@@ -14,7 +14,7 @@ const BusinessType = () => {
   }
 
   return (
-    <KYCLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Business Type'}>
+    <KYCLayout pageTitle={'Business Type'}>
        <div className={styles.auth}>
        <div className={styles.inner}>
        <div className={styles.center}>

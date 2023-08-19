@@ -12,7 +12,7 @@ export default function AuthLayout({ children, btn, pageTitle = '' }) {
   return (
     <div>
       <Head>
-        <title>{`${pageTitle} | Passpoint Go`}</title>
+        <title>{`${pageTitle} | Auth | Passpoint Go`}</title>
       </Head>
       <AuthHeader btn={btn} />
       {children}

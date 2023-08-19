@@ -20,18 +20,6 @@
   gap: var(--inner-component-gap);
 }
 
-/* .header .inner .rhs a {
-  display: flex;
-  height: 2.5rem;
-  padding: 1rem 1.5rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid var(--grey-5);
-  box-shadow: 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
-} */
-
 .product_stage {
   text-transform: uppercase;
   color: #fff;

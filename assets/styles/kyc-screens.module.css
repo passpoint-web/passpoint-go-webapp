@@ -1,0 +1,45 @@
+
+/* KYC Header */
+.header {
+  width: 100%;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--grey-5);
+}
+
+.header .inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--header-padding);
+  gap: var(--outer-component-gap);
+}
+
+.header .inner .lhs {
+  display: flex;
+  align-items: center;
+  gap: var(--inner-component-gap);
+}
+
+.header .inner .lhs,
+.header .inner .rhs {
+  width: 50px;
+}
+
+@media screen and (max-width: 700px) {
+  .header .inner {
+    justify-content: space-between;
+  }
+}
+
+.kyc_content {
+  display: flex;
+}
+
+.kyc_content_lhs {
+  display: flex;
+  width: 40%;
+  max-width: 300px;
+  min-height: calc(100vh - var(--header-height));
+  border: 1px solid red;
+}
+

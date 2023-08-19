@@ -88,6 +88,7 @@
   --outer-component-mg: 48px;
   --inner-component-mg: 24px;
   --inner-component-gap: 16px;
+  --outer-component-gap: 32px;
   --sm-inner-component-mg: 8px;
 
   --btn-padding: 24px;
@@ -320,6 +321,7 @@ ol, ul {
     --outer-component-mg: 32px;
     --inner-component-mg: 12px;
     --inner-component-gap: 8px;
+    --outer-component-gap: 16px;
     --screen-top-padding: 32px;
   }
 
