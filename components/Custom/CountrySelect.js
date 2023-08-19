@@ -59,6 +59,8 @@ const Select = ({emitCountry, countriesSelectProps}) => {
       return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
       }
     ))
+    const countriesCtn = document.getElementById('signup_countries');
+    countriesCtn.scrollTop = 0;
   }
   
   useEffect(()=>{
@@ -94,7 +96,7 @@ const Select = ({emitCountry, countriesSelectProps}) => {
         </svg>
       </button>
       { showCountriesSelect ?
-      <div className={styles.countries}>
+      <div id={'signup_countries'} className={styles.countries}>
         <Search search={search} id={'country'} placeholder={'Search country'} searchCountry={(e)=>searchCountry(e)} />
         {filteredCountries.map((c, index)=>(
           <div key={index} className={styles.content} onClick={(e) => handleCountrySelect(e, c)}>
