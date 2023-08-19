@@ -142,10 +142,11 @@
   position: sticky;
   position: -webkit-sticky;
   top: 0;
+  padding-bottom: var(--sm-inner-component-mg);
 }
 
 .form_group .custom_country_select .countries input[type=search] {
-  height: 40px;
+  /* height: 40px; */
   margin: 0 var(--sm-inner-component-mg);
   width: calc(100% - var(--sm-inner-component-mg)*2);
   border-radius: 6px;
@@ -167,6 +168,7 @@
 .form_group .custom_country_select .content .img,
 .form_group .custom_country_select .countries .content .img {
   border-radius: 5px;
+  border: 0.2px solid var(--grey-6);
 }
 
 .form_group .custom_country_select .countries .content:hover {
@@ -283,17 +285,20 @@
   transform: translateY(15px);
   z-index: 50;
   height: 100%;
-  display: grid;
-  place-items: center;
 }
 
 .input_wrapper.left .absolute_side {
   left: 16px;
   right: unset;
+  margin-bottom: 0;
 }
 
-.input_wrapper.left + input {
+.input_wrapper.left input {
   padding-left: 30px !important;
+}
+
+.input_wrapper.left input:focus label svg path {
+  stroke: var(--grey-1) !important;
 }
 
 .absolute_side svg path {

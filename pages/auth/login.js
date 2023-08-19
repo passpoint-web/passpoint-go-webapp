@@ -21,7 +21,7 @@ const Login = () => {
   }
 
   return (
-    <AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}}>
+    <AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Login'}>
        <div className={styles.auth}>
        <div className={styles.inner}>
        <div className={styles.center}>

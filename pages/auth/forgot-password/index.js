@@ -113,7 +113,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <AuthLayout btn={{text: 'Log in', url: '/auth/login'}}>
+    <AuthLayout btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Forgot Password'}>
        <div className={styles.auth}>
         <div className={styles.inner}>
           <div className={styles.center}>

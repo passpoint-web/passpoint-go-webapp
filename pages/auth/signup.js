@@ -36,7 +36,7 @@ const Signup = () => {
   }, [country?.name?.common, lastName, firstName, businessName, email, phone, password])
 
   return (
-    <AuthLayout btn={{text: 'Log in', url: '/auth/login'}}>
+    <AuthLayout btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
        <div className={styles.auth}>
        <div className={styles.inner}>
        <div className={styles.lhs}>

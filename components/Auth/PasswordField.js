@@ -34,8 +34,6 @@ const PasswordField = ({passwordStrengthNeeded = true, emitPassword}) => {
     const regexString = /\d/
     return regexString.test(password)
   }
-  // const passwordStyles = {fontSize: `${type === 'password' ? '30px' : '14px'}`, transition: 'none'}
-
   useEffect(()=>{
     // eg login screen
     if (!passwordStrengthNeeded) {

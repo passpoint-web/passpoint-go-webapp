@@ -5,13 +5,12 @@ import Image from 'next/image'
 import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
 const Select = ({emitCountry, countriesSelectProps}) => {
-  const [country, setCountry] = useState({})
-  const [unfilteredCountries, setUnfilteredCountries] = useState([])
-  const [countries, setCountries] = useState([])
-  const [search, setSearch] = useState('')
-  const [filteredCountris, setFilteredCountries] = useState([])
-  const [filteredCountries, setCountryFilter] = useState({})
   const [showCountriesSelect, setShowCountriesSelect] = useState(false)
+  
+  const [countries, setCountries] = useState([])
+  const [filteredCountries, setFilteredCountries] = useState([])
+  const [country, setCountry] = useState({})
+  const [search, setSearch] = useState('')
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -21,14 +20,12 @@ const Select = ({emitCountry, countriesSelectProps}) => {
   const handleCountrySelect = (e, country) => {
     setCountry(country)
     emitCountry(country)
+    window.setTimeout(()=>{
     setShowCountriesSelect(false)
+    }, 200)
   }
 
-  const hideCountrySelect = (e) => {
-    console.log(e)
-    // console.log(country)
-    setShowCountriesSelect(false)
-  }
+  const hideCountrySelect = (e) => {}
 
   const retrieveCountries = () => {
     axios.get('https://restcountries.com/v3.1/all')
@@ -45,7 +42,7 @@ const Select = ({emitCountry, countriesSelectProps}) => {
       });
       const africa = data.filter(e=>e.region === 'Africa')
       setCountries(africa)
-      setUnfilteredCountries(africa)
+      setFilteredCountries(africa)
       const defaultCountry = data.find((e)=>e.name.common === 'Nigeria')
       setCountry(defaultCountry)
       emitCountry(defaultCountry)
@@ -58,18 +55,10 @@ const Select = ({emitCountry, countriesSelectProps}) => {
 
   const searchCountry = (item)=> {
     setSearch(item)
-    // setCountryFilter(countries.filter((c) => { 
-    //   return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
-    //   }
-    // ))
-    if (item) {
-      setCountries(countries.filter((c) => { 
-        return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
-        }
-      ))
-    } else {
-      setCountries(unfilteredCountries)
-    }
+    setFilteredCountries(countries.filter((c) => { 
+      return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
+      }
+    ))
   }
   
   useEffect(()=>{
@@ -106,15 +95,13 @@ const Select = ({emitCountry, countriesSelectProps}) => {
       </button>
       { showCountriesSelect ?
       <div className={styles.countries}>
-        {/* <div className={styles.content}> */}
-          <Search search={search} id={'country'} placeholder={'Search country'} searchCountry={(e)=>searchCountry(e)} />
-        {/* </div> */}
-      {countries.map((c, index)=>(
-         <div key={index} className={styles.content} onClick={(e) => handleCountrySelect(e, c)}>
-          <Image src={c?.flags?.png} alt={c?.name?.common} width="20" height="20" className={styles.img} />
-          <p>{c?.name?.common}</p>
-        </div>
-      ))}
+        <Search search={search} id={'country'} placeholder={'Search country'} searchCountry={(e)=>searchCountry(e)} />
+        {filteredCountries.map((c, index)=>(
+          <div key={index} className={styles.content} onClick={(e) => handleCountrySelect(e, c)}>
+            <Image src={c?.flags?.png} alt={c?.name?.common} width="20" height="20" className={styles.img} />
+            <p>{c?.name?.common}</p>
+          </div>
+        ))}
     </div>
     : <></>}
     </div></>

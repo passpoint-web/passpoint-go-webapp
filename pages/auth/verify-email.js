@@ -16,7 +16,7 @@ const VerifyEmail = () => {
   }
 
   return (
-    <AuthLayout btn={{text: 'Log in', url: '/auth/login'}}>
+    <AuthLayout btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Verify Email'}>
        <div className={styles.auth}>
        <div className={styles.inner}>
        <div className={styles.center}>
