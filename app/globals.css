@@ -79,9 +79,10 @@
   --input-error-border: var(--negative);
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
-
+  
   --input-icon-z-index: 5;
-  --select-dropdown-z-index: 10;
+  --select-dropdown-z-index: 20;
+  --overlay-z-index: 10;
 
   --form-font-size: 14px;
 
@@ -262,10 +263,11 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-form {
+/* commented out because it messes with position fixed */
+/* form {
   animation: slide-in-fr 0.7s forwards;
   -webkit-animation: slide-in-fr 0.7s forwards;
-}
+} */
 
 .overlay_screen {
   width: 100vw;
@@ -273,9 +275,9 @@ form {
   min-height: 100vh;
   position: fixed;
   inset: 0;
-  background: rgb(0, 0, 0, 0.3);
+  background: rgb(0, 0, 0, 0);
   /* background: rgb(112, 112, 112); */
-  z-index: 50;
+  z-index: var(--overlay-z-index);
   cursor: default;
 }
 
@@ -347,6 +349,24 @@ form {
     -moz-transform: translateX(0vw);
     -ms-transform: translateX(0vw);
     -o-transform: translateX(0vw);
+  }
+}
+
+.slide-up {
+  animation: slide-up 0.4s forwards;
+  -webkit-animation: slide-up 0.4s forwards;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0vw);
+    -webkit-transform: translateY(0vw);
+    -moz-transform: translateY(0vw);
+    -ms-transform: translateY(0vw);
+    -o-transform: translateY(0vw);
   }
 }
 

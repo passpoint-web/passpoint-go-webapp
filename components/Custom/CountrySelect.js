@@ -28,7 +28,11 @@ const CountrySelect = ({emitCountry, countriesSelectProps}) => {
     }, 200)
   }
 
-  const hideCountrySelect = (e) => {}
+  const hideCountrySelect = (e) => {
+    window.setTimeout(()=>{
+    setShowCountriesSelect(false)
+    }, 200)
+  }
 
   const retrieveCountriesFromAPI = () => {
     axios.get('https://restcountries.com/v3.1/all')
@@ -99,7 +103,7 @@ const CountrySelect = ({emitCountry, countriesSelectProps}) => {
   return (
     <>
     <div className={styles.custom_country_select }>
-    {/* {showCountriesSelect ? <OverlayScreen onClick={hideCountrySelect} /> : <></>} */}
+    {showCountriesSelect ? <OverlayScreen emitClick={hideCountrySelect} /> : <></>}
       <button className={`${showCountriesSelect ? styles.active : ''}`} onClick={handleClick}>
         {!countries?.name ? 
           <div className={styles.content}>
