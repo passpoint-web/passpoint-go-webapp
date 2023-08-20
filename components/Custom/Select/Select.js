@@ -1,6 +1,4 @@
-import axios from 'axios'
 import styles from './custom-select.module.css'
-// import styles from '@/assets/styles/auth-screens.module.css'
 import { useEffect, useState } from 'react'
 import OverlayScreen from '../../OverlayScreen'
 
@@ -25,10 +23,6 @@ const CustomSelect = ({emitSelect, selectedOption, selectOptions}) => {
     setShowSelect(false)
     }, 200)
   }
-
-  useEffect(()=>{
-    console.log(styles)
-  }, [])
 
   return (
     <>
