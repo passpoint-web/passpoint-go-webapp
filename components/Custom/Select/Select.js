@@ -2,7 +2,7 @@ import styles from './custom-select.module.css'
 import { useEffect, useState } from 'react'
 import OverlayScreen from '../../OverlayScreen'
 
-const CustomSelect = ({emitSelect, selectedOption, selectOptions}) => {
+const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions}) => {
 
   const [showSelect, setShowSelect] = useState(false)
 
@@ -28,15 +28,14 @@ const CustomSelect = ({emitSelect, selectedOption, selectOptions}) => {
     <>
     <div className={styles.custom_select }>
     {showSelect ? <OverlayScreen emitClick={hideSelect} /> : <></>}
-      <button className={`${showSelect ? styles.active : ''}`} onClick={handleClick}>
-        {selectedOption ?
-          <div className={styles.content}>
-            <p>{selectedOption}</p>
-          </div> :
-          <div className={styles.content_name}>
+      <button disabled={disabled} className={`${showSelect ? styles.active : ''}`} onClick={handleClick}>
+        <div className={styles.content}>
+          {
+            selectedOption ?
+            <p className={styles.option}>{selectedOption}</p>:
             <p>Please select</p>
-          </div>
-        }
+          }
+        </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20" fill="none">
           <path d="M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837" stroke="#BDC0CE" strokeWidth="2.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
@@ -45,7 +44,7 @@ const CustomSelect = ({emitSelect, selectedOption, selectOptions}) => {
       <div className={`${styles.select} dropdown`}>
         {selectOptions.map((option, index)=>(
           <div key={index} className={styles.content} onClick={(e) => handleSelect(e, option)}>
-            <p>{option}</p>
+            <p className={styles.option}>{option}</p>
           </div>
         ))}
     </div>
