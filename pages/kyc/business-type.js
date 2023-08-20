@@ -4,10 +4,22 @@ import PrimaryBtn from "@/components/Btn/Primary"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import CustomSelect from "@/components/Custom/Select/Select"
 
 const BusinessType = () => {
+
   const router = useRouter()
-  const [type, setType] = useState('')
+  const [businessType, setBusinessType] = useState(undefined)
+  const businessTypes = [
+    'Travel agent',
+    'Travel agency',
+    'Tour management',
+    'Company'
+  ]
+
+  const handleSelect = (e) => {
+    setBusinessType(e)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -18,32 +30,16 @@ const BusinessType = () => {
        <div className={styles.auth}>
        <div className={styles.inner}>
        <div className={styles.center}>
-       <h1>You’re operating on passpoint as a..</h1>
+       <h1>Help us get to know you better 🥳</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inner}>
           <div className={styles.form_group}>
             <label>Select your type of business</label>
-            <select onChange={(e)=>setType(e.target.value)}>
-              <option selected disabled>
-                --please select--
-              </option>
-              <option>
-                Travel agent
-              </option>
-              <option>
-                Travel agency
-              </option>
-              <option>
-                Tour management
-              </option>
-              <option>
-                Company
-              </option>
-            </select>
+            <CustomSelect selectOptions={businessTypes} selectedOption={businessType} emitSelect={handleSelect} />
           </div>
           </div>
           <div className={styles.action_ctn}>
-            <PrimaryBtn disabled={!type} text={`Let's get started!`} />
+            <PrimaryBtn disabled={!businessType} text={`Save and continue`} />
           </div>
         </form>
        </div>

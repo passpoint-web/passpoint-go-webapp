@@ -21,6 +21,7 @@ export default function KYCLayout({ children, pageTitle = '' }) {
       <div className={styles.kyc_content}>
         <KYCLayoutLHS />
         {children}
+        <div className={styles.kyc_content_rhs} />
       </div>
     </div>
   )
