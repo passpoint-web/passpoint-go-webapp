@@ -96,10 +96,11 @@
   --btn-secondary-height: 40px;
   --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
 
-  --screen-top-padding: 64px;
+  --screen-padding-top: 64px;
 
   --kyc-layout-lhs-width: 30%;
   --kyc-layout-lhs-max-width: 350px;
+  --kyc-outer-component-padding: 48px;
 }
 
 /* @media (prefers-color-scheme: dark) {} */
@@ -224,6 +225,7 @@ button:disabled {
   border: 1px solid var(--grey-5);
   background-color: unset;
   box-shadow: var(--btn-secondary-shadow);
+  white-space: nowrap;
 }
 
 .close_btn {
@@ -325,7 +327,9 @@ ol, ul {
     --inner-component-mg: 12px;
     --inner-component-gap: 8px;
     --outer-component-gap: 16px;
-    --screen-top-padding: 32px;
+    --screen-padding-top: 32px;
+    --btn-padding: 16px;
+    --kyc-outer-component-padding: 16px;
   }
 
   h1 {

@@ -15,6 +15,7 @@ const nextConfig = {
     ]
   },
   images: {
+    // for countries api
     remotePatterns: [
       {
         protocol: 'https',

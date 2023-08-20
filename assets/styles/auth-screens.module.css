@@ -34,7 +34,7 @@
 /* end */
 
 .auth {
-  padding-top: var(--screen-top-padding);
+  padding-top: var(--screen-padding-top);
 }
 
 .auth > .inner {
@@ -44,16 +44,12 @@
 
 .auth > .inner > .center {
   margin: 0 auto;
-  width: 40%;
-  max-width: 550px;
-  min-width: 500px;
+  width: clamp(550px, 40%, 600px);
 }
 
 .auth > .inner.business_type > .center {
   margin: 0 auto;
-  width: 50%;
-  max-width: 700px;
-  min-width: 650px;
+  width: clamp(650px, 50%, 700px);
 }
 
 .auth .lhs {
@@ -61,6 +57,7 @@
   padding: 0 3rem;
   min-width: 500px;
   padding-left: calc(var(--header-padding) + 3rem);
+  width: clamp(500px, 50%, 50%);
 }
 
 .form {
