@@ -34,6 +34,7 @@
 .kyc_content {
   display: flex;
   justify-content: space-between;
+  gap: var(--outer-component-gap);
 }
 
 .kyc_content_lhs,

@@ -35,7 +35,7 @@ const BusinessType = () => {
           <div className={styles.inner}>
           <div className={styles.form_group}>
             <label>Select your type of business</label>
-            <CustomSelect selectOptions={businessTypes} selectedOption={businessType} emitSelect={handleSelect} />
+            <CustomSelect id="business-type" selectOptions={businessTypes} selectedOption={businessType} emitSelect={handleSelect} />
           </div>
           </div>
           <div className={styles.action_ctn}>

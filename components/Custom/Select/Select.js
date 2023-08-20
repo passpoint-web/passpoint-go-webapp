@@ -2,7 +2,7 @@ import styles from './custom-select.module.css'
 import { useEffect, useState } from 'react'
 import OverlayScreen from '../../OverlayScreen'
 
-const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions}) => {
+const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions, id}) => {
 
   const [showSelect, setShowSelect] = useState(false)
 
@@ -41,7 +41,7 @@ const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions}) => 
         </svg>
       </button>
       { showSelect ?
-      <div className={`${styles.select} dropdown`}>
+      <div id={id} className={`${styles.select} dropdown`}>
         {selectOptions.map((option, index)=>(
           <div key={index} className={styles.content} onClick={(e) => handleSelect(e, option)}>
             <p className={styles.option}>{option}</p>

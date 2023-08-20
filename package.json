@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
-    "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "next": "13.4.13",
     "react": "18.2.0",
@@ -18,5 +17,21 @@
     "react-icons": "^4.10.1",
     "react-otp-input": "^3.0.4",
     "react-phone-number-input": "^3.3.4"
+  },
+  "eslintconfig": {
+    "extends": "next/core-web-vitals",
+    "rules": {
+      "no-unused-vars": [
+        "warn",
+        {
+          "argsignorepattern": "^_",
+          "varsignorepattern": "^_"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "eslint-plugin-react": "^7.33.2"
   }
 }
