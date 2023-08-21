@@ -455,4 +455,8 @@
     max-width: 48px;
     font-size: 20px;
   }
+
+  .password_strength_ctn {
+    gap: 16px;
+  }
 }

@@ -148,10 +148,18 @@ button {
 a,
 button {
   font-size: var(--btn-fs);
+  cursor: pointer;
+  transition: 0.3s ease-in;
+  white-space: nowrap;
 }
 
+a:disabled,
+button:disabled {
+  cursor: not-allowed;
+}
+
+
 h1 {
-  /* font-size: 2.125rem; */
   font-style: normal;
   font-size: 34px;
   line-height: 44px;
@@ -192,15 +200,6 @@ p {
 
 li {
   color: var(--grey-2);
-}
-
-button {
-  cursor: pointer;
-  transition: 0.3s ease-in;
-}
-
-button:disabled {
-  cursor: not-allowed;
 }
 
 .primary_btn, 
@@ -252,7 +251,6 @@ button.small {
   border: 1px solid var(--grey-5);
   background-color: unset;
   box-shadow: var(--btn-secondary-shadow);
-  white-space: nowrap;
 }
 
 .secondary_btn.medium,
@@ -355,7 +353,8 @@ ol, ul {
 @media screen and (max-width: 700px) {
   :root {
     --header-padding: 40px;
-    --outer-component-mg: 32px;
+    /* --outer-component-mg: 32px; */
+    --outer-component-mg: 48px;
     --inner-component-mg: 12px;
     --inner-component-gap: 8px;
     --outer-component-gap: 16px;
