@@ -9,10 +9,14 @@ import CountrySelect from '@/components/Custom/CountrySelect'
 import PhoneSelect from '@/components/Custom/PhoneSelect'
 import PhoneInput from 'react-phone-number-input'
 import { registerAgent } from '@/services/restService'
+import functions from '@/utils/functions'
+import Checkbox from '@/components/Custom/Checkbox/CheckBox'
 
 const Signup = () => {
 	// const router = useRouter()
 	const { push } = useRouter()
+
+	const {validEmail} = functions
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -24,38 +28,45 @@ const Signup = () => {
 	const [email, setEmail] = useState('')
 	const [phone, setPhone] = useState('')
 	const [password, setPassword] = useState('')
+	const [checked, setChecked] = useState(false)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
+		if (!allFieldsValid) {
+			return
+		}
+		const data = {
+			email,
+			firstname: firstName,
+			lastname: lastName,
+			phone,
+			business_name: businessName,
+			password,
+			country: country?.name?.common
+		}
+
 		try {
-			const response = await registerAgent()
-			// setInputFields({
-			// 	email: '',
-			// 	name_of_institution: '',
-			// 	address: '3rd street',
-			// 	phone_number: '',
-			// 	password: '',
-			// 	registration_number: ''
-			// })
+			const response = await registerAgent(data)
+			console.log(response)
 
 			push('/auth/verify-email')
 		} catch (err) { /* empty */ } 
 		finally { /* empty */ }
 	}
 
-	const handlePhoneValue= (e) => {
-		// e.preventDefault()
-		console.log(e)
+	const toggleChecked = () => {
+		setChecked(!checked)
 	}
 
 	useEffect(()=>{
-		if (country?.name.common && lastName && firstName && businessName && email && phone && password) {
+		const conditionsMet = country?.name.common && lastName && firstName && businessName && validEmail(email) && phone && password && checked
+		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [country?.name?.common, lastName, firstName, businessName, email, phone, password])
+	}, [country?.name?.common, lastName, firstName, businessName, email, phone, password, checked])
 
 	return (
 		<AuthLayout btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
@@ -102,9 +113,8 @@ const Signup = () => {
 											placeholder="Enter phone number"
 											defaultCountry="NG"
 											value={phone}
-											onChange={handlePhoneValue}
+											onChange={setPhone}
 										/>
-										{/* <input placeholder="234987654321" id="phone-number" type="text" value={phone} onChange={(e)=>setPhone(e.target.value)} /> */}
 									</div>
 									<div className={styles.form_group}>
 										<label htmlFor="password">Password</label>
@@ -112,9 +122,9 @@ const Signup = () => {
 									</div>
 								</div>
 							</div>
-
 							<div className={styles.terms}>
-								<input type="checkbox" />
+								{/* <input type="checkbox" toggleCheck={toggleCheck} /> */}
+								<Checkbox value={checked}  onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>

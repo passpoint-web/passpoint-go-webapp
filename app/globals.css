@@ -80,6 +80,7 @@
   --input-error-border: var(--negative);
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
+  --input-checkbox-width: 16px;
 
   --input-icon-z-index: 5;
   --select-dropdown-z-index: 20;

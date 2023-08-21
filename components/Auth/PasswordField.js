@@ -84,7 +84,7 @@ const PasswordField = ({passwordStrengthNeeded = true, emitPassword}) => {
 					<PasswordStrength valid={isUpToEightChars()} text='Atleast 8 characters' />
 					<PasswordStrength valid={hasUpperCase()} text='Atleast one uppercase' />
 					<PasswordStrength valid={containsNumbers()} text='Atleast one number' />
-					<PasswordStrength valid={containsSpecialChars()} text='Atleast one spcial character' />
+					<PasswordStrength valid={containsSpecialChars()} text='Atleast one special character' />
 				</div> :
 				<></>
 			}

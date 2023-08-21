@@ -23,5 +23,5 @@ const getRequestConfig = () => {
 // register agent
 export const registerAgent = (data) => {
 	const config = getRequestConfig()
-	return axiosClient.post('onBoardAgent', data, config)
+	return axiosClient().post('onBoardAgent', data, config)
 }
