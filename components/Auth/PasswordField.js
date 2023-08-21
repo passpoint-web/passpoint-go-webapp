@@ -42,14 +42,14 @@ const PasswordField = ({passwordStrengthNeeded = true, emitPassword}) => {
 		isUpToEightChars()
 		containsNumbers()
 		hasUpperCase()
-		if (isUpToEightChars() && containsNumbers() && hasUpperCase()) {
+		containsSpecialChars()
+		if (isUpToEightChars() && containsNumbers() && hasUpperCase() && containsSpecialChars()) {
 			emitPassword(password)
 		} else {
 			if (passwordStrengthNeeded) {
 				emitPassword('')
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [password])
 
 	return (
@@ -84,6 +84,7 @@ const PasswordField = ({passwordStrengthNeeded = true, emitPassword}) => {
 					<PasswordStrength valid={isUpToEightChars()} text='Atleast 8 characters' />
 					<PasswordStrength valid={hasUpperCase()} text='Atleast one uppercase' />
 					<PasswordStrength valid={containsNumbers()} text='Atleast one number' />
+					<PasswordStrength valid={containsSpecialChars()} text='Atleast one spcial character' />
 				</div> :
 				<></>
 			}

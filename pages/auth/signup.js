@@ -30,10 +30,6 @@ const Signup = () => {
 		setCtaClicked(true)
 		try {
 			const response = await registerAgent()
-
-			// saveCredentials(inputFields.email, inputFields.password)
-			// console.log(response)
-
 			// setInputFields({
 			// 	email: '',
 			// 	name_of_institution: '',
