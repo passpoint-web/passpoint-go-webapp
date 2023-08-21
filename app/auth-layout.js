@@ -9,13 +9,13 @@ import Head from 'next/head'
 //   description: '',
 // }
 export default function AuthLayout({ children, btn, pageTitle = '' }) {
-  return (
-    <div>
-      <Head>
-        <title>{`${pageTitle} | Auth | Passpoint Go`}</title>
-      </Head>
-      <AuthHeader btn={btn} />
-      {children}
-    </div>
-  )
+	return (
+		<div>
+			<Head>
+				<title>{`${pageTitle} | Auth | Passpoint Go`}</title>
+			</Head>
+			<AuthHeader btn={btn || {}} />
+			{children}
+		</div>
+	)
 }

@@ -19,7 +19,7 @@ const BusinessKind = () => {
 	}
   
 	return (
-		<AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Business Kind'}>
+		<AuthLayout pageTitle={'Business Kind'}>
 			<div className={styles.auth}>
 				<div className={`${styles.inner} ${styles.business_type}`}>
 					<div className={styles.center}>

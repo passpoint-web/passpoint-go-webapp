@@ -1,7 +1,7 @@
-const PrimaryBtn = ({text, disabled}) => {
-  return (
-    <button className="primary_btn" disabled={disabled}>{text}</button>
-  )
+const PrimaryBtn = ({text, disabled, type}) => {
+	return (
+		<button className={`primary_btn ${type || ''}`}disabled={disabled}>{text}</button>
+	)
 }
 
 export default PrimaryBtn

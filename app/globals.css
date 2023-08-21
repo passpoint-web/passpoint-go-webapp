@@ -69,7 +69,7 @@
   --warning-bg: #FBEEE680;
 
   --input-height: 48px;
-  --input-br: 8px;
+  --input-br: 12px;
   --input-padding: 16px;
   --input-transition: 0.3s ease-in;
   --input-border: var(--grey-5);
@@ -80,7 +80,7 @@
   --input-error-border: var(--negative);
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
-  
+
   --input-icon-z-index: 5;
   --select-dropdown-z-index: 20;
   --overlay-z-index: 10;
@@ -91,6 +91,13 @@
   --outer-component-gap: 32px;
   --sm-inner-component-mg: 8px;
 
+  --btn-br: 12px;
+  --btn-fs: 16px;
+  --btn-height: 48px;
+  --btn-height-md: 40px;
+  --btn-br-sd: 12px;
+  --btn-br-md: 8px;
+  --btn-br-sm: 6px;
   --btn-padding: 24px;
   --btn-disabled: var(--grey-5);
   --btn-secondary-height: 40px;
@@ -136,6 +143,11 @@ a,
 button {
   font-family: 'GraphikMedium';
   font-weight: 500;
+}
+
+a,
+button {
+  font-size: var(--btn-fs);
 }
 
 h1 {
@@ -198,12 +210,27 @@ button:disabled {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: var(--input-height);
+  height: var(--btn-height);
   padding: 0 var(--btn-padding);
-  border-radius: var(--input-br);
+  border-radius: var(--btn-br);
   border: none;
   background-color: var(--cta-bg);
   color: #fff;
+}
+
+a.standard,
+button.standard {
+  border-radius: var(--btn-br-sd);
+}
+
+a.medium,
+button.medium {
+  border-radius: var(--btn-br-md);
+}
+
+a.small,
+button.small {
+  border-radius: var(--btn-br-sm);
 }
 
 .primary_btn:disabled {
@@ -217,9 +244,9 @@ button:disabled {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: var(--btn-secondary-height);
+  height: var(--btn-height);
   padding: 0 var(--btn-padding);
-  border-radius: var(--input-br);
+  border-radius: var(--btn-br);
   border: none;
   color: var(--grey-1);
   border: 1px solid var(--grey-5);
@@ -228,13 +255,18 @@ button:disabled {
   white-space: nowrap;
 }
 
+.secondary_btn.medium,
+.secondary_link.medium {
+  height: var(--btn-height-md);
+}
+
 .close_btn {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 40px;
   height: 40px;
-  border-radius: var(--input-br);
+  border-radius: var(--btn-br);
   border: none;
   color: var(--grey-1);
   border: 1px solid var(--grey-5);
@@ -262,7 +294,7 @@ button:disabled {
 .back_btn {
   margin: 0 0 var(--outer-component-mg);
   width: fit-content;
-  height: var(--input-height);
+  height: var(--btn-height-md);
   padding: 0 var(--btn-padding);
   border-radius: var(--input-br);
   border: 1px solid var(--grey-5);
@@ -341,7 +373,7 @@ ol, ul {
     display: none;
   }
   .back_btn {
-    width: var(--input-height);
+    width: var(--btn-height-md);
     padding: 0;
   }
 

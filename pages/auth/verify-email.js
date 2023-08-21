@@ -5,8 +5,11 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import BackBtn from '@/components/Btn/Back'
 import { useState } from 'react'
 import OtpInput from 'react-otp-input'
+import { useRouter } from 'next/router'
 
 const VerifyEmail = () => {
+
+	const {push} = useRouter()
 
 	// const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [otp, setOtp] = useState('')
@@ -16,11 +19,11 @@ const VerifyEmail = () => {
 	}
 
 	return (
-		<AuthLayout btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Verify Email'}>
+		<AuthLayout pageTitle={'Verify Email'}>
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn />
+						<BackBtn emitClick={()=>push('/auth/signup')} />
 						<h1>Verify email address</h1>
 						<p>
               We sent a 6 digit code to kelechi****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification 

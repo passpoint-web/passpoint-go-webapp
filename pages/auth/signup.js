@@ -1,17 +1,18 @@
-import AuthLayout from '@/app/auth-layout'
-import styles from '@/assets/styles/auth-screens.module.css'
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import AuthLayout from '@/app/auth-layout'
+import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
-import PasswordStrength from '@/components/Auth/PasswordStrength'
 import CountrySelect from '@/components/Custom/CountrySelect'
 import PhoneSelect from '@/components/Custom/PhoneSelect'
 import PhoneInput from 'react-phone-number-input'
 import { registerAgent } from '@/services/restService'
 
 const Signup = () => {
-	const router = useRouter()
+	// const router = useRouter()
+	const { push } = useRouter()
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -24,10 +25,27 @@ const Signup = () => {
 	const [phone, setPhone] = useState('')
 	const [password, setPassword] = useState('')
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
-		router.push('/auth/business-kind')
+		try {
+			const response = await registerAgent()
+
+			// saveCredentials(inputFields.email, inputFields.password)
+			// console.log(response)
+
+			// setInputFields({
+			// 	email: '',
+			// 	name_of_institution: '',
+			// 	address: '3rd street',
+			// 	phone_number: '',
+			// 	password: '',
+			// 	registration_number: ''
+			// })
+
+			push('/auth/verify-email')
+		} catch (err) { /* empty */ } 
+		finally { /* empty */ }
 	}
 
 	const handlePhoneValue= (e) => {
