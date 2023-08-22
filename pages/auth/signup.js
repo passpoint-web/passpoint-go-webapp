@@ -6,9 +6,9 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
 import CountrySelect from '@/components/Custom/CountrySelect'
-import PhoneSelect from '@/components/Custom/PhoneSelect'
+// import PhoneSelect from '@/components/Custom/PhoneSelect'
 import PhoneInput from 'react-phone-number-input'
-import { registerAgent } from '@/services/restService'
+// import { registerAgent } from '@/services/restService'
 import functions from '@/utils/functions'
 import Checkbox from '@/components/Custom/Checkbox/CheckBox'
 
@@ -21,7 +21,10 @@ const Signup = () => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [country, setCountry] = useState(undefined)
-	const [countriesSelectProps, setCountriesSelectProps] = useState(false)
+	const [
+		// countriesSelectProps, 
+		setCountriesSelectProps
+	] = useState(false)
 	const [lastName, setLastName] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [businessName, setBusinessName] = useState('')
@@ -33,7 +36,7 @@ const Signup = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		push('/auth/verify-email')
-		// setCtaClicked(true)
+		setCtaClicked(true)
 		// if (!allFieldsValid) {
 		// 	return
 		// }

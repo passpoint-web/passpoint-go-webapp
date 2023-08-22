@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 const VerifyEmail = () => {
 
-	const {push} = useRouter()
+	const { push } = useRouter()
 
 	// const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [otp, setOtp] = useState('')

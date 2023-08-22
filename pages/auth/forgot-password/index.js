@@ -13,7 +13,7 @@ import PasswordField from '@/components/Auth/PasswordField'
 const ForgotPassword = () => {
 	const {push} = useRouter()
 	const { validEmail } = functions
-	const [allFieldsValid, setAllFieldsValid] = useState(false)
+	// const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')

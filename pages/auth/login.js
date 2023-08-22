@@ -2,12 +2,12 @@ import AuthLayout from '@/app/auth-layout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import PasswordField from '@/components/Auth/PasswordField'
 const Login = () => {
 	const router = useRouter()
-	const [allFieldsValid, setAllFieldsValid] = useState(false)
+	// const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
@@ -16,9 +16,9 @@ const Login = () => {
 		router.push('/auth/business-kind')
 	}
 
-	const onSetPassword = (e) => {
-		console.log(e)
-	}
+	// const onSetPassword = (e) => {
+	// 	console.log(e)
+	// }
 
 	return (
 		<AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Login'}>
