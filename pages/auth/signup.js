@@ -32,27 +32,26 @@ const Signup = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setCtaClicked(true)
-		if (!allFieldsValid) {
-			return
-		}
-		const data = {
-			email,
-			firstname: firstName,
-			lastname: lastName,
-			phone,
-			business_name: businessName,
-			password,
-			country: country?.name?.common
-		}
+		push('/auth/verify-email')
+		// setCtaClicked(true)
+		// if (!allFieldsValid) {
+		// 	return
+		// }
+		// const data = {
+		// 	email,
+		// 	firstname: firstName,
+		// 	lastname: lastName,
+		// 	phone,
+		// 	business_name: businessName,
+		// 	password,
+		// 	country: country?.name?.common
+		// }
 
-		try {
-			const response = await registerAgent(data)
-			console.log(response)
-
-			push('/auth/verify-email')
-		} catch (err) { /* empty */ } 
-		finally { /* empty */ }
+		// try {
+		// 	const response = await registerAgent(data)
+		// 	console.log(response)
+		// } catch (err) { /* empty */ } 
+		// finally { /* empty */ }
 	}
 
 	const toggleChecked = () => {

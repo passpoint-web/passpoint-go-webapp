@@ -449,14 +449,16 @@
     min-width: 100%;
   }
 
+  .password_strength_ctn {
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 500px) {
   .form_group .otp_input > div input {
     height: 48px;
     width: 14% !important;
     max-width: 48px;
     font-size: 20px;
-  }
-
-  .password_strength_ctn {
-    gap: 16px;
   }
 }
