@@ -4,7 +4,7 @@ import BusinessKindBtn from './Btn'
 import styles from './business-kind.module.css'
 
 const ChoiceCard = ({emitSetOption}) => {
-	const [option, setOption] = useState(undefined)
+	// const [option, setOption] = useState(undefined)
 	const [currentOption, setCurrentOption] = useState({})
 	const options = [
 		{
@@ -106,7 +106,7 @@ const ChoiceCard = ({emitSetOption}) => {
 	]
 
 	const selectOption = (option) => {
-		setOption(option)
+		// setOption(option)
 		setCurrentOption(option)
 		emitSetOption(option)
 	}
