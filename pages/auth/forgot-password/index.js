@@ -8,12 +8,16 @@ import { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 import functions from '@/utils/functions'
 import { useRouter } from 'next/router'
+import PasswordField from '@/components/Auth/PasswordField'
 
 const ForgotPassword = () => {
-	const router = useRouter()
+	const {push} = useRouter()
 	const { validEmail } = functions
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [confirmPassword, setConfirmPassword] = useState('')
+	const [passwordFieldsValid, setPasswordFieldsValid] = useState(false)
 	const [currentLevel, setCurrentLevel] = useState('forgot')
 	const [otp, setOtp] = useState('')
 
@@ -24,7 +28,6 @@ const ForgotPassword = () => {
 	const handleForgotPasswordSubmit = (e) => {
 		e.preventDefault()
 		setCurrentLevel('verify')
-		// router.replace('/auth/forgot-password?level=verify')
 	}
 	const handleVerificationSubmit = (e) => {
 		e.preventDefault()
@@ -32,11 +35,16 @@ const ForgotPassword = () => {
 	}
 	const handleResetPasswordSubmit = (e) => {
 		e.preventDefault()
+		push('/auth/business-kind')
 	}
 
 	useEffect(()=>{
-		// setCurrentLevel(router.query.level)
-	}, [router])
+		if (password === confirmPassword) {
+			setPasswordFieldsValid(true)
+		} else {
+			setPasswordFieldsValid(false)
+		}
+	}, [password, confirmPassword])
 
 	const Forgot = () => {
 		return (
@@ -97,15 +105,15 @@ const ForgotPassword = () => {
 					<div className={styles.inner}>
 						<div className={styles.form_group}>
 							<label>Create password</label>
-							<input placeholder="****" type="password" />
+							<PasswordField id="password" emitPassword={(e)=>setPassword(e)} />
 						</div>
 						<div className={styles.form_group}>
 							<label>Confirm password</label>
-							<input placeholder="****" type="password" />
+							<PasswordField id="confirm_password" passwordStrengthNeeded={false} emitPassword={(e)=>setConfirmPassword(e)} />
 						</div>
 					</div>
 					<div className={styles.action_ctn}>
-						<PrimaryBtn disabled={!allFieldsValid} text='Login' />
+						<PrimaryBtn disabled={!passwordFieldsValid} text='Login' />
 					</div>
 				</form>
 			</>
