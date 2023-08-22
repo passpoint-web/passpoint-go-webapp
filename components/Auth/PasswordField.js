@@ -1,7 +1,7 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 import { useEffect, useState } from 'react'
 import PasswordStrength from './PasswordStrength'
-const PasswordField = ({passwordStrengthNeeded = true, emitPassword}) => {
+const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPassword}) => {
 
 	const [type, setType] = useState('password')
 	const [password, setPassword] = useState('')
@@ -56,7 +56,7 @@ const PasswordField = ({passwordStrengthNeeded = true, emitPassword}) => {
 		<>
 			<div className={styles.input_wrapper}>
 				<input
-					id="password"
+					id={id}
 					type={type}
 					placeholder="Password"
 					value={password}

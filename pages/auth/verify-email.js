@@ -16,6 +16,7 @@ const VerifyEmail = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+		push('/auth/business-kind')
 	}
 
 	return (
