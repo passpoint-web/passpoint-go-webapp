@@ -82,7 +82,6 @@ const Signup = () => {
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
 									<label htmlFor="country" onClick={()=>setCountriesSelectProps(true)}>
-										{/* <label htmlFor="country"> */}
                       Country
 									</label>
 									{/* <CountrySelect countriesSelectProps={countriesSelectProps} emitCountry={(e)=>{setCountry(e); setCountriesSelectProps(false)}} /> */}
