@@ -18,6 +18,7 @@ const Signup = () => {
 
 	const {validEmail} = functions
 
+
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [country, setCountry] = useState(undefined)
