@@ -10,7 +10,7 @@ import CountrySelect from '@/components/Custom/CountrySelect'
 import PhoneInput from 'react-phone-number-input'
 // import { registerAgent } from '@/services/restService'
 import functions from '@/utils/functions'
-import Checkbox from '@/components/Custom/Checkbox/CheckBox'
+import CheckBox from '@/components/Custom/CheckBox/CheckBox'
 
 const Signup = () => {
 	// const router = useRouter()
@@ -125,7 +125,7 @@ const Signup = () => {
 							</div>
 							<div className={styles.terms}>
 								{/* <input type="checkbox" toggleCheck={toggleCheck} /> */}
-								<Checkbox value={checked}  onChange={toggleChecked} />
+								<CheckBox value={checked}  onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>
