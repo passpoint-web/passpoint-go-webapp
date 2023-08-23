@@ -10,7 +10,7 @@ import CountrySelect from '@/components/Custom/CountrySelect'
 import PhoneInput from 'react-phone-number-input'
 // import { registerAgent } from '@/services/restService'
 import functions from '@/utils/functions'
-import CheckBox from '@/components/Custom/CheckBox/CheckBox'
+import CheckBox from '@/components/Custom/Check/Check'
 
 const Signup = () => {
 	// const router = useRouter()
