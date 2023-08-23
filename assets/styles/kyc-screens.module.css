@@ -51,6 +51,119 @@
   padding: var(--screen-padding-top) var(--kyc-outer-component-padding);
 }
 
+.kyc_content_lhs .inner {
+ display: flex;
+ flex-direction: column;
+}
+
+/* kyc -level */
+
+.kyc_level {
+  display: flex;
+  gap: var(--inner-component-gap);
+}
+
+.kyc_level .lhs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: -3px;
+}
+
+.kyc_level .lhs .round_ctn {
+  border: 4px solid transparent;
+}
+
+.kyc_level .lhs .round {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: 500;
+  display: grid;
+  place-items: center;
+  color: var(--grey-4);
+  border: 2px solid var(--grey-4);
+}
+
+.kyc_level.completed .lhs .round {
+  background-color: var(--green);
+  border: 2px solid var(--green) !important;
+}
+
+.kyc_level .lhs .line {
+  height: 100%;
+  width: 2px;
+  background-color: var(--grey-4);
+}
+
+.kyc_level .lhs .round span {
+  font-weight: 700;
+}
+
+.kyc_level.active .lhs .round {
+  border: 2px solid var(--blue);
+  color: var(--blue);
+}
+
+/* .kyc_level.active .lhs .line { */
+  /* background-color: var(--blue); */
+/* } */
+
+.kyc_level .lhs .round svg {
+  display: none;
+}
+
+.kyc_level.completed .lhs .round,
+.kyc_level.completed .lhs .line {
+  background-color: var(--green);
+}
+
+.kyc_level.completed .lhs .round span {
+  display: none;
+}
+
+.kyc_level.completed .lhs .round svg {
+  display: block;
+}
+
+.kyc_level .content {
+  margin-bottom: var(--inner-component-mg);
+}
+
+.kyc_level .content h3,
+.kyc_level .content h3 {
+  margin-bottom: 3px;
+  font-family: 'GraphikRegular';
+  font-weight: 700;
+}
+
+.kyc_level .content * {
+  color: var(--grey-4);
+}
+
+.kyc_level:last-child .line {
+  display: none;
+}
+
+.kyc_level .content p,
+.kyc_level .content p {
+  color: var(--grey-4);
+  font-family: 'GraphikRegular';
+}
+
+.kyc_level.completed .content p,
+.kyc_level.active .content p {
+  color: var(--grey-3);
+}
+
+.kyc_level.completed .content h3,
+.kyc_level.active .content h3 {
+  color: var(--grey-1);
+}
+
+/* emd of kyc level */
+
 @media screen and (max-width: 1024px) {
   .kyc_content {
     justify-content: flex-start;
@@ -63,13 +176,46 @@
 @media screen and (max-width: 700px) {
   .kyc_content {
     flex-direction: column;
-    /* justify-content: flex-start; */
+    align-items: center;
   }
 
   .kyc_content_lhs {
     min-height: fit-content;
     width: 100%;
     border-right: none;
+    display: flex;
+  }
+
+  .kyc_content_lhs .inner {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .kyc_level {
+    display: flex;
+    /* flex: 1 1; */
+  }
+
+  .kyc_level .lhs {
+    flex-direction: row;
+    position: relative;
+  }
+
+  .kyc_level .lhs .round-ctn {
+    z-index: 4;
+  }
+
+  .kyc_level .lhs .line {
+    width: 50px;
+    /* position: absolute; */
+    left: calc(100% - 30px);
+    height: 3px;
+    z-index: 3;
+  }
+
+  .kyc_level .content {
+    display: none;
   }
 }
 

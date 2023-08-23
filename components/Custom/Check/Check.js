@@ -1,6 +1,6 @@
 import styles from './checkbox.module.css'
 
-const Checkbox = ({value, onChange, id}) => {
+const CheckBox = ({value, onChange, id}) => {
 	return (
 		<label className={styles.checkbox_container}>
 			<input id={id} type="checkbox" checked={value} onChange={onChange} />
@@ -12,4 +12,4 @@ const Checkbox = ({value, onChange, id}) => {
 	)
 }
 
-export default Checkbox
+export default CheckBox

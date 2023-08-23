@@ -10,13 +10,14 @@ import CountrySelect from '@/components/Custom/CountrySelect'
 import PhoneInput from 'react-phone-number-input'
 // import { registerAgent } from '@/services/restService'
 import functions from '@/utils/functions'
-import Checkbox from '@/components/Custom/Checkbox/CheckBox'
+import CheckBox from '@/components/Custom/Check/Check'
 
 const Signup = () => {
 	// const router = useRouter()
 	const { push } = useRouter()
 
 	const {validEmail} = functions
+
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -82,7 +83,6 @@ const Signup = () => {
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
 									<label htmlFor="country" onClick={()=>setCountriesSelectProps(true)}>
-										{/* <label htmlFor="country"> */}
                       Country
 									</label>
 									{/* <CountrySelect countriesSelectProps={countriesSelectProps} emitCountry={(e)=>{setCountry(e); setCountriesSelectProps(false)}} /> */}
@@ -125,8 +125,7 @@ const Signup = () => {
 								</div>
 							</div>
 							<div className={styles.terms}>
-								{/* <input type="checkbox" toggleCheck={toggleCheck} /> */}
-								<Checkbox value={checked}  onChange={toggleChecked} />
+								<CheckBox value={checked}  onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>
