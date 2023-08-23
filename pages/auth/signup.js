@@ -124,7 +124,6 @@ const Signup = () => {
 								</div>
 							</div>
 							<div className={styles.terms}>
-								{/* <input type="checkbox" toggleCheck={toggleCheck} /> */}
 								<CheckBox value={checked}  onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
