@@ -106,9 +106,9 @@
   color: var(--blue);
 }
 
-.kyc_level.active .lhs .line {
-  background-color: var(--blue);
-}
+/* .kyc_level.active .lhs .line { */
+  /* background-color: var(--blue); */
+/* } */
 
 .kyc_level .lhs .round svg {
   display: none;
@@ -148,7 +148,7 @@
 
 .kyc_level .content p,
 .kyc_level .content p {
-  color: var(--grey-3);
+  color: var(--grey-4);
   font-family: 'GraphikRegular';
 }
 

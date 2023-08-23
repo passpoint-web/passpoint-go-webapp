@@ -3,14 +3,14 @@ import KYCLevel from './Level'
 import { useRouter } from 'next/router'
 
 const KYCLayoutLHS = () => {
-	
+
 	const {route} = useRouter()
 	const kycLevels = [
 		{
 			title: 'Business type',
 			sub_title: 'We want to know how you want to operate on passpoint',
 			active: route === '/kyc/business-type',
-			completed: false
+			completed: true
 		},
 		{
 			title: 'Add address',

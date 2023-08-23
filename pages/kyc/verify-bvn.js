@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import CustomSelect from '@/components/Custom/Select/Select'
 
-const BusinessType = () => {
+const VerifyBVN = () => {
 	const { push } = useRouter()
 	const [businessType, setBusinessType] = useState(undefined)
 	const businessTypes = [
@@ -25,7 +25,7 @@ const BusinessType = () => {
 	}
 
 	return (
-		<KYCLayout pageTitle={'Business Type'}>
+		<KYCLayout pageTitle={'Verify Your BVN'}>
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
@@ -48,4 +48,4 @@ const BusinessType = () => {
 	)
 }
 
-export default BusinessType
+export default VerifyBVN
