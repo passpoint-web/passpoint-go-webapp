@@ -18,6 +18,7 @@ const Signup = () => {
 
 	const {validEmail} = functions
 
+	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -36,8 +37,12 @@ const Signup = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		push('/auth/verify-email')
 		setCtaClicked(true)
+		setFullScreenLoader(true)
+		window.setTimeout(()=>{
+			setFullScreenLoader(false)
+			push('/auth/verify-email')
+		}, 3000)
 		// if (!allFieldsValid) {
 		// 	return
 		// }
@@ -72,7 +77,7 @@ const Signup = () => {
 	}, [country?.name?.common, lastName, firstName, businessName, email, phone, password, checked])
 
 	return (
-		<AuthLayout btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
+		<AuthLayout fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.lhs}>

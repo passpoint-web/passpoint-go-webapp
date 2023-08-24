@@ -6,14 +6,19 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import PasswordField from '@/components/Auth/PasswordField'
 const Login = () => {
-	const router = useRouter()
+	const {push} = useRouter()
 	// const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		router.push('/auth/business-kind')
+		setFullScreenLoader(true)
+		window.setTimeout(()=>{
+			setFullScreenLoader(false)
+			push('/auth/business-kind')
+		}, 3000)
 	}
 
 	// const onSetPassword = (e) => {
@@ -21,7 +26,7 @@ const Login = () => {
 	// }
 
 	return (
-		<AuthLayout btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Login'}>
+		<AuthLayout fullScreenLoader={fullScreenLoader} btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Login'}>
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>

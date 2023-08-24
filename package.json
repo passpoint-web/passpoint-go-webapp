@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3500",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,18 +19,6 @@
     "react-otp-input": "^3.0.4",
     "react-phone-input-2": "^2.15.1",
     "react-phone-number-input": "^3.3.4"
-  },
-  "eslintconfig": {
-    "extends": "next/core-web-vitals",
-    "rules": {
-      "no-unused-vars": [
-        "warn",
-        {
-          "argsignorepattern": "^_",
-          "varsignorepattern": "^_"
-        }
-      ]
-    }
   },
   "devDependencies": {
     "eslint": "^8.47.0",
