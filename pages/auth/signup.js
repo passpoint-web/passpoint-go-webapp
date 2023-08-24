@@ -40,7 +40,7 @@ const Signup = () => {
 		setCtaClicked(true)
 		setFullScreenLoader(true)
 		window.setTimeout(()=>{
-			setFullScreenLoader(true)
+			setFullScreenLoader(false)
 			push('/auth/verify-email')
 		}, 3000)
 		// if (!allFieldsValid) {
