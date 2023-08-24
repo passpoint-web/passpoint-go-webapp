@@ -1,7 +1,8 @@
 import './globals.css'
 import AuthHeader from '@/components/Auth/Header'
+import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import Head from 'next/head'
-export default function AuthLayout({ children, btn, pageTitle = '' }) {
+export default function AuthLayout({ children, btn, pageTitle = '', fullScreenLoader }) {
 	return (
 		<div>
 			<Head>
@@ -9,6 +10,7 @@ export default function AuthLayout({ children, btn, pageTitle = '' }) {
 			</Head>
 			<AuthHeader btn={btn || {}} />
 			{children}
+			{fullScreenLoader ? <FullScreenLoader /> : <></>}
 		</div>
 	)
 }
