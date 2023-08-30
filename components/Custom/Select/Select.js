@@ -43,7 +43,7 @@ const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions, id})
 				{ showSelect ?
 					<div id={id} className={`${styles.select} dropdown`}>
 						{selectOptions.map((option, index)=>(
-							<div key={index} className={styles.content} onClick={(e) => handleSelect(e, option)}>
+							<div key={index} className={`${styles.content} ${option === selectedOption ?styles.content_selected : '' }`} onClick={(e) => handleSelect(e, option)}>
 								<p className={styles.option}>{option}</p>
 							</div>
 						))}
