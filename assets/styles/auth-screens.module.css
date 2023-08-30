@@ -192,7 +192,8 @@
   /* height: 40px; */
   margin: 0 var(--sm-inner-component-mg);
   width: calc(100% - var(--sm-inner-component-mg)*2);
-  border-radius: 6px;
+  /* calc to get inner br */
+  border-radius: calc(var(--input-br) - var(--sm-inner-component-mg));
 }
 
 .form_group .custom_country_select .countries input[type=search]:focus {

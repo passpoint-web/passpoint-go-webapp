@@ -4,7 +4,7 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import {notify} from '@/components/Toast'
+// import {notify} from '@/components/Toast'
 import PasswordField from '@/components/Auth/PasswordField'
 
 const Login = () => {
@@ -15,9 +15,9 @@ const Login = () => {
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const handleSubmit = (e) => {
-		console.log(notify())
+		// console.log(notify())
 		e.preventDefault()
-		notify('yoyoyoy')
+		// notify('yoyoyoy')
 		setFullScreenLoader(true)
 		window.setTimeout(()=>{
 			setFullScreenLoader(false)

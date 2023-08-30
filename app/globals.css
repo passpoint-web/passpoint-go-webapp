@@ -164,8 +164,8 @@ a,
 button {
   font-size: var(--btn-fs);
   cursor: pointer;
-  transition: 0.3s ease-in;
   white-space: nowrap;
+  transition: var(--input-transition);
 }
 
 a:disabled,

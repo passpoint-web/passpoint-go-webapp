@@ -44,6 +44,10 @@
   gap: 10px;
 }
 
+.custom_select .content_selected {
+  background-color: var(--grey-6);
+}
+
 .custom_select button .content p {
   color: var(--grey-4);
 }
