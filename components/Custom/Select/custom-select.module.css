@@ -29,13 +29,13 @@
   border-color: var(--sky-blue);
 }
 
-/* .custom_select button.active, */
-/* .custom_select button:focus { */
-  /* border: 1px solid var(--sky-blue); */
-  /* outline: transparent; */
-  /* box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow); */
-  /* background-color: var(--input-focus-bg); */
-/* } */
+.custom_select button svg {
+  transition: 0.3s;
+}
+
+.custom_select button.active svg {
+  transform: rotate(-180deg);
+}
 
 .custom_select .content {
   width: 100%;
