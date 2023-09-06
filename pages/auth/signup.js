@@ -117,7 +117,6 @@ const Signup = () => {
 										<label htmlFor="email-address">Email address</label>
 										<input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
 									</div>
-									{phone}
 									<div className={`${styles.form_group} ${ctaClicked && !phone ? styles.error : ''}`}>
 										<label htmlFor="phone-number">Phone number</label>
 										{/* <PhoneSelect emitCountry={(e)=>setCountry(e)} /> */}
