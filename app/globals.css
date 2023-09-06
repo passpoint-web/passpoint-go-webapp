@@ -91,6 +91,8 @@
   --input-error-bg: var(--negative-bg);
   --input-checkbox-width: 16px;
 
+  --flag-dropdown-width: clamp(40px, 15%, 200px);
+
   --input-icon-z-index: 5;
   --select-dropdown-z-index: 20;
   --overlay-z-index: 10;
@@ -391,7 +393,7 @@ ol, ul {
   margin-left: 16px;
 }
 
-/* React phone input */
+/* REACT PHONE INPUT - OLD */
 
 .PhoneInput {
   display: flex;
@@ -402,6 +404,67 @@ ol, ul {
   display: flex;
   width: 40%;
 }
+
+/* END */
+
+
+/* REACT PHONE INPUT */
+.react-tel-input .form-control {
+  background-color: #fff !important;
+  border: 1px solid var(--input-border) !important;
+  height: var(--input-height) !important;
+  border-radius: var(--input-br) !important;
+  padding: 0 var(--input-padding) !important;
+  box-shadow: var(--input-box-shadow) !important;
+  display: block !important;
+  width: 100% !important;
+  transition: var(--input-transition) !important;
+  padding-left: calc(var(--flag-dropdown-width) + var(--input-padding)) !important;
+}
+
+.react-tel-input .flag-dropdown {
+  height: calc(100% - 2px);
+  width: var(--flag-dropdown-width) !important;
+  /* bottom: 1px !important; */
+  top: 1px !important;
+  left: 1px !important;
+  border: none !important;
+  background-color: inherit !important;
+  border-right: 1px solid var(--input-border) !important;
+  border-radius: calc(var(--input-br) - 1px) 0 0 calc(var(--input-br) - 1px) !important;
+}
+
+.react-tel-input .selected-flag {
+  width: 100% !important;
+  background-color: inherit !important;
+  padding: 0 0 0 var(--input-padding);
+  border-radius: calc(var(--input-br) - 1px) 0 0 calc(var(--input-br) - 1px) !important;
+}
+
+.react-tel-input .form-control:not(:disabled):hover {
+  border-color: var(--sky-blue) !important;
+}
+
+.react-tel-input .form-control:disabled {
+  background-color: var(--grey-6) !important;
+  border: 1px solid var(--input-border-disabled) !important;
+}
+
+.react-tel-input .form-control:not(:disabled):focus {
+  border: 1px solid var(--sky-blue) !important;
+  outline: transparent !important;
+  box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow) !important;
+  background-color: var(--input-focus-bg) !important;
+}
+
+.form_group.error .react-tel-input .form-control {
+  border: 1px solid var(--input-error-border) !important;
+  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
+  background-color: var(--input-error-bg) !important;
+}
+
+/* END OF REACT PHONE INPUT */
+
 
 /* SCREEN RESOLUTIONS */
 @media screen and (max-width: 700px) {

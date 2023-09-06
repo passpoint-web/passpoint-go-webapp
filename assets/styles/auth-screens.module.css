@@ -95,7 +95,8 @@
 
 .form_group input,
 .form_group select,
-.form_group .custom_country_select button {
+.form_group .custom_country_select button,
+.form_group_input {
   background-color: #fff;
   border: 1px solid var(--input-border);
   height: var(--input-height);
@@ -119,6 +120,14 @@
   align-items: center;
   justify-content: space-between;
   height: var(--input-height);
+}
+
+.custom_country_select button svg {
+  transition: 0.3s;
+}
+
+.custom_country_select button.active svg {
+  transform: rotate(-180deg);
 }
 
 .form_group .custom_country_select button:hover {

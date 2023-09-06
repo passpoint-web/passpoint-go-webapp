@@ -7,7 +7,9 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
 import CountrySelect from '@/components/Custom/CountrySelect'
 // import PhoneSelect from '@/components/Custom/PhoneSelect'
-import PhoneInput from 'react-phone-number-input'
+// import PhoneInput from 'react-phone-number-input'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 // import { registerAgent } from '@/services/restService'
 import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
@@ -35,6 +37,9 @@ const Signup = () => {
 	const [password, setPassword] = useState('')
 	const [checked, setChecked] = useState(false)
 
+	const handlePhoneInput = ({phone}) => {
+		setPhone(phone)
+	}
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
@@ -112,15 +117,21 @@ const Signup = () => {
 										<label htmlFor="email-address">Email address</label>
 										<input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
 									</div>
+									{phone}
 									<div className={`${styles.form_group} ${ctaClicked && !phone ? styles.error : ''}`}>
 										<label htmlFor="phone-number">Phone number</label>
 										{/* <PhoneSelect emitCountry={(e)=>setCountry(e)} /> */}
-										<PhoneInput
+										{/* <PhoneInput
 											international
 											placeholder="Enter phone number"
 											defaultCountry="NG"
 											value={phone}
 											onChange={setPhone}
+										/> */}
+										<PhoneInput
+											country={'ng'}
+											value={phone}
+											onChange={phone => handlePhoneInput({ phone })}
 										/>
 									</div>
 									<div className={styles.form_group}>
