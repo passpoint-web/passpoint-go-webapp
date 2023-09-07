@@ -1,7 +1,8 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BusinessKindBtn from './Btn'
 import styles from './business-kind.module.css'
+import { getUserType } from '@/services/localService'
 
 const ChoiceCard = ({emitSetOption}) => {
 	// const [option, setOption] = useState(undefined)
@@ -9,39 +10,6 @@ const ChoiceCard = ({emitSetOption}) => {
 	const options = [
 		{
 			id: 0,
-			icon: (
-				<svg xmlns="http://www.w3.org/2000/svg" width="95" height="96" viewBox="0 0 95 96" fill="none">
-					<g clipPath="url(#clip0_331_1629)">
-						<rect x="0.21167" width="94.0766" height="95.9997" rx="47.0383" fill="#96D7E7" fillOpacity="0.5"/>
-						<path d="M87 47.6162L81.2857 50.9163L47.0001 70.7108V24.5215L87 47.6162Z" fill="#DF752B"/>
-						<path d="M46.9999 24.5215V70.7108L41.2857 67.4107L12.7143 50.9163L7 47.6162L46.9999 24.5215Z" fill="#973E00"/>
-						<path d="M41.2856 67.4104V74.0107L12.7142 57.5163V50.916L41.2856 67.4104Z" fill="#054C5C"/>
-						<path d="M41.2856 74.011V107L12.7142 90.5053V57.5166L41.2856 74.011Z" fill="#096378"/>
-						<path d="M81.2856 50.916V57.5163L46.9999 77.3108L41.2856 74.0107V67.4104L46.9999 70.7105L81.2856 50.916Z" fill="#0B8CAA"/>
-						<path d="M81.2856 57.5166V83.905L41.2856 107V74.011L46.9999 77.3111L81.2856 57.5166Z" fill="#009EC4"/>
-						<path d="M72.3304 93.712V69.4268L54.4601 79.5074V101.96L72.3304 93.712Z" fill="#6BC7DD"/>
-						<path d="M34.1709 27.5895V47.7924L28.342 51.1568V24.2197L34.1709 27.5895Z" fill="#93B1B6"/>
-						<path d="M40.0049 24.2197V44.4279L34.1707 47.7924V27.5895L40.0049 24.2197Z" fill="#CEE3E7"/>
-						<path d="M40.0051 24.2199L34.1709 27.5897L28.342 24.2199L34.1709 20.8555L40.0051 24.2199Z" fill="#D9D9D9"/>
-					</g>
-					<defs>
-						<clipPath id="clip0_331_1629">
-							<rect x="0.21167" width="94.0766" height="95.9997" rx="47.0383" fill="white"/>
-						</clipPath>
-					</defs>
-				</svg>),
-			heading: 'Non-registered business',
-			content: {
-				p: 'For a non-registered business, we’ll ask you to provide with us your:',
-				list: [
-					'Valid government ID (NIN, National Id card)',
-					'BVN (Nigerians only)',
-					'Utility bill (eg. Electricity)'
-				]
-			}
-		},
-		{
-			id: 1,
 			icon: (
 				<svg xmlns="http://www.w3.org/2000/svg" width="95" height="96" viewBox="0 0 95 96" fill="none">
 					<g clipPath="url(#clip0_250_932)">
@@ -92,9 +60,9 @@ const ChoiceCard = ({emitSetOption}) => {
 						</clipPath>
 					</defs>
 				</svg>),
-			heading: 'Registered business',
+			heading: 'Corporate Business',
 			content: {
-				p: 'For a registered business, we’ll ask you to provide with us your:',
+				p: 'For a corporate business, we’ll ask you to provide us with your:',
 				list: [
 					'Full incorporation documents (CAC)',
 					'Valid identification of directors',
@@ -102,14 +70,57 @@ const ChoiceCard = ({emitSetOption}) => {
 				]
 			}
 		},
+		{
+			id: 1,
+			icon: (
+				<svg xmlns="http://www.w3.org/2000/svg" width="95" height="96" viewBox="0 0 95 96" fill="none">
+					<g clipPath="url(#clip0_331_1629)">
+						<rect x="0.21167" width="94.0766" height="95.9997" rx="47.0383" fill="#96D7E7" fillOpacity="0.5"/>
+						<path d="M87 47.6162L81.2857 50.9163L47.0001 70.7108V24.5215L87 47.6162Z" fill="#DF752B"/>
+						<path d="M46.9999 24.5215V70.7108L41.2857 67.4107L12.7143 50.9163L7 47.6162L46.9999 24.5215Z" fill="#973E00"/>
+						<path d="M41.2856 67.4104V74.0107L12.7142 57.5163V50.916L41.2856 67.4104Z" fill="#054C5C"/>
+						<path d="M41.2856 74.011V107L12.7142 90.5053V57.5166L41.2856 74.011Z" fill="#096378"/>
+						<path d="M81.2856 50.916V57.5163L46.9999 77.3108L41.2856 74.0107V67.4104L46.9999 70.7105L81.2856 50.916Z" fill="#0B8CAA"/>
+						<path d="M81.2856 57.5166V83.905L41.2856 107V74.011L46.9999 77.3111L81.2856 57.5166Z" fill="#009EC4"/>
+						<path d="M72.3304 93.712V69.4268L54.4601 79.5074V101.96L72.3304 93.712Z" fill="#6BC7DD"/>
+						<path d="M34.1709 27.5895V47.7924L28.342 51.1568V24.2197L34.1709 27.5895Z" fill="#93B1B6"/>
+						<path d="M40.0049 24.2197V44.4279L34.1707 47.7924V27.5895L40.0049 24.2197Z" fill="#CEE3E7"/>
+						<path d="M40.0051 24.2199L34.1709 27.5897L28.342 24.2199L34.1709 20.8555L40.0051 24.2199Z" fill="#D9D9D9"/>
+					</g>
+					<defs>
+						<clipPath id="clip0_331_1629">
+							<rect x="0.21167" width="94.0766" height="95.9997" rx="47.0383" fill="white"/>
+						</clipPath>
+					</defs>
+				</svg>),
+			heading: 'Individual User',
+			content: {
+				p: 'For an individual user, we’ll ask you to provide us with your:',
+				list: [
+					'Valid government ID (NIN, National Id card)',
+					'BVN (Nigerians only)',
+					'Utility bill (eg. Electricity)'
+				]
+			}
+		},
+		
     
 	]
-
 	const selectOption = (option) => {
 		// setOption(option)
 		setCurrentOption(option)
 		emitSetOption(option)
 	}
+
+	useEffect(()=>{
+		if (getUserType()) {
+			setCurrentOption(options.find(e=> e.heading === getUserType()))
+		}
+	}, [])
+
+	useEffect(()=>{
+		emitSetOption(currentOption)
+	}, [currentOption])
 
 	const listOptions = options.map((option, index)=> 
 		<BusinessKindBtn key={index} onSelectOption={selectOption} option={option} currentOption={currentOption}>
