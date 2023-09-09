@@ -61,12 +61,13 @@ const ChoiceCard = ({emitSetOption}) => {
 				</svg>),
 			heading: 'Corporate Business',
 			content: {
-				p: 'For a corporate business, we’ll ask you to provide us with your:',
-				list: [
-					'Full incorporation documents (CAC)',
-					'Valid identification of directors',
-					'Valid ID of shareholders with more than 5% ownership'
-				]
+				p: 'An entity that is associated with a business or corporation, it’s duly registered as a business under the country corporate affairs commission, it is licensed if applicable and all the documents identifying it as a business.'
+				// p: 'For a corporate business, we’ll ask you to provide us with your:',
+				// list: [
+				// 	'Full incorporation documents (CAC)',
+				// 	'Valid identification of directors',
+				// 	'Valid ID of shareholders with more than 5% ownership'
+				// ]
 			}
 		},
 		{
@@ -94,12 +95,13 @@ const ChoiceCard = ({emitSetOption}) => {
 				</svg>),
 			heading: 'Individual User',
 			content: {
-				p: 'For an individual user, we’ll ask you to provide us with your:',
-				list: [
-					'Valid government ID (NIN, National Id card)',
-					'BVN (Nigerians only)',
-					'Utility bill (eg. Electricity)'
-				]
+				p: 'An account that represents a unique identity or profile associated with a specific person.'
+				// p: 'For an individual user, we’ll ask you to provide us with your:',
+				// list: [
+				// 	'Valid government ID (NIN, National Id card)',
+				// 	'BVN (Nigerians only)',
+				// 	'Utility bill (eg. Electricity)'
+				// ]
 			}
 		},
 		
@@ -127,13 +129,13 @@ const ChoiceCard = ({emitSetOption}) => {
 			<h2>{option.heading}</h2>
 			<div className={styles.content}>
 				<p>{option.content.p}</p>
-				<ol>
+				{/* <ol>
 					{option.content.list.map((item, i)=> 
 						<li key={i}>
 							{item}
 						</li>
 					)}
-				</ol>
+				</ol> */}
 			</div>
 		</BusinessKindBtn>)
 
