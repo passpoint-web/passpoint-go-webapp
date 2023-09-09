@@ -31,12 +31,15 @@
   }
 }
 
+/* TODO: move kyc lhs content to signup lhs content */
+
 .kyc_content {
   display: flex;
   justify-content: space-between;
   gap: var(--outer-component-gap);
 }
 
+.kyc_content_lhs_empty,
 .kyc_content_lhs,
 .kyc_content_rhs {
   display: flex;
@@ -44,6 +47,11 @@
   max-width: var(--kyc-layout-lhs-max-width);
   min-height: calc(100vh - var(--header-height));
   border-right: 1px solid var(--grey-5);
+}
+
+.kyc_content_rhs,
+.kyc_content_lhs_empty {
+  border: none;
 }
 
 .kyc_content_lhs {
@@ -56,7 +64,7 @@
  flex-direction: column;
 }
 
-/* kyc -level */
+/* kyc level */
 
 .kyc_level {
   display: flex;
@@ -162,12 +170,13 @@
   color: var(--grey-1);
 }
 
-/* emd of kyc level */
+/* end of kyc level */
 
 @media screen and (max-width: 1024px) {
   .kyc_content {
     justify-content: flex-start;
   }
+  .kyc_content_lhs_empty,
   .kyc_content_rhs {
     display: none;
   }
