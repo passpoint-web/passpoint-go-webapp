@@ -7,15 +7,18 @@ import PasswordField from '@/components/Auth/PasswordField'
 import CountrySelect from '@/components/Custom/CountrySelect'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-// import { registerAgent } from '@/services/restService'
+// import { registerUser } from '@/services/restService'
 import functions from '@/utils/functions'
 import { saveUserType, getUserType } from '@/services/localService'
 import CheckBox from '@/components/Custom/Check/Check'
 import ChoiceCard from '@/components/BusinessKind/ChoiceCard'
 
 const Signup = () => {
-	const { push, replace, query } = useRouter()
-	console.log(query)
+	const { 
+		push, replace, 
+		// query 
+	} = useRouter()
+	// console.log(query)
 
 	// const userTypeSet = getUserType()
 
@@ -25,7 +28,8 @@ const Signup = () => {
 
 	const [option, setOption] = useState(undefined)
 	const [
-		// userType, 
+		// eslint-disable-next-line no-unused-vars
+		userType, 
 		setUserType
 	] = useState(undefined)
 	const [userTypeChosen, setUserTypeChosen] = useState(false)
@@ -50,10 +54,6 @@ const Signup = () => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [country, setCountry] = useState(undefined)
-	const [
-		// countriesSelectProps, 
-		setCountriesSelectProps
-	] = useState(false)
 	const [lastName, setLastName] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [businessName, setBusinessName] = useState('')
@@ -87,7 +87,7 @@ const Signup = () => {
 		// }
 
 		// try {
-		// 	const response = await registerAgent(data)
+		// 	const response = await registerUser(data)
 		// 	console.log(response)
 		// } catch (err) { /* empty */ } 
 		// finally { /* empty */ }
@@ -108,11 +108,12 @@ const Signup = () => {
 
 	const BusinessKind = () => {
 		return (
-			<>
+			<AuthLayout LHSRequired={false} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
 				<div className={styles.auth}>
 					<div className={`${styles.inner} ${styles.business_type}`}>
 						<div className={styles.center}>
 							<h1 className="center">What kind of business are you?</h1>
+							<h4 className="center">Select your category, So that you can accurately define your role and access the appropriate features of passpoint.</h4>
 							<form className={styles.form} onSubmit={handleConfirmUserOption}>
 								<div className={styles.inner}>
 									<ChoiceCard emitSetOption={onSetOption} />
@@ -124,23 +125,25 @@ const Signup = () => {
 						</div>
 					</div>
 				</div>
-			</>
+			</AuthLayout>
 		)
 	}
 
 	const SignUpForm = () => {
 		return (
-			<>
+			<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
 				<div className={styles.auth}>
 					<div className={styles.inner}>
-						<div className={styles.lhs}>
+						{/* <div className={styles.lhs}> */}
+						<div className={styles.center}>
 							<h1>
-								<span>Hi,</span> 👋🏾 Give your customers the <br/> best traveling experience 
+							Provide Business Information
+								{/* <span>Hi,</span> 👋🏾 Give your customers the <br/> best traveling experience  */}
 							</h1>
 							<form className={styles.form} onSubmit={handleSubmit}>
 								<div className={styles.inner}>
 									<div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
-										<label htmlFor="country" onClick={()=>setCountriesSelectProps(true)}>
+										<label htmlFor="country">
                       Country
 										</label>
 										{/* <CountrySelect countriesSelectProps={countriesSelectProps} emitCountry={(e)=>{setCountry(e); setCountriesSelectProps(false)}} /> */}
@@ -195,16 +198,18 @@ const Signup = () => {
 									<PrimaryBtn disabled={!allFieldsValid} text='Open account' />
 								</div>
 							</form>
+							{/* </div> */}
 						</div>
 					</div>
-				</div></>
+				</div>
+			</AuthLayout>
 		)
 	}
 
 	return (
-		<AuthLayout fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
+		<>
 			{userTypeChosen === false ? BusinessKind() : SignUpForm()}
-		</AuthLayout>
+		</>
 	)
 }
 

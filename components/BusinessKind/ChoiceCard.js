@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import BusinessKindBtn from './Btn'
 import styles from './business-kind.module.css'
