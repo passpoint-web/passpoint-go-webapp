@@ -26,19 +26,23 @@ const Signup = () => {
 
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
-	const [option, setOption] = useState(undefined)
+	const [option, setOption] = useState({})
 	const [
 		// eslint-disable-next-line no-unused-vars
-		userType, 
+		userType,
 		setUserType
 	] = useState(undefined)
 	const [userTypeChosen, setUserTypeChosen] = useState(false)
-
-	useEffect(()=>{
-		if (getUserType) {
-			setUserType(getUserType)
-		}
-	},[])
+	const [allFieldsValid, setAllFieldsValid] = useState(false)
+	const [ctaClicked, setCtaClicked] = useState(false)
+	const [country, setCountry] = useState(undefined)
+	const [lastName, setLastName] = useState('')
+	const [firstName, setFirstName] = useState('')
+	const [businessName, setBusinessName] = useState('')
+	const [email, setEmail] = useState('')
+	const [phone, setPhone] = useState('')
+	const [password, setPassword] = useState('')
+	const [checked, setChecked] = useState(false)
 
 	const onSetOption = (value) => {
 		setOption(value)
@@ -50,17 +54,6 @@ const Signup = () => {
 		setUserTypeChosen(true)
 		replace(`/auth/signup?user-type=${option.heading}`)
 	}
-
-	const [allFieldsValid, setAllFieldsValid] = useState(false)
-	const [ctaClicked, setCtaClicked] = useState(false)
-	const [country, setCountry] = useState(undefined)
-	const [lastName, setLastName] = useState('')
-	const [firstName, setFirstName] = useState('')
-	const [businessName, setBusinessName] = useState('')
-	const [email, setEmail] = useState('')
-	const [phone, setPhone] = useState('')
-	const [password, setPassword] = useState('')
-	const [checked, setChecked] = useState(false)
 
 	const handlePhoneInput = ({phone}) => {
 		setPhone(phone)
@@ -98,6 +91,12 @@ const Signup = () => {
 	}
 
 	useEffect(()=>{
+		if (getUserType) {
+			setUserType(getUserType)
+		}
+	},[])
+
+	useEffect(()=>{
 		const conditionsMet = country?.name.common && lastName && firstName && businessName && validEmail(email) && phone && password && checked
 		if (conditionsMet) {
 			setAllFieldsValid(true)
@@ -108,7 +107,7 @@ const Signup = () => {
 
 	const BusinessKind = () => {
 		return (
-			<AuthLayout LHSRequired={false} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
+			<>
 				<div className={styles.auth}>
 					<div className={`${styles.inner} ${styles.business_type}`}>
 						<div className={styles.center}>
@@ -119,19 +118,19 @@ const Signup = () => {
 									<ChoiceCard emitSetOption={onSetOption} />
 								</div>
 								<div className={`${styles.action_ctn} ${styles.end}`}>
-									<PrimaryBtn disabled={option === undefined} text='Continue' />
+									<PrimaryBtn disabled={Object.keys(option).length === 0} text='Continue' />
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
-			</AuthLayout>
+			</>
 		)
 	}
 
 	const SignUpForm = () => {
 		return (
-			<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
+			<>
 				<div className={styles.auth}>
 					<div className={styles.inner}>
 						{/* <div className={styles.lhs}> */}
@@ -202,14 +201,14 @@ const Signup = () => {
 						</div>
 					</div>
 				</div>
-			</AuthLayout>
+			</>
 		)
 	}
 
 	return (
-		<>
+		<AuthLayout LHSRequired={userTypeChosen} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
 			{userTypeChosen === false ? BusinessKind() : SignUpForm()}
-		</>
+		</AuthLayout>
 	)
 }
 
