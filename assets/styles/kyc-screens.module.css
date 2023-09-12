@@ -25,12 +25,6 @@
   width: 40px;
 }
 
-@media screen and (max-width: 700px) {
-  .header .inner {
-    justify-content: space-between;
-  }
-}
-
 /* TODO: move kyc lhs content to signup lhs content */
 
 .kyc_content {
@@ -177,6 +171,13 @@
 }
 
 @media screen and (max-width: 700px) {
+  .kyc_level {
+    min-height: unset;
+  }
+  .header .inner {
+    justify-content: space-between;
+  }
+
   .kyc_content {
     flex-direction: column;
     align-items: center;

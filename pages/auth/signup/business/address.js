@@ -43,11 +43,7 @@ const BusinessAddress = () => {
 
 	const handleSetState = (e) => {
 		setState(e)
-		console.log(e)
-		console.log(CS)
-		console.log(CS.getCitiesByName(e))
-		// setLGAs(CS.getCities(e))
-		// setStates(CS.getStatesByShort(e.cca2))
+		setLGAs(CS.getCities(country.cca2, e))
 	}
 
 	useEffect(()=>{
@@ -70,7 +66,7 @@ const BusinessAddress = () => {
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						<BackBtn emitClick={()=>push('/auth/signup/business/info')} />
-						<h1>Add your business address 🏠</h1>
+						<h1 className="title">Add your business address 🏠</h1>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>

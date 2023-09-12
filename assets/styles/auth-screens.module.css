@@ -429,6 +429,11 @@
   .auth {
     width: 100%;
   }
+
+  .auth.no_pd_top {
+    padding-top: 0;
+  }
+  
   .auth > .inner {
     padding-left: 0;
     padding: 0 var(--header-padding);

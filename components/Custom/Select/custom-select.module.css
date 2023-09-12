@@ -62,8 +62,11 @@
   /* border: 1px solid var(--grey-4); */
   border-radius: var(--input-br);
   box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.10), 0px 0px 1px 0px rgba(12, 26, 75, 0.20);
-  /* max-height: calc(var(--input-height)*5 - var(--sm-inner-component-mg)); */
-  height: calc(var(--input-height)*5 - var(--sm-inner-component-mg));
+  /* experimental */
+  height: clamp(
+    calc(var(--input-height)*4 + (var(--sm-inner-component-mg)*2)), 
+    calc(var(--input-height)*4 + (var(--sm-inner-component-mg)*2)), 
+    calc(var(--input-height)*5 - var(--sm-inner-component-mg)));
   overflow-y: auto;
   margin-top: calc(var(--sm-inner-component-mg)*2);
   position: absolute;

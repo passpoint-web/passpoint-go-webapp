@@ -98,7 +98,7 @@ const BusinessInformation = () => {
 				<div className={styles.inner}>
 					{/* <div className={styles.lhs}> */}
 					<div className={styles.center}>
-						<h1>
+						<h1 className="title">
 							Provide Business Information
 						</h1>
 						<form className={styles.form} onSubmit={handleSubmit}>
