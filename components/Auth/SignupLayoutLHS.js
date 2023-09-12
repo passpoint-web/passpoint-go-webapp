@@ -9,7 +9,7 @@ const SignupLayoutLHS = () => {
 		{
 			title: 'Business Information',
 			sub_title: 'We want to know how you want to operate on passpoint',
-			active: route === '/auth/signup/business/info',
+			active: route === '/auth/signup/business',
 			completed: false
 		},
 		{

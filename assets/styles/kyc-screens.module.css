@@ -161,12 +161,9 @@
 /* end of kyc level */
 
 @media screen and (max-width: 1024px) {
-  .kyc_content {
-    justify-content: flex-start;
-  }
   .kyc_content_lhs_empty,
   .kyc_content_rhs {
-    display: none;
+    width: 15%;
   }
 }
 
@@ -177,10 +174,18 @@
   .header .inner {
     justify-content: space-between;
   }
+  .kyc_content {
+    justify-content: flex-start;
+  }
 
   .kyc_content {
     flex-direction: column;
     align-items: center;
+  }
+
+  .kyc_content_lhs_empty,
+  .kyc_content_rhs {
+    display: none;
   }
 
   .kyc_content_lhs {

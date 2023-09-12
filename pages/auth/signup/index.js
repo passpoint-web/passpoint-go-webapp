@@ -26,7 +26,11 @@ const Signup = () => {
 		e.preventDefault()
 		saveUserType(option.heading)
 		setUserTypeChosen(true)
-		push('/auth/signup/business/info')
+		if (option.heading === 'Corporate Business') {
+			push('/auth/signup/business')
+		} else {
+			push('/auth/signup/individual')
+		}
 	}
 
 	useEffect(()=>{
