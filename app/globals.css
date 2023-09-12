@@ -118,8 +118,8 @@
 
   --screen-padding-top: 64px;
 
-  --kyc-layout-lhs-width: 30%;
-  --kyc-layout-lhs-max-width: 350px;
+  --kyc-layout-lhs-width: 250px;
+  --kyc-layout-lhs-max-width: 400px;
   --kyc-outer-component-padding: 48px;
   /* colors */
   --blue: #2B60E9;

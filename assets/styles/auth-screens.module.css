@@ -35,6 +35,7 @@
 
 .auth {
   padding-top: var(--screen-padding-top);
+  width: clamp(400px, 50%, 600px);
 }
 
 .auth > .inner {
@@ -425,6 +426,9 @@
   /* .auth {
     padding-top: 40px;
   } */
+  .auth {
+    width: 100%;
+  }
   .auth > .inner {
     padding-left: 0;
     padding: 0 var(--header-padding);
