@@ -20,6 +20,8 @@ export const saveUserType = (val) => {
 export const getUserType = () => {
 	if (typeof window !== 'undefined') {
 		const user_type = localStorage.getItem('user_type')
-		return JSON.parse(user_type)
+		if (user_type !== 'undefined') {
+			return JSON.parse(user_type)
+		}
 	}
 }
