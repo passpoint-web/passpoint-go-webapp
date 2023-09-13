@@ -256,9 +256,14 @@
 
 .form_group.error input,
 .form_group.error select {
-  border: 1px solid var(--input-error-border);
-  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow);
-  background-color: var(--input-error-bg);
+  border: 1px solid var(--input-error-border) !important;
+  /* box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow); */
+  background-color: var(--input-error-bg) !important;
+}
+
+.form_group.error input:focus,
+.form_group.error select:focus {
+  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
 }
 
 .form .action_ctn {
@@ -394,7 +399,7 @@
 .form .terms {
   display: flex;
   gap: 1rem;
-  margin: var(--outer-component-mg) 0;
+  margin: var(--inner-component-mg) 0;
 }
 
 /* verify email */
@@ -422,6 +427,14 @@
   font-size: 12px;
 }
 
+.password_strength.error span {
+  color: var(--negative);
+}
+
+.password_strength.error svg path {
+  stroke: var(--negative);
+}
+
 @media screen and (max-width: 700px) {
   /* .auth {
     padding-top: 40px;
@@ -433,7 +446,7 @@
   .auth.no_pd_top {
     padding-top: 0;
   }
-  
+
   .auth > .inner {
     padding-left: 0;
     padding: 0 var(--header-padding);

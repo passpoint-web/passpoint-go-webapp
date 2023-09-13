@@ -11,6 +11,7 @@ import PasswordField from '@/components/Auth/PasswordField'
 import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
 import CustomSelect from '@/components/Custom/Select/Select'
+import FeedbackInfo from '@/components/FeedbackInfo'
 
 const BusinessInformation = () => {
 	const {
@@ -57,6 +58,9 @@ const BusinessInformation = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
+		if (!allFieldsValid) {
+			return
+		}
 		setFullScreenLoader(true)
 		window.setTimeout(()=>{
 			setFullScreenLoader(false)
@@ -94,39 +98,44 @@ const BusinessInformation = () => {
 	return (
 		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
 			
-			<div className={styles.auth}>
+			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					{/* <div className={styles.lhs}> */}
 					<div className={styles.center}>
 						<h1 className="title">
 							Provide Business Information
 						</h1>
+						<h4 className="sub-title media-max-700">We want to know how you want to operate on passpoint</h4>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
-
-								<div className={styles.form_group}>
-									<label htmlFor="business-name">Business name</label>
+								<div className={`${styles.form_group} ${ctaClicked && !businessName ? styles.error : ''}`}>
+									<label htmlFor="business-name">Business Name</label>
 									<input placeholder="John Travels" id="business-name" value={businessName} onChange={(e)=>setBusinessName(e.target.value)} />
+									{ctaClicked && !businessName ? <FeedbackInfo message='Business name needed' /> : <></>}
 								</div>
-								<div className={styles.form_group}>
-									<label htmlFor="email-address">Business Email address</label>
+								<div className={`${styles.form_group} ${ctaClicked && !validEmail(email) ? styles.error : ''}`}>
+									<label htmlFor="email-address">Business Email Address</label>
 									<input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+									{ctaClicked && !validEmail(email) ? <FeedbackInfo message='Business email needed' /> : <></>}
 								</div>
-								<div className={styles.form_group}>
+								<div className={`${styles.form_group}`}>
 									<label>Business Type</label>
-									<CustomSelect id="business-type" selectOptions={businessTypes} selectedOption={businessType} emitSelect={handleBusinessTypeSelect} />
+									<CustomSelect id="business-type" selectOptions={businessTypes} selectedOption={businessType} fieldError={ctaClicked && !businessType} emitSelect={handleBusinessTypeSelect} />
+									{ctaClicked && !businessType? <FeedbackInfo message='Business type needed' /> : <></>}
 								</div>
 								<div className={styles.form_group}>
 									<label>Business Industry</label>
-									<CustomSelect id="business-industry" selectOptions={businessIndustries} selectedOption={businessIndustry} emitSelect={handleBusinessIndustrySelect} />
+									<CustomSelect id="business-industry" selectOptions={businessIndustries} selectedOption={businessIndustry} fieldError={ctaClicked && !businessIndustry} emitSelect={handleBusinessIndustrySelect} />
+									{ctaClicked && !businessIndustry? <FeedbackInfo message='Business industry needed' /> : <></>}
 								</div>
-								<div className={styles.form_group}>
+								<div className={`${styles.form_group} ${ctaClicked && !businessId ? styles.error : ''}`}>
 									<label htmlFor="business-id">Business Identification Number</label>
 									<input placeholder="RC 0123456" id="business-id" value={businessId} onChange={(e)=>setBusinessId(e.target.value)} />
+									{ctaClicked && !businessId? <FeedbackInfo message='Business ID No. needed' /> : <></>}
 								</div>
-								<div className={styles.form_group}>
+								<div className={`${styles.form_group} ${ctaClicked && !password ? styles.error : ''}`}>
 									<label htmlFor="password">Password</label>
-									<PasswordField emitPassword={(e)=>setPassword(e)} />
+									<PasswordField errorField={ctaClicked && !password} emitPassword={(e)=>setPassword(e)} />
 								</div>
 							</div>
 							<div className={styles.terms}>
@@ -134,7 +143,8 @@ const BusinessInformation = () => {
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid} text='Open account' />
+								{/* <PrimaryBtn disabled={!allFieldsValid} text='Open account' /> */}
+								<PrimaryBtn text='Open account' />
 							</div>
 						</form>
 						{/* </div> */}

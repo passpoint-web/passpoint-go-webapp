@@ -13,7 +13,7 @@ const Signup = () => {
 	const [option, setOption] = useState({})
 	const [
 		// eslint-disable-next-line no-unused-vars
-		userType, 
+		userType,
 		setUserType
 	] = useState(undefined)
 	const [userTypeChosen, setUserTypeChosen] = useState(false)

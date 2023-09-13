@@ -12,7 +12,7 @@ const PasswordStrength = ({valid, text}) => {
 		</svg>)
 
 	return (
-		<div className={styles.password_strength}>
+		<div className={`${styles.password_strength} ${!valid ? styles.error : ''}`}>
 			{!valid ? checkicon : checkiconValid}
 			<span>{text}</span>
 		</div>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 const SignupLayoutLHS = () => {
 
 	const {route} = useRouter()
-	const kycLevels = [
+	const levels = [
 		{
 			title: 'Business Information',
 			sub_title: 'We want to know how you want to operate on passpoint',
@@ -21,7 +21,7 @@ const SignupLayoutLHS = () => {
 		{
 			title: 'Personal Information',
 			sub_title: 'Kindly provide personal information',
-			active: route === '/kyc/verify-bvn',
+			active: route === '/auth/signup/business/personal',
 			completed: false
 		},
 		{
@@ -34,7 +34,7 @@ const SignupLayoutLHS = () => {
 	return ( 
 		<div className={styles.kyc_content_lhs}>
 			<div className={styles.inner}>
-				{kycLevels.map((e, index)=>(
+				{levels.map((e, index)=>(
 					<SignupLevel key={index} kyc={{...e, level: index+1}} />
 				))}
 			</div>

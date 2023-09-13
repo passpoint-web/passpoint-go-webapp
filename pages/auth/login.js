@@ -34,7 +34,7 @@ const Login = () => {
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<h1><span>Hi,</span> 👋🏾 Welcome back</h1>
+						<h1 className="title"><span>Hi,</span> 👋🏾 Welcome back</h1>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_group}>

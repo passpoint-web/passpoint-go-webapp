@@ -15,21 +15,14 @@ const BusinessAddress = () => {
 
 	const { push } = useRouter()
 	const [streetNo, setStreetNo] = useState('')
-	const [lga, setLga] = useState(undefined)
+	const [LGA, setLGA] = useState(undefined)
 	const [country, setCountry] = useState(undefined)
 	const [state, setState] = useState(undefined)
 	const [states, setStates] = useState([])
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
-	const [lgas, setLGAs] = useState([])
-
-	// const handleState = (e) => {
-	// 	setState(e)
-	// }
-	// const handleLga = (e) => {
-	// 	setLga(e)
-	// }
+	const [LGAs, setLGAs] = useState([])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -39,34 +32,32 @@ const BusinessAddress = () => {
 	const handleSetCountry = (e) => {
 		setCountry(e)
 		setStates(CS.getStatesByShort(e.cca2)) // cca2: country's shortname
+		setState('')
+		setLGA('')
 	}
 
 	const handleSetState = (e) => {
 		setState(e)
 		setLGAs(CS.getCities(country.cca2, e))
+		setLGA('')
 	}
 
 	useEffect(()=>{
-		if (state && lga && streetNo) {
+		if (country?.name?.common, state && LGA && streetNo) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [state, lga, streetNo])
-
-	// useEffect(()=>{
-	// console.log(country)
-	// console.log(CS)
-	// console.log(CS.getStatesByShort('NG'))
-	// }, [country])
+	}, [state, LGA, streetNo])
 
 	return (
 		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
-			<div className={styles.auth}>
+			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={()=>push('/auth/signup/business/info')} />
+						<BackBtn emitClick={()=>push('/auth/signup/business')} />
 						<h1 className="title">Add your business address 🏠</h1>
+						<h4 className="sub-title media-max-700">Kindly provide personal information</h4>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
@@ -81,7 +72,7 @@ const BusinessAddress = () => {
 								</div>
 								<div className={styles.form_group}>
 									<label>Local Govt.</label>
-									<CustomSelect disabled={!state} selectOptions={lgas} selectedOption={lga} emitSelect={(e)=>setLga(e)} />
+									<CustomSelect disabled={!state} selectOptions={LGAs} selectedOption={LGA} emitSelect={(e)=>setLGA(e)} />
 								</div>
 								<div className={styles.form_group}>
 									<label htmlFor="street-no">Street no.</label>

@@ -1,7 +1,7 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 import { useEffect, useState } from 'react'
 import PasswordStrength from './PasswordStrength'
-const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPassword}) => {
+const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPassword, errorField}) => {
 
 	const [type, setType] = useState('password')
 	const [password, setPassword] = useState('')
@@ -81,7 +81,7 @@ const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPass
 
 			{passwordStrengthNeeded ? 
 				<div className={styles.password_strength_ctn}>
-					<PasswordStrength valid={isUpToEightChars()} text='Atleast 8 characters' />
+					<PasswordStrength error={errorField && !isUpToEightChars()} valid={isUpToEightChars()} text='Atleast 8 characters' />
 					<PasswordStrength valid={hasUpperCase()} text='Atleast one uppercase' />
 					<PasswordStrength valid={containsNumbers()} text='Atleast one number' />
 					<PasswordStrength valid={containsSpecialChars()} text='Atleast one special character' />
