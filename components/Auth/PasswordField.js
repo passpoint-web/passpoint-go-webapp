@@ -34,6 +34,26 @@ const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPass
 		const regexString = /\d/
 		return regexString.test(password)
 	}
+
+	const passwordStrength = [
+		{
+			valid: isUpToEightChars(),
+			text: 'Atleast 8 characters'
+		},
+		{
+			valid: hasUpperCase(),
+			text: 'Atleast one uppercase'
+		},
+		{
+			valid: containsNumbers(),
+			text: 'Atleast one number'
+		},
+		{
+			valid: containsSpecialChars(),
+			text: 'Atleast one special character'
+		},
+	]
+	
 	useEffect(()=>{
 		// eg login screen
 		if (!passwordStrengthNeeded) {
@@ -81,10 +101,9 @@ const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPass
 
 			{passwordStrengthNeeded ? 
 				<div className={styles.password_strength_ctn}>
-					<PasswordStrength error={errorField && !isUpToEightChars()} valid={isUpToEightChars()} text='Atleast 8 characters' />
-					<PasswordStrength error={errorField && !hasUpperCase()} valid={hasUpperCase()} text='Atleast one uppercase' />
-					<PasswordStrength error={errorField && !containsNumbers()} valid={containsNumbers()} text='Atleast one number' />
-					<PasswordStrength error={errorField && !containsSpecialChars()} valid={containsSpecialChars()} text='Atleast one special character' />
+					{passwordStrength.map((p, index)=>(
+						<PasswordStrength key={index} error={errorField && !p.valid} valid={p.valid} text={p.text} />
+					))}
 				</div> :
 				<></>
 			}

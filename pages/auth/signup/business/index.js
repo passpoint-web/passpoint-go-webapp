@@ -75,6 +75,7 @@ const BusinessInformation = () => {
 	useEffect(()=>{
 		const conditionsMet =
 		businessId && 
+		businessName &&
 		businessIndustry && 
 		businessType && 
 		validEmail(email) &&
@@ -151,7 +152,6 @@ const BusinessInformation = () => {
 					</div>
 				</div>
 			</div>
-	
 		</AuthLayout>
 	)
 }
