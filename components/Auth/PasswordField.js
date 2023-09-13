@@ -82,9 +82,9 @@ const PasswordField = ({id = 'password', passwordStrengthNeeded = true, emitPass
 			{passwordStrengthNeeded ? 
 				<div className={styles.password_strength_ctn}>
 					<PasswordStrength error={errorField && !isUpToEightChars()} valid={isUpToEightChars()} text='Atleast 8 characters' />
-					<PasswordStrength valid={hasUpperCase()} text='Atleast one uppercase' />
-					<PasswordStrength valid={containsNumbers()} text='Atleast one number' />
-					<PasswordStrength valid={containsSpecialChars()} text='Atleast one special character' />
+					<PasswordStrength error={errorField && !hasUpperCase()} valid={hasUpperCase()} text='Atleast one uppercase' />
+					<PasswordStrength error={errorField && !containsNumbers()} valid={containsNumbers()} text='Atleast one number' />
+					<PasswordStrength error={errorField && !containsSpecialChars()} valid={containsSpecialChars()} text='Atleast one special character' />
 				</div> :
 				<></>
 			}

@@ -1,5 +1,5 @@
 import styles from '@/assets/styles/auth-screens.module.css'
-const PasswordStrength = ({valid, text}) => {
+const PasswordStrength = ({valid, text, error}) => {
 
 	const checkicon = (
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -12,7 +12,7 @@ const PasswordStrength = ({valid, text}) => {
 		</svg>)
 
 	return (
-		<div className={`${styles.password_strength} ${!valid ? styles.error : ''}`}>
+		<div className={`${styles.password_strength} ${!valid && error ? styles.error : ''}`}>
 			{!valid ? checkicon : checkiconValid}
 			<span>{text}</span>
 		</div>
