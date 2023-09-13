@@ -26,7 +26,11 @@ const BusinessAddress = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		push('/auth/signup/business/verify') 
+		setCtaClicked(true)
+		setFullScreenLoader(true)
+		window.setTimeout(()=>{
+			push('/auth/signup/business/verify')
+		}, 3000)
 	}
 
 	const handleSetCountry = (e) => {

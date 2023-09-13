@@ -1,22 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import AuthLayout from '@/app/auth-layout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import { saveUserType, getUserType } from '@/services/localService'
+import { saveUserType } from '@/services/localService'
 import ChoiceCard from '@/components/BusinessKind/ChoiceCard'
 
 const Signup = () => {
 	const { 
-		replace, push
+		push
 	} = useRouter()
 	const [option, setOption] = useState({})
-	const [
-		// eslint-disable-next-line no-unused-vars
-		userType,
-		setUserType
-	] = useState(undefined)
-	const [userTypeChosen, setUserTypeChosen] = useState(false)
 
 	const onSetOption = (value) => {
 		setOption(value)
@@ -25,19 +19,12 @@ const Signup = () => {
 	const handleConfirmUserOption = (e) => {
 		e.preventDefault()
 		saveUserType(option.heading)
-		setUserTypeChosen(true)
 		if (option.heading === 'Corporate Business') {
 			push('/auth/signup/business')
 		} else {
 			push('/auth/signup/individual')
 		}
 	}
-
-	useEffect(()=>{
-		if (getUserType) {
-			setUserType(getUserType)
-		}
-	},[])
 
 	return (
 		<AuthLayout LHSRequired={false} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>

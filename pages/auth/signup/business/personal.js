@@ -5,7 +5,6 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
 import BackBtn from '@/components/Btn/Back'
 
@@ -13,9 +12,6 @@ const BusinessPersonalInfo = () => {
 	const {
 		push
 	} = useRouter()
-
-	const {validEmail} = functions
-
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
