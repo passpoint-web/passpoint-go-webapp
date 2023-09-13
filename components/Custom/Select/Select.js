@@ -2,7 +2,7 @@ import styles from './custom-select.module.css'
 import { useState } from 'react'
 import OverlayScreen from '../../OverlayScreen'
 
-const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions, id}) => {
+const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions, id, fieldError}) => {
 
 	const [showSelect, setShowSelect] = useState(false)
 
@@ -26,7 +26,7 @@ const CustomSelect = ({disabled, emitSelect, selectedOption, selectOptions, id})
 
 	return (
 		<>
-			<div className={styles.custom_select }>
+			<div className={`${styles.custom_select} ${fieldError ? styles.error : ''}`}>
 				{showSelect ? <OverlayScreen emitClick={hideSelect} /> : <></>}
 				<button disabled={disabled} className={`${showSelect ? styles.active : ''}`} onClick={handleClick}>
 					<div className={styles.content}>

@@ -49,8 +49,8 @@ const ForgotPassword = () => {
 	const Forgot = () => {
 		return (
 			<>
-				<h1>Forgot password?</h1>
-				<p>Enter the email you used to create your account</p>
+				<h1 className="title">Forgot password?</h1>
+				<h4 className="sub-title">Enter the email you used to create your account</h4>
 				<form className={styles.form} onSubmit={handleForgotPasswordSubmit}>
 					<div className={styles.inner}>
 						<div className={styles.form_group}>
@@ -70,8 +70,8 @@ const ForgotPassword = () => {
 		return (
 			<>
 				<BackBtn emitClick={()=>setCurrentLevel('forgot')} />
-				<h1>Verify email</h1>
-				<p>We sent a 6 digit code to daniel****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification </p>
+				<h1 className="title">Verify email</h1>
+				<h4 className="sub-title">We sent a 6 digit code to daniel****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification </h4>
 				<form className={styles.form} onSubmit={handleVerificationSubmit}>
 					<div className={styles.inner}>
 						<div className={styles.form_group}>
@@ -99,8 +99,8 @@ const ForgotPassword = () => {
 	const Reset = () => {
 		return (
 			<>
-				<h1>Create new password</h1>
-				<p>Kindly enter a unique password to secure your account</p>
+				<h1 className="title">Create new password</h1>
+				<h4 className="sub-title">Kindly enter a unique password to secure your account</h4>
 				<form className={styles.form} onSubmit={handleResetPasswordSubmit}>
 					<div className={styles.inner}>
 						<div className={styles.form_group}>

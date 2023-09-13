@@ -14,19 +14,28 @@
   box-shadow: var(--input-box-shadow);
   display: block;
   width: 100%;
-  transition: var(--input-transition);
-}
-
-.custom_select button {
-  transition: var(--input-transition);
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: var(--input-height);
 }
 
+
 .custom_select button:not(:disabled):hover {
   border-color: var(--sky-blue);
+}
+
+.custom_select button:not(:disabled):focus {
+  box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
+}
+
+.custom_select.error button:not(:disabled) {
+  border: 1px solid var(--input-error-border) !important;
+  background-color: var(--input-error-bg) !important;
+}
+
+.custom_select.error button:not(:disabled):focus {
+  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
 }
 
 .custom_select button svg {
@@ -62,10 +71,13 @@
   /* border: 1px solid var(--grey-4); */
   border-radius: var(--input-br);
   box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.10), 0px 0px 1px 0px rgba(12, 26, 75, 0.20);
-  /* max-height: calc(var(--input-height)*5 - var(--sm-inner-component-mg)); */
-  height: calc(var(--input-height)*5 - var(--sm-inner-component-mg));
+  /* experimental */
+  height: clamp(
+    calc(var(--input-height)*4 + (var(--sm-inner-component-mg)*2)), 
+    calc(var(--input-height)*4 + (var(--sm-inner-component-mg)*2)), 
+    calc(var(--input-height)*5 - var(--sm-inner-component-mg)));
   overflow-y: auto;
-  margin-top: calc(var(--sm-inner-component-mg)*2);
+  margin-top: calc(var(--sm-inner-component-mg));
   position: absolute;
   top: var(--input-height);
   width: 100%;

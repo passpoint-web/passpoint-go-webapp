@@ -118,12 +118,15 @@
 
   --screen-padding-top: 64px;
 
-  --kyc-layout-lhs-width: 30%;
-  --kyc-layout-lhs-max-width: 350px;
+  --kyc-layout-lhs-width: 250px;
+  --kyc-layout-lhs-max-width: 400px;
   --kyc-outer-component-padding: 48px;
   /* colors */
   --blue: #2B60E9;
   --green: #07B463;
+
+  --anim-come-down-sm: come-down-sm 0.5s ease-in-out;
+  --anim-come-down-sm-w-opacity: come-down-sm-w-opacity 0.5s ease-in-out;
 }
 
 /* @media (prefers-color-scheme: dark) {} */
@@ -181,9 +184,6 @@ h1 {
   font-size: 34px;
   line-height: 44px;
   margin-bottom: 8px;
-  /* letter-spacing:  -1.5px; */
-  animation: slide-in-fr 0.7s forwards;
-  -webkit-animation: slide-in-fr 0.7s forwards;
 }
 
 h2 {
@@ -207,9 +207,23 @@ h1 span {
   color: var(--grey-2);
 }
 
+
 h4 {
   color: var(--grey-3);
-  font-size: 16px;
+  font-size: 14px;
+}
+
+h1.title {
+  /* letter-spacing:  -1.5px; */
+  animation: slide-in-fr 0.7s forwards;
+  -webkit-animation: slide-in-fr 0.7s forwards;
+}
+
+h4.sub-title {
+  opacity: 0;
+  animation-delay: 0.3s !important;
+  animation: slide-in-fr 0.5s forwards;
+  -webkit-animation: slide-in-fr 0.5s forwards;
 }
 
 p.center,
@@ -377,11 +391,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* commented out because it messes with position fixed */
-/* form {
-  animation: slide-in-fr 0.7s forwards;
-  -webkit-animation: slide-in-fr 0.7s forwards;
-} */
+form {
+  animation: var(--anim-come-down-sm);
+  -webkit-animation: var(--anim-come-down-sm);
+}
 
 .overlay_screen {
   width: 100vw;
@@ -472,10 +485,14 @@ ol, ul {
 
 
 /* SCREEN RESOLUTIONS */
+@media screen and (min-width: 700px) {
+  .media-max-700 {
+    display: none;
+  }
+}
 @media screen and (max-width: 700px) {
   :root {
     --header-padding: 40px;
-    /* --outer-component-mg: 32px; */
     --outer-component-mg: 48px;
     --inner-component-mg: 12px;
     --inner-component-gap: 8px;
@@ -483,6 +500,10 @@ ol, ul {
     --screen-padding-top: 32px;
     --btn-padding: 16px;
     --kyc-outer-component-padding: 16px;
+  }
+
+  .media-max-700 {
+    display: block;
   }
 
   h1 {
@@ -540,6 +561,7 @@ ol, ul {
     transform: translateX(80px);
   }
   100% {
+    opacity: 1;
     transform: translateX(0vw);
     -webkit-transform: translateX(0vw);
     -moz-transform: translateX(0vw);
@@ -587,6 +609,55 @@ ol, ul {
     -moz-transform: scaleY(0);
     -ms-transform: scaleY(0);
     -o-transform: scaleY(0);
+  }
+}
+
+.come-down-sm {
+  animation: var(--anim-come-down-sm);
+  -webkit-animation: var(--anim-come-down-sm);
+}
+
+@keyframes come-down-sm {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+  }
+}
+
+@keyframes come-down-sm-w-opacity {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
   }
 }
 
