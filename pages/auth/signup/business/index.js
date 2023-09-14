@@ -97,7 +97,6 @@ const BusinessInformation = () => {
 
 	return (
 		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
-			
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					{/* <div className={styles.lhs}> */}
@@ -116,7 +115,8 @@ const BusinessInformation = () => {
 								<div className={`${styles.form_group} ${ctaClicked && !validEmail(email) ? styles.error : ''}`}>
 									<label htmlFor="email-address">Business Email Address</label>
 									<input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-									{ctaClicked && !validEmail(email) ? <FeedbackInfo message='Business email needed' /> : <></>}
+									{ctaClicked && !validEmail(email) ? <FeedbackInfo message={!email ? 'Business email is required' : !validEmail(email) ? 'Valid business email is required' : 'Business email is required'} /> : <></>}
+									{/* {ctaClicked && !validEmail(email) ? <FeedbackInfo message='Business email needed' /> : <></>} */}
 								</div>
 								<div className={`${styles.form_group}`}>
 									<label>Business Type</label>
