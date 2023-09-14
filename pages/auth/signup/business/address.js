@@ -6,7 +6,7 @@ import CustomSelect from '@/components/Custom/Select/Select'
 import AuthLayout from '@/app/auth-layout'
 import CountrySelect from '@/components/Custom/CountrySelect'
 import BackBtn from '@/components/Btn/Back'
-// import functions from '@/utils/functions'
+import FeedbackInfo from '@/components/FeedbackInfo'
 // eslint-disable-next-line no-undef
 const CS = require('countrycitystatejson')
 // const countries = CS.getCountries()
@@ -27,8 +27,12 @@ const BusinessAddress = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
+		if (!allFieldsValid) {
+			return
+		}
 		setFullScreenLoader(true)
 		window.setTimeout(()=>{
+			setFullScreenLoader(false)
 			push('/auth/signup/business/verify')
 		}, 3000)
 	}
@@ -47,7 +51,7 @@ const BusinessAddress = () => {
 	}
 
 	useEffect(()=>{
-		if (country?.name?.common, state && LGA && streetNo) {
+		if (country?.name?.common && state && (LGAs.length && LGA) && streetNo) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
@@ -68,23 +72,27 @@ const BusinessAddress = () => {
 									<label htmlFor="country">
                       Country
 									</label>
-									<CountrySelect emitCountry={(e)=>handleSetCountry(e)} />
+									<CountrySelect fieldError={ctaClicked && !country?.name?.common} emitCountry={(e)=>handleSetCountry(e)} />
+									{ctaClicked && !country?.name?.common ? <FeedbackInfo message='Country is needed' /> : <></>}
 								</div>
 								<div className={styles.form_group}>
-									<label>Select state</label>
-									<CustomSelect disabled={!country?.name?.common} selectOptions={states} selectedOption={state} emitSelect={(e)=>handleSetState(e)} />
+									<label>Select State</label>
+									<CustomSelect disabled={!country?.name?.common} fieldError={ctaClicked && !state} selectOptions={states} selectedOption={state} emitSelect={(e)=>handleSetState(e)} />
+									{ctaClicked && !state ? <FeedbackInfo message='State is needed' /> : <></>}
 								</div>
 								<div className={styles.form_group}>
 									<label>Local Govt.</label>
-									<CustomSelect disabled={!state} selectOptions={LGAs} selectedOption={LGA} emitSelect={(e)=>setLGA(e)} />
+									<CustomSelect disabled={!state} fieldError={ctaClicked && (state && !LGA && LGAs.length)} selectOptions={LGAs} selectedOption={LGA} emitSelect={(e)=>setLGA(e)} />
+									{ctaClicked && (state && !LGA && LGAs.length) ? <FeedbackInfo message='LGA is needed' /> : <></>}
 								</div>
-								<div className={styles.form_group}>
+								<div className={`${styles.form_group} ${ctaClicked && !streetNo ? styles.error : ''}`}>
 									<label htmlFor="street-no">Street no.</label>
 									<input id="street-no" placeholder="91, Lagos road" value={streetNo} onChange={(e)=>setStreetNo(e.target.value)} />
+									{ctaClicked && !streetNo? <FeedbackInfo message='Street No. is needed' /> : <></>}
 								</div>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid} text={'Save and continue'} />
+								<PrimaryBtn text={'Save and continue'} />
 							</div>
 						</form>
 					</div>

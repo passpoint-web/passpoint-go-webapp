@@ -5,6 +5,12 @@
   animation: var(--anim-come-down-sm-w-opacity);
   -webkit-animation: var(--anim-come-down-sm-w-opacity);
 }
+
+.feedback_info_ctn.center {
+  align-self: center;
+  margin-top: 16px;
+}
+
 .feedback_info_ctn .content {
   font-size: 12px;
   color: #FF3B2D;
