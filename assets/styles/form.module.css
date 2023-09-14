@@ -1,5 +1,6 @@
 .feedback_info_ctn {
   display: flex;
+  align-self: center;
   gap: 8px;
   margin-top: 8px;
   animation: var(--anim-come-down-sm-w-opacity);

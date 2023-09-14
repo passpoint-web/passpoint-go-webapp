@@ -26,6 +26,7 @@
 }
 
 .custom_select button:not(:disabled):focus {
+  border-color: var(--sky-blue);
   box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
 }
 
@@ -46,6 +47,10 @@
   transform: rotate(-180deg);
 }
 
+.custom_select button .content {
+  width: calc(100% - 15px);
+}
+
 .custom_select .content {
   width: 100%;
   display: flex;
@@ -64,6 +69,8 @@
 .custom_select button .content p.option,
 .custom_select .select .content p.option {
   color: var(--grey-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .custom_select .select {
