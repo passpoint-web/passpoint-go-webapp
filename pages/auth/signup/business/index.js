@@ -138,8 +138,8 @@ const BusinessInformation = () => {
 									<PasswordField errorField={ctaClicked && !password} emitPassword={(e)=>setPassword(e)} />
 								</div>
 							</div>
-							<div className={styles.terms}>
-								<CheckBox value={checked}  onChange={toggleChecked} />
+							<div className={`${styles.terms} ${ctaClicked && !checked ? styles.error : ''}`}>
+								<CheckBox error={ctaClicked && !checked} value={checked}  onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>

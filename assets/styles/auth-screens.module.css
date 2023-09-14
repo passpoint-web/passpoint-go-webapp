@@ -402,6 +402,10 @@
   margin: var(--inner-component-mg) 0;
 }
 
+.terms.error p {
+  color: var(--negative);
+}
+
 /* verify email */
 
 .form .form_inline_centered_text {
