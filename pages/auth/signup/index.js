@@ -5,12 +5,14 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { saveUserType } from '@/services/localService'
 import ChoiceCard from '@/components/BusinessKind/ChoiceCard'
+import FeedbackInfo from '@/components/FeedbackInfo'
 
 const Signup = () => {
 	const { 
 		push
 	} = useRouter()
 	const [option, setOption] = useState({})
+	const [ctaClicked, setCtaClicked] = useState(false)
 
 	const onSetOption = (value) => {
 		setOption(value)
@@ -18,6 +20,10 @@ const Signup = () => {
 
 	const handleConfirmUserOption = (e) => {
 		e.preventDefault()
+		setCtaClicked(true)
+		if (!option.heading) {
+			return
+		}
 		saveUserType(option.heading)
 		if (option.heading === 'Corporate Business') {
 			push('/auth/signup/business')
@@ -38,8 +44,9 @@ const Signup = () => {
 								<div className={styles.inner}>
 									<ChoiceCard emitSetOption={onSetOption} />
 								</div>
+								{ctaClicked && !option.heading ? <FeedbackInfo center={true} message="Please select a category" /> : <></> }
 								<div className={`${styles.action_ctn} ${styles.end}`}>
-									<PrimaryBtn disabled={option === undefined} text='Continue' />
+									<PrimaryBtn text='Continue' />
 								</div>
 							</form>
 						</div>
