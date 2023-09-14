@@ -1,8 +1,8 @@
 import styles from '@/assets/styles/form.module.css'
-const FeedbackInfo = ({message}) => {
+const FeedbackInfo = ({message, center}) => {
 	return (
 		<>
-			<div className={styles.feedback_info_ctn}>
+			<div className={`${styles.feedback_info_ctn} ${center ? styles.center : ''}`}>
 				<div className={styles.icon}>
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 						<path d="M8 6V9.33333" stroke="#FF3B2D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
