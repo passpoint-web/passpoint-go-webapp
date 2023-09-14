@@ -22,8 +22,7 @@ const IndividualInformation = () => {
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
-	// eslint-disable-next-line no-unused-vars
-	const [ctaClicked, setCtaClicked] = useState(false)
+	// const [ctaClicked, setCtaClicked] = useState(false)
 	const [businessName, setBusinessName] = useState('')
 	const [businessId, setBusinessId] = useState('')
 	const [email, setEmail] = useState('')
@@ -56,7 +55,7 @@ const IndividualInformation = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setCtaClicked(true)
+		// setCtaClicked(true)
 		setFullScreenLoader(true)
 		window.setTimeout(()=>{
 			setFullScreenLoader(false)

@@ -8,7 +8,7 @@ const KYCLayoutLHS = () => {
 	const kycLevels = [
 		{
 			title: 'Business type',
-			sub_title: 'We want to know how you want to operate on passpoint',
+			sub_title: 'We want to know how you want to operate on Passpoint',
 			active: route === '/kyc/business-type',
 			completed: true
 		},

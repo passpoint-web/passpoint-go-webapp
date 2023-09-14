@@ -33,7 +33,7 @@ const Signup = () => {
 					<div className={`${styles.inner} ${styles.business_type}`}>
 						<div className={styles.center}>
 							<h1 className="center title">What kind of business are you?</h1>
-							<h4 className="center sub-title">Select your category, So that you can accurately define your role and access the appropriate features of passpoint.</h4>
+							<h4 className="center sub-title">Select your category, So that you can accurately define your role and access the appropriate features of Passpoint.</h4>
 							<form className={styles.form} onSubmit={handleConfirmUserOption}>
 								<div className={styles.inner}>
 									<ChoiceCard emitSetOption={onSetOption} />

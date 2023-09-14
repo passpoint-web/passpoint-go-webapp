@@ -4,7 +4,7 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import TertiaryBtn from '@/components/Btn/Tertiary'
 import BackBtn from '@/components/Btn/Back'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 // import functions from '@/utils/functions'
 import { useRouter } from 'next/router'
@@ -14,7 +14,6 @@ const VerifyEmail = () => {
 
 	const {push} = useRouter()
 	const [otp, setOtp] = useState('')
-	// eslint-disable-next-line no-unused-vars
 	const [errorMsg, setErrorMsg] = useState('')
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -31,6 +30,10 @@ const VerifyEmail = () => {
 			push('/auth/login')
 		}, 3000)
 	}
+
+	useEffect(()=>{
+		setErrorMsg('')
+	})
 
 	return (
 		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>

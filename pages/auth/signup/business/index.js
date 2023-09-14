@@ -23,7 +23,6 @@ const BusinessInformation = () => {
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
-	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [businessName, setBusinessName] = useState('')
 	const [businessId, setBusinessId] = useState('')
@@ -106,7 +105,7 @@ const BusinessInformation = () => {
 						<h1 className="title">
 							Provide Business Information
 						</h1>
-						<h4 className="sub-title media-max-700">We want to know how you want to operate on passpoint</h4>
+						<h4 className="sub-title media-max-700">We want to know how you want to operate on Passpoint</h4>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !businessName ? styles.error : ''}`}>
