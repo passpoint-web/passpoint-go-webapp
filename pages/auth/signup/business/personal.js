@@ -15,7 +15,6 @@ const BusinessPersonalInfo = () => {
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
-	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
