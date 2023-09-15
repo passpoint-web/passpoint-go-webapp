@@ -169,6 +169,10 @@
   .kyc_level {
     gap: 5px
   }
+
+  .kyc_content_lhs{
+    padding: var(--screen-padding-top) 30px;
+  }
 }
 
 @media screen and (max-width: 700px) {
