@@ -135,7 +135,9 @@ export const CorporateIcon = () => (
 				d="M51.6802 21.3422L45.3198 25.0193L38.9593 21.3422L45.3198 17.6709L51.6802 21.3422Z"
 				fill="#CEE3E7"
 			/>
-			<path d="M38.9584 21.3438H38.9535" stroke="black" strokeMiterlimit="10" />
+			<path d="M38.9584 21.3438H38.9535"
+				stroke="black"
+				strokeMiterlimit="10" />
 			<path
 				d="M26.2267 28.6908V43.3877L19.8663 39.7164V25.0195L26.2267 28.6908Z"
 				fill="#5D8991"
@@ -382,22 +384,74 @@ export const EyeOpen = () => (
 )
 
 export const WarningIcon = () => (
-	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-		<path d="M8 6V9.33333" stroke="#FF3B2D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-		<path d="M7.99979 14.2735H3.95979C1.64646 14.2735 0.679793 12.6202 1.79979 10.6002L3.87979 6.85352L5.83979 3.33352C7.02646 1.19352 8.97313 1.19352 10.1598 3.33352L12.1198 6.86018L14.1998 10.6068C15.3198 12.6268 14.3465 14.2802 12.0398 14.2802H7.99979V14.2735Z" stroke="#FF3B2D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-		<path d="M7.99609 11.333H8.00208" stroke="#FF3B2D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 16 16"
+		fill="none">
+		<path d="M8 6V9.33333"
+			stroke="#FF3B2D"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M7.99979 14.2735H3.95979C1.64646 14.2735 0.679793 12.6202 1.79979 10.6002L3.87979 6.85352L5.83979 3.33352C7.02646 1.19352 8.97313 1.19352 10.1598 3.33352L12.1198 6.86018L14.1998 10.6068C15.3198 12.6268 14.3465 14.2802 12.0398 14.2802H7.99979V14.2735Z"
+			stroke="#FF3B2D"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M7.99609 11.333H8.00208"
+			stroke="#FF3B2D"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
 	</svg>
 )
 
 export const CheckIcon = () => (
-	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-		<path d="M7.99998 14.6667C11.6666 14.6667 14.6666 11.6667 14.6666 8.00004C14.6666 4.33337 11.6666 1.33337 7.99998 1.33337C4.33331 1.33337 1.33331 4.33337 1.33331 8.00004C1.33331 11.6667 4.33331 14.6667 7.99998 14.6667Z" stroke="#7E8494" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-		<path d="M5.16669 7.99995L7.05335 9.88661L10.8334 6.11328" stroke="#7E8494" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 16 16"
+		fill="none">
+		<path d="M7.99998 14.6667C11.6666 14.6667 14.6666 11.6667 14.6666 8.00004C14.6666 4.33337 11.6666 1.33337 7.99998 1.33337C4.33331 1.33337 1.33331 4.33337 1.33331 8.00004C1.33331 11.6667 4.33331 14.6667 7.99998 14.6667Z"
+			stroke="#7E8494"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M5.16669 7.99995L7.05335 9.88661L10.8334 6.11328"
+			stroke="#7E8494"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
 	</svg>
 )
 
 export const CheckIconValid = () => (
-	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-		<path d="M7.99998 1.33337C4.32665 1.33337 1.33331 4.32671 1.33331 8.00004C1.33331 11.6734 4.32665 14.6667 7.99998 14.6667C11.6733 14.6667 14.6666 11.6734 14.6666 8.00004C14.6666 4.32671 11.6733 1.33337 7.99998 1.33337ZM11.1866 6.46671L7.40665 10.2467C7.31331 10.34 7.18665 10.3934 7.05331 10.3934C6.91998 10.3934 6.79331 10.34 6.69998 10.2467L4.81331 8.36004C4.61998 8.16671 4.61998 7.84671 4.81331 7.65337C5.00665 7.46004 5.32665 7.46004 5.51998 7.65337L7.05331 9.18671L10.48 5.76004C10.6733 5.56671 10.9933 5.56671 11.1866 5.76004C11.38 5.95337 11.38 6.26671 11.1866 6.46671Z" fill="#07B463"/>
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 16 16"
+		fill="none">
+		<path d="M7.99998 1.33337C4.32665 1.33337 1.33331 4.32671 1.33331 8.00004C1.33331 11.6734 4.32665 14.6667 7.99998 14.6667C11.6733 14.6667 14.6666 11.6734 14.6666 8.00004C14.6666 4.32671 11.6733 1.33337 7.99998 1.33337ZM11.1866 6.46671L7.40665 10.2467C7.31331 10.34 7.18665 10.3934 7.05331 10.3934C6.91998 10.3934 6.79331 10.34 6.69998 10.2467L4.81331 8.36004C4.61998 8.16671 4.61998 7.84671 4.81331 7.65337C5.00665 7.46004 5.32665 7.46004 5.51998 7.65337L7.05331 9.18671L10.48 5.76004C10.6733 5.56671 10.9933 5.56671 11.1866 5.76004C11.38 5.95337 11.38 6.26671 11.1866 6.46671Z"
+			fill="#07B463"/>
+	</svg>
+)
+
+export const DropDownIcon = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="15"
+		height="15"
+		viewBox="0 0 20 20"
+		fill="none"
+	>
+		<path
+			d="M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837"
+			stroke="#BDC0CE"
+			strokeWidth="2.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
 	</svg>
 )

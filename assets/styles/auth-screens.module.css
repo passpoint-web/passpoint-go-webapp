@@ -100,7 +100,6 @@
   position: sticky;
   position: -webkit-sticky;
   top: 100px;
-  height: 80vh;
 }
 
 
@@ -250,7 +249,8 @@
   }
 
   .auth_content_lhs {
-    min-height: fit-content;
+    height: 100px;
+    min-height: 100px;
     width: 100%;
     border-right: none;
     display: flex;
