@@ -5,7 +5,7 @@ const Input = ({children, label, error, errorMsg, ...props}) => {
 		<>
 			<div
 				className={`${styles.form_group} ${
-					error ? styles.error : ''
+					error ? 'error' : ''
 				}`}
 			>
 				<label htmlFor={props.id}>{label}</label>

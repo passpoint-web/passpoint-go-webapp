@@ -129,12 +129,12 @@ const BusinessAddress = () => {
 								<Input
 									id="LGA"
 									label="Select Local Govt."
-									error={ctaClicked && payload.state && (LGAs.length && !payload.LGA)}
+									error={ctaClicked && payload.state && (LGAs?.length && !payload.LGA)}
 									errorMsg="LGA is required"
 								>
 									<CustomSelect
 										disabled={!payload.state}
-										fieldError={ctaClicked && payload.state && (LGAs.length && !payload.LGA)}
+										fieldError={ctaClicked && payload.state && (LGAs?.length && !payload.LGA)}
 										selectOptions={LGAs}
 										selectedOption={payload.LGA}
 										emitSelect={(e) => handleChange({
