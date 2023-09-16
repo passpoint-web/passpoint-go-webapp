@@ -12,7 +12,6 @@ const CS = require('countrycitystatejson')
 // const countries = CS.getCountries()
 
 const BusinessAddress = () => {
-
 	const { push } = useRouter()
 	const [streetNo, setStreetNo] = useState('')
 	const [LGA, setLGA] = useState(undefined)
@@ -31,9 +30,9 @@ const BusinessAddress = () => {
 			return
 		}
 		setFullScreenLoader(true)
-		window.setTimeout(()=>{
+		window.setTimeout(() => {
 			setFullScreenLoader(false)
-			push('/auth/signup/business/verify')
+			push('/auth/signup/business/personal')
 		}, 3000)
 	}
 
@@ -50,8 +49,8 @@ const BusinessAddress = () => {
 		setLGA('')
 	}
 
-	useEffect(()=>{
-		if (country?.name?.common && state && (LGAs.length && LGA) && streetNo) {
+	useEffect(() => {
+		if (country?.name?.common && state && LGAs.length && LGA && streetNo) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
@@ -59,36 +58,85 @@ const BusinessAddress = () => {
 	}, [state, LGA, streetNo])
 
 	return (
-		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
+		<AuthLayout
+			LHSRequired={true}
+			fullScreenLoader={fullScreenLoader}
+			btn={{ text: 'Log in', url: '/auth/login' }}
+			pageTitle={'Signup'}
+		>
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={()=>push('/auth/signup/business')} />
+						<BackBtn emitClick={() => push('/auth/signup/business')} />
 						<h1 className="title">Add your business address 🏠</h1>
-						<h4 className="sub-title media-max-700">Kindly provide personal information</h4>
+						<h4 className="sub-title media-max-700">
+              Kindly provide personal information
+						</h4>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
-								<div className={`${styles.form_group} ${ctaClicked && !country ? styles.error : ''}`}>
-									<label htmlFor="country">
-                      Country
-									</label>
-									<CountrySelect fieldError={ctaClicked && !country?.name?.common} emitCountry={(e)=>handleSetCountry(e)} />
-									{ctaClicked && !country?.name?.common ? <FeedbackInfo message='Country is needed' /> : <></>}
+								<div
+									className={`${styles.form_group} ${
+										ctaClicked && !country ? styles.error : ''
+									}`}
+								>
+									<label htmlFor="country">Country</label>
+									<CountrySelect
+										fieldError={ctaClicked && !country?.name?.common}
+										emitCountry={(e) => handleSetCountry(e)}
+									/>
+									{ctaClicked && !country?.name?.common ? (
+										<FeedbackInfo message="Country is needed" />
+									) : (
+										<></>
+									)}
 								</div>
 								<div className={styles.form_group}>
 									<label>Select State</label>
-									<CustomSelect disabled={!country?.name?.common} fieldError={ctaClicked && !state} selectOptions={states} selectedOption={state} emitSelect={(e)=>handleSetState(e)} />
-									{ctaClicked && !state ? <FeedbackInfo message='State is needed' /> : <></>}
+									<CustomSelect
+										disabled={!country?.name?.common}
+										fieldError={ctaClicked && !state}
+										selectOptions={states}
+										selectedOption={state}
+										emitSelect={(e) => handleSetState(e)}
+									/>
+									{ctaClicked && !state ? (
+										<FeedbackInfo message="State is needed" />
+									) : (
+										<></>
+									)}
 								</div>
 								<div className={styles.form_group}>
 									<label>Local Govt.</label>
-									<CustomSelect disabled={!state} fieldError={ctaClicked && (state && !LGA && LGAs.length)} selectOptions={LGAs} selectedOption={LGA} emitSelect={(e)=>setLGA(e)} />
-									{ctaClicked && (state && !LGA && LGAs.length) ? <FeedbackInfo message='LGA is needed' /> : <></>}
+									<CustomSelect
+										disabled={!state}
+										fieldError={ctaClicked && state && !LGA && LGAs.length}
+										selectOptions={LGAs}
+										selectedOption={LGA}
+										emitSelect={(e) => setLGA(e)}
+									/>
+									{ctaClicked && state && !LGA && LGAs.length ? (
+										<FeedbackInfo message="LGA is needed" />
+									) : (
+										<></>
+									)}
 								</div>
-								<div className={`${styles.form_group} ${ctaClicked && !streetNo ? styles.error : ''}`}>
+								<div
+									className={`${styles.form_group} ${
+										ctaClicked && !streetNo ? styles.error : ''
+									}`}
+								>
 									<label htmlFor="street-no">Street no.</label>
-									<input id="street-no" placeholder="91, Lagos road" value={streetNo} onChange={(e)=>setStreetNo(e.target.value)} />
-									{ctaClicked && !streetNo? <FeedbackInfo message='Street No. is needed' /> : <></>}
+									<input
+										id="street-no"
+										placeholder="91, Lagos road"
+										value={streetNo}
+										onChange={(e) => setStreetNo(e.target.value)}
+									/>
+									{ctaClicked && !streetNo ? (
+										<FeedbackInfo message="Street No. is needed" />
+									) : (
+										<></>
+									)}
 								</div>
 							</div>
 							<div className={styles.action_ctn}>

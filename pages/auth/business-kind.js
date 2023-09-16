@@ -12,12 +12,12 @@ const BusinessKind = () => {
 	const onSetOption = (value) => {
 		setOption(value)
 	}
-  
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		router.push('/kyc/business-type')
 	}
-  
+
 	return (
 		<AuthLayout pageTitle={'Business Kind'}>
 			<div className={styles.auth}>
@@ -29,7 +29,7 @@ const BusinessKind = () => {
 								<ChoiceCard emitSetOption={onSetOption} />
 							</div>
 							<div className={`${styles.action_ctn} ${styles.end}`}>
-								<PrimaryBtn disabled={option === undefined} text='Continue' />
+								<PrimaryBtn disabled={option === undefined} text="Continue" />
 							</div>
 						</form>
 					</div>

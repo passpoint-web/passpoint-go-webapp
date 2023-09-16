@@ -18,6 +18,17 @@ const Login = () => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [password, setPassword] = useState('')
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
+	// const [payload, setPayload] = useState({
+	// 	email: '',
+	// 	password: '',
+	// })
+
+	// const handleChange = (e) => {
+	// 	setPayload((prevState) => ({
+	// 		...prevState,
+	// 		[e.target.name]: e.target.value,
+	// 	}))
+	// }
 
 
 	const handleSubmit = (e) =>{
@@ -27,7 +38,7 @@ const Login = () => {
 			return
 		}
 		setFullScreenLoader(true)
-		window.setTimeout(()=>{
+		window.setTimeout(() => {
 			setFullScreenLoader(false)
 			push('/auth/signup/business/address')
 		}, 3000)
@@ -50,11 +61,17 @@ const Login = () => {
 
 
 	return (
-		<AuthLayout fullScreenLoader={fullScreenLoader} btn={{text: 'Sign up', url: '/auth/signup'}} pageTitle={'Login'}>
+		<AuthLayout
+			fullScreenLoader={fullScreenLoader}
+			btn={{ text: 'Sign up', url: '/auth/signup' }}
+			pageTitle={'Login'}
+		>
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<h1 className="title"><span>Hi,</span> 👋🏾 Welcome back</h1>
+						<h1 className="title">
+							<span>Hi,</span> 👋🏾 Welcome back
+						</h1>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !validEmail(email) ? styles.error : ''}`}>
