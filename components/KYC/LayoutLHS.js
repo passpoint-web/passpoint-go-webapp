@@ -35,7 +35,8 @@ const KYCLayoutLHS = () => {
 		<div className={styles.kyc_content_lhs}>
 			<div className={styles.inner}>
 				{kycLevels.map((e, index)=>(
-					<KYCLevel key={index} kyc={{...e, level: index+1}} />
+					<KYCLevel key={index}
+						kyc={{...e, level: index+1}} />
 				))}
 			</div>
 		</div>

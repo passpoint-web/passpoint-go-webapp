@@ -72,9 +72,10 @@ const IndividualInformation = () => {
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={()=>push('/auth/signup')} />
+						<BackBtn onClick={()=>push('/auth/signup')} />
 						<h1 className="title">Provide Business Information</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_row}>
 									<div className={styles.form_group}>
@@ -146,21 +147,24 @@ const IndividualInformation = () => {
 								</div>
 							</div>
 							<div className={styles.terms}>
-								<CheckBox value={checked} onChange={toggleChecked} />
+								<CheckBox value={checked}
+									onChange={toggleChecked} />
 								<p>
                   By clicking, you indicate your role as the owner or manager of
                   the business
 								</p>
 							</div>
 							<div className={styles.terms}>
-								<CheckBox value={checked} onChange={toggleChecked} />
+								<CheckBox value={checked}
+									onChange={toggleChecked} />
 								<p>
                   By clicking, you accept our <a href="#">Terms of use</a> and{' '}
 									<a href="#">Privacy Policy</a>
 								</p>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid} text="Open account" />
+								<PrimaryBtn disabled={!allFieldsValid}
+									text="Open account" />
 							</div>
 						</form>
 					</div>

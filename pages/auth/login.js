@@ -72,22 +72,29 @@ const Login = () => {
 						<h1 className="title">
 							<span>Hi,</span> 👋🏾 Welcome back
 						</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={`${styles.form_group} ${ctaClicked && !validEmail(email) ? styles.error : ''}`}>
 									<label htmlFor="email-address">Email address</label>
-									<input placeholder="kelechi@gmail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+									<input placeholder="kelechi@gmail.com"
+										id="email-address"
+										type="email"
+										value={email}
+										onChange={(e)=>setEmail(e.target.value)} />
 									{ctaClicked && !validEmail(email) ? <FeedbackInfo message={!email ? 'Email is needed' : !validEmail(email) ? 'Valid email is required' : 'Email is needed'} /> : <></>}
 								</div>
 								<div className={`${styles.form_group} ${ctaClicked && !password ? styles.error : ''}`}>
 									<label htmlFor="password">Password</label>
-									<PasswordField passwordStrengthNeeded={false} emitPassword={(e)=>setPassword(e)} />
+									<PasswordField passwordStrengthNeeded={false}
+										emitPassword={(e)=>setPassword(e)} />
 									{ctaClicked && !password ? <FeedbackInfo message='Password is needed' /> : <></>}
 								</div>
 							</div>
 							<div className={styles.action_ctn}>
 								<PrimaryBtn text='Log in' />
-								<p>Forgot password? <Link href="/auth/forgot-password" text='Reset it'>Reset it</Link></p>
+								<p>Forgot password? <Link href="/auth/forgot-password"
+									text='Reset it'>Reset it</Link></p>
 							</div>
 						</form>
 					</div>

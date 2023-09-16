@@ -24,12 +24,14 @@ const BusinessKind = () => {
 				<div className={`${styles.inner} ${styles.business_type}`}>
 					<div className={styles.center}>
 						<h1 className="center">What kind of business are you?</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<ChoiceCard emitSetOption={onSetOption} />
 							</div>
 							<div className={`${styles.action_ctn} ${styles.end}`}>
-								<PrimaryBtn disabled={option === undefined} text="Continue" />
+								<PrimaryBtn disabled={option === undefined}
+									text="Continue" />
 							</div>
 						</form>
 					</div>

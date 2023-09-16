@@ -95,17 +95,21 @@ const BusinessInformation = () => {
 	])
 
 	return (
-		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
+		<AuthLayout LHSRequired={true}
+			fullScreenLoader={fullScreenLoader}
+			btn={{text: 'Log in', url: '/auth/login'}}
+			pageTitle={'Signup'}>
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					{/* <div className={styles.lhs}> */}
 					<div className={styles.center}>
-						<BackBtn emitClick={()=>push('/auth/signup')} />
+						<BackBtn onClick={()=>push('/auth/signup')} />
 						<h1 className="title">Provide Business Information</h1>
 						<h4 className="sub-title media-max-700">
               We want to know how you want to operate on Passpoint
 						</h4>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<Input
 									label="Business Name"
@@ -179,11 +183,12 @@ const BusinessInformation = () => {
 								</Input>
 							</div>
 							<div className={`${styles.terms} ${ctaClicked && !checked ? styles.error : ''}`}>
-								<CheckBox error={ctaClicked && !checked} value={checked}  onChange={toggleChecked} />
+								<CheckBox error={ctaClicked && !checked}
+									value={checked}
+									onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>
-								{/* <PrimaryBtn disabled={!allFieldsValid} text='Open account' /> */}
 								<PrimaryBtn text="Open account" />
 							</div>
 						</form>

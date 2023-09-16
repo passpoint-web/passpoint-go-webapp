@@ -13,7 +13,9 @@ const AuthHeader = ({ btn }) => {
 				</div>
 				{Object.keys(btn).length ? (
 					<div className={styles.rhs}>
-						<SecondaryLink type="medium" href={`${btn.url}`} text={btn.text} />
+						<SecondaryLink type="medium"
+							href={`${btn.url}`}
+							text={btn.text} />
 					</div>
 				) : (
 					<></>

@@ -4,7 +4,8 @@ import Link from 'next/link'
 
 const PasspointLogo = () => {
 	return (
-		<Link href="/auth/login" className={styles.logo}>
+		<Link href="/auth/login"
+			className={styles.logo}>
 			<Logo />
 		</Link>
 	)

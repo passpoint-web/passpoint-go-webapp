@@ -73,12 +73,13 @@ const BusinessInformation = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={() => push('/auth/signup/individual')} />
+						<BackBtn onClick={() => push('/auth/signup/individual')} />
 						<h1 className="title">Register your business with Passpoint</h1>
 						<h4 className="sub-title media-max-700">
               We want to know how you want to operate on Passpoint
 						</h4>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_group}>
 									<label>Business Industry</label>

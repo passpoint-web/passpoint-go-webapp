@@ -66,7 +66,8 @@ const CustomSelect = ({
 					</svg>
 				</button>
 				{showSelect ? (
-					<div id={id} className={`${styles.select} dropdown`}>
+					<div id={id}
+						className={`${styles.select} dropdown`}>
 						{selectOptions.map((option, index) => (
 							<div
 								key={index}

@@ -99,12 +99,13 @@ const BusinessAddress = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={() => push('/auth/signup/individual/business')} />
+						<BackBtn onClick={() => push('/auth/signup/individual/business')} />
 						<h1 className="title">Add Address</h1>
 						<h4 className="sub-title media-max-700">
               Kindly provide personal information
 						</h4>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div
 									className={`${styles.form_group} ${
@@ -184,7 +185,8 @@ const BusinessAddress = () => {
 								</div>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid} text={'Open account'} />
+								<PrimaryBtn disabled={!allFieldsValid}
+									text={'Open account'} />
 							</div>
 						</form>
 					</div>

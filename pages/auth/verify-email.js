@@ -24,12 +24,13 @@ const VerifyEmail = () => {
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={()=>push('/auth/signup')} />
+						<BackBtn onClick={()=>push('/auth/signup')} />
 						<h1>Verify email address</h1>
 						<p>
               We sent a 6 digit code to kelechi****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification
 						</p>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_group}>
 									<div className={styles.otp_input}>
@@ -45,7 +46,8 @@ const VerifyEmail = () => {
 							</div>
 							<div className={styles.action_ctn}>
 								<p>Didn’t receive any code? <TertiaryBtn text='Resend OTP'/></p>
-								<PrimaryBtn disabled={otp.length !== 6} text='Verify OTP' />
+								<PrimaryBtn disabled={otp.length !== 6}
+									text='Verify OTP' />
 							</div>
 						</form>
 					</div>

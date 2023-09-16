@@ -43,14 +43,15 @@ const VerifyEmail = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={() => push('/auth/signup/business/address')} />
+						<BackBtn onClick={() => push('/auth/signup/business/address')} />
 						<h1 className="title">Verify Email Address</h1>
 						<h4 className="sub-title">
               We sent a 6 digit code to daniel****@gmail.com, please enter the
               code below, or click the verification link in your mail to
               complete verification{' '}
 						</h4>
-						<form className={styles.form} onSubmit={handleVerificationSubmit}>
+						<form className={styles.form}
+							onSubmit={handleVerificationSubmit}>
 							<div className={styles.inner}>
 								<div
 									className={`${styles.form_group} ${

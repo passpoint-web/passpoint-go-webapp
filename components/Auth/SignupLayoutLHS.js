@@ -73,7 +73,8 @@ const SignupLayoutLHS = () => {
 		<div className={styles.auth_content_lhs}>
 			<div className={styles.inner}>
 				{levelsToDisplay.map((e, index) => (
-					<SignupLevel key={index} auth={{ ...e, level: index + 1 }} />
+					<SignupLevel key={index}
+						auth={{ ...e, level: index + 1 }} />
 				))}
 			</div>
 		</div>

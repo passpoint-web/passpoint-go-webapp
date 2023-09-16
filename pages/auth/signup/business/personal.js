@@ -56,12 +56,13 @@ const BusinessPersonalInfo = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={() => push('/auth/signup/business/address')} />
+						<BackBtn onClick={() => push('/auth/signup/business/address')} />
 						<h1 className="title">Personal Information</h1>
 						<h4 className="sub-title media-max-700">
               Kindly provide personal information
 						</h4>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_row}>
 									<div className={styles.form_group}>
@@ -96,21 +97,24 @@ const BusinessPersonalInfo = () => {
 									/>
 								</div>
 								<div className={styles.terms}>
-									<CheckBox value={checked} onChange={toggleChecked} />
+									<CheckBox value={checked}
+										onChange={toggleChecked} />
 									<p>
                     By clicking, you indicate your role as the owner or manager
                     of the business
 									</p>
 								</div>
 								<div className={styles.terms}>
-									<CheckBox value={checked} onChange={toggleChecked} />
+									<CheckBox value={checked}
+										onChange={toggleChecked} />
 									<p>
                     By clicking, you accept our <a href="#">Terms of use</a> and{' '}
 										<a href="#">Privacy Policy</a>
 									</p>
 								</div>
 								<div className={styles.action_ctn}>
-									<PrimaryBtn disabled={!allFieldsValid} text="Open account" />
+									<PrimaryBtn disabled={!allFieldsValid}
+										text="Open account" />
 								</div>
 							</div>
 						</form>
