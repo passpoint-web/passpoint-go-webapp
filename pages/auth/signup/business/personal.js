@@ -97,7 +97,7 @@ const BusinessPersonalInfo = () => {
 								</div>
 								<Input
 									id="phone"
-									label="Phone number"
+									label="Phone Number"
 									error={ctaClicked && !payload.phone}
 									errorMsg="Phone is required"
 								>
