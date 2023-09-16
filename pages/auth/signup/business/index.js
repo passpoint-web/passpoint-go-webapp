@@ -13,7 +13,7 @@ import CheckBox from '@/components/Custom/Check/Check'
 import CustomSelect from '@/components/Custom/Select/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-
+import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
 const BusinessInformation = () => {
 	const { push } = useRouter()
 
@@ -23,34 +23,22 @@ const BusinessInformation = () => {
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
-	const [businessName, setBusinessName] = useState('')
-	const [businessId, setBusinessId] = useState('')
-	const [businessEmail, setBusinessEmail] = useState('')
-	const [password, setPassword] = useState('')
 	const [checked, setChecked] = useState(false)
-	const [businessType, setBusinessType] = useState(undefined)
-	const [businessIndustry, setBusinessIndustry] = useState(undefined)
+	const [payload, setPayload] = useState({
+		businessName: '',
+		businessEmail: '',
+		businessType: '',
+		businessIndustry: '',
+		businessId: '',
+		password: ''
+	})
 
-	const businessTypes = [
-		'Sole Proprietorship',
-		'Partnership',
-		'Limited Liability Company (LLC)',
-		'Cooperation',
-		'Cooperative',
-		'Limited Liability Partnership (LLP)',
-	]
-
-	const businessIndustries = [
-		'Travel Agents',
-		'Tour Operators',
-		'Hospitality Service Providers (Hoteliers, rentals, Restaurants)',
-	]
-
-	const handleBusinessTypeSelect = (e) => {
-		setBusinessType(e)
-	}
-	const handleBusinessIndustrySelect = (e) => {
-		setBusinessIndustry(e)
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
 	}
 
 	const handleSubmit = async (e) => {
@@ -71,6 +59,14 @@ const BusinessInformation = () => {
 	}
 
 	useEffect(() => {
+		const {
+			businessName,
+			businessEmail,
+			businessType,
+			businessIndustry,
+			businessId,
+			password
+		} = payload
 		const conditionsMet =
       businessId &&
       businessName &&
@@ -85,13 +81,7 @@ const BusinessInformation = () => {
 			setAllFieldsValid(false)
 		}
 	}, [
-		businessId,
-		businessName,
-		businessIndustry,
-		businessType,
-		businessEmail,
-		password,
-		checked,
+		payload
 	])
 
 	return (
@@ -114,49 +104,57 @@ const BusinessInformation = () => {
 								<Input
 									label="Business Name"
 									id="business-name"
-									name="business-name"
+									name="businessName"
 									placeholder="John Travels"
-									value={businessName}
-									onChange={(e) => setBusinessName(e.target.value)}
-									error={ctaClicked && !businessName}
+									value={payload.businessName}
+									onChange={handleChange}
+									error={ctaClicked && !payload.businessName}
 									errorMsg={'Business name is required'}
 								/>
 								<Input
 									label="Business Email Address"
 									id="business-email-address"
-									name="business-email"
+									name="businessEmail"
 									placeholder="John@mail.com"
-									value={businessEmail}
-									onChange={(e) => setBusinessEmail(e.target.value)}
-									error={ctaClicked && !validEmail(businessEmail)}
-									errorMsg={!businessEmail ? 'Business email is required' : !validEmail(businessEmail) ? 'Valid business email is required' : 'Business email is required'}
+									value={payload.businessEmail}
+									onChange={handleChange}
+									error={ctaClicked && !validEmail(payload.businessEmail)}
+									errorMsg={!payload.businessEmail ? 'Business email is required' : !validEmail(payload.businessEmail) ? 'Valid business email is required' : 'Business email is required'}
 								/>
 								<Input
 									id="business-type"
 									label="Business Type"
-									error={ctaClicked && !businessType}
+									error={ctaClicked && !payload.businessType}
 									errorMsg="Business Type is required"
 								>
 									<CustomSelect
 										id="business-type"
 										selectOptions={businessTypes}
-										selectedOption={businessType}
-										fieldError={ctaClicked && !businessType}
-										emitSelect={handleBusinessTypeSelect}
+										selectedOption={payload.businessType}
+										fieldError={ctaClicked && !payload.businessType}
+										emitSelect={(option) =>
+											handleChange({
+												target: { name: 'businessType', value: option },
+											})
+										}
 									/>
 								</Input>
 								<Input
 									id="business-industry"
 									label="Business Industry"
-									error={ctaClicked && !businessIndustry}
+									error={ctaClicked && !payload.businessIndustry}
 									errorMsg="Business Industry is required"
 								>
 									<CustomSelect
 										id="business-type"
 										selectOptions={businessIndustries}
-										selectedOption={businessIndustry}
-										fieldError={ctaClicked && !businessIndustry}
-										emitSelect={handleBusinessIndustrySelect}
+										selectedOption={payload.businessIndustry}
+										fieldError={ctaClicked && !payload.businessIndustry}
+										emitSelect={(option) =>
+											handleChange({
+												target: { name: 'businessIndustry', value: option },
+											})
+										}
 									/>
 								</Input>
 								<Input
@@ -164,9 +162,9 @@ const BusinessInformation = () => {
 									id="business-id"
 									name="businessId"
 									placeholder="RC 0123456"
-									value={businessId}
-									onChange={(e) => setBusinessId(e.target.value)}
-									error={ctaClicked && !businessId}
+									value={payload.businessId}
+									onChange={handleChange}
+									error={ctaClicked && !payload.businessId}
 									errorMsg="Business ID No. required"
 								/>
 								<Input
@@ -174,11 +172,15 @@ const BusinessInformation = () => {
 									id="password"
 									name="password"
 									placeholder="Password"
-									error={ctaClicked && !password}
+									error={ctaClicked && !payload.password}
 								>
 									<PasswordField
-										errorField={ctaClicked && !password}
-										emitPassword={(e) => setPassword(e)}
+										errorField={ctaClicked && !payload.password}
+										emitPassword={(e) =>
+											handleChange({
+												target: { name: 'password', value: e },
+											})
+										}
 									/>
 								</Input>
 							</div>
