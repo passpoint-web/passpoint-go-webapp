@@ -8,7 +8,6 @@ import Search from './Search'
 
 const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
-  
 	const [countries, setCountries] = useState([])
 	const [filteredCountries, setFilteredCountries] = useState([])
 	const [country, setCountry] = useState({})
@@ -48,14 +47,14 @@ const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 
 	const searchCountry = (item)=> {
 		setSearch(item)
-		setFilteredCountries(countries.filter((c) => { 
+		setFilteredCountries(countries.filter((c) => {
 			return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
 		}
 		))
 		const countriesCtn = document.getElementById('signup_countries')
 		countriesCtn.scrollTop = 0
 	}
-  
+
 	useEffect(()=>{
 		retrieveCountries()
 	}, [])
@@ -71,7 +70,7 @@ const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 			<div className={styles.custom_country_select }>
 				{/* {showCountriesSelect ? <OverlayScreen onClick={hideCountrySelect} /> : <></>} */}
 				<button className={`${showCountriesSelect ? styles.active : ''}`} onClick={handleClick}>
-					{!countries?.name ? 
+					{!countries?.name ?
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
 								<Image src={country?.flags?.png} alt={country?.name?.common} width="20" height="20" className={styles.img} />

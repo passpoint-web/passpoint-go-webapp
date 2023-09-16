@@ -27,7 +27,7 @@ const VerifyEmail = () => {
 						<BackBtn emitClick={()=>push('/auth/signup')} />
 						<h1>Verify email address</h1>
 						<p>
-              We sent a 6 digit code to kelechi****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification 
+              We sent a 6 digit code to kelechi****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification
 						</p>
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<div className={styles.inner}>

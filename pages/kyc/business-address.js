@@ -35,7 +35,7 @@ const BusinessAddress = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		push('/kyc/verify-bvn') 
+		push('/kyc/verify-bvn')
 	}
 
 	useEffect(()=>{

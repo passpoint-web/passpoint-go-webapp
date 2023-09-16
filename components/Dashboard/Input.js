@@ -9,7 +9,7 @@ const Input = ({children, label, error, errorMsg, ...props}) => {
 				}`}
 			>
 				<label htmlFor={props.id}>{label}</label>
-				{children || <input {...props} />} 
+				{children || <input {...props} />}
 				{error && errorMsg ? <FeedbackInfo message={errorMsg} /> : <></>}
 			</div>
 		</>

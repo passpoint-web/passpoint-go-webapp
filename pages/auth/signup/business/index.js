@@ -11,7 +11,6 @@ import PasswordField from '@/components/Auth/PasswordField'
 import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
 import CustomSelect from '@/components/Custom/Select/Select'
-import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 

@@ -8,7 +8,7 @@ import ChoiceCard from '@/components/BusinessKind/ChoiceCard'
 import FeedbackInfo from '@/components/FeedbackInfo'
 
 const Signup = () => {
-	const { 
+	const {
 		push
 	} = useRouter()
 	const [option, setOption] = useState({})

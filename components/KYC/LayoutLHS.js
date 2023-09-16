@@ -31,7 +31,7 @@ const KYCLayoutLHS = () => {
 			completed: false
 		},
 	]
-	return ( 
+	return (
 		<div className={styles.kyc_content_lhs}>
 			<div className={styles.inner}>
 				{kycLevels.map((e, index)=>(

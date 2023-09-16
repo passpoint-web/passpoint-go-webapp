@@ -126,9 +126,9 @@ const ForgotPassword = () => {
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						{
-							currentLevel === 'forgot' ? 
+							currentLevel === 'forgot' ?
 								Forgot() :
-								currentLevel === 'verify' ? 
+								currentLevel === 'verify' ?
 									Verify() :
 									Reset()
 						}

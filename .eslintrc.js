@@ -33,6 +33,7 @@ module.exports = {
 		'linebreak-style': ['error','unix'],
 		quotes: ['error','single'],
 		semi: ['error','never'],
+		'no-trailing-spaces': ['error', { 'skipBlankLines': false }],
 		'react/react-in-jsx-scope': 'off'
 	}
 }
