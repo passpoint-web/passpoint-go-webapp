@@ -1,8 +1,8 @@
 
-const OverlayScreen = ({emitClick}) => {
+const OverlayScreen = ({onClick}) => {
 	return (
 		<div className="overlay_screen"
-			onClick={emitClick} />
+			onClick={onClick} />
 	)
 }
 

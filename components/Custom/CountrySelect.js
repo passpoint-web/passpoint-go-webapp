@@ -76,7 +76,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 		<>
 			<div className={styles.custom_country_select}>
 				{showCountriesSelect ? (
-					<OverlayScreen emitClick={hideCountrySelect} />
+					<OverlayScreen onClick={hideCountrySelect} />
 				) : (
 					<></>
 				)}

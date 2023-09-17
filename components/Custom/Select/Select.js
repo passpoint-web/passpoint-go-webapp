@@ -36,7 +36,7 @@ const CustomSelect = ({
 			<div
 				className={`${styles.custom_select} ${fieldError ? styles.error : ''}`}
 			>
-				{showSelect ? <OverlayScreen emitClick={hideSelect} /> : <></>}
+				{showSelect ? <OverlayScreen onClick={hideSelect} /> : <></>}
 				<button
 					disabled={disabled}
 					className={`${showSelect ? styles.active : ''}`}
