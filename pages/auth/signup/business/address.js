@@ -7,8 +7,7 @@ import AuthLayout from '@/app/auth-layout'
 import CountrySelect from '@/components/Custom/CountrySelect'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-// eslint-disable-next-line no-undef
-const CS = require('countrycitystatejson')
+import { CS } from '@/utils/CONSTANTS'
 
 const BusinessAddress = () => {
 	const { push } = useRouter()

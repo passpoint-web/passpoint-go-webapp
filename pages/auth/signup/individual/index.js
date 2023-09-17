@@ -9,15 +9,17 @@ import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
 import PhoneInput from 'react-phone-input-2'
 import BackBtn from '@/components/Btn/Back'
+import Input from '@/components/Dashboard/Input'
 
 const IndividualInformation = () => {
 	const { push } = useRouter()
 	const { validEmail } = functions
-	const [checked, setChecked] = useState(false)
-	const [password, setPassword] = useState('')
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
+	const [termsAccepted, setTermsAccepted] = useState(false)
+	const [roleConfirmed, setRoleConfirmed] = useState(false)
+
 	const [payload, setPayload] = useState({
 		lastName: '',
 		firstName: '',
@@ -33,28 +35,29 @@ const IndividualInformation = () => {
 			[name]: value,
 		}))
 	}
-	const toggleChecked = () => {
-		setChecked(!checked)
-	}
 
 	useEffect(() => {
+		const {firstName, lastName, password, email} = payload
 		const conditionsMet =
-      payload.lastName &&
-      payload.firstName &&
-      validEmail(payload.email) &&
+      lastName &&
+      firstName &&
+      validEmail(email) &&
       password &&
-      checked
+			termsAccepted &&
+			roleConfirmed
 		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [payload, password, checked])
+	}, [payload, termsAccepted, roleConfirmed])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		console.log(payload)
 		setCtaClicked(true)
+		if (!allFieldsValid) {
+			return
+		}
 		setFullScreenLoader(true)
 		window.setTimeout(() => {
 			setFullScreenLoader(false)
@@ -73,98 +76,92 @@ const IndividualInformation = () => {
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						<BackBtn onClick={()=>push('/auth/signup')} />
-						<h1 className="title">Provide Business Information</h1>
+						<h1 className="title">Personal Information</h1>
 						<form className={styles.form}
 							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_row}>
-									<div className={styles.form_group}>
-										<label htmlFor="last-name">Last name</label>
-										<input
-											placeholder="John"
-											id="last-name"
-											name="lastName"
-											value={payload.lastName}
-											onChange={handleChange}
-										/>
-									</div>
-									<div className={styles.form_group}>
-										<label htmlFor="first-name">First name</label>
-										<input
-											placeholder="Kelechi"
-											id="first-name"
-											name="firstName"
-											value={payload.firstName}
-											onChange={handleChange}
-										/>
-									</div>
-								</div>
-								<div
-									className={`${styles.form_group} ${
-										ctaClicked && !validEmail(payload.email) ? styles.error : ''
-									}`}
-								>
-									<label htmlFor="email">Email address</label>
-									<input
-										placeholder="kelechi@gmail.com"
-										id="email"
-										name="email"
-										value={payload.email}
+									<Input
+										label="Last Name"
+										id="last-name"
+										name="lastName"
+										placeholder="John"
+										value={payload.lastName}
 										onChange={handleChange}
+										error={ctaClicked && !payload.lastName}
+										errorMsg={'Last name is required'}
+									/>
+									<Input
+										label="First Name"
+										id="first-name"
+										name="firstName"
+										placeholder="Travels"
+										value={payload.firstName}
+										onChange={handleChange}
+										error={ctaClicked && !payload.firstName}
+										errorMsg={'First name is required'}
 									/>
 								</div>
-								<div
-									className={`${styles.form_group} ${
-										ctaClicked && !payload.phone ? styles.error : ''
-									}`}
+								<Input
+									label="Email Address"
+									id="email-address"
+									name="email"
+									placeholder="John@mail.com"
+									value={payload.email}
+									onChange={handleChange}
+									error={ctaClicked && !validEmail(payload.email)}
+									errorMsg={!payload.email ? 'Email is required' : !validEmail(payload.email) ? 'Valid email is required' : 'Email is required'}
+								/>
+								<Input
+									id="phone"
+									label="Phone Number"
+									error={ctaClicked && !payload.phone}
+									errorMsg="Phone is required"
 								>
-									<label htmlFor="phone-number">Phone number</label>
-									<div>
-										<PhoneInput
-											country={'ng'}
-											name="phone"
-											value={payload.phone}
-											onChange={(phoneValue) => {
-												setPayload((prevState) => ({
-													...prevState,
-													phone: phoneValue,
-												}))
-											}}
-										/>
-									</div>
-								</div>
-								<div
-									className={`${styles.form_group} ${
-										ctaClicked && !password ? styles.error : ''
-									}`}
+									<PhoneInput
+										country={'ng'}
+										value={payload.phone}
+										onChange={(phone) => handleChange({ target: { name: 'phone', value: phone } })}
+									/>
+								</Input>
+								<Input
+									label="Password"
+									id="password"
+									name="password"
+									placeholder="Password"
+									error={ctaClicked && !payload.password}
 								>
-									<label htmlFor="password">Password</label>
 									<PasswordField
-										errorField={ctaClicked && !password}
-										emitPassword={(e) => setPassword(e)}
-										setPayload={setPayload}
+										errorField={ctaClicked && !payload.password}
+										emitPassword={(e) =>
+											handleChange({
+												target: { name: 'password', value: e },
+											})
+										}
 									/>
+								</Input>
+								<div className={`${styles.terms} ${ctaClicked && !roleConfirmed ? styles.error : ''}`}>
+									<CheckBox value={roleConfirmed}
+										error={ctaClicked && !roleConfirmed}
+										onChange={()=>setRoleConfirmed(!roleConfirmed)} />
+									<p>
+                    By clicking, you indicate your role as the owner or manager
+                    of the business
+									</p>
 								</div>
-							</div>
-							<div className={styles.terms}>
-								<CheckBox value={checked}
-									onChange={toggleChecked} />
-								<p>
-                  By clicking, you indicate your role as the owner or manager of
-                  the business
-								</p>
-							</div>
-							<div className={styles.terms}>
-								<CheckBox value={checked}
-									onChange={toggleChecked} />
-								<p>
-                  By clicking, you accept our <a href="#">Terms of use</a> and{' '}
-									<a href="#">Privacy Policy</a>
-								</p>
-							</div>
-							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid}
-									text="Open account" />
+								<div className={`${styles.terms} ${ctaClicked && !termsAccepted ? styles.error : ''}`}>
+									<CheckBox value={termsAccepted}
+										error={ctaClicked && !termsAccepted}
+										onChange={()=>setTermsAccepted(!termsAccepted)} />
+									<p>
+                    By clicking, you accept our <a href="#">Terms of use</a> and{' '}
+										<a href="#">Privacy Policy</a>
+									</p>
+								</div>
+								<div className={styles.action_ctn}>
+									<PrimaryBtn text="Open account" />
+								</div>
+
 							</div>
 						</form>
 					</div>

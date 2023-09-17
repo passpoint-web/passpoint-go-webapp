@@ -6,9 +6,8 @@ import CustomSelect from '@/components/Custom/Select/Select'
 import AuthLayout from '@/app/auth-layout'
 import CountrySelect from '@/components/Custom/CountrySelect'
 import BackBtn from '@/components/Btn/Back'
-import FeedbackInfo from '@/components/FeedbackInfo'
-// eslint-disable-next-line no-undef
-const CS = require('countrycitystatejson')
+import Input from '@/components/Dashboard/Input'
+import { CS } from '@/utils/CONSTANTS'
 
 const BusinessAddress = () => {
 	const { push } = useRouter()
@@ -18,52 +17,37 @@ const BusinessAddress = () => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [LGAs, setLGAs] = useState([])
 	const [payload, setPayload] = useState({
-		streetNo: '',
-		lga: undefined,
-		country: undefined,
-		state: undefined,
+		country: '',
+		state: '',
+		LGA: '',
+		streetNo: ''
 	})
 
-	const handleChange = (name, value) => {
+	const handleChange = (e) => {
+		const { name, value } = e.target
 		setPayload((prevState) => ({
 			...prevState,
-			[name]: value,
+			[name]: value
 		}))
-
-		// Clear the LGA when changing the State
-		if (name === 'state') {
+		const resetState = name === 'country' && value.name.common !== payload.country?.name?.common
+		const resetLGA = name === 'state' && value !== payload.state
+		if (resetState) {
 			setPayload((prevState) => ({
 				...prevState,
-				lga: '',
+				state: '',
 			}))
 		}
-	}
 
-	const loadLGAs = (selectedState) => {
-		if (selectedState) {
-			// Use the selectedState to load the corresponding LGAs
-			const lgas = CS.getCities(payload.country?.cca2, selectedState)
-			setLGAs(lgas)
-		} else {
-			// Clear the LGAs if no State is selected
-			setLGAs([])
-		}
-	}
-
-	const loadStates = (selectedCountry) => {
-		if (selectedCountry) {
-			// Use the selectedCountry to load the corresponding states
-			const countryStates = CS.getStatesByShort(selectedCountry.cca2)
-			setStates(countryStates)
-		} else {
-			// Clear the states if no country is selected
-			setStates([])
+		if (resetState || resetLGA) {
+			setPayload((prevState) => ({
+				...prevState,
+				LGA: '',
+			}))
 		}
 	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log(payload)
 		setCtaClicked(true)
 		if (!allFieldsValid) {
 			return
@@ -75,14 +59,18 @@ const BusinessAddress = () => {
 		}, 3000)
 	}
 
+	useEffect(()=>{
+		setStates(CS.getStatesByShort(payload?.country?.cca2)) // cca2: country's shortname
+	},[payload.country?.name?.common])
+
+	useEffect(()=>{
+		setLGAs(CS.getCities(payload?.country?.cca2, payload.state))
+	},[payload.state])
+
 	useEffect(() => {
-		if (
-			payload.country?.name?.common &&
-      payload.state &&
-      LGAs.length &&
-      payload.lga &&
-      payload.streetNo
-		) {
+		const {country, state, LGA, streetNo} = payload
+		const LGANeeded = LGAs?.length ? LGA : false
+		if (country?.name?.common && state && LGANeeded && streetNo) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
@@ -99,94 +87,73 @@ const BusinessAddress = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn onClick={() => push('/auth/signup/individual/business')} />
-						<h1 className="title">Add Address</h1>
+						<BackBtn onClick={() => push('/auth/signup/business')} />
+						<h1 className="title">Add address 🏠</h1>
 						<h4 className="sub-title media-max-700">
               Kindly provide personal information
 						</h4>
 						<form className={styles.form}
 							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
-								<div
-									className={`${styles.form_group} ${
-										ctaClicked && !payload.streetNo ? styles.error : ''
-									}`}
+								<Input
+									id="country"
+									label="Country"
+									error={ctaClicked && !payload.country?.name?.common}
+									errorMsg="Country is required"
 								>
-									<label htmlFor="street-no">Street no.</label>
-									<input
-										id="street-no"
-										name="streetNo"
-										placeholder="91, Lagos road"
-										value={payload.streetNo}
-										onChange={(e) =>
-											handleChange(e.target.name, e.target.value)
-										}
+									<CountrySelect
+										fieldError={ctaClicked && !payload.country?.name?.common}
+										emitCountry={(option) =>
+											handleChange({
+												target: { name: 'country', value: option },
+											})}
 									/>
-									{ctaClicked && !payload.streetNo ? (
-										<FeedbackInfo message="Street No. is needed" />
-									) : (
-										<></>
-									)}
-								</div>
-								<div className={styles.form_group}>
-									<label>Select State</label>
+								</Input>
+								<Input
+									id="state"
+									label="Select state"
+									error={ctaClicked && !payload.state}
+									errorMsg="State is required"
+								>
 									<CustomSelect
 										disabled={!payload.country?.name?.common}
 										fieldError={ctaClicked && !payload.state}
 										selectOptions={states}
 										selectedOption={payload.state}
-										emitSelect={(option) => {
-											handleChange('state', option)
-											loadLGAs(option) // Load LGAs based on the selected State
-										}}
+										emitSelect={(e) => handleChange({
+											target: { name: 'state', value: e },
+										})}
 									/>
-									{ctaClicked && !payload.state ? (
-										<FeedbackInfo message="State is needed" />
-									) : (
-										<></>
-									)}
-								</div>
-								<div className={styles.form_group}>
-									<label>Local Govt.</label>
+								</Input>
+								<Input
+									id="LGA"
+									label="Select Local Govt."
+									error={ctaClicked && payload.state && (LGAs?.length && !payload.LGA)}
+									errorMsg="LGA is required"
+								>
 									<CustomSelect
 										disabled={!payload.state}
-										fieldError={ctaClicked && !payload.lga && LGAs.length}
+										fieldError={ctaClicked && payload.state && (LGAs?.length && !payload.LGA)}
 										selectOptions={LGAs}
-										selectedOption={payload.lga}
-										emitSelect={(option) => handleChange('lga', option)}
+										selectedOption={payload.LGA}
+										emitSelect={(e) => handleChange({
+											target: { name: 'LGA', value: e },
+										})}
 									/>
-									{ctaClicked &&
-                  payload.state &&
-                  !payload.lga &&
-                  LGAs.length ? (
-											<FeedbackInfo message="LGA is needed" />
-										) : (
-											<></>
-										)}
-								</div>
-								<div
-									className={`${styles.form_group} ${
-										ctaClicked && !payload.country ? styles.error : ''
-									}`}
-								>
-									<label htmlFor="country">Country</label>
-									<CountrySelect
-										fieldError={ctaClicked && !payload.country?.name?.common}
-										emitCountry={(option) => {
-											handleChange('country', option)
-											loadStates(option) // Load states based on the selected country
-										}}
-									/>
-									{ctaClicked && !payload.country?.name?.common ? (
-										<FeedbackInfo message="Country is needed" />
-									) : (
-										<></>
-									)}
-								</div>
+								</Input>
+								<Input
+									label="Street No."
+									id="street-no"
+									name="streetNo"
+									placeholder="91, Lagos road"
+									value={payload.streetNo}
+									onChange={handleChange}
+									error={ctaClicked && !payload.streetNo}
+									errorMsg="Street No. is required"
+								/>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid}
-									text={'Open account'} />
+								<PrimaryBtn text={'Save and continue'} />
 							</div>
 						</form>
 					</div>

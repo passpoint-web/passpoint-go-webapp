@@ -362,6 +362,7 @@ button.small {
 
 .secondary_link:hover {
   text-decoration: none;
+  background-color: var(--grey-5);
 }
 
 .tertiary_btn,
@@ -389,6 +390,10 @@ button.small {
   justify-content: center;
   gap: 8px;
   box-shadow: var(--btn-secondary-shadow);
+}
+
+.back_btn:hover {
+  background-color: var(--grey-5);
 }
 
 /* end of buttons */

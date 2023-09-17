@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react'
 import CustomSelect from '@/components/Custom/Select/Select'
 import PrimaryBtn from '@/components/Btn/Primary'
 import BackBtn from '@/components/Btn/Back'
-import FeedbackInfo from '@/components/FeedbackInfo'
+import { businessIndustries } from '@/utils/CONSTANTS'
+import Input from '@/components/Dashboard/Input'
 
 const BusinessInformation = () => {
 	const { push } = useRouter()
@@ -15,34 +16,19 @@ const BusinessInformation = () => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [payload, setPayload] = useState({
 		businessName: '',
-		businessIndustry: undefined,
+		businessIndustry: '',
 	})
-
-	const businessIndustries = [
-		'Travel Agents',
-		'Tour Operators',
-		'Hospitality Service Providers (Hoteliers, rentals, Restaurants)',
-	]
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
-		// Check if the field name is 'businessIndustry'
-		if (name === 'businessIndustry') {
-			setPayload((prevState) => ({
-				...prevState,
-				businessIndustry: value,
-			}))
-		} else {
-			setPayload((prevState) => ({
-				...prevState,
-				[name]: value,
-			}))
-		}
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
 	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		console.log(payload)
 		setCtaClicked(true)
 		if (!allFieldsValid) {
 			return
@@ -55,7 +41,8 @@ const BusinessInformation = () => {
 	}
 
 	useEffect(() => {
-		const conditionsMet = payload.businessName && payload.businessIndustry
+		const {businessIndustry, businessName} = payload
+		const conditionsMet = businessName && businessIndustry
 		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
@@ -81,10 +68,14 @@ const BusinessInformation = () => {
 						<form className={styles.form}
 							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
-								<div className={styles.form_group}>
-									<label>Business Industry</label>
+								<Input
+									id="business-industry"
+									label="Business Industry"
+									error={ctaClicked && !payload.businessIndustry}
+									errorMsg="Business Industry is required"
+								>
 									<CustomSelect
-										id="business-industry"
+										id="business-type"
 										selectOptions={businessIndustries}
 										selectedOption={payload.businessIndustry}
 										fieldError={ctaClicked && !payload.businessIndustry}
@@ -94,35 +85,20 @@ const BusinessInformation = () => {
 											})
 										}
 									/>
-									{ctaClicked && !payload.businessIndustry ? (
-										<FeedbackInfo message="Business industry needed" />
-									) : (
-										<></>
-									)}
-								</div>
-								<div
-									className={`${styles.form_group} ${
-										ctaClicked && !payload.businessName ? styles.error : ''
-									}`}
-								>
-									<label htmlFor="business-name">Business Name</label>
-									<input
-										placeholder="Kelechi Travels"
-										id="business-name"
-										name="businessName"
-										value={payload.businessName}
-										onChange={handleChange}
-									/>
-									{ctaClicked && !payload.businessName ? (
-										<FeedbackInfo message="Business name needed" />
-									) : (
-										<></>
-									)}
-								</div>
+								</Input>
+								<Input
+									label="Business Name"
+									id="business-name"
+									name="businessName"
+									placeholder="John Travels"
+									value={payload.businessName}
+									onChange={handleChange}
+									error={ctaClicked && !payload.businessName}
+									errorMsg={'Business name is required'}
+								/>
 							</div>
 							<div className={styles.action_ctn}>
 								<PrimaryBtn
-									disabled={!allFieldsValid}
 									text="Save and continue"
 								/>
 							</div>

@@ -14,3 +14,6 @@ export const businessIndustries = [
 	'Tour Operators',
 	'Hospitality Service Providers (Hoteliers, rentals, Restaurants)',
 ]
+
+// eslint-disable-next-line no-undef
+export const CS = require('countrycitystatejson')
