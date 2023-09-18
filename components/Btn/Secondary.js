@@ -1,7 +1,8 @@
 
-const SecondaryBtn = ({text, disabled, type}) => {
+const SecondaryBtn = ({text, type, ...props}) => {
 	return (
-		<button className={`secondary_btn ${type || ''}`} disabled={disabled}>
+		<button className={`secondary_btn ${type || ''}`}
+			{...props}>
 			{text}
 		</button>
 	)

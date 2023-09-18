@@ -1,51 +1,78 @@
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
-import TertiaryBtn from '@/components/Btn/Tertiary'
 import PrimaryBtn from '@/components/Btn/Primary'
 import BackBtn from '@/components/Btn/Back'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 import { useRouter } from 'next/router'
+import Input from '@/components/Dashboard/Input'
+import ResendOTP from '@/components/Auth/ResendOTP'
 
 const VerifyEmail = () => {
-
-	const { push } = useRouter()
-
-	// const [allFieldsValid, setAllFieldsValid] = useState(false)
+	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
-
-	const handleSubmit = (e) => {
+	const [errorMsg, setErrorMsg] = useState('')
+	const [fullScreenLoader, setFullScreenLoader] = useState(false)
+	const [ctaClicked, setCtaClicked] = useState(false)
+	const [countDown, setCountDown] = useState(0)
+	const handleVerificationSubmit = (e) => {
 		e.preventDefault()
-		push('/auth/business-kind')
+		setCtaClicked(true)
+		if (otp.length !== 6) {
+			return
+		}
+		setFullScreenLoader(true)
+		window.setTimeout(() => {
+			setFullScreenLoader(false)
+			push('/auth/login')
+		}, 3000)
 	}
 
+	useEffect(() => {
+		setErrorMsg('')
+	}, [])
+
 	return (
-		<AuthLayout pageTitle={'Verify Email'}>
-			<div className={styles.auth}>
+		<AuthLayout
+			LHSRequired={false}
+			fullScreenLoader={fullScreenLoader}
+			pageTitle={'Verify Email'}
+		>
+			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn emitClick={()=>push('/auth/signup')} />
-						<h1>Verify email address</h1>
-						<p>
-              We sent a 6 digit code to kelechi****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification 
-						</p>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<BackBtn onClick={() => back()} />
+						<h1 className="title">Verify Email Address</h1>
+						<h4 className="sub-title">
+              We sent a 6 digit code to daniel****@gmail.com, please enter the
+              code below, or click the verification link in your mail to
+              complete verification{' '}
+						</h4>
+						<form className={styles.form}
+							onSubmit={handleVerificationSubmit}>
 							<div className={styles.inner}>
-								<div className={styles.form_group}>
+								<Input
+									error={(ctaClicked && otp.length !== 6) || errorMsg}
+									errorMsg={otp.length !== 6 ? 'Valid OTP needed' : errorMsg}
+									msgPositionCenter={true}
+								>
 									<div className={styles.otp_input}>
 										<OtpInput
 											value={otp}
 											onChange={setOtp}
 											numInputs={6}
-											renderSeparator={<span> </span>}
+											inputType="number"
+											inputMode="numeric"
+											renderSeparator={<span />}
 											renderInput={(props) => <input {...props} />}
 										/>
 									</div>
-								</div>
+								</Input>
 							</div>
 							<div className={styles.action_ctn}>
-								<p>Didn’t receive any code? <TertiaryBtn text='Resend OTP'/></p>
-								<PrimaryBtn disabled={otp.length !== 6} text='Verify OTP' />
+								<ResendOTP countDown={countDown}
+									setCountDown={(v)=>setCountDown(v)} />
+								<PrimaryBtn text="Verify" />
 							</div>
 						</form>
 					</div>

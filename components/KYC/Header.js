@@ -10,7 +10,7 @@ const KYCHeader = () => {
 		<header className={styles.header}>
 			<div className={styles.inner}>
 				<div className={styles.lhs}>
-					<CloseBtn emitClick={handleCloseClick} />
+					<CloseBtn onClick={handleCloseClick} />
 				</div>
 				<div className={styles.mhs}>
 					<h2>Complete KYC</h2>

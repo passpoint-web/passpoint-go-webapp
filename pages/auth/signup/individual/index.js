@@ -1,146 +1,172 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
-// import CountrySelect from '@/components/Custom/CountrySelect'
-// import PhoneInput from 'react-phone-input-2'
-// import 'react-phone-input-2/lib/style.css'
-// import { registerUser } from '@/services/restService'
+import 'react-phone-input-2/lib/style.css'
 import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
-import CustomSelect from '@/components/Custom/Select/Select'
+import PhoneInput from 'react-phone-input-2'
+import BackBtn from '@/components/Btn/Back'
+import Input from '@/components/Dashboard/Input'
 
 const IndividualInformation = () => {
-	const {
-		push
-	} = useRouter()
-
-	const {validEmail} = functions
-
+	const { push, back } = useRouter()
+	const { validEmail } = functions
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
-
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
-	// const [ctaClicked, setCtaClicked] = useState(false)
-	const [businessName, setBusinessName] = useState('')
-	const [businessId, setBusinessId] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [checked, setChecked] = useState(false)	
-	const [businessType, setBusinessType] = useState(undefined)
-	const [businessIndustry, setBusinessIndustry] = useState(undefined)
+	const [ctaClicked, setCtaClicked] = useState(false)
+	const [termsAccepted, setTermsAccepted] = useState(false)
+	const [roleConfirmed, setRoleConfirmed] = useState(false)
 
-	const businessTypes = [
-		'Sole Proprietorship',
-		'Partnership',
-		'Limited Liability Company (LLC)',
-		'Cooperation',
-		'Cooperative',
-		'Limited Liability Partnership (LLP)'
-	]
+	const [payload, setPayload] = useState({
+		lastName: '',
+		firstName: '',
+		email: '',
+		phone: '',
+		password: '',
+	})
 
-	const businessIndustries = [
-		'Travel Agents',
-		'Tour Operators',
-		'Hospitality Service Providers (Hoteliers, rentals, Restaurants)'
-	]
-
-	const handleBusinessTypeSelect = (e) => {
-		setBusinessType(e)
-	}
-	const handleBusinessIndustrySelect = (e) => {
-		setBusinessIndustry(e)
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
 	}
 
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-		// setCtaClicked(true)
-		setFullScreenLoader(true)
-		window.setTimeout(()=>{
-			setFullScreenLoader(false)
-			push('/auth/signup/business/address')
-		}, 3000)
-	}
-
-	const toggleChecked = () => {
-		setChecked(!checked)
-	}
-
-	useEffect(()=>{
+	useEffect(() => {
+		const {firstName, lastName, password, email} = payload
 		const conditionsMet =
-		businessId && 
-		businessIndustry && 
-		businessType && 
-		validEmail(email) &&
-		password && 
-		checked
+      lastName &&
+      firstName &&
+      validEmail(email) &&
+      password &&
+			termsAccepted &&
+			roleConfirmed
 		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [
-		businessId, 
-		businessName,
-		businessIndustry,
-		businessType,
-		email,
-		password, 
-		checked
-	])
+	}, [payload, termsAccepted, roleConfirmed])
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		setCtaClicked(true)
+		if (!allFieldsValid) {
+			return
+		}
+		setFullScreenLoader(true)
+		window.setTimeout(() => {
+			setFullScreenLoader(false)
+			push('/auth/signup/individual/business')
+		}, 3000)
+	}
 
 	return (
-		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
-			
+		<AuthLayout
+			LHSRequired={true}
+			fullScreenLoader={fullScreenLoader}
+			btn={{ text: 'Log in', url: '/auth/login' }}
+			pageTitle={'Signup'}
+		>
 			<div className={styles.auth}>
 				<div className={styles.inner}>
-					{/* <div className={styles.lhs}> */}
 					<div className={styles.center}>
-						<h1 className="title">
-							Provide Business Information
-						</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<BackBtn onClick={()=>back()} />
+						<h1 className="title">Personal Information</h1>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
+								<div className={styles.form_row}>
+									<Input
+										label="Last Name"
+										id="last-name"
+										name="lastName"
+										placeholder="John"
+										value={payload.lastName}
+										onChange={handleChange}
+										error={ctaClicked && !payload.lastName}
+										errorMsg={'Last name is required'}
+									/>
+									<Input
+										label="First Name"
+										id="first-name"
+										name="firstName"
+										placeholder="Travels"
+										value={payload.firstName}
+										onChange={handleChange}
+										error={ctaClicked && !payload.firstName}
+										errorMsg={'First name is required'}
+									/>
+								</div>
+								<Input
+									label="Email Address"
+									id="email-address"
+									name="email"
+									placeholder="John@mail.com"
+									value={payload.email}
+									onChange={handleChange}
+									error={ctaClicked && !validEmail(payload.email)}
+									errorMsg={!payload.email ? 'Email is required' : !validEmail(payload.email) ? 'Valid email is required' : 'Email is required'}
+								/>
+								<Input
+									id="phone"
+									label="Phone Number"
+									error={ctaClicked && !payload.phone}
+									errorMsg="Phone is required"
+								>
+									<PhoneInput
+										country={'ng'}
+										value={payload.phone}
+										onChange={(phone) => handleChange({ target: { name: 'phone', value: phone } })}
+									/>
+								</Input>
+								<Input
+									label="Password"
+									id="password"
+									name="password"
+									placeholder="Password"
+									error={ctaClicked && !payload.password}
+								>
+									<PasswordField
+										errorField={ctaClicked && !payload.password}
+										emitPassword={(e) =>
+											handleChange({
+												target: { name: 'password', value: e },
+											})
+										}
+									/>
+								</Input>
+								<div className={`${styles.terms} ${ctaClicked && !roleConfirmed ? styles.error : ''}`}>
+									<CheckBox value={roleConfirmed}
+										error={ctaClicked && !roleConfirmed}
+										onChange={()=>setRoleConfirmed(!roleConfirmed)} />
+									<p>
+                    By clicking, you indicate your role as the owner or manager
+                    of the business
+									</p>
+								</div>
+								<div className={`${styles.terms} ${ctaClicked && !termsAccepted ? styles.error : ''}`}>
+									<CheckBox value={termsAccepted}
+										error={ctaClicked && !termsAccepted}
+										onChange={()=>setTermsAccepted(!termsAccepted)} />
+									<p>
+                    By clicking, you accept our <a href="#">Terms of use</a> and{' '}
+										<a href="#">Privacy Policy</a>
+									</p>
+								</div>
+								<div className={styles.action_ctn}>
+									<PrimaryBtn text="Open account" />
+								</div>
 
-								<div className={styles.form_group}>
-									<label htmlFor="business-name">Business name</label>
-									<input placeholder="John Travels" id="business-name" value={businessName} onChange={(e)=>setBusinessName(e.target.value)} />
-								</div>
-								<div className={styles.form_group}>
-									<label htmlFor="email-address">Business Email address</label>
-									<input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-								</div>
-								<div className={styles.form_group}>
-									<label>Business Type</label>
-									<CustomSelect id="business-type" selectOptions={businessTypes} selectedOption={businessType} emitSelect={handleBusinessTypeSelect} />
-								</div>
-								<div className={styles.form_group}>
-									<label>Business Industry</label>
-									<CustomSelect id="business-industry" selectOptions={businessIndustries} selectedOption={businessIndustry} emitSelect={handleBusinessIndustrySelect} />
-								</div>
-								<div className={styles.form_group}>
-									<label htmlFor="business-id">Business Identification Number</label>
-									<input placeholder="RC 0123456" id="business-id" value={businessId} onChange={(e)=>setBusinessId(e.target.value)} />
-								</div>
-								<div className={styles.form_group}>
-									<label htmlFor="password">Password</label>
-									<PasswordField emitPassword={(e)=>setPassword(e)} />
-								</div>
-							</div>
-							<div className={styles.terms}>
-								<CheckBox value={checked}  onChange={toggleChecked} />
-								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
-							</div>
-							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid} text='Open account' />
 							</div>
 						</form>
-						{/* </div> */}
 					</div>
 				</div>
 			</div>
-	
 		</AuthLayout>
 	)
 }

@@ -112,6 +112,7 @@ const functions = {
 	hideEmail,
 	validEmail,
 	getMonth,
+	resetModalState
 	// encryptData,
 	// decryptData
 }

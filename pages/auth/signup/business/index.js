@@ -1,57 +1,40 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
-// import CountrySelect from '@/components/Custom/CountrySelect'
-// import PhoneInput from 'react-phone-input-2'
-// import 'react-phone-input-2/lib/style.css'
-// import { registerUser } from '@/services/restService'
 import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
 import CustomSelect from '@/components/Custom/Select/Select'
-import FeedbackInfo from '@/components/FeedbackInfo'
-
+import BackBtn from '@/components/Btn/Back'
+import Input from '@/components/Dashboard/Input'
+import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
 const BusinessInformation = () => {
-	const {
-		push
-	} = useRouter()
+	const { push, back } = useRouter()
 
-	const {validEmail} = functions
+	const { validEmail } = functions
 
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
-	const [businessName, setBusinessName] = useState('')
-	const [businessId, setBusinessId] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [checked, setChecked] = useState(false)	
-	const [businessType, setBusinessType] = useState(undefined)
-	const [businessIndustry, setBusinessIndustry] = useState(undefined)
+	const [checked, setChecked] = useState(false)
+	const [payload, setPayload] = useState({
+		businessName: '',
+		businessEmail: '',
+		businessType: '',
+		businessIndustry: '',
+		businessId: '',
+		password: ''
+	})
 
-	const businessTypes = [
-		'Sole Proprietorship',
-		'Partnership',
-		'Limited Liability Company (LLC)',
-		'Cooperation',
-		'Cooperative',
-		'Limited Liability Partnership (LLP)'
-	]
-
-	const businessIndustries = [
-		'Travel Agents',
-		'Tour Operators',
-		'Hospitality Service Providers (Hoteliers, rentals, Restaurants)'
-	]
-
-	const handleBusinessTypeSelect = (e) => {
-		setBusinessType(e)
-	}
-	const handleBusinessIndustrySelect = (e) => {
-		setBusinessIndustry(e)
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
 	}
 
 	const handleSubmit = async (e) => {
@@ -61,7 +44,7 @@ const BusinessInformation = () => {
 			return
 		}
 		setFullScreenLoader(true)
-		window.setTimeout(()=>{
+		window.setTimeout(() => {
 			setFullScreenLoader(false)
 			push('/auth/signup/business/address')
 		}, 3000)
@@ -71,80 +54,140 @@ const BusinessInformation = () => {
 		setChecked(!checked)
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
+		const {
+			businessName,
+			businessEmail,
+			businessType,
+			businessIndustry,
+			businessId,
+			password
+		} = payload
 		const conditionsMet =
-		businessId && 
-		businessName &&
-		businessIndustry && 
-		businessType && 
-		validEmail(email) &&
-		password && 
-		checked
+      businessId &&
+      businessName &&
+      businessIndustry &&
+      businessType &&
+      validEmail(businessEmail) &&
+      password &&
+      checked
 		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
 		}
 	}, [
-		businessId, 
-		businessName,
-		businessIndustry,
-		businessType,
-		email,
-		password, 
-		checked
+		payload, checked
 	])
 
 	return (
-		<AuthLayout LHSRequired={true} fullScreenLoader={fullScreenLoader} btn={{text: 'Log in', url: '/auth/login'}} pageTitle={'Signup'}>
-			
+		<AuthLayout LHSRequired={true}
+			fullScreenLoader={fullScreenLoader}
+			btn={{text: 'Log in', url: '/auth/login'}}
+			pageTitle={'Signup'}>
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					{/* <div className={styles.lhs}> */}
 					<div className={styles.center}>
-						<h1 className="title">
-							Provide Business Information
-						</h1>
-						<h4 className="sub-title media-max-700">We want to know how you want to operate on Passpoint</h4>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<BackBtn onClick={()=>back()} />
+						<h1 className="title">Provide Business Information</h1>
+						<h4 className="sub-title media-max-700">
+              We want to know how you want to operate on Passpoint
+						</h4>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
-								<div className={`${styles.form_group} ${ctaClicked && !businessName ? styles.error : ''}`}>
-									<label htmlFor="business-name">Business Name</label>
-									<input placeholder="John Travels" id="business-name" value={businessName} onChange={(e)=>setBusinessName(e.target.value)} />
-									{ctaClicked && !businessName ? <FeedbackInfo message='Business name needed' /> : <></>}
-								</div>
-								<div className={`${styles.form_group} ${ctaClicked && !validEmail(email) ? styles.error : ''}`}>
-									<label htmlFor="email-address">Business Email Address</label>
-									<input placeholder="john@mail.com" id="email-address" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-									{ctaClicked && !validEmail(email) ? <FeedbackInfo message='Business email needed' /> : <></>}
-								</div>
-								<div className={`${styles.form_group}`}>
-									<label>Business Type</label>
-									<CustomSelect id="business-type" selectOptions={businessTypes} selectedOption={businessType} fieldError={ctaClicked && !businessType} emitSelect={handleBusinessTypeSelect} />
-									{ctaClicked && !businessType? <FeedbackInfo message='Business type needed' /> : <></>}
-								</div>
-								<div className={styles.form_group}>
-									<label>Business Industry</label>
-									<CustomSelect id="business-industry" selectOptions={businessIndustries} selectedOption={businessIndustry} fieldError={ctaClicked && !businessIndustry} emitSelect={handleBusinessIndustrySelect} />
-									{ctaClicked && !businessIndustry? <FeedbackInfo message='Business industry needed' /> : <></>}
-								</div>
-								<div className={`${styles.form_group} ${ctaClicked && !businessId ? styles.error : ''}`}>
-									<label htmlFor="business-id">Business Identification Number</label>
-									<input placeholder="RC 0123456" id="business-id" value={businessId} onChange={(e)=>setBusinessId(e.target.value)} />
-									{ctaClicked && !businessId? <FeedbackInfo message='Business ID No. needed' /> : <></>}
-								</div>
-								<div className={`${styles.form_group} ${ctaClicked && !password ? styles.error : ''}`}>
-									<label htmlFor="password">Password</label>
-									<PasswordField errorField={ctaClicked && !password} emitPassword={(e)=>setPassword(e)} />
-								</div>
+								<Input
+									label="Business Name"
+									id="business-name"
+									name="businessName"
+									placeholder="John Travels"
+									value={payload.businessName}
+									onChange={handleChange}
+									error={ctaClicked && !payload.businessName}
+									errorMsg={'Business name is required'}
+								/>
+								<Input
+									label="Business Email Address"
+									id="business-email-address"
+									name="businessEmail"
+									placeholder="John@mail.com"
+									value={payload.businessEmail}
+									onChange={handleChange}
+									error={ctaClicked && !validEmail(payload.businessEmail)}
+									errorMsg={!payload.businessEmail ? 'Business email is required' : !validEmail(payload.businessEmail) ? 'Valid business email is required' : 'Business email is required'}
+								/>
+								<Input
+									id="business-type"
+									label="Business Type"
+									error={ctaClicked && !payload.businessType}
+									errorMsg="Business Type is required"
+								>
+									<CustomSelect
+										id="business-type"
+										selectOptions={businessTypes}
+										selectedOption={payload.businessType}
+										fieldError={ctaClicked && !payload.businessType}
+										emitSelect={(option) =>
+											handleChange({
+												target: { name: 'businessType', value: option },
+											})
+										}
+									/>
+								</Input>
+								<Input
+									id="business-industry"
+									label="Business Industry"
+									error={ctaClicked && !payload.businessIndustry}
+									errorMsg="Business Industry is required"
+								>
+									<CustomSelect
+										id="business-type"
+										selectOptions={businessIndustries}
+										selectedOption={payload.businessIndustry}
+										fieldError={ctaClicked && !payload.businessIndustry}
+										emitSelect={(option) =>
+											handleChange({
+												target: { name: 'businessIndustry', value: option },
+											})
+										}
+									/>
+								</Input>
+								<Input
+									label="Business Identification Number"
+									id="business-id"
+									name="businessId"
+									placeholder="RC 0123456"
+									value={payload.businessId}
+									onChange={handleChange}
+									error={ctaClicked && !payload.businessId}
+									errorMsg="Business ID No. required"
+								/>
+								<Input
+									label="Password"
+									id="password"
+									name="password"
+									placeholder="Password"
+									error={ctaClicked && !payload.password}
+								>
+									<PasswordField
+										errorField={ctaClicked && !payload.password}
+										emitPassword={(e) =>
+											handleChange({
+												target: { name: 'password', value: e },
+											})
+										}
+									/>
+								</Input>
 							</div>
 							<div className={`${styles.terms} ${ctaClicked && !checked ? styles.error : ''}`}>
-								<CheckBox error={ctaClicked && !checked} value={checked}  onChange={toggleChecked} />
+								<CheckBox error={ctaClicked && !checked}
+									value={checked}
+									onChange={toggleChecked} />
 								<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 							</div>
 							<div className={styles.action_ctn}>
-								{/* <PrimaryBtn disabled={!allFieldsValid} text='Open account' /> */}
-								<PrimaryBtn text='Open account' />
+								<PrimaryBtn text="Open account" />
 							</div>
 						</form>
 						{/* </div> */}
@@ -156,3 +199,4 @@ const BusinessInformation = () => {
 }
 
 export default BusinessInformation
+

@@ -8,7 +8,6 @@ import Search from './Search'
 
 const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
-  
 	const [countries, setCountries] = useState([])
 	const [filteredCountries, setFilteredCountries] = useState([])
 	const [country, setCountry] = useState({})
@@ -48,14 +47,14 @@ const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 
 	const searchCountry = (item)=> {
 		setSearch(item)
-		setFilteredCountries(countries.filter((c) => { 
+		setFilteredCountries(countries.filter((c) => {
 			return (c.name?.common.toLowerCase().includes(item.toLowerCase()))
 		}
 		))
 		const countriesCtn = document.getElementById('signup_countries')
 		countriesCtn.scrollTop = 0
 	}
-  
+
 	useEffect(()=>{
 		retrieveCountries()
 	}, [])
@@ -70,11 +69,16 @@ const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 		<>
 			<div className={styles.custom_country_select }>
 				{/* {showCountriesSelect ? <OverlayScreen onClick={hideCountrySelect} /> : <></>} */}
-				<button className={`${showCountriesSelect ? styles.active : ''}`} onClick={handleClick}>
-					{!countries?.name ? 
+				<button className={`${showCountriesSelect ? styles.active : ''}`}
+					onClick={handleClick}>
+					{!countries?.name ?
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
-								<Image src={country?.flags?.png} alt={country?.name?.common} width="20" height="20" className={styles.img} />
+								<Image src={country?.flags?.png}
+									alt={country?.name?.common}
+									width="20"
+									height="20"
+									className={styles.img} />
 							</div>
 							<p>{country?.name?.common}</p>
 						</div> :
@@ -82,16 +86,35 @@ const PhoneSelect = ({emitCountry, countriesSelectProps}) => {
 							<p>Please select</p>
 						</div>
 					}
-					<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20" fill="none">
-						<path d="M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837" stroke="#BDC0CE" strokeWidth="2.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+					<svg xmlns="http://www.w3.org/2000/svg"
+						width="15"
+						height="15"
+						viewBox="0 0 20 20"
+						fill="none">
+						<path d="M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837"
+							stroke="#BDC0CE"
+							strokeWidth="2.5"
+							strokeMiterlimit="10"
+							strokeLinecap="round"
+							strokeLinejoin="round"/>
 					</svg>
 				</button>
 				{ showCountriesSelect ?
-					<div id={'signup_countries'} className={`${styles.countries} dropdown`}>
-						<Search search={search} id={'country'} placeholder={'Search country'} searchCountry={(e)=>searchCountry(e)} />
+					<div id={'signup_countries'}
+						className={`${styles.countries} dropdown`}>
+						<Search search={search}
+							id={'country'}
+							placeholder={'Search country'}
+							searchCountry={(e)=>searchCountry(e)} />
 						{filteredCountries.map((c, index)=>(
-							<div key={index} className={styles.content} onClick={(e) => handleCountrySelect(e, c)}>
-								<Image src={c?.flags?.png} alt={c?.name?.common} width="20" height="20" className={styles.img} />
+							<div key={index}
+								className={styles.content}
+								onClick={(e) => handleCountrySelect(e, c)}>
+								<Image src={c?.flags?.png}
+									alt={c?.name?.common}
+									width="20"
+									height="20"
+									className={styles.img} />
 								<p>{c?.name?.common}</p>
 							</div>
 						))}

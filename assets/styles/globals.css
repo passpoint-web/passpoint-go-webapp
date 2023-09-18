@@ -1,46 +1,54 @@
-
-
 @font-face {
-  font-family: 'GraphikMedium';
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikMedium.otf'); 
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikMedium.otf') format('embedded-opentype'),
-  url('../assets/fonts/Graphik-Font-Family/GraphikMedium.otf') format('truetype');
+  font-family: "GraphikMedium";
+  src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
+      format("embedded-opentype"),
+    url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
+      format("truetype");
   font-weight: 500;
 }
 @font-face {
-  font-family: 'GraphikBold';
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikBold.otf');
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikBold.otf') format('embedded-opentype'),
-  url('../assets/fonts/Graphik-Font-Family/GraphikBold.otf') format('truetype');
+  font-family: "GraphikBold";
+  src: url("../fonts/Graphik-Font-Family/GraphikBold.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikBold.otf")
+      format("embedded-opentype"),
+    url("../fonts/Graphik-Font-Family/GraphikBold.otf")
+      format("truetype");
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'GraphikLight';
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikLight.otf');
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikLight.otf') format('embedded-opentype'),
-  url('../assets/fonts/Graphik-Font-Family/GraphikLight.otf') format('truetype');
+  font-family: "GraphikLight";
+  src: url("../fonts/Graphik-Font-Family/GraphikLight.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
+      format("embedded-opentype"),
+    url("../fonts/Graphik-Font-Family/GraphikLight.otf")
+      format("truetype");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'GraphikExtraLight';
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikExtralight.otf');
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikExtralight.otf') format('embedded-opentype'),
-  url('../assets/fonts/Graphik-Font-Family/GraphikExtralight.otf') format('truetype');
+  font-family: "GraphikExtraLight";
+  src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
+      format("embedded-opentype"),
+    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
+      format("truetype");
   font-weight: lighter;
 }
 
 @font-face {
-  font-family: 'GraphikRegular';
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikRegular.otf');
-  src: url('../assets/fonts/Graphik-Font-Family/GraphikRegular.otf') format('embedded-opentype'),
-  url('../assets/fonts/Graphik-Font-Family/GraphikRegular.otf') format('truetype');
+  font-family: "GraphikRegular";
+  src: url("../fonts/Graphik-Font-Family/GraphikRegular.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikRegular.otf")
+      format("embedded-opentype"),
+    url("../fonts/Graphik-Font-Family/GraphikRegular.otf")
+      format("truetype");
   font-weight: 400;
 }
 
 * {
-  font-family: 'GraphikLight', sans-serif;
+  font-family: "GraphikLight", sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -54,28 +62,34 @@
   --header-padding: 80px;
   --header-height: 100px;
 
-  --grey-1: #1C1132;
-  --grey-2: #565C69;
-  --grey-3: #7E8494;
-  --grey-4: #BDC0CE;
-  --grey-5: #E5E7EF;
-  --grey-6: #F4F5F8;
+  --graphikMedium: "GraphikMedium", sans-serif;
+  --graphikRegular: "GraphikRegular", sans-serif;
+  --graphikLight: "GraphikLight", sans-serif;
+  --graphikBold: "GraphikBold", sans-serif;
 
-  --sky-blue: #009EC4;
-  --sky-blue-active: #006F89;
-  --sky-blue-bg: #E6F5F980;
+  --white: #ffffff;
+  --grey-1: #1c1132;
+  --grey-2: #565c69;
+  --grey-3: #7e8494;
+  --grey-4: #bdc0ce;
+  --grey-5: #e5e7ef;
+  --grey-6: #f4f5f8;
+
+  --sky-blue: #009ec4;
+  --sky-blue-active: #006f89;
+  --sky-blue-bg: #e6f5f980;
 
   --cta-bg: #121212;
 
-  --negative: #FF3B2D;
-  --negative-box-shadow: #FFC7C3;
-  --negative-bg: #FFE6E4;
+  --negative: #ff3b2d;
+  --negative-box-shadow: #ffc7c3;
+  --negative-bg: #ffe6e4;
 
-  --warning-200: #DF752B;
-  --warning-300: #D85900;
-  --warning-400: #973E00;
+  --warning-200: #df752b;
+  --warning-300: #d85900;
+  --warning-400: #973e00;
   --warning-500: #843600;
-  --warning-bg: #FBEEE680;
+  --warning-bg: #fbeee680;
 
   --input-height: 48px;
   --input-br: 12px;
@@ -83,9 +97,10 @@
   --input-transition: 0.3s ease-in;
   --input-border: var(--grey-5);
   --input-border-disabled: var(--grey-5);
-  --input-focus-bg:  #E6F5F9;
-  --input-box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.10), 0px 0px 1px 0px rgba(12, 26, 75, 0.20);
-  --input-focus-box-shadow: #96D7E7;
+  --input-focus-bg: #e6f5f9;
+  --input-box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.2);
+  --input-focus-box-shadow: #96d7e7;
   --input-error-border: var(--negative);
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
@@ -93,9 +108,9 @@
 
   --flag-dropdown-width: clamp(40px, 15%, 200px);
 
-  --input-icon-z-index: 5;
-  --select-dropdown-z-index: 20;
-  --overlay-z-index: 10;
+  --z-index-input-icon: 5;
+  --z-index-select-dropdown: 20;
+  --z-index-overlay: 10;
 
   --outer-component-mg: 48px;
   --inner-component-mg: 24px;
@@ -114,16 +129,17 @@
   --btn-disabled: var(--grey-5);
   --btn-height-md: 40px;
   --btn-height-sm: 32px;
-  --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.10), 0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
+  --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.1),
+    0px 2px 0px 0px rgba(234, 234, 234, 0.25) inset;
 
   --screen-padding-top: 64px;
 
-  --kyc-layout-lhs-width: 250px;
-  --kyc-layout-lhs-max-width: 400px;
-  --kyc-outer-component-padding: 48px;
+  --auth-layout-lhs-width: 250px;
+  --auth-layout-lhs-max-width: 400px;
+  --auth-outer-component-padding: 48px;
   /* colors */
-  --blue: #2B60E9;
-  --green: #07B463;
+  --blue: #2b60e9;
+  --green: #07b463;
 
   --anim-come-down-sm: come-down-sm 0.5s ease-in-out;
   --anim-come-down-sm-w-opacity: come-down-sm-w-opacity 0.5s ease-in-out;
@@ -161,7 +177,7 @@ h2,
 h3,
 a,
 button {
-  font-family: 'GraphikMedium';
+  font-family: "GraphikMedium";
   font-weight: 500;
 }
 
@@ -177,7 +193,6 @@ a:disabled,
 button:disabled {
   cursor: not-allowed;
 }
-
 
 h1 {
   font-style: normal;
@@ -206,7 +221,6 @@ h1 span {
   font-family: inherit;
   color: var(--grey-2);
 }
-
 
 h4 {
   color: var(--grey-3);
@@ -247,7 +261,7 @@ li {
 }
 
 /* buttons */
-.primary_btn, 
+.primary_btn,
 .primary_link {
   width: 100%;
   display: flex;
@@ -345,9 +359,9 @@ button.small {
   box-shadow: var(--btn-secondary-shadow);
 }
 
-
 .secondary_link:hover {
   text-decoration: none;
+  background-color: var(--grey-5);
 }
 
 .tertiary_btn,
@@ -377,6 +391,10 @@ button.small {
   box-shadow: var(--btn-secondary-shadow);
 }
 
+.back_btn:hover {
+  background-color: var(--grey-5);
+}
+
 /* end of buttons */
 
 /* Chrome, Safari, Edge, Opera */
@@ -387,7 +405,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -403,12 +421,34 @@ form {
   position: fixed;
   inset: 0;
   /* background: rgb(0, 0, 0, 0); */
-  z-index: var(--overlay-z-index);
+  z-index: var(--z-index-overlay);
   cursor: default;
 }
 
-ol, ul {
+ol,
+ul {
   margin-left: 16px;
+}
+
+
+.error input,
+.error select {
+  border: 1px solid var(--input-error-border) !important;
+  /* box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow); */
+  background-color: var(--input-error-bg) !important;
+}
+
+.error select {
+  background: var(--input-error-bg)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(189, 192, 206)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
+    no-repeat right var(--input-padding) center/1rem !important;
+}
+
+.error input:focus,
+.error select:focus {
+  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
+  border: 1px solid var(--input-error-border) !important;
+  background-color: var(--input-error-bg) !important;
 }
 
 /* REACT PHONE INPUT - OLD */
@@ -425,7 +465,6 @@ ol, ul {
 
 /* END */
 
-
 /* REACT PHONE INPUT */
 .react-tel-input .form-control {
   background-color: #fff !important;
@@ -437,7 +476,9 @@ ol, ul {
   display: block !important;
   width: 100% !important;
   transition: var(--input-transition) !important;
-  padding-left: calc(var(--flag-dropdown-width) + var(--input-padding)) !important;
+  padding-left: calc(
+    var(--flag-dropdown-width) + var(--input-padding)
+  ) !important;
 }
 
 .react-tel-input .flag-dropdown {
@@ -475,14 +516,28 @@ ol, ul {
   background-color: var(--input-focus-bg) !important;
 }
 
+/* introduced for selector specificity */
+.error .react-tel-input .form-control:not(:disabled),
+.error .react-tel-input .form-control:not(:disabled):hover {
+  border-color: var(--input-error-border) !important;
+  border: 1px solid var(--input-error-border) !important;
+  background-color: var(--input-error-bg) !important;
+}
+
+.error .react-tel-input .form-control:not(:disabled):focus {
+  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
+  border: 1px solid var(--input-error-border) !important;
+  background-color: var(--input-error-bg) !important;
+}
+
+/* .form_group.error .react-tel-input .form-control:not(:disabled):focus,
 .form_group.error .react-tel-input .form-control {
   border: 1px solid var(--input-error-border) !important;
   box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
   background-color: var(--input-error-bg) !important;
-}
+} */
 
 /* END OF REACT PHONE INPUT */
-
 
 /* SCREEN RESOLUTIONS */
 @media screen and (min-width: 700px) {
@@ -511,7 +566,7 @@ ol, ul {
     font-size: 24px;
     line-height: 36px;
   }
-  
+
   h1 br {
     display: none;
   }
@@ -532,7 +587,6 @@ ol, ul {
 }
 
 /* ANIMS */
-
 
 .slide-in-fl {
   animation: slide-in-fl 0.6s forwards;
@@ -588,7 +642,6 @@ ol, ul {
     -o-transform: translateY(0vw);
   }
 }
-
 
 .dropdown {
   animation: dropdown 0.5s ease-in-out forwards;

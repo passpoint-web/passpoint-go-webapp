@@ -1,4 +1,4 @@
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { useState } from 'react'
@@ -12,24 +12,26 @@ const BusinessKind = () => {
 	const onSetOption = (value) => {
 		setOption(value)
 	}
-  
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		router.push('/kyc/business-type')
 	}
-  
+
 	return (
 		<AuthLayout pageTitle={'Business Kind'}>
 			<div className={styles.auth}>
 				<div className={`${styles.inner} ${styles.business_type}`}>
 					<div className={styles.center}>
 						<h1 className="center">What kind of business are you?</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<ChoiceCard emitSetOption={onSetOption} />
 							</div>
 							<div className={`${styles.action_ctn} ${styles.end}`}>
-								<PrimaryBtn disabled={option === undefined} text='Continue' />
+								<PrimaryBtn disabled={option === undefined}
+									text="Continue" />
 							</div>
 						</form>
 					</div>

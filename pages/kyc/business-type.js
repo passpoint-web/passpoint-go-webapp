@@ -1,4 +1,4 @@
-import KYCLayout from '@/app/kyc-layout'
+import KYCLayout from '@/components/Layouts/KYCLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { useState } from 'react'
@@ -30,15 +30,20 @@ const BusinessType = () => {
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						<h1>Help us get to know you better 🥳</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_group}>
 									<label>Select your type of business</label>
-									<CustomSelect id="business-type" selectOptions={businessTypes} selectedOption={businessType} emitSelect={handleSelect} />
+									<CustomSelect id="business-type"
+										selectOptions={businessTypes}
+										selectedOption={businessType}
+										emitSelect={handleSelect} />
 								</div>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!businessType} text={'Save and continue'} />
+								<PrimaryBtn disabled={!businessType}
+									text={'Save and continue'} />
 							</div>
 						</form>
 					</div>

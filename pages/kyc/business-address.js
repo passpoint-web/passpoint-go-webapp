@@ -1,4 +1,4 @@
-import KYCLayout from '@/app/kyc-layout'
+import KYCLayout from '@/components/Layouts/KYCLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { useEffect, useState } from 'react'
@@ -35,7 +35,7 @@ const BusinessAddress = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		push('/kyc/verify-bvn') 
+		push('/kyc/verify-bvn')
 	}
 
 	useEffect(()=>{
@@ -52,23 +52,33 @@ const BusinessAddress = () => {
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						<h1>Add your business address 🏠</h1>
-						<form className={styles.form} onSubmit={handleSubmit}>
+						<form className={styles.form}
+							onSubmit={handleSubmit}>
 							<div className={styles.inner}>
 								<div className={styles.form_group}>
 									<label htmlFor="street-no">Street no.</label>
-									<input id="street-no" placeholder="91, Lagos road" value={streetNo} onChange={(e)=>setStreetNo(e.target.value)} />
+									<input id="street-no"
+										placeholder="91, Lagos road"
+										value={streetNo}
+										onChange={(e)=>setStreetNo(e.target.value)} />
 								</div>
 								<div className={styles.form_group}>
 									<label>Select state</label>
-									<CustomSelect selectOptions={states} selectedOption={state} emitSelect={(e)=>setState(e)} />
+									<CustomSelect selectOptions={states}
+										selectedOption={state}
+										emitSelect={(e)=>setState(e)} />
 								</div>
 								<div className={styles.form_group}>
 									<label>Local Govt.</label>
-									<CustomSelect disabled={!state} selectOptions={lgas} selectedOption={lga} emitSelect={(e)=>setLga(e)} />
+									<CustomSelect disabled={!state}
+										selectOptions={lgas}
+										selectedOption={lga}
+										emitSelect={(e)=>setLga(e)} />
 								</div>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn disabled={!allFieldsValid} text={'Save and continue'} />
+								<PrimaryBtn disabled={!allFieldsValid}
+									text={'Save and continue'} />
 							</div>
 						</form>
 					</div>

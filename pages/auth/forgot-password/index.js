@@ -1,4 +1,4 @@
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import TertiaryBtn from '@/components/Btn/Tertiary'
@@ -51,16 +51,23 @@ const ForgotPassword = () => {
 			<>
 				<h1 className="title">Forgot password?</h1>
 				<h4 className="sub-title">Enter the email you used to create your account</h4>
-				<form className={styles.form} onSubmit={handleForgotPasswordSubmit}>
+				<form className={styles.form}
+					onSubmit={handleForgotPasswordSubmit}>
 					<div className={styles.inner}>
 						<div className={styles.form_group}>
 							<label htmlFor="email-address">Email address</label>
-							<input placeholder="kelechi@gmail.com" id="email-address" type="email" value={email} onChange={handleEmailChange} />
+							<input placeholder="kelechi@gmail.com"
+								id="email-address"
+								type="email"
+								value={email}
+								onChange={handleEmailChange} />
 						</div>
 					</div>
 					<div className={styles.action_ctn}>
-						<PrimaryBtn disabled={!validEmail(email)} text='Reset' />
-						<SecondaryLink text='Go back to Log in' href='/auth/login' />
+						<PrimaryBtn disabled={!validEmail(email)}
+							text='Reset' />
+						<SecondaryLink text='Go back to Log in'
+							href='/auth/login' />
 					</div>
 				</form>
 			</>
@@ -69,10 +76,11 @@ const ForgotPassword = () => {
 	const Verify = () => {
 		return (
 			<>
-				<BackBtn emitClick={()=>setCurrentLevel('forgot')} />
+				<BackBtn onClick={()=>setCurrentLevel('forgot')} />
 				<h1 className="title">Verify email</h1>
 				<h4 className="sub-title">We sent a 6 digit code to daniel****@gmail.com, please enter the code below, or click the verification link in your mail to complete verification </h4>
-				<form className={styles.form} onSubmit={handleVerificationSubmit}>
+				<form className={styles.form}
+					onSubmit={handleVerificationSubmit}>
 					<div className={styles.inner}>
 						<div className={styles.form_group}>
 							<div className={styles.otp_input}>
@@ -89,7 +97,8 @@ const ForgotPassword = () => {
 					</div>
 					<div className={styles.action_ctn}>
 						<p>Didn’t receive any code? <TertiaryBtn text='Resend OTP'/></p>
-						<PrimaryBtn disabled={otp.length !== 6} text='Verify' />
+						<PrimaryBtn disabled={otp.length !== 6}
+							text='Verify' />
 					</div>
 				</form>
 			</>
@@ -101,19 +110,24 @@ const ForgotPassword = () => {
 			<>
 				<h1 className="title">Create new password</h1>
 				<h4 className="sub-title">Kindly enter a unique password to secure your account</h4>
-				<form className={styles.form} onSubmit={handleResetPasswordSubmit}>
+				<form className={styles.form}
+					onSubmit={handleResetPasswordSubmit}>
 					<div className={styles.inner}>
 						<div className={styles.form_group}>
 							<label>Create password</label>
-							<PasswordField id="password" emitPassword={(e)=>setPassword(e)} />
+							<PasswordField id="password"
+								emitPassword={(e)=>setPassword(e)} />
 						</div>
 						<div className={styles.form_group}>
 							<label>Confirm password</label>
-							<PasswordField id="confirm_password" passwordStrengthNeeded={false} emitPassword={(e)=>setConfirmPassword(e)} />
+							<PasswordField id="confirm_password"
+								passwordStrengthNeeded={false}
+								emitPassword={(e)=>setConfirmPassword(e)} />
 						</div>
 					</div>
 					<div className={styles.action_ctn}>
-						<PrimaryBtn disabled={!passwordFieldsValid} text='Login' />
+						<PrimaryBtn disabled={!passwordFieldsValid}
+							text='Login' />
 					</div>
 				</form>
 			</>
@@ -126,9 +140,9 @@ const ForgotPassword = () => {
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						{
-							currentLevel === 'forgot' ? 
+							currentLevel === 'forgot' ?
 								Forgot() :
-								currentLevel === 'verify' ? 
+								currentLevel === 'verify' ?
 									Verify() :
 									Reset()
 						}
