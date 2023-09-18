@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PhoneInput from 'react-phone-input-2'
@@ -10,7 +10,7 @@ import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 
 const BusinessPersonalInfo = () => {
-	const { push } = useRouter()
+	const { push, back } = useRouter()
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -44,7 +44,6 @@ const BusinessPersonalInfo = () => {
 		}, 3000)
 	}
 
-
 	useEffect(() => {
 		// console.log(payload)
 		const {firstName, lastName, phone} = payload
@@ -66,7 +65,7 @@ const BusinessPersonalInfo = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn onClick={() => push('/auth/signup/business/address')} />
+						<BackBtn onClick={() => back()} />
 						<h1 className="title">Personal Information</h1>
 						<h4 className="sub-title media-max-700">
               Kindly provide personal information

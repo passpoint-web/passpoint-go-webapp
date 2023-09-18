@@ -1,4 +1,4 @@
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -10,7 +10,7 @@ import { businessIndustries } from '@/utils/CONSTANTS'
 import Input from '@/components/Dashboard/Input'
 
 const BusinessInformation = () => {
-	const { push } = useRouter()
+	const { push, back } = useRouter()
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -60,7 +60,7 @@ const BusinessInformation = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn onClick={() => push('/auth/signup/individual')} />
+						<BackBtn onClick={() => back()} />
 						<h1 className="title">Register your business with Passpoint</h1>
 						<h4 className="sub-title media-max-700">
               We want to know how you want to operate on Passpoint

@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/assets/styles/globals.css'
 import KYCHeader from '@/components/KYC/Header'
 import KYCLayoutLHS from '@/components/KYC/LayoutLHS'
 import styles from '@/assets/styles/kyc-screens.module.css'

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { saveUserType } from '@/services/localService'

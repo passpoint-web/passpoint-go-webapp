@@ -1,4 +1,4 @@
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import BackBtn from '@/components/Btn/Back'
@@ -9,7 +9,7 @@ import Input from '@/components/Dashboard/Input'
 import ResendOTP from '@/components/Auth/ResendOTP'
 
 const VerifyEmail = () => {
-	const { push } = useRouter()
+	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
@@ -42,7 +42,7 @@ const VerifyEmail = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn onClick={() => push('/auth/signup/business/address')} />
+						<BackBtn onClick={() => back()} />
 						<h1 className="title">Verify Email Address</h1>
 						<h4 className="sub-title">
               We sent a 6 digit code to daniel****@gmail.com, please enter the

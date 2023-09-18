@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/assets/styles/globals.css'
 import AuthHeader from '@/components/Auth/Header'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import styles from '@/assets/styles/auth-screens.module.css'

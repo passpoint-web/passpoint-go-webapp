@@ -409,7 +409,7 @@
   position: absolute;
   top: var(--input-height);
   width: 100%;
-  z-index: var(--select-dropdown-z-index);
+  z-index: var(--z-index-select-dropdown);
   background-color: #fff;
 }
 
@@ -590,7 +590,7 @@
   bottom: 16px;
   transition: var(--input-transition);
   transform: translateY(15px);
-  z-index: var(--input-icon-z-index);
+  z-index: var(--z-index-input-icon);
   height: calc(100% - var(--sm-inner-component-mg));
 }
 

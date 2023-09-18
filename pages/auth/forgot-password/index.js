@@ -1,4 +1,4 @@
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import TertiaryBtn from '@/components/Btn/Tertiary'

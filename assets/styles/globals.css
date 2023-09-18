@@ -1,48 +1,48 @@
 @font-face {
   font-family: "GraphikMedium";
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikMedium.otf");
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikMedium.otf")
+  src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
       format("embedded-opentype"),
-    url("../assets/fonts/Graphik-Font-Family/GraphikMedium.otf")
+    url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
       format("truetype");
   font-weight: 500;
 }
 @font-face {
   font-family: "GraphikBold";
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikBold.otf");
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikBold.otf")
+  src: url("../fonts/Graphik-Font-Family/GraphikBold.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikBold.otf")
       format("embedded-opentype"),
-    url("../assets/fonts/Graphik-Font-Family/GraphikBold.otf")
+    url("../fonts/Graphik-Font-Family/GraphikBold.otf")
       format("truetype");
   font-weight: 700;
 }
 
 @font-face {
   font-family: "GraphikLight";
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikLight.otf");
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikLight.otf")
+  src: url("../fonts/Graphik-Font-Family/GraphikLight.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
       format("embedded-opentype"),
-    url("../assets/fonts/Graphik-Font-Family/GraphikLight.otf")
+    url("../fonts/Graphik-Font-Family/GraphikLight.otf")
       format("truetype");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "GraphikExtraLight";
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikExtralight.otf");
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikExtralight.otf")
+  src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
       format("embedded-opentype"),
-    url("../assets/fonts/Graphik-Font-Family/GraphikExtralight.otf")
+    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
       format("truetype");
   font-weight: lighter;
 }
 
 @font-face {
   font-family: "GraphikRegular";
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikRegular.otf");
-  src: url("../assets/fonts/Graphik-Font-Family/GraphikRegular.otf")
+  src: url("../fonts/Graphik-Font-Family/GraphikRegular.otf");
+  src: url("../fonts/Graphik-Font-Family/GraphikRegular.otf")
       format("embedded-opentype"),
-    url("../assets/fonts/Graphik-Font-Family/GraphikRegular.otf")
+    url("../fonts/Graphik-Font-Family/GraphikRegular.otf")
       format("truetype");
   font-weight: 400;
 }
@@ -66,7 +66,6 @@
   --graphikRegular: "GraphikRegular", sans-serif;
   --graphikLight: "GraphikLight", sans-serif;
   --graphikBold: "GraphikBold", sans-serif;
-
 
   --white: #ffffff;
   --grey-1: #1c1132;
@@ -109,9 +108,9 @@
 
   --flag-dropdown-width: clamp(40px, 15%, 200px);
 
-  --input-icon-z-index: 5;
-  --select-dropdown-z-index: 20;
-  --overlay-z-index: 10;
+  --z-index-input-icon: 5;
+  --z-index-select-dropdown: 20;
+  --z-index-overlay: 10;
 
   --outer-component-mg: 48px;
   --inner-component-mg: 24px;
@@ -422,7 +421,7 @@ form {
   position: fixed;
   inset: 0;
   /* background: rgb(0, 0, 0, 0); */
-  z-index: var(--overlay-z-index);
+  z-index: var(--z-index-overlay);
   cursor: default;
 }
 

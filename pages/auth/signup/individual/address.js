@@ -3,14 +3,14 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import CustomSelect from '@/components/Custom/Select/Select'
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import CountrySelect from '@/components/Custom/CountrySelect'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import { CS } from '@/utils/CONSTANTS'
 
 const BusinessAddress = () => {
-	const { push } = useRouter()
+	const { push, back } = useRouter()
 	const [states, setStates] = useState([])
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
@@ -87,7 +87,7 @@ const BusinessAddress = () => {
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn onClick={() => push('/auth/signup/business')} />
+						<BackBtn onClick={() => back()} />
 						<h1 className="title">Add address 🏠</h1>
 						<h4 className="sub-title media-max-700">
               Kindly provide personal information

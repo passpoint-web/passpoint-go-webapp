@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import AuthLayout from '@/app/auth-layout'
+import AuthLayout from '@/components/Layouts/AuthLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
@@ -12,7 +12,7 @@ import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 
 const IndividualInformation = () => {
-	const { push } = useRouter()
+	const { push, back } = useRouter()
 	const { validEmail } = functions
 	const [fullScreenLoader, setFullScreenLoader] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -75,7 +75,7 @@ const IndividualInformation = () => {
 			<div className={styles.auth}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
-						<BackBtn onClick={()=>push('/auth/signup')} />
+						<BackBtn onClick={()=>back()} />
 						<h1 className="title">Personal Information</h1>
 						<form className={styles.form}
 							onSubmit={handleSubmit}>
