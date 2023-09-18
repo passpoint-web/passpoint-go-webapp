@@ -45,7 +45,6 @@ const BusinessPersonalInfo = () => {
 	}
 
 	useEffect(() => {
-		// console.log(payload)
 		const {firstName, lastName, phone} = payload
 		const conditionsMet = firstName && lastName && phone && termsAccepted && roleConfirmed
 		if (conditionsMet) {
