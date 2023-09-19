@@ -52,7 +52,7 @@ const BusinessAddress = () => {
 			return
 		}
 		// window.setTimeout(() => {
-		push('/auth/signup/business/personal')
+		push('/auth/signup/individual/verify')
 		// }, 3000)
 	}
 
@@ -79,7 +79,7 @@ const BusinessAddress = () => {
 			<div className={styles.inner}>
 				<div className={styles.center}>
 					<BackBtn onClick={() => back()} />
-					<h1 className="title">Add your business address 🏠</h1>
+					<h1 className="title">Add address 🏠</h1>
 					<h4 className="sub-title media-max-700">
               Kindly provide personal information
 					</h4>

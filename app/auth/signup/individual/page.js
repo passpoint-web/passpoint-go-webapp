@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import PhoneInput from 'react-phone-input-2'
+import PasswordField from '@/components/Auth/PasswordField'
 import 'react-phone-input-2/lib/style.css'
+import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check/Check'
+import PhoneInput from 'react-phone-input-2'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 
-const BusinessPersonalInfo = () => {
+const IndividualInformation = () => {
 	const { push, back } = useRouter()
-
+	const { validEmail } = functions
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [termsAccepted, setTermsAccepted] = useState(false)
@@ -20,15 +22,34 @@ const BusinessPersonalInfo = () => {
 	const [payload, setPayload] = useState({
 		lastName: '',
 		firstName: '',
-		phone: ''
+		email: '',
+		phone: '',
+		password: '',
 	})
+
 	const handleChange = (e) => {
 		const { name, value } = e.target
 		setPayload((prevState) => ({
 			...prevState,
-			[name]: value
+			[name]: value,
 		}))
 	}
+
+	useEffect(() => {
+		const {firstName, lastName, password, email} = payload
+		const conditionsMet =
+      lastName &&
+      firstName &&
+      validEmail(email) &&
+      password &&
+			termsAccepted &&
+			roleConfirmed
+		if (conditionsMet) {
+			setAllFieldsValid(true)
+		} else {
+			setAllFieldsValid(false)
+		}
+	}, [payload, termsAccepted, roleConfirmed])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -37,29 +58,16 @@ const BusinessPersonalInfo = () => {
 			return
 		}
 		// window.setTimeout(() => {
-		push('/auth/signup/business/verify')
+		push('/auth/signup/individual/business')
 		// }, 3000)
 	}
-
-	useEffect(() => {
-		const {firstName, lastName, phone} = payload
-		const conditionsMet = firstName && lastName && phone && termsAccepted && roleConfirmed
-		if (conditionsMet) {
-			setAllFieldsValid(true)
-		} else {
-			setAllFieldsValid(false)
-		}
-	}, [payload, termsAccepted, roleConfirmed])
 
 	return (
 		<div className={`${styles.auth} ${styles.no_pd_top}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-					<BackBtn onClick={() => back()} />
+					<BackBtn onClick={()=>back()} />
 					<h1 className="title">Personal Information</h1>
-					<h4 className="sub-title media-max-700">
-              Kindly provide personal information
-					</h4>
 					<form className={styles.form}
 						onSubmit={handleSubmit}>
 						<div className={styles.inner}>
@@ -68,23 +76,33 @@ const BusinessPersonalInfo = () => {
 									label="Last Name"
 									id="last-name"
 									name="lastName"
-									placeholder="Doe"
+									placeholder="John"
 									value={payload.lastName}
 									onChange={handleChange}
 									error={ctaClicked && !payload.lastName}
-									errorMsg="Last Name is required"
+									errorMsg={'Last name is required'}
 								/>
 								<Input
 									label="First Name"
 									id="first-name"
 									name="firstName"
-									placeholder="Jon"
+									placeholder="Travels"
 									value={payload.firstName}
 									onChange={handleChange}
 									error={ctaClicked && !payload.firstName}
-									errorMsg="First Name is required"
+									errorMsg={'First name is required'}
 								/>
 							</div>
+							<Input
+								label="Email Address"
+								id="email-address"
+								name="email"
+								placeholder="John@mail.com"
+								value={payload.email}
+								onChange={handleChange}
+								error={ctaClicked && !validEmail(payload.email)}
+								errorMsg={!payload.email ? 'Email is required' : !validEmail(payload.email) ? 'Valid email is required' : 'Email is required'}
+							/>
 							<Input
 								id="phone"
 								label="Phone Number"
@@ -95,6 +113,22 @@ const BusinessPersonalInfo = () => {
 									country={'ng'}
 									value={payload.phone}
 									onChange={(phone) => handleChange({ target: { name: 'phone', value: phone } })}
+								/>
+							</Input>
+							<Input
+								label="Password"
+								id="password"
+								name="password"
+								placeholder="Password"
+								error={ctaClicked && !payload.password}
+							>
+								<PasswordField
+									errorField={ctaClicked && !payload.password}
+									emitPassword={(e) =>
+										handleChange({
+											target: { name: 'password', value: e },
+										})
+									}
 								/>
 							</Input>
 							<div className={`${styles.terms} ${ctaClicked && !roleConfirmed ? styles.error : ''}`}>
@@ -116,9 +150,9 @@ const BusinessPersonalInfo = () => {
 								</p>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn
-									text="Open account" />
+								<PrimaryBtn text="Open account" />
 							</div>
+
 						</div>
 					</form>
 				</div>
@@ -127,4 +161,4 @@ const BusinessPersonalInfo = () => {
 	)
 }
 
-export default BusinessPersonalInfo
+export default IndividualInformation

@@ -1,4 +1,4 @@
-import KYCLayout from '@/app/kyc-layout'
+import KYCLayout from '@/components/Layouts/KYCLayout'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { useEffect, useState } from 'react'

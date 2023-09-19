@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/assets/styles/globals.css'
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
