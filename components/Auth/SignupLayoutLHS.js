@@ -1,34 +1,42 @@
+'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import SignupLevel from './SignupLevel'
-import { useRouter } from 'next/router'
+import {
+	// useRouter,
+	usePathname,
+	// useSearchParams
+}
+	from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const SignupLayoutLHS = () => {
-	const { route } = useRouter()
+	const pathname = usePathname()
+	// const router = useRouter()
+	// const searchParams = useSearchParams()
 
 	const individualLevel = [
 		{
 			title: 'Personal Information',
 			sub_title: 'Kindly provide personal information',
-			active: route === '/auth/signup/individual',
+			active: pathname === '/auth/signup/individual',
 			completed: false,
 		},
 		{
 			title: 'Business Registration',
 			sub_title: 'We want to know how you want to operate on passpoint',
-			active: route === '/auth/signup/individual/business',
+			active: pathname === '/auth/signup/individual/business',
 			completed: false,
 		},
 		{
 			title: 'Address Details',
 			sub_title: 'Kindly fill in your correct address details',
-			active: route === '/auth/signup/individual/address',
+			active: pathname === '/auth/signup/individual/address',
 			completed: false,
 		},
 		{
 			title: 'Verify Email Address',
 			sub_title: 'Verify your registered email address',
-			active: route === '/auth/signup/individual/verify',
+			active: pathname === '/auth/signup/individual/verify',
 			completed: false,
 		},
 	]
@@ -37,37 +45,37 @@ const SignupLayoutLHS = () => {
 		{
 			title: 'Business Information',
 			sub_title: 'We want to know how you want to operate on Passpoint',
-			active: route === '/auth/signup/business',
+			active: pathname === '/auth/signup/business',
 			completed: false,
 		},
 		{
 			title: 'Business Address',
 			sub_title: 'Kindly fill in your correct address details',
-			active: route === '/auth/signup/business/address',
+			active: pathname === '/auth/signup/business/address',
 			completed: false,
 		},
 		{
 			title: 'Personal Information',
 			sub_title: 'Kindly provide personal information',
-			active: route === '/auth/signup/business/personal',
+			active: pathname === '/auth/signup/business/personal',
 			completed: false,
 		},
 		{
 			title: 'Verify Email Address',
 			sub_title: 'Verify your registered email address',
-			active: route === '/auth/signup/business/verify',
+			active: pathname === '/auth/signup/business/verify',
 			completed: false,
 		},
 	]
 
 	const [levelsToDisplay, setLevelsToDisplay] = useState([])
 	useEffect(()=>{
-		if (route.includes('/signup/business')) {
+		if (pathname.includes('/signup/business')) {
 			setLevelsToDisplay(businessLevel)
 		} else {
 			setLevelsToDisplay(individualLevel)
 		}
-	},[])
+	},[pathname])
 
 	return (
 		<div className={styles.auth_content_lhs}>
