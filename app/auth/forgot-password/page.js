@@ -1,4 +1,4 @@
-import AuthLayout from '@/components/Layouts/AuthLayout'
+'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import TertiaryBtn from '@/components/Btn/Tertiary'
@@ -7,7 +7,7 @@ import BackBtn from '@/components/Btn/Back'
 import { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 import functions from '@/utils/functions'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import PasswordField from '@/components/Auth/PasswordField'
 
 const ForgotPassword = () => {
@@ -135,21 +135,19 @@ const ForgotPassword = () => {
 	}
 
 	return (
-		<AuthLayout pageTitle={'Forgot Password'}>
-			<div className={styles.auth}>
-				<div className={styles.inner}>
-					<div className={styles.center}>
-						{
-							currentLevel === 'forgot' ?
-								Forgot() :
-								currentLevel === 'verify' ?
-									Verify() :
-									Reset()
-						}
-					</div>
+		<div className={styles.auth}>
+			<div className={styles.inner}>
+				<div className={styles.center}>
+					{
+						currentLevel === 'forgot' ?
+							Forgot() :
+							currentLevel === 'verify' ?
+								Verify() :
+								Reset()
+					}
 				</div>
 			</div>
-		</AuthLayout>
+		</div>
 	)
 }
 

@@ -1,9 +1,13 @@
+'use client'
+import { usePathname } from 'next/navigation'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PasspointLogo from '../Passpoint/Logo'
 import ProductStage from '../ProductStage'
 import SecondaryLink from '../Link/Secondary'
 
-const AuthHeader = ({ btn }) => {
+const AuthHeader = () => {
+	const pathname = usePathname()
+	const btn = pathname.includes('/signup') ? {url: '/auth/login', text: 'Login'} : {url: '/auth/signup', text: 'Signup'}
 	return (
 		<header className={styles.header}>
 			<div className={styles.inner}>
