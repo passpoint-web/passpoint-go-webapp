@@ -14,7 +14,6 @@ const AuthHeader = () => {
 				<div className={styles.lhs}>
 					<PasspointLogo />
 					<ProductStage stage="beta" />
-					<input />
 				</div>
 				{Object.keys(btn).length ? (
 					<div className={styles.rhs}>
