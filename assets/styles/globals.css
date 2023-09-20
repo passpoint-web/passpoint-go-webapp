@@ -6,6 +6,7 @@
     url("../fonts/Graphik-Font-Family/GraphikMedium.otf") format("truetype");
   font-weight: 500;
 }
+
 @font-face {
   font-family: "GraphikBold";
   src: url("../fonts/Graphik-Font-Family/GraphikBold.otf");

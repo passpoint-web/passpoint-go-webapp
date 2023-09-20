@@ -70,7 +70,7 @@
 
 /* dashboard Header  */
 .dashHeader_main {
-  height: 100px;
+  height: var(--header-height);
   background-color: var(--white);
   justify-content: flex-end;
   padding: 0 30px;
@@ -109,7 +109,7 @@
   left: 0;
 }
 .dashSide_main i {
-  height: 100px;
+  height: var(--header-height);
   padding: 0 30px;
 }
 .dashSide_link {
