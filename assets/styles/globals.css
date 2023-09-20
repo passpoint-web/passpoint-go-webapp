@@ -550,7 +550,7 @@ ul {
   :root {
     --header-padding: 40px;
     --outer-component-mg: 20px;
-    --inner-component-mg: 12px;
+    --inner-component-mg: 15px;
     --inner-component-gap: 8px;
     --outer-component-gap: 16px;
     --screen-padding-top: 32px;

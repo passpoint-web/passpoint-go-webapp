@@ -20,8 +20,8 @@ const getRequestConfig = () => {
 	}
 }
 
-// register agent
+// register user
 export const registerUser = (data) => {
 	const config = getRequestConfig()
-	return axiosClient().post('onboardUser', data, config)
+	return axiosClient().post('onBoardUserBusinessInfo', data, config)
 }
