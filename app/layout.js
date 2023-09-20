@@ -9,11 +9,10 @@ export default function RootLayout({ children }) {
 				{children}
 				<ToastContainer
 					position="top-right"
-					autoClose={5000}
+					autoClose={4000}
 					hideProgressBar={true}
 					newestOnTop={false}
 					draggable={false}
-					pauseOnVisibilityChange
 					closeOnClick
 					pauseOnHover
 				/>
