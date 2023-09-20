@@ -12,6 +12,7 @@ import Input from '@/components/Dashboard/Input'
 import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
 import { registerUser } from '@/services/restService'
 import toast from '@/components/Toast'
+import { saveCredentials } from '@/services/localService'
 
 const BusinessInformation = () => {
 
@@ -55,10 +56,14 @@ const BusinessInformation = () => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await registerUser(payload)
+			const response = await registerUser('onBoardUserBusinessInfo', payload)
 			console.log(response)
+			// setSignupLevel({'business', 2})
+			let credentials = {...payload}
+			delete credentials.password
+			saveCredentials(credentials)
 			notify('success', 'Your account has been created successfully')
-			// push('/auth/signup/business/address')
+			push('/auth/signup/business/address')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)

@@ -2,47 +2,63 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-// import {notify} from '@/components/Toast'
 import PasswordField from '@/components/Auth/PasswordField'
-import FeedbackInfo from '@/components/FeedbackInfo'
 import functions from '@/utils/functions'
+import { login } from '@/services/restService'
+import Input from '@/components/Dashboard/Input'
+import toast from '@/components/Toast'
 
 const Login = () => {
 
 	const {validEmail} = functions
+	// eslint-disable-next-line no-unused-vars
 	const {push} = useRouter()
-	const [email, setEmail] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
-	const [password, setPassword] = useState('')
-	// const [payload, setPayload] = useState({
-	// 	email: '',
-	// 	password: '',
-	// })
+	const [isLoading, setIsLoading] = useState(false)
+	const [payload, setPayload] = useState({
+		email: '',
+		password: ''
+	})
 
-	// const handleChange = (e) => {
-	// 	setPayload((prevState) => ({
-	// 		...prevState,
-	// 		[e.target.name]: e.target.value,
-	// 	}))
-	// }
+	const notify = useCallback((type, message) => {
+		toast({ type, message })
+	}, [])
 
 
-	const handleSubmit = (e) =>{
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
+	}
+
+	const handleSubmit = async (e) =>{
 		e.preventDefault()
 		setCtaClicked(true)
 		if (!allFieldsValid) {
 			return
 		}
-		// window.setTimeout(() => {
-		push('/auth/signup/business/address')
-		// }, 3000)
+		setIsLoading(true)
+		try {
+			const response = await login(payload)
+			console.log(response)
+			// setSignupLevel({'business', 2})
+			notify('success', `You're logged in as ${payload.email}`)
+			// push('/')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
-
 	useEffect(()=>{
+		const {email, password} = payload
 		const conditionsMet =
 	validEmail(email) &&
 		password
@@ -51,11 +67,7 @@ const Login = () => {
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [
-		email,
-		password
-	])
-
+	}, [payload])
 
 	return (
 		<div className={styles.auth}>
@@ -67,24 +79,40 @@ const Login = () => {
 					<form className={styles.form}
 						onSubmit={handleSubmit}>
 						<div className={styles.inner}>
-							<div className={`${styles.form_group} ${ctaClicked && !validEmail(email) ? styles.error : ''}`}>
-								<label htmlFor="email-address">Email address</label>
-								<input placeholder="kelechi@gmail.com"
-									id="email-address"
-									type="email"
-									value={email}
-									onChange={(e)=>setEmail(e.target.value)} />
-								{ctaClicked && !validEmail(email) ? <FeedbackInfo message={!email ? 'Email is needed' : !validEmail(email) ? 'Valid email is required' : 'Email is needed'} /> : <></>}
-							</div>
-							<div className={`${styles.form_group} ${ctaClicked && !password ? styles.error : ''}`}>
-								<label htmlFor="password">Password</label>
-								<PasswordField passwordStrengthNeeded={false}
-									emitPassword={(e)=>setPassword(e)} />
-								{ctaClicked && !password ? <FeedbackInfo message='Password is needed' /> : <></>}
-							</div>
+							<Input
+								label="Email Address"
+								id="email-address"
+								name="email"
+								placeholder="John@mail.com"
+								value={payload.email}
+								onChange={handleChange}
+								error={ctaClicked && !validEmail(payload.email)}
+								errorMsg={!payload.email ? 'Email address is required' : !validEmail(payload.email) ? 'Valid business email is required' : 'Business email is required'}
+							/>
+							<Input
+								label="Password"
+								id="password"
+								name="password"
+								placeholder="Password"
+								error={ctaClicked && !payload.password}
+								errorMsg='Password is required'
+							>
+								<PasswordField
+									errorField={ctaClicked && !payload.password}
+									passwordStrengthNeeded={false}
+									emitPassword={(e) =>
+										handleChange({
+											target: { name: 'password', value: e },
+										})
+									}
+								/>
+							</Input>
 						</div>
 						<div className={styles.action_ctn}>
-							<PrimaryBtn text='Log in' />
+							<PrimaryBtn
+								text='Log in'
+								loading={isLoading}
+							/>
 							<p>Forgot password? <Link href="/auth/forgot-password"
 								text='Reset it'>Reset it</Link></p>
 						</div>

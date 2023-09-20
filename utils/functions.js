@@ -39,7 +39,7 @@ function lastFourDigits(number) {
 	return maskedNumber
 }
 
-function hideEmail(target) {
+function maskedEmail(target) {
 	const email = target
 	let hiddenEmail = ''
 	for (let i = 0; i < email.length; i++) {
@@ -109,7 +109,7 @@ const functions = {
 	currencySymbol,
 	formatTimestamp: dateTimestamp,
 	truncateString,
-	hideEmail,
+	maskedEmail,
 	validEmail,
 	getMonth,
 	resetModalState

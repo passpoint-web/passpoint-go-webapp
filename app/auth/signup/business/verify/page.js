@@ -2,11 +2,15 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import BackBtn from '@/components/Btn/Back'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import OtpInput from 'react-otp-input'
 import { useRouter } from 'next/navigation'
 import Input from '@/components/Dashboard/Input'
 import ResendOTP from '@/components/Auth/ResendOTP'
+import { getCredentials } from '@/services/localService'
+import { registerUser } from '@/services/restService'
+import toast from '@/components/Toast'
+import functions from '@/utils/functions'
 
 const VerifyEmail = () => {
 	const { push, back } = useRouter()
@@ -14,15 +18,39 @@ const VerifyEmail = () => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [countDown, setCountDown] = useState(0)
-	const handleVerificationSubmit = (e) => {
+	const savedCredentials = getCredentials()
+	const [isLoading, setIsLoading] = useState(false)
+
+	const notify = useCallback((type, message) => {
+		toast({ type, message })
+	}, [])
+
+	const {maskedEmail} = functions
+
+	const handleVerificationSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
 		if (otp.length !== 6) {
 			return
 		}
-		// window.setTimeout(() => {
-		push('/auth/login')
-		// }, 3000)
+		setIsLoading(true)
+		try {
+			const payload = {
+				otp,
+				email: savedCredentials.email,
+				otpType:'accountVerification'
+			}
+			const response = await registerUser('verifyUserOtp', payload)
+			console.log(response)
+			// setSignupLevel({'business', 2})
+			notify('success', 'Your email has been verified!')
+			push('/auth/login')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	useEffect(() => {
@@ -36,9 +64,9 @@ const VerifyEmail = () => {
 					<BackBtn onClick={() => back()} />
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
-              We sent a 6 digit code to daniel****@gmail.com, please enter the
+              We sent a 6 digit code to {maskedEmail(savedCredentials.email)}, please enter the
               code below, or click the verification link in your mail to
-              complete verification{' '}
+              complete verification
 					</h4>
 					<form className={styles.form}
 						onSubmit={handleVerificationSubmit}>
@@ -64,7 +92,10 @@ const VerifyEmail = () => {
 						<div className={styles.action_ctn}>
 							<ResendOTP countDown={countDown}
 								setCountDown={(v)=>setCountDown(v)} />
-							<PrimaryBtn text="Verify" />
+							<PrimaryBtn
+								text="Verify"
+								loading={isLoading}
+							/>
 						</div>
 					</form>
 				</div>

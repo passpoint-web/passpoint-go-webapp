@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
@@ -8,6 +8,9 @@ import 'react-phone-input-2/lib/style.css'
 import CheckBox from '@/components/Custom/Check/Check'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
+import { registerUser } from '@/services/restService'
+import toast from '@/components/Toast'
+import { getCredentials, saveCredentials } from '@/services/localService'
 
 const BusinessPersonalInfo = () => {
 	const { push, back } = useRouter()
@@ -16,12 +19,20 @@ const BusinessPersonalInfo = () => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [termsAccepted, setTermsAccepted] = useState(false)
 	const [roleConfirmed, setRoleConfirmed] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const [payload, setPayload] = useState({
 		lastName: '',
 		firstName: '',
 		phone: ''
 	})
+	const savedCredentials = getCredentials()
+
+	const notify = useCallback((type, message) => {
+		toast({ type, message })
+	}, [])
+
+
 	const handleChange = (e) => {
 		const { name, value } = e.target
 		setPayload((prevState) => ({
@@ -36,9 +47,20 @@ const BusinessPersonalInfo = () => {
 		if (!allFieldsValid) {
 			return
 		}
-		// window.setTimeout(() => {
-		push('/auth/signup/business/verify')
-		// }, 3000)
+		setIsLoading(true)
+		try {
+			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials.email, ...payload})
+			console.log(response)
+			// setSignupLevel({'business', 2})
+			saveCredentials({...savedCredentials, payload})
+			notify('success', 'Your personal information has been saved')
+			push('/auth/signup/business/verify')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	useEffect(() => {
@@ -117,6 +139,7 @@ const BusinessPersonalInfo = () => {
 							</div>
 							<div className={styles.action_ctn}>
 								<PrimaryBtn
+									loading={isLoading}
 									text="Open account" />
 							</div>
 						</div>

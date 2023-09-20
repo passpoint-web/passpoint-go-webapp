@@ -549,7 +549,7 @@ ul {
 @media screen and (max-width: 700px) {
   :root {
     --header-padding: 40px;
-    --outer-component-mg: 20px;
+    --outer-component-mg: 25px;
     --inner-component-mg: 15px;
     --inner-component-gap: 8px;
     --outer-component-gap: 16px;
