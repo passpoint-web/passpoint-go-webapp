@@ -1,7 +1,7 @@
 'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import BackBtn from '@/components/Btn/Back'
+// import BackBtn from '@/components/Btn/Back'
 import { useEffect, useState, useCallback } from 'react'
 import OtpInput from 'react-otp-input'
 import { useRouter } from 'next/navigation'
@@ -13,6 +13,7 @@ import toast from '@/components/Toast'
 import functions from '@/utils/functions'
 
 const VerifyEmail = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
@@ -61,7 +62,7 @@ const VerifyEmail = () => {
 		<div className={`${styles.auth} ${styles.no_pd_top}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-					<BackBtn onClick={() => back()} />
+					{/* <BackBtn onClick={() => back()} /> */}
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
               We sent a 6 digit code to {maskedEmail(savedCredentials.email)}, please enter the
