@@ -72,7 +72,7 @@ const Login = () => {
 		} else if (!is_active && Number(userType) == 1) {
 			push(`/auth/signup/individual/${individualLevels[regStage]}`)
 		} else {
-			push('/')
+			push('/dashboard')
 		}
 	}
 
