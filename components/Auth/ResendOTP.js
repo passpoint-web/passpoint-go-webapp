@@ -29,7 +29,7 @@ const ResendOTP = ({setCountDown, countDown}) => {
 	}
 	return (
 		<p className={styles.receive_otp_text}>
-      Didn’t receive any code?
+      Didn’t receive any code? {' '}
 			{
 				!countDown && resendOTPStatus === 'Resend OTP' ?
 					<TertiaryBtn

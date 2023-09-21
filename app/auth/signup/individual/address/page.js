@@ -1,26 +1,37 @@
 'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { registerUser } from '@/services/restService'
+import { CS } from '@/utils/CONSTANTS'
+import { getCredentials, saveCredentials } from '@/services/localService'
 import CustomSelect from '@/components/Custom/Select/Select'
 import CountrySelect from '@/components/Custom/CountrySelect'
-import BackBtn from '@/components/Btn/Back'
+// import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import { CS } from '@/utils/CONSTANTS'
+import toast from '@/components/Toast'
 
 const BusinessAddress = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [states, setStates] = useState([])
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
-	const [LGAs, setLGAs] = useState([])
+	const [lgas, setLgas] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
 	const [payload, setPayload] = useState({
 		country: '',
 		state: '',
-		LGA: '',
+		lga: '',
 		streetNo: ''
 	})
+
+	const savedCredentials = getCredentials()
+
+	const notify = useCallback((type, message) => {
+		toast({ type, message })
+	}, [])
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -29,7 +40,7 @@ const BusinessAddress = () => {
 			[name]: value
 		}))
 		const resetState = name === 'country' && value.name.common !== payload.country?.name?.common
-		const resetLGA = name === 'state' && value !== payload.state
+		const resetLga = name === 'state' && value !== payload.state
 		if (resetState) {
 			setPayload((prevState) => ({
 				...prevState,
@@ -37,23 +48,36 @@ const BusinessAddress = () => {
 			}))
 		}
 
-		if (resetState || resetLGA) {
+		if (resetState || resetLga) {
 			setPayload((prevState) => ({
 				...prevState,
-				LGA: '',
+				lga: '',
 			}))
 		}
 	}
-
-	const handleSubmit = (e) => {
+	// onBoardIndividualBusinessAddress
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
 		if (!allFieldsValid) {
 			return
 		}
-		// window.setTimeout(() => {
-		push('/auth/signup/individual/verify')
-		// }, 3000)
+		setIsLoading(true)
+		try {
+			const { lga, state, country, streetNo } = payload
+			let body = {email: savedCredentials.email, country: country.name.common, lga, state, address: streetNo}
+			const response = await registerUser('onBoardUserBusinessAddress', body)
+			console.log(response)
+			// setSignupLevel({'business', 2})
+			saveCredentials({...savedCredentials, ...body, regStage: 1})
+			notify('success', 'Your business address has been saved')
+			push('/auth/signup/individual/verify')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	useEffect(()=>{
@@ -61,13 +85,13 @@ const BusinessAddress = () => {
 	},[payload.country?.name?.common])
 
 	useEffect(()=>{
-		setLGAs(CS.getCities(payload?.country?.cca2, payload.state))
+		setLgas(CS.getCities(payload?.country?.cca2, payload.state))
 	},[payload.state])
 
 	useEffect(() => {
-		const {country, state, LGA, streetNo} = payload
-		const LGANeeded = LGAs?.length ? LGA : false
-		if (country?.name?.common && state && LGANeeded && streetNo) {
+		const {country, state, lga, streetNo} = payload
+		const lgaNeeded = lgas?.length ? lga : false
+		if (country?.name?.common && state && lgaNeeded && streetNo) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
@@ -75,10 +99,10 @@ const BusinessAddress = () => {
 	}, [payload])
 
 	return (
-		<div className={`${styles.auth} ${styles.no_pd_top}`}>
+		<div className={`${styles.auth}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-					<BackBtn onClick={() => back()} />
+					{/* <BackBtn onClick={() => back()} /> */}
 					<h1 className="title">Add address 🏠</h1>
 					<h4 className="sub-title media-max-700">
               Kindly provide personal information
@@ -117,18 +141,18 @@ const BusinessAddress = () => {
 								/>
 							</Input>
 							<Input
-								id="LGA"
+								id="lga"
 								label="Select Local Govt."
-								error={ctaClicked && payload.state && (LGAs?.length && !payload.LGA)}
-								errorMsg="LGA is required"
+								error={ctaClicked && payload.state && (lgas?.length && !payload.lga)}
+								errorMsg="lga is required"
 							>
 								<CustomSelect
 									disabled={!payload.state}
-									fieldError={ctaClicked && payload.state && (LGAs?.length && !payload.LGA)}
-									selectOptions={LGAs}
-									selectedOption={payload.LGA}
+									fieldError={ctaClicked && payload.state && (lgas?.length && !payload.lga)}
+									selectOptions={lgas}
+									selectedOption={payload.lga}
 									emitSelect={(e) => handleChange({
-										target: { name: 'LGA', value: e },
+										target: { name: 'lga', value: e },
 									})}
 								/>
 							</Input>
@@ -144,7 +168,8 @@ const BusinessAddress = () => {
 							/>
 						</div>
 						<div className={styles.action_ctn}>
-							<PrimaryBtn text={'Save and continue'} />
+							<PrimaryBtn text={'Save and continue'}
+								loading={isLoading} />
 						</div>
 					</form>
 				</div>

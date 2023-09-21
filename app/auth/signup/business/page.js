@@ -1,6 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
+import { registerUser } from '@/services/restService'
+import { saveCredentials } from '@/services/localService'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
@@ -9,21 +12,33 @@ import CheckBox from '@/components/Custom/Check/Check'
 import CustomSelect from '@/components/Custom/Select/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
+import toast from '@/components/Toast'
+
 const BusinessInformation = () => {
+
+	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const { validEmail } = functions
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [checked, setChecked] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const [payload, setPayload] = useState({
 		businessName: '',
-		businessEmail: '',
+		email: '',
 		businessType: '',
 		businessIndustry: '',
-		businessId: '',
+		rcNumber: '',
 		password: ''
 	})
+
+	const notify = useCallback((type, message) => {
+		toast({ type, message })
+	}, [])
+
+	// const dismiss = useCallback(() => {
+	// 	toast.dismiss()
+	// }, [])
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -39,9 +54,22 @@ const BusinessInformation = () => {
 		if (!allFieldsValid) {
 			return
 		}
-		// window.setTimeout(() => {
-		push('/auth/signup/business/address')
-		// }, 3000)
+		setIsLoading(true)
+		try {
+			const response = await registerUser('onBoardUserBusinessInfo', payload)
+			console.log(response)
+			// setSignupLevel({'business', 2})
+			let credentials = {...payload, regStage: 1}
+			delete credentials.password
+			saveCredentials(credentials)
+			notify('success', 'Your account has been created successfully')
+			push('/auth/signup/business/address')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	const toggleChecked = () => {
@@ -51,18 +79,19 @@ const BusinessInformation = () => {
 	useEffect(() => {
 		const {
 			businessName,
-			businessEmail,
+			email,
 			businessType,
 			businessIndustry,
-			businessId,
+			rcNumber,
 			password
 		} = payload
+
 		const conditionsMet =
-      businessId &&
+      rcNumber &&
       businessName &&
       businessIndustry &&
       businessType &&
-      validEmail(businessEmail) &&
+      validEmail(email) &&
       password &&
       checked
 		if (conditionsMet) {
@@ -100,12 +129,12 @@ const BusinessInformation = () => {
 							<Input
 								label="Business Email Address"
 								id="business-email-address"
-								name="businessEmail"
+								name="email"
 								placeholder="John@mail.com"
-								value={payload.businessEmail}
+								value={payload.email}
 								onChange={handleChange}
-								error={ctaClicked && !validEmail(payload.businessEmail)}
-								errorMsg={!payload.businessEmail ? 'Business email is required' : !validEmail(payload.businessEmail) ? 'Valid business email is required' : 'Business email is required'}
+								error={ctaClicked && !validEmail(payload.email)}
+								errorMsg={!payload.email ? 'Business email is required' : !validEmail(payload.email) ? 'Valid business email is required' : 'Business email is required'}
 							/>
 							<Input
 								id="business-type"
@@ -146,11 +175,11 @@ const BusinessInformation = () => {
 							<Input
 								label="Business Identification Number"
 								id="business-id"
-								name="businessId"
+								name="rcNumber"
 								placeholder="RC 0123456"
-								value={payload.businessId}
+								value={payload.rcNumber}
 								onChange={handleChange}
-								error={ctaClicked && !payload.businessId}
+								error={ctaClicked && !payload.rcNumber}
 								errorMsg="Business ID No. required"
 							/>
 							<Input
@@ -177,7 +206,8 @@ const BusinessInformation = () => {
 							<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
 						</div>
 						<div className={styles.action_ctn}>
-							<PrimaryBtn text="Open account" />
+							<PrimaryBtn text="Open account"
+								loading={isLoading} />
 						</div>
 					</form>
 					{/* </div> */}
