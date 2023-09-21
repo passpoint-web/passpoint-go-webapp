@@ -54,6 +54,7 @@ const BusinessInformation = () => {
 		if (!allFieldsValid) {
 			return
 		}
+
 		setIsLoading(true)
 		try {
 			const response = await registerUser('onBoardUserBusinessInfo', payload)
