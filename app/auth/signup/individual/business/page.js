@@ -49,7 +49,7 @@ const BusinessInformation = () => {
 			const response = await registerUser('onBoardIndividualBusinessInfo', {email: savedCredentials.email, ...payload})
 			console.log(response)
 			// setSignupLevel({'business', 2})
-			saveCredentials({...savedCredentials, payload, regStage: 2})
+			saveCredentials({...savedCredentials, ...payload})
 			notify('success', 'Your business information has been saved')
 			push('/auth/signup/individual/address')
 		} catch (_err) {

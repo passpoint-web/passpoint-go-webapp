@@ -1,10 +1,11 @@
-import React from 'react'
 import ModalWrapper from './ModalWrapper'
 import styles from './modal.module.css'
 import PrimaryBtn from '../Btn/Primary'
+
 const PasspointBusinessModal = ({onClose}) => {
 	return (
-		<ModalWrapper contentStyle={{maxWidth: '500px'}}
+		<ModalWrapper
+			contentStyle={{maxWidth: '500px'}}
 			heading='Passpoint Business Warning'
 			onClose={onClose}
 		>

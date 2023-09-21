@@ -1,6 +1,6 @@
 // setters
 export const saveCredentials = (credentials) => {
-	sessionStorage.setItem(
+	localStorage.setItem(
 		'registration_cr3dentials',
 		JSON.stringify(credentials)
 	)
@@ -8,8 +8,9 @@ export const saveCredentials = (credentials) => {
 
 export const getCredentials = () => {
 	if (typeof window !== 'undefined') {
-		const credentials = sessionStorage.getItem('registration_cr3dentials')
+		const credentials = localStorage.getItem('registration_cr3dentials')
 		if (credentials !== 'undefined') {
+			console.log(credentials)
 			return JSON.parse(credentials)
 		}
 	}

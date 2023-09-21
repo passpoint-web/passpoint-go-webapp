@@ -1,14 +1,10 @@
 
-import { useEffect } from 'react'
+
 import { ToastContainer } from 'react-toastify'
-import toast from '@/components/Toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 
 const Page = () => {
-	useEffect(() => {
-		toast({ type: 'info', message: 'Hello world!' })
-	}, [])
 	return (
 		<div>
 			<ToastContainer

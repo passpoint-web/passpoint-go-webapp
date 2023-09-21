@@ -76,6 +76,9 @@
   position: absolute;
   right: 0;
   top: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 500px) {
