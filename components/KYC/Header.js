@@ -13,7 +13,7 @@ const KYCHeader = () => {
 					<CloseBtn onClick={handleCloseClick} />
 				</div>
 				<div className={styles.mhs}>
-					<h2>Complete KYC</h2>
+					<h3>Complete KYC</h3>
 				</div>
 				<div className={styles.rhs} />
 			</div>

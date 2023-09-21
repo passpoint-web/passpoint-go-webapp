@@ -8,14 +8,16 @@ import Head from 'next/head'
 import { usePathname } from 'next/navigation'
 import SignupLayoutLHS from '@/components/Auth/SignupLayoutLHS'
 
+
 export default function AuthLayout({
 	children,
 	pageTitle = '',
 	fullScreenLoader,
 }) {
-
 	const pathname = usePathname()
-	const LHSRequired = pathname.includes('/auth/signup/individual') || pathname.includes('/auth/signup/business')
+	const LHSRequired =
+    pathname.includes('/auth/signup/individual') ||
+    pathname.includes('/auth/signup/business')
 	return (
 		<div>
 			<Head>
