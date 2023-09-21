@@ -69,8 +69,7 @@ const BusinessAddress = () => {
 			let body = {email: savedCredentials.email, country: country.name.common, lga, state, address: streetNo}
 			const response = await registerUser('onBoardUserBusinessAddress', body)
 			console.log(response)
-			// setSignupLevel({'business', 2})
-			saveCredentials({...savedCredentials, ...body})
+			saveCredentials({...savedCredentials, ...body, regStage: 1})
 			notify('success', 'Your business address has been saved')
 			push('/auth/signup/business/personal')
 		} catch (_err) {

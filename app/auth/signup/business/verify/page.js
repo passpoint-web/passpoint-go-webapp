@@ -16,6 +16,7 @@ const VerifyEmail = () => {
 	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
+	const [email, setEmail] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [countDown, setCountDown] = useState(0)
@@ -31,14 +32,14 @@ const VerifyEmail = () => {
 	const handleVerificationSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
-		if (otp.length !== 6) {
+		if (otp?.length !== 6) {
 			return
 		}
 		setIsLoading(true)
 		try {
 			const payload = {
 				otp,
-				email: savedCredentials.email,
+				email: savedCredentials?.email,
 				otpType:'accountVerification'
 			}
 			const response = await registerUser('verifyUserOtp', payload)
@@ -55,6 +56,10 @@ const VerifyEmail = () => {
 	}
 
 	useEffect(() => {
+		if (
+			setEmail(savedCredentials.email)) {
+			setEmail(savedCredentials.email)
+		}
 		setErrorMsg('')
 	}, [])
 
@@ -65,7 +70,7 @@ const VerifyEmail = () => {
 					{/* <BackBtn onClick={() => back()} /> */}
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
-              We sent a 6 digit code to {maskedEmail(savedCredentials.email)}, please enter the
+              We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
               code below, or click the verification link in your mail to
               complete verification
 					</h4>
@@ -73,8 +78,8 @@ const VerifyEmail = () => {
 						onSubmit={handleVerificationSubmit}>
 						<div className={styles.inner}>
 							<Input
-								error={(ctaClicked && otp.length !== 6) || errorMsg}
-								errorMsg={otp.length !== 6 ? 'Valid OTP needed' : errorMsg}
+								error={(ctaClicked && otp?.length !== 6) || errorMsg}
+								errorMsg={otp?.length !== 6 ? 'Valid OTP needed' : errorMsg}
 								msgPositionCenter={true}
 							>
 								<div className={styles.otp_input}>

@@ -51,8 +51,7 @@ const BusinessPersonalInfo = () => {
 		try {
 			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials.email, ...payload})
 			console.log(response)
-			// setSignupLevel({'business', 2})
-			saveCredentials({...savedCredentials, ...payload})
+			saveCredentials({...savedCredentials, ...payload, regStage: 1})
 			notify('success', 'Your personal information has been saved')
 			push('/auth/signup/business/verify')
 		} catch (_err) {

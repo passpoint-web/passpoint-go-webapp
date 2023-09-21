@@ -59,7 +59,7 @@ const BusinessInformation = () => {
 			const response = await registerUser('onBoardUserBusinessInfo', payload)
 			console.log(response)
 			// setSignupLevel({'business', 2})
-			let credentials = {...payload}
+			let credentials = {...payload, regStage: 1}
 			delete credentials.password
 			saveCredentials(credentials)
 			notify('success', 'Your account has been created successfully')
