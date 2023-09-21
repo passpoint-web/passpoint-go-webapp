@@ -23,25 +23,25 @@ const SignupLayoutLHS = () => {
 			title: 'Personal Information',
 			sub_title: 'Kindly provide personal information',
 			active: pathname === '/auth/signup/individual',
-			completed: false,
+			completed: savedCredentials.regStage > 0,
 		},
 		{
 			title: 'Business Registration',
 			sub_title: 'We want to know how you want to operate on passpoint',
 			active: pathname === '/auth/signup/individual/business',
-			completed: false,
+			completed: savedCredentials.regStage > 1,
 		},
 		{
 			title: 'Address Details',
 			sub_title: 'Kindly fill in your correct address details',
 			active: pathname === '/auth/signup/individual/address',
-			completed: false,
+			completed: savedCredentials.regStage > 2,
 		},
 		{
 			title: 'Verify Email Address',
 			sub_title: 'Verify your registered email address',
 			active: pathname === '/auth/signup/individual/verify',
-			completed: false,
+			completed: savedCredentials.regStage > 3,
 		},
 	]
 

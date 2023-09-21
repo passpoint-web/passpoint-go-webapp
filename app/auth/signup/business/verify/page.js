@@ -1,15 +1,15 @@
 'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-// import BackBtn from '@/components/Btn/Back'
-import { useEffect, useState, useCallback } from 'react'
 import OtpInput from 'react-otp-input'
-import { useRouter } from 'next/navigation'
 import Input from '@/components/Dashboard/Input'
 import ResendOTP from '@/components/Auth/ResendOTP'
+import toast from '@/components/Toast'
+// import BackBtn from '@/components/Btn/Back'
+import { useEffect, useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { getCredentials } from '@/services/localService'
 import { registerUser } from '@/services/restService'
-import toast from '@/components/Toast'
 import functions from '@/utils/functions'
 
 const VerifyEmail = () => {
@@ -19,8 +19,8 @@ const VerifyEmail = () => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [countDown, setCountDown] = useState(0)
-	const savedCredentials = getCredentials()
 	const [isLoading, setIsLoading] = useState(false)
+	const savedCredentials = getCredentials()
 
 	const notify = useCallback((type, message) => {
 		toast({ type, message })
@@ -59,7 +59,7 @@ const VerifyEmail = () => {
 	}, [])
 
 	return (
-		<div className={`${styles.auth} ${styles.no_pd_top}`}>
+		<div className={`${styles.auth}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
 					{/* <BackBtn onClick={() => back()} /> */}

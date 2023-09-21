@@ -9,7 +9,7 @@ import functions from '@/utils/functions'
 import { login } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-import { saveCredentials } from '@/services/localService'
+import { getCredentials, saveCredentials } from '@/services/localService'
 
 const Login = () => {
 
@@ -50,6 +50,9 @@ const Login = () => {
 			const response = await login(payload)
 			const data = response.data.data
 			saveCredentials(data)
+			window.setTimeout(()=>{
+				console.log(getCredentials())
+			}, 1000)
 			directUser(data)
 			// setSignupLevel({'business', 2})
 			notify('success', `You're logged in as ${payload.email}`)
@@ -64,10 +67,10 @@ const Login = () => {
 	const directUser = ({userType, is_active, regStage}) => {
 		const businessLevels = ['', 'address', 'personal', 'verify']
 		const individualLevels = ['', 'business', 'address', 'verify']
-		if (is_active && Number(userType) == 2) {
-			push(`/auth/signup/business/${businessLevels[regStage-1]}`)
-		} else if (is_active && Number(userType) == 1) {
-			push(`/auth/signup/personal/${individualLevels[regStage-1]}`)
+		if (!is_active && Number(userType) == 2) {
+			push(`/auth/signup/business/${businessLevels[regStage]}`)
+		} else if (!is_active && Number(userType) == 1) {
+			push(`/auth/signup/individual/${individualLevels[regStage]}`)
 		} else {
 			push('/')
 		}

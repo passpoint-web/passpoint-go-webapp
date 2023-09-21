@@ -62,7 +62,7 @@ const ChoiceCard = ({ emitSetOption }) => {
 			currentOption={currentOption}
 		>
 			{option.icon}
-			<h2>{option.heading}</h2>
+			<h3>{option.heading}</h3>
 			<div className={styles.content}>
 				<p>{option.content.p}</p>
 				{/* <ol>

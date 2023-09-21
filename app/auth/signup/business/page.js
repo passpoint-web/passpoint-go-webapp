@@ -1,6 +1,9 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
+import { registerUser } from '@/services/restService'
+import { saveCredentials } from '@/services/localService'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
@@ -9,10 +12,7 @@ import CheckBox from '@/components/Custom/Check/Check'
 import CustomSelect from '@/components/Custom/Select/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
-import { registerUser } from '@/services/restService'
 import toast from '@/components/Toast'
-import { saveCredentials } from '@/services/localService'
 
 const BusinessInformation = () => {
 
@@ -59,7 +59,7 @@ const BusinessInformation = () => {
 			const response = await registerUser('onBoardUserBusinessInfo', payload)
 			console.log(response)
 			// setSignupLevel({'business', 2})
-			let credentials = {...payload}
+			let credentials = {...payload, regStage: 1}
 			delete credentials.password
 			saveCredentials(credentials)
 			notify('success', 'Your account has been created successfully')

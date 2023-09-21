@@ -1,6 +1,8 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { registerUser } from '@/services/restService'
+import { getCredentials, saveCredentials } from '@/services/localService'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PhoneInput from 'react-phone-input-2'
@@ -8,9 +10,7 @@ import 'react-phone-input-2/lib/style.css'
 import CheckBox from '@/components/Custom/Check/Check'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import { registerUser } from '@/services/restService'
 import toast from '@/components/Toast'
-import { getCredentials, saveCredentials } from '@/services/localService'
 
 const BusinessPersonalInfo = () => {
 	const { push, back } = useRouter()
@@ -52,7 +52,7 @@ const BusinessPersonalInfo = () => {
 			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials.email, ...payload})
 			console.log(response)
 			// setSignupLevel({'business', 2})
-			saveCredentials({...savedCredentials, payload})
+			saveCredentials({...savedCredentials, payload, regStage: 3})
 			notify('success', 'Your personal information has been saved')
 			push('/auth/signup/business/verify')
 		} catch (_err) {
@@ -74,7 +74,7 @@ const BusinessPersonalInfo = () => {
 	}, [payload, termsAccepted, roleConfirmed])
 
 	return (
-		<div className={`${styles.auth} ${styles.no_pd_top}`}>
+		<div className={`${styles.auth}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
 					<BackBtn onClick={() => back()} />
