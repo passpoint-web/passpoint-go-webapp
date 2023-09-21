@@ -3,17 +3,16 @@
   src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
   src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
-      format("truetype");
+    url("../fonts/Graphik-Font-Family/GraphikMedium.otf") format("truetype");
   font-weight: 500;
 }
+
 @font-face {
   font-family: "GraphikBold";
   src: url("../fonts/Graphik-Font-Family/GraphikBold.otf");
   src: url("../fonts/Graphik-Font-Family/GraphikBold.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikBold.otf")
-      format("truetype");
+    url("../fonts/Graphik-Font-Family/GraphikBold.otf") format("truetype");
   font-weight: 700;
 }
 
@@ -22,8 +21,7 @@
   src: url("../fonts/Graphik-Font-Family/GraphikLight.otf");
   src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikLight.otf")
-      format("truetype");
+    url("../fonts/Graphik-Font-Family/GraphikLight.otf") format("truetype");
   font-weight: 400;
 }
 
@@ -32,19 +30,18 @@
   src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf");
   src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
-      format("truetype");
+    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf") format("truetype");
   font-weight: lighter;
 }
 
 @font-face {
   font-family: "GraphikRegular";
   src: url("../fonts/Graphik-Font-Family/GraphikRegular.otf");
-  src: url("../fonts/Graphik-Font-Family/GraphikRegular.otf")
-      format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikRegular.otf")
-      format("truetype");
-  font-weight: 400;
+}
+
+@font-face {
+  font-family: "GraphikSemibold";
+  src: url("../fonts/Graphik-Font-Family/GraphikSemibold.otf");
 }
 
 * {
@@ -54,7 +51,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 400;
-  line-height: 21px;
+  /* line-height: 21px; */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -66,6 +63,7 @@
   --graphikRegular: "GraphikRegular", sans-serif;
   --graphikLight: "GraphikLight", sans-serif;
   --graphikBold: "GraphikBold", sans-serif;
+  --graphikSemibold: "GraphikSemibold", sans-serif;
 
   --white: #ffffff;
   --grey-1: #1c1132;
@@ -80,6 +78,7 @@
   --sky-blue-bg: #e6f5f980;
 
   --cta-bg: #121212;
+  --secondary: #303237;
 
   --negative: #ff3b2d;
   --negative-box-shadow: #ffc7c3;
@@ -438,7 +437,6 @@ ol,
 ul {
   margin-left: 16px;
 }
-
 
 .error input,
 .error select {

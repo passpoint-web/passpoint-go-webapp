@@ -14,9 +14,10 @@ export default function AuthLayout({
 	pageTitle = '',
 	fullScreenLoader,
 }) {
-
 	const pathname = usePathname()
-	const LHSRequired = pathname.includes('/auth/signup/individual') || pathname.includes('/auth/signup/business')
+	const LHSRequired =
+    pathname.includes('/auth/signup/individual') ||
+    pathname.includes('/auth/signup/business')
 	return (
 		<div>
 			<Head>
