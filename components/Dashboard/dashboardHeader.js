@@ -22,7 +22,7 @@ const DashboardHeader = () => {
 				<Image src={ProfileImage}
 					alt="avatar" />
 				<div>
-					<h3>{savedCredentials?.bussinesName || 'User'}</h3>
+					<h3>{savedCredentials?.businessName}</h3>
 					<Link href="/dashboard/settings/profile">View Profile</Link>
 				</div>
 			</section>
