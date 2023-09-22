@@ -50,7 +50,7 @@ const BusinessPersonalInfo = () => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials.email, ...payload})
+			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials?.email, ...payload})
 			console.log(response)
 			saveCredentials({...savedCredentials, ...payload, regStage: 3})
 			notify('success', 'Your personal information has been saved')

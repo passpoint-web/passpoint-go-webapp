@@ -9,9 +9,9 @@ const DashboardSidebar = () => {
 
 	return (
 		<div className={styles.dashSide_main}>
-			<i>
+			<div className={styles.logo}>
 				<Logo />
-			</i>
+			</div>
 			<nav>
 				{sidebarData.map((item, index) => (
 					<Link href={item.path}

@@ -1,6 +1,6 @@
 'use client'
-import DashboardHeader from '@/components/Dashboard/dashboardHeader'
-import DashboardSidebar from '@/components/Dashboard/dashboardSidebar'
+import DashboardHeader from '@/components/Dashboard/DashboardHeader'
+import DashboardSidebar from '@/components/Dashboard/DashboardSidebar'
 import styles from '@/assets/styles/dashboard-layout.module.css'
 
 export default function DashboardLayout({ children }) {
