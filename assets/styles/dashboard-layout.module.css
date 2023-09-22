@@ -77,6 +77,7 @@
 }
 .dashHeader_main button {
   padding: 14px 20px;
+  background-color: var(--grey-5);
   width: fit-content;
   border-radius: var(--btn-br);
   margin-right: 35px;
