@@ -1,6 +1,8 @@
 'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import SignupLevel from './SignupLevel'
+import { getCredentials } from '@/services/localService'
+
 import {
 	// useRouter,
 	usePathname,
@@ -10,6 +12,9 @@ import {
 import { useEffect, useState } from 'react'
 
 const SignupLayoutLHS = () => {
+
+	const savedCredentials = getCredentials()
+
 	const pathname = usePathname()
 	// const router = useRouter()
 	// const searchParams = useSearchParams()
@@ -19,19 +24,19 @@ const SignupLayoutLHS = () => {
 			title: 'Personal Information',
 			sub_title: 'Kindly provide personal information',
 			active: pathname === '/auth/signup/individual',
-			completed: false,
+			completed: savedCredentials?.regStage > 0,
 		},
 		{
 			title: 'Business Registration',
 			sub_title: 'We want to know how you want to operate on passpoint',
 			active: pathname === '/auth/signup/individual/business',
-			completed: false,
+			completed: savedCredentials?.regStage > 1,
 		},
 		{
 			title: 'Address Details',
 			sub_title: 'Kindly fill in your correct address details',
 			active: pathname === '/auth/signup/individual/address',
-			completed: false,
+			completed: savedCredentials?.regStage > 2,
 		},
 		{
 			title: 'Verify Email Address',
@@ -46,19 +51,19 @@ const SignupLayoutLHS = () => {
 			title: 'Business Information',
 			sub_title: 'We want to know how you want to operate on Passpoint',
 			active: pathname === '/auth/signup/business',
-			completed: false,
+			completed: savedCredentials?.regStage > 0,
 		},
 		{
 			title: 'Business Address',
 			sub_title: 'Kindly fill in your correct address details',
 			active: pathname === '/auth/signup/business/address',
-			completed: false,
+			completed: savedCredentials?.regStage > 1,
 		},
 		{
 			title: 'Personal Information',
 			sub_title: 'Kindly provide personal information',
 			active: pathname === '/auth/signup/business/personal',
-			completed: false,
+			completed: savedCredentials?.regStage > 2,
 		},
 		{
 			title: 'Verify Email Address',

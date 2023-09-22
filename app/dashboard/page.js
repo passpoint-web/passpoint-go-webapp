@@ -1,10 +1,10 @@
 "use client";
-import { CustomerChart } from "@/components/Dashboard/DashboardHome/customerChart";
+import { CustomerChart } from "@/components/Dashboard/DashboardHome/CustomerChart";
 import styles from "../../assets/styles/dashboard-layout.module.css";
-import KycCard from "@/components/Dashboard/DashboardHome/kycCard";
-import MetricCard from "@/components/Dashboard/DashboardHome/metricCard";
-import { MonthlyChart } from "@/components/Dashboard/DashboardHome/monthlyChart";
-import PublicProfileCard from "@/components/Dashboard/DashboardHome/publicProfileCard";
+import KycCard from "@/components/Dashboard/DashboardHome/KycCard";
+import MetricCard from "@/components/Dashboard/DashboardHome/MetricCard";
+import { MonthlyChart } from "@/components/Dashboard/DashboardHome/MonthlyChart";
+import PublicProfileCard from "@/components/Dashboard/DashboardHome/PublicProfileCard";
 
 export default function Dashboard() {
   return (

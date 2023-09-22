@@ -1,6 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { saveCredentials } from '@/services/localService'
+import { registerUser } from '@/services/restService'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
@@ -10,6 +12,7 @@ import CheckBox from '@/components/Custom/Check/Check'
 import PhoneInput from 'react-phone-input-2'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
+import toast from '@/components/Toast'
 
 const IndividualInformation = () => {
 	const { push, back } = useRouter()
@@ -17,6 +20,7 @@ const IndividualInformation = () => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [termsAccepted, setTermsAccepted] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const [roleConfirmed, setRoleConfirmed] = useState(false)
 
 	const [payload, setPayload] = useState({
@@ -26,6 +30,10 @@ const IndividualInformation = () => {
 		phone: '',
 		password: '',
 	})
+
+	const notify = useCallback((type, message) => {
+		toast({ type, message })
+	}, [])
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -57,9 +65,22 @@ const IndividualInformation = () => {
 		if (!allFieldsValid) {
 			return
 		}
-		// window.setTimeout(() => {
-		push('/auth/signup/individual/business')
-		// }, 3000)
+		setIsLoading(true)
+		try {
+			const response = await registerUser('onBoardIndividualPersonalInfo', {...payload, phone: `+${payload.phone}`})
+			console.log(response)
+			// setSignupLevel({'business', 2})
+			let credentials = {...payload, regStage: 1}
+			delete credentials.password
+			saveCredentials(credentials)
+			notify('success', 'Your account has been created successfully')
+			push('/auth/signup/individual/business')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	return (
@@ -150,7 +171,8 @@ const IndividualInformation = () => {
 								</p>
 							</div>
 							<div className={styles.action_ctn}>
-								<PrimaryBtn text="Open account" />
+								<PrimaryBtn text="Open account"
+									loading={isLoading} />
 							</div>
 
 						</div>

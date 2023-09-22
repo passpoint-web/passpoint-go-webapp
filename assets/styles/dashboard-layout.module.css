@@ -2,7 +2,7 @@
 .dashHeader_main button,
 .dashHeader_main,
 .dashHeader_profile,
-.dashSide_main i,
+.dashSide_main .logo,
 .dashSide_link,
 .dashMetric_content {
   display: flex;
@@ -39,8 +39,7 @@
 .dashPublic_content a,
 .dashKyc_content a {
   width: fit-content;
-  display: block;
-  padding: var(--btn-fs) 18px;
+  /* padding: var(--btn-fs) 18px; */
   border-radius: 8px;
   border: none;
   font-family: var(--graphikMedium);
@@ -109,27 +108,39 @@
   position: fixed;
   left: 0;
 }
-.dashSide_main i {
+
+.dashSide_main nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dashSide_main .logo {
   height: var(--header-height);
   padding: 0 30px;
 }
+
 .dashSide_link {
-  padding: var(--btn-fs) var(--btn-padding);
+  /* padding: var(--btn-fs) var(--btn-padding); */
   gap: var(--btn-fs);
   color: var(--grey-3);
   font-family: var(--graphikRegular);
   letter-spacing: 0.3px;
   font-size: 15px;
   text-decoration: none !important;
+  height: 50px;
 }
+
 .dashSide_active {
   color: var(--secondary);
   font-family: var(--graphikSemibold);
 }
+
 .dashSide_active svg path {
   fill: var(--secondary);
   opacity: 1;
 }
+
 /* end  */
 
 /* dashboard main  */

@@ -52,6 +52,9 @@ var options = {
       display: false,
       text: "Chart.js Bar Chart - Stacked",
     },
+    legend: {
+      display: false,
+    },
   },
   elements: {
     bar: {
@@ -86,11 +89,6 @@ var options = {
       },
     },
   },
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
 };
 
 export function CustomerChart() {
@@ -103,7 +101,9 @@ export function CustomerChart() {
         </h3>
       </div>
       <div>
-        <Bar options={options} height={182} data={data} />
+        <Bar options={options}
+height={182}
+data={data} />
       </div>
     </main>
   );

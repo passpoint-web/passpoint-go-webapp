@@ -1,15 +1,23 @@
 // setters
-export const saveCredentials = (email, password) => {
+export const saveCredentials = (credentials) => {
 	localStorage.setItem(
 		'registration_cr3dentials',
-		JSON.stringify({
-			email,
-			password
-		})
+		JSON.stringify(credentials)
 	)
 }
 
+export const getCredentials = () => {
+	if (typeof window !== 'undefined') {
+		const credentials = localStorage.getItem('registration_cr3dentials')
+		if (credentials !== 'undefined') {
+			// console.log(credentials)
+			return JSON.parse(credentials)
+		}
+	}
+}
+
 export const saveUserType = (val) => {
+	localStorage.removeItem('registration_cr3dentials')
 	localStorage.setItem(
 		'user_type',
 		JSON.stringify(val)

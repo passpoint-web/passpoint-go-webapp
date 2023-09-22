@@ -1,7 +1,10 @@
-const PrimaryBtn = ({text, type, ...props}) => {
+import Loader from "./Loader"
+
+const PrimaryBtn = ({text, type, loading,  ...props}) => {
 	return (
-		<button className={`primary_btn ${type || ''}`}
-			{...props}>{text}</button>
+		<button className={`primary_btn ${type}`}
+			disabled={loading}
+			{...props}>{!loading ? text : <Loader />}</button>
 	)
 }
 
