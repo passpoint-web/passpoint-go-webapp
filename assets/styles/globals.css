@@ -84,6 +84,8 @@
   --negative-box-shadow: #ffc7c3;
   --negative-bg: #ffe6e4;
 
+  --positive: #66cb9f;
+
   --warning-200: #df752b;
   --warning-300: #d85900;
   --warning-400: #973e00;
@@ -329,8 +331,15 @@ li {
   background-color: var(--sky-blue-active);
 }
 
+a, button {
+  display: grid;
+  place-items: center;
+  padding: 0 var(--btn-padding);
+}
+
 a.standard,
 button.standard {
+  border-radius: var(--btn-br-sd);
   border-radius: var(--btn-br-sd);
 }
 
