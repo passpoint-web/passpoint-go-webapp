@@ -18,3 +18,9 @@ export const login = (data) => {
 	const config = getRequestConfig()
 	return axiosClient().post('login', data, config)
 }
+
+// verify
+export const resendOtp = (data) => {
+	const config = getRequestConfig()
+	return axiosClient().post('resendOtp', data, config)
+}
