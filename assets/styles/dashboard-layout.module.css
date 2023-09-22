@@ -39,8 +39,6 @@
 .dashPublic_content a,
 .dashKyc_content a {
   width: fit-content;
-  display: block;
-  padding: 16px 18px;
   border-radius: 8px;
   border: none;
   font-family: var(--graphikMedium);
@@ -113,8 +111,7 @@
   padding: 0 30px;
 }
 .dashSide_link {
-  padding: 16px 24px;
-  gap: 16px;
+  gap: var(--btn-fs);
   color: var(--grey-3);
   font-family: var(--graphikRegular);
   letter-spacing: 0.3px;
