@@ -67,7 +67,7 @@ const IndividualInformation = () => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await registerUser('onBoardIndividualPersonalInfo', payload)
+			const response = await registerUser('onBoardIndividualPersonalInfo', {...payload, phone: `+${payload.phone}`})
 			console.log(response)
 			// setSignupLevel({'business', 2})
 			let credentials = {...payload, regStage: 1}
