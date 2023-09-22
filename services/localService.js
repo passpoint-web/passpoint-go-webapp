@@ -24,7 +24,6 @@ export const saveUserType = (val) => {
 	)
 }
 
-// getters
 export const getUserType = () => {
 	if (typeof window !== 'undefined') {
 		const user_type = localStorage.getItem('user_type')
