@@ -56,8 +56,7 @@ const VerifyEmail = () => {
 	}
 
 	useEffect(() => {
-		if (
-			setEmail(savedCredentials.email)) {
+		if (savedCredentials.email) {
 			setEmail(savedCredentials.email)
 		}
 		setErrorMsg('')
