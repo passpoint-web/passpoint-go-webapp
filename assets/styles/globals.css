@@ -142,6 +142,7 @@
 
   --anim-come-down-sm: come-down-sm 0.5s ease-in-out;
   --anim-come-down-sm-w-opacity: come-down-sm-w-opacity 0.5s ease-in-out;
+  --anim-slide-up: slide-up 0.4s forwards;
 }
 
 /* @media (prefers-color-scheme: dark) {} */
@@ -304,7 +305,7 @@ button.medium {
   border-radius: var(--btn-br-md);
   height: var(--btn-height-md);
 }
-/*  TODO: */
+
 a.small,
 button.small {
   border-radius: var(--btn-br-sm);
@@ -594,6 +595,63 @@ ul {
 }
 
 /* ANIMS */
+
+.squeeze-in {
+  animation: squeeze-in 0.5s ease-in-out forwards;
+  -webkit-animation: squeeze-in 0.5s ease-in-out forwards;
+}
+
+@keyframes squeeze-in {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+  }
+}
+
+.blur-in {
+  animation: blur-in 0.5s ease-in-out forwards;
+}
+
+@keyframes blur-in {
+  0% {
+    filter: blur(0px);
+  }
+  100% {
+    filter: blur(20px);
+  }
+}
+
+.blur-out {
+  animation: blur-out 0.3s ease-in-out forwards;
+  -webkit-animation: blur-out 0.3s ease-in-out forwards;
+}
+
+@keyframes blur-out {
+  from {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: #07143930;
+  }
+  to {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    background: #ffffff00;
+  }
+}
+
+
 .reveals {
   animation: reveals 0.5s forwards;
   -webkit-animation: reveals 0.5s forwards;
@@ -645,8 +703,8 @@ ul {
 }
 
 .slide-up {
-  animation: slide-up 0.4s forwards;
-  -webkit-animation: slide-up 0.4s forwards;
+  animation: var(--anim-slide-up);
+  -webkit-animation: var(--anim-slide-up);
 }
 
 @keyframes slide-up {

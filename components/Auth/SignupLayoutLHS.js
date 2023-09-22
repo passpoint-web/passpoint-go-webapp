@@ -11,9 +11,10 @@ import {
 	from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-const savedCredentials = getCredentials()
-
 const SignupLayoutLHS = () => {
+
+	const savedCredentials = getCredentials()
+
 	const pathname = usePathname()
 	// const router = useRouter()
 	// const searchParams = useSearchParams()

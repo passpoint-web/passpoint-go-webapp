@@ -99,7 +99,7 @@ const BusinessAddress = () => {
 	}, [payload])
 
 	return (
-		<div className={`${styles.auth}`}>
+		<div className={`${styles.auth} ${styles.no_pd_top}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
 					{/* <BackBtn onClick={() => back()} /> */}
