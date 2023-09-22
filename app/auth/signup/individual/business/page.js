@@ -18,7 +18,7 @@ const BusinessInformation = () => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const [showBusinessWarning, setShowBusinessWarning] = useState(true)
+	const [showBusinessWarning, setShowBusinessWarning] = useState(false)
 	const [payload, setPayload] = useState({
 		businessName: '',
 		businessIndustry: '',
@@ -60,6 +60,12 @@ const BusinessInformation = () => {
 		}
 	}
 
+	useEffect(function delayBusinessWarningModal() {
+		window.setTimeout(()=>{
+			setShowBusinessWarning(true)
+		}, 1000)
+	},[])
+
 	useEffect(() => {
 		const {businessIndustry, businessName} = payload
 		const conditionsMet = businessName && businessIndustry
@@ -72,8 +78,14 @@ const BusinessInformation = () => {
 
 	return (
 		<>
-			{showBusinessWarning ? <PasspointBusinessModal onClose={()=>setShowBusinessWarning(false)} /> : <></>}
-			<div className={`${styles.auth}`}>
+			{
+				showBusinessWarning ? 
+				<PasspointBusinessModal 
+					onClose={()=>setShowBusinessWarning(false)} 
+				/> : 
+				<></>
+			}
+			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>
 					<div className={styles.center}>
 						{/* <BackBtn onClick={() => back()} /> */}

@@ -64,7 +64,7 @@ const VerifyEmail = () => {
 	}, [])
 
 	return (
-		<div className={`${styles.auth}`}>
+		<div className={`${styles.auth} ${styles.no_pd_top}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
 					{/* <BackBtn onClick={() => back()} /> */}
@@ -97,6 +97,7 @@ const VerifyEmail = () => {
 						</div>
 						<div className={styles.action_ctn}>
 							<ResendOTP countDown={countDown}
+								email={email}
 								setCountDown={(v)=>setCountDown(v)} />
 							<PrimaryBtn
 								text="Verify"

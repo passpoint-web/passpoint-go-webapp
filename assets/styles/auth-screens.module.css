@@ -227,9 +227,6 @@
 }
 
 @media screen and (max-width: 700px) {
-  .auth {
-    padding-top: 0;
-  }
   .auth_level {
     min-height: unset;
     gap: 5px

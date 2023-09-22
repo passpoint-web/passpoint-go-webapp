@@ -8,11 +8,12 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import CheckBox from '@/components/Custom/Check/Check'
-import BackBtn from '@/components/Btn/Back'
+// import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
 
 const BusinessPersonalInfo = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -73,10 +74,10 @@ const BusinessPersonalInfo = () => {
 	}, [payload, termsAccepted, roleConfirmed])
 
 	return (
-		<div className={`${styles.auth}`}>
+		<div className={`${styles.auth} ${styles.no_pd_top}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-					<BackBtn onClick={() => back()} />
+					{/* <BackBtn onClick={() => back()} /> */}
 					<h1 className="title">Personal Information</h1>
 					<h4 className="sub-title media-max-700">
               Kindly provide personal information

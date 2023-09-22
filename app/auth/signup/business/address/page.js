@@ -8,13 +8,14 @@ import { getCredentials,
 } from '@/services/localService'
 import CustomSelect from '@/components/Custom/Select/Select'
 import CountrySelect from '@/components/Custom/CountrySelect'
-import BackBtn from '@/components/Btn/Back'
+// import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 
 const BusinessAddress = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [states, setStates] = useState([])
@@ -99,10 +100,10 @@ const BusinessAddress = () => {
 	}, [payload])
 
 	return (
-		<div className={`${styles.auth}`}>
+		<div className={`${styles.auth} ${styles.no_pd_top}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-					<BackBtn onClick={() => back()} />
+					{/* <BackBtn onClick={() => back()} /> */}
 					<h1 className="title">Add your business address 🏠</h1>
 					<h4 className="sub-title media-max-700">
               Kindly provide personal information
