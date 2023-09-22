@@ -14,7 +14,8 @@ const Input = ({
         <label htmlFor={props.id}>{label}</label>
         {children || <input {...props} />}
         {error && errorMsg ? (
-          <FeedbackInfo center={msgPositionCenter} message={errorMsg} />
+          <FeedbackInfo center={msgPositionCenter}
+          message={errorMsg} />
         ) : (
           <></>
         )}

@@ -10,6 +10,7 @@ const PublicProfileCard = () => {
 				<p>We want to know how you want to operate on passpoint</p>
 				{/* <Link href="">Start Setup</Link> */}
 				<PrimaryLink
+					type='medium'
 					text='Start setup'
 					href='#'
 				/>
