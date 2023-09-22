@@ -512,7 +512,7 @@
 }
 
 .form .action_ctn {
-  margin: var(--outer-component-mg) 0 var(--inner-component-mg);
+  margin: 48px 0 var(--inner-component-mg);
   display: flex;
   flex-direction: column;
   gap: var(--inner-component-mg);
