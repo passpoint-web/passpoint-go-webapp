@@ -17,6 +17,7 @@ export const getCredentials = () => {
 }
 
 export const saveUserType = (val) => {
+	localStorage.removeItem('registration_cr3dentials')
 	localStorage.setItem(
 		'user_type',
 		JSON.stringify(val)
