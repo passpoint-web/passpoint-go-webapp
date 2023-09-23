@@ -8,7 +8,6 @@ import Head from 'next/head'
 import { usePathname } from 'next/navigation'
 import SignupLayoutLHS from '@/components/Auth/SignupLayoutLHS'
 
-
 export default function AuthLayout({
 	children,
 	pageTitle = '',

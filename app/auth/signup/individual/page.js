@@ -8,7 +8,7 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
 import 'react-phone-input-2/lib/style.css'
 import functions from '@/utils/functions'
-import CheckBox from '@/components/Custom/Check/Check'
+import CheckBox from '@/components/Custom/Check'
 import PhoneInput from 'react-phone-input-2'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
@@ -22,6 +22,7 @@ const IndividualInformation = () => {
 	const [termsAccepted, setTermsAccepted] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [roleConfirmed, setRoleConfirmed] = useState(false)
+	const [feedbackError, setFeedbackError] = useState('')
 
 	const [payload, setPayload] = useState({
 		lastName: '',
@@ -44,6 +45,7 @@ const IndividualInformation = () => {
 	}
 
 	useEffect(() => {
+		setFeedbackError('')
 		const {firstName, lastName, password, email} = payload
 		const conditionsMet =
       lastName &&
@@ -69,7 +71,6 @@ const IndividualInformation = () => {
 		try {
 			const response = await registerUser('onBoardIndividualPersonalInfo', {...payload, phone: `+${payload.phone}`})
 			console.log(response)
-			// setSignupLevel({'business', 2})
 			let credentials = {...payload, regStage: 1}
 			delete credentials.password
 			saveCredentials(credentials)
@@ -77,6 +78,7 @@ const IndividualInformation = () => {
 			push('/auth/signup/individual/business')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
+			setFeedbackError(message)
 			notify('error', message)
 		} finally {
 			setIsLoading(false)
@@ -88,6 +90,7 @@ const IndividualInformation = () => {
 			<div className={styles.inner}>
 				<div className={styles.center}>
 					<BackBtn onClick={()=>back()} />
+					<p>{feedbackError.toLowerCase().includes('email')}</p>
 					<h1 className="title">Personal Information</h1>
 					<form className={styles.form}
 						onSubmit={handleSubmit}>
@@ -121,14 +124,14 @@ const IndividualInformation = () => {
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}
-								error={ctaClicked && !validEmail(payload.email)}
-								errorMsg={!payload.email ? 'Email is required' : !validEmail(payload.email) ? 'Valid email is required' : 'Email is required'}
+								error={ctaClicked && (!validEmail(payload.email) || feedbackError.toLowerCase().includes('email'))}
+								errorMsg={!payload.email ? 'Email is required' : !validEmail(payload.email) ? 'Valid email is required' : feedbackError.toLowerCase().includes('email') ? feedbackError : 'Email is required'}
 							/>
 							<Input
 								id="phone"
 								label="Phone Number"
-								error={ctaClicked && !payload.phone}
-								errorMsg="Phone is required"
+								error={ctaClicked && !payload.phone || feedbackError.toLowerCase().includes('phone')}
+								errorMsg={!payload.phone ? 'Phone is required' : feedbackError.toLowerCase().includes('phone') ? feedbackError : 'Phone is required'}
 							>
 								<PhoneInput
 									country={'ng'}

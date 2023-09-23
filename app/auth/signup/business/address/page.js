@@ -6,7 +6,7 @@ import { CS } from '@/utils/CONSTANTS'
 import { getCredentials,
 	saveCredentials
 } from '@/services/localService'
-import CustomSelect from '@/components/Custom/Select/Select'
+import CustomSelect from '@/components/Custom/Select'
 import CountrySelect from '@/components/Custom/CountrySelect'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
