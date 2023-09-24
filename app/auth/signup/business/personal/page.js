@@ -7,7 +7,7 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import CheckBox from '@/components/Custom/Check/Check'
+import CheckBox from '@/components/Custom/Check'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
@@ -50,9 +50,9 @@ const BusinessPersonalInfo = () => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials.email, ...payload})
+			const response = await registerUser('onBoardUserPersonalInfo', {email: savedCredentials?.email, ...payload})
 			console.log(response)
-			saveCredentials({...savedCredentials, ...payload, regStage: 1})
+			saveCredentials({...savedCredentials, ...payload, regStage: 3})
 			notify('success', 'Your personal information has been saved')
 			push('/auth/signup/business/verify')
 		} catch (_err) {

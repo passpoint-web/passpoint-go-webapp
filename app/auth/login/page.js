@@ -9,7 +9,7 @@ import functions from '@/utils/functions'
 import { login } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-import { getCredentials, saveCredentials } from '@/services/localService'
+import { saveCredentials } from '@/services/localService'
 
 const Login = () => {
 
@@ -50,11 +50,7 @@ const Login = () => {
 			const response = await login(payload)
 			const data = response.data.data
 			saveCredentials(data)
-			window.setTimeout(()=>{
-				console.log(getCredentials())
-			}, 1000)
 			directUser(data)
-			// setSignupLevel({'business', 2})
 			notify('success', `You're logged in as ${payload.email}`)
 		} catch (_err) {
 			const { message } = _err.response?.data || _err

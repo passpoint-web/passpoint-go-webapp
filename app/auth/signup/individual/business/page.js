@@ -5,7 +5,7 @@ import { businessIndustries } from '@/utils/CONSTANTS'
 import { useState, useEffect, useCallback } from 'react'
 import { registerUser } from '@/services/restService'
 import { getCredentials, saveCredentials } from '@/services/localService'
-import CustomSelect from '@/components/Custom/Select/Select'
+import CustomSelect from '@/components/Custom/Select'
 import PrimaryBtn from '@/components/Btn/Primary'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
@@ -49,7 +49,7 @@ const BusinessInformation = () => {
 			const response = await registerUser('onBoardIndividualBusinessInfo', {email: savedCredentials.email, ...payload})
 			console.log(response)
 			// setSignupLevel({'business', 2})
-			saveCredentials({...savedCredentials, ...payload, regStage: 1})
+			saveCredentials({...savedCredentials, ...payload, regStage: 2})
 			notify('success', 'Your business information has been saved')
 			push('/auth/signup/individual/address')
 		} catch (_err) {

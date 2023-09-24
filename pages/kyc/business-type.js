@@ -3,7 +3,7 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import CustomSelect from '@/components/Custom/Select/Select'
+import CustomSelect from '@/components/Custom/Select'
 
 const BusinessType = () => {
 	const { push } = useRouter()
