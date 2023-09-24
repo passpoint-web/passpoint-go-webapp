@@ -1,4 +1,4 @@
-import styles from '@/assets/styles/auth-screens.module.css'
+import styles from './signup-layout-lhs.module.css'
 
 const SignupLevel = ({ auth }) => {
 	return (
