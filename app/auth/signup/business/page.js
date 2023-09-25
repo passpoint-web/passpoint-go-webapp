@@ -13,7 +13,6 @@ import CustomSelect from '@/components/Custom/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-
 const BusinessInformation = () => {
 
 	// eslint-disable-next-line no-unused-vars
@@ -207,7 +206,12 @@ const BusinessInformation = () => {
 							<CheckBox error={ctaClicked && !checked}
 								value={checked}
 								onChange={toggleChecked} />
-							<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
+							<p>By clicking, you accept our <a href="https://mypasspoint.com/terms_and_conditions"
+								rel='noreferrer'
+								target='_blank'>Terms of use</a> and <a href="https://mypasspoint.com/privacy_policy"
+								rel='noreferrer'
+								target='_blank'>Privacy Policy</a>
+							</p>
 						</div>
 						<div className={styles.action_ctn}>
 							<PrimaryBtn text="Open account"

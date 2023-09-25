@@ -1,24 +1,44 @@
-import rootReducer from './reducer/index';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER
+} from 'redux-persist';
+import rootReducer from './reducers';
+import storage from 'redux-persist/lib/storage';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
-const initStore = (initialState, options) => {
-    let composeEnhancers = compose;
-
-    //Check if function running on the sever or client
-    if (!options.isServer) {
-        //Setup Redux Debuger
-        composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    }
-
-
-
-    const store = createStore(rootReducer, initialState, composeEnhancers(
-        applyMiddleware(thunk) //Applying redux-thunk middleware
-    ));
-
-    return store;
+// persist config
+const persistConfig = {
+  key: 'root',
+  storage,
+  stateReconciler: autoMergeLevel2
 };
 
+const pReducer = persistReducer(
+  persistConfig,
+  rootReducer
+);
 
-export default initStore;
+// eslint-disable-next-line space-before-function-paren
+export default function mergeStore() {
+  const store = configureStore({
+    reducer: pReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+        }
+      }),
+    // devTools: process.env.NODE_ENV !== 'production'
+  });
+
+  const persistor = persistStore(store);
+
+  return { store, persistor };
+}
