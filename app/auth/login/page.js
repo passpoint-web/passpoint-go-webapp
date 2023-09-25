@@ -10,6 +10,9 @@ import { login } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
 import { saveCredentials } from '@/services/localService'
+import cookiesFunc from "@/plugins/js-cookies"
+const cookies = cookiesFunc()
+
 
 const Login = () => {
 
@@ -83,6 +86,12 @@ const Login = () => {
 			setAllFieldsValid(false)
 		}
 	}, [payload])
+
+	useEffect(()=>{
+		const word = 'yoyoyoyoyoyo'
+		cookies.set('word', word)
+    console.log(cookies.get('word'))
+	}, [])
 
 	return (
 		<div className={styles.auth}>
