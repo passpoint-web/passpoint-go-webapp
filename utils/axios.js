@@ -1,12 +1,18 @@
-import axios from 'axios'
+import axios from "axios";
 
 const axiosClient = () => {
-	return axios.create({
-		baseURL: 'https://api.jessecoders.com/passpointGo/v1/',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	})
-}
+  return axios.create({
+    baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("goToken")}`,
+    },
+  });
+};
 
-export default axiosClient
+// axiosClient.interceptors.request.use((config) => {
+//   config.headers["Authorization"] = `Bearer ${localStorage.getItem("goToken")}`;
+//   return config;
+// });
+
+export default axiosClient;

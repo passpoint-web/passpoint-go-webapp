@@ -68,25 +68,25 @@ export const sidebarData = [
   },
 ];
 
-export const metricData = [
-  {
-    title: "Total Revenue",
-    icon: Metric1,
-    value: "2.300",
-  },
-  {
-    title: "Booking Conversion Rate",
-    icon: Metric2,
-    value: "20",
-  },
-  {
-    title: "Completed Bookings",
-    icon: Metric3,
-    value: "23%",
-  },
-  {
-    title: "Total Visits",
-    icon: Metric4,
-    value: "57",
-  },
-];
+// export const metricData = [
+//   {
+//     title: "Total Revenue",
+//     icon: Metric1,
+//     value: "2.300",
+//   },
+//   {
+//     title: "Booking Conversion Rate",
+//     icon: Metric2,
+//     value: "20",
+//   },
+//   {
+//     title: "Completed Bookings",
+//     icon: Metric3,
+//     value: "23%",
+//   },
+//   {
+//     title: "Total Visits",
+//     icon: Metric4,
+//     value: "57",
+//   },
+// ];

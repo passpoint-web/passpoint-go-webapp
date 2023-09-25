@@ -10,6 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useEffect, useState } from "react";
+import { metrics } from "@/services/restService";
 
 ChartJS.register(
   CategoryScale,
@@ -62,44 +64,60 @@ var options = {
   },
 };
 
-var data = {
-  labels: [
-    "Jan",
-    "Feb",
-    " Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ],
-  datasets: [
-    {
-      data: [
-        7500, 6000, 9000, 12500, 16500, 18500, 11000, 5000, 6500, 10000, 8000,
-        9500,
-      ],
-      backgroundColor: "#789DFB",
-      borderColor: "#789DFB",
-      barThickness: 50,
-      borderRadius: 3,
-      tension: 0.4,
-    },
-  ],
-};
-
 export function MonthlyChart() {
+  const [chartData, setChartData] = useState({});
+  const dataValues = chartData?.reveuneList
+    ? Object.values(chartData.reveuneList)
+    : [];
+  var data = {
+    labels: [
+      "Jan",
+      "Feb",
+      " Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    datasets: [
+      {
+        data: dataValues,
+        backgroundColor: "#789DFB",
+        borderColor: "#789DFB",
+        barThickness: 50,
+        borderRadius: 3,
+        tension: 0.4,
+      },
+    ],
+  };
+  console.log(chartData);
+  const getMetrics = async () => {
+    try {
+      const response = await metrics();
+      console.log(response);
+      setChartData(response.data.monthlyReveune);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMetrics();
+  }, []);
   return (
     <main className={styles.dashMonthChart}>
       <div className={styles.content}>
         <h3>Month on Month Revenue</h3>
-        <h3>
-          £12,283 <span>-8.39%</span>
-        </h3>
+        {chartData.totalMonthlyReveune !== undefined && (
+          <h3>
+            {`£${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
+          </h3>
+        )}
       </div>
       <div>
         <Line options={options} height={182} data={data} />
