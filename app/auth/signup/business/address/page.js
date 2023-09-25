@@ -86,7 +86,12 @@ const BusinessAddress = () => {
 	},[payload.country?.name?.common])
 
 	useEffect(()=>{
-		setLgas(CS.getCities(payload?.country?.cca2, payload.state))
+		const cities = CS.getCities(payload?.country?.cca2, payload.state) || []
+		if (cities.length) {
+			setLgas(cities)
+		} else {
+			setLgas([payload.state])
+		}
 	},[payload.state])
 
 	useEffect(() => {
