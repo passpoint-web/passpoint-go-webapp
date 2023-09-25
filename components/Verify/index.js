@@ -56,8 +56,8 @@ const VerifyEmail = ({apiUserType = 'verifyUserOtp'}) => {
 
 	useEffect(() => {
 		if (
-			savedCredentials.email) {
-			setEmail(savedCredentials.email)
+			savedCredentials?.email) {
+			setEmail(savedCredentials?.email)
 		}
 		setErrorMsg('')
 	}, [])
@@ -88,9 +88,9 @@ const VerifyEmail = ({apiUserType = 'verifyUserOtp'}) => {
 										numInputs={6}
 										shouldAutoFocus={true}
 										inputType="number"
-										inputMode="nullss"
+										inputMode={null}
 										renderSeparator={<span />}
-										renderInput={(props) => <input {...props} />}
+										renderInput={() => <input />}
 									/>
 								</div>
 							</Input>

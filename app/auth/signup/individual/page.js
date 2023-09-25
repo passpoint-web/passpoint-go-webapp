@@ -92,6 +92,7 @@ const IndividualInformation = () => {
 					<BackBtn onClick={()=>back()} />
 					<p>{feedbackError.toLowerCase().includes('email')}</p>
 					<h1 className="title">Personal Information</h1>
+					<h4 className='sub-title media-max-700'>Kindly provide personal information</h4>
 					<form className={styles.form}
 						onSubmit={handleSubmit}>
 						<div className={styles.inner}>
