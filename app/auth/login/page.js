@@ -45,7 +45,9 @@ const Login = () => {
     try {
       const response = await login(payload);
       const data = response.data.data;
-      localStorage.setItem("goToken", response.data.token);
+      const {token} = response.data
+      // localStorage.setItem("goToken", response.data.token);
+      setTokenOnServerSide(token)
       saveCredentials(data);
       directUser(data);
       notify("success", `You're logged in as ${payload.email}`);
@@ -57,6 +59,16 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  const setTokenOnServerSide = (token) => {
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({token})
+    })
+  }
 
   const directUser = ({ userType, is_active, regStage }) => {
     const businessLevels = ["", "address", "personal", "verify"];

@@ -10,8 +10,6 @@ import SignupLayoutLHS from '@/components/Auth/SignupLayoutLHS'
 
 export default function AuthLayout({
 	children,
-	pageTitle = '',
-	fullScreenLoader,
 }) {
 	const pathname = usePathname()
 	const LHSRequired =
@@ -20,7 +18,7 @@ export default function AuthLayout({
 	return (
 		<>
 			<Head>
-				<title>{`${pageTitle} | Auth | Passpoint Go`}</title>
+				<title>{`Auth | Passpoint Go`}</title>
 			</Head>
 			<AuthHeader />
 			<div className={styles.auth_content_ctn}>
@@ -34,7 +32,7 @@ export default function AuthLayout({
 					<div className={styles.auth_content_rhs} />
 				</div>
 			</div>
-			{fullScreenLoader ? <FullScreenLoader /> : <></>}
+			{/* {fullScreenLoader ? <FullScreenLoader /> : <></>} */}
 		</>
 	)
 }

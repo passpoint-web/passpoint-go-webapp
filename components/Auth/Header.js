@@ -15,7 +15,9 @@ const AuthHeader = () => {
         <PasspointLogo href='/auth/login' />
         {Object.keys(btn).length ? (
           <div className={styles.rhs}>
-            <SecondaryLink type="medium" href={`${btn.url}`} text={btn.text} />
+            <SecondaryLink type="medium" 
+            href={`${btn.url}`} 
+            text={btn.text} />
           </div>
         ) : (
           <></>

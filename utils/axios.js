@@ -1,11 +1,11 @@
 import axios from "axios"
-
+// import {cookie} from 'next/headers'
 const axiosClient = () => {
   return axios.create({
     baseURL: "https://api.jessecoders.com/passpointGo/v1/",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("goToken")}`,
+      // Authorization: `Bearer ${cookie.get('token')}`,
     },
   });
 };
