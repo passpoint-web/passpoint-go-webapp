@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
-import styles from "../../assets/styles/dashboard-layout.module.css";
-import Logo from "../Logo";
+import styles from "./sidebar.module.css";
+import Logo from "@/components/PasspointLogo";
 import { sidebarData } from "@/constants/general";
 import Link from "next/link";
 
@@ -10,7 +10,7 @@ const DashboardSidebar = () => {
   return (
     <div className={styles.dashSide_main}>
       <div className={styles.logo}>
-        <Logo />
+        <Logo href='/dashboard' />
       </div>
       <nav>
         {sidebarData.map((item, index) => (

@@ -19,11 +19,11 @@ ChartJS.register(
   Title
 );
 
-var data = {
+const data = {
   labels: [
     "Jan",
     "Feb",
-    " Mar",
+    "Mar",
     "Apr",
     "May",
     "Jun",
@@ -34,6 +34,7 @@ var data = {
     "Nov",
     "Dec",
   ],
+
   datasets: [
     {
       data: [60, 105, 150, 100, 90, 135, 130, 90, 55, 85, 88, 130],
@@ -44,7 +45,7 @@ var data = {
   ],
 };
 
-var options = {
+const options = {
   maintainAspectRatio: false,
   responsive: true,
   plugins: {

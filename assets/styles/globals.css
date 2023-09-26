@@ -337,12 +337,6 @@ li {
   background-color: var(--sky-blue-active);
 }
 
-a, button {
-  /* display: flex; */
-  /* align-items: center; */
-  /* padding: 0 var(--btn-padding); */
-}
-
 a.standard,
 button.standard {
   border-radius: var(--btn-br-sd);
@@ -359,6 +353,16 @@ a.small,
 button.small {
   border-radius: var(--btn-br-sm);
   height: var(--btn-height-sm);
+}
+
+.passpoint-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.passpoint-logo a {
+  padding: 0;
 }
 
 .primary_btn:disabled {
@@ -464,6 +468,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 

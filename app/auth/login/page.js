@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/assets/styles/auth-screens.module.css";
+import styles from "@/assets/styles/auth-screens.module.css"
 import PrimaryBtn from '@/components/Btn/Primary'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
@@ -45,7 +45,6 @@ const Login = () => {
     try {
       const response = await login(payload);
       const data = response.data.data;
-      console.log(response.data);
       localStorage.setItem("goToken", response.data.token);
       saveCredentials(data);
       directUser(data);

@@ -87,13 +87,16 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 					{!countries?.name ? (
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
-								<Image
-									src={country?.flags?.png}
-									alt={`${country?.name?.common}`}
-									width={20}
-									height={20}
-									className={styles.img}
-								/>
+								{ country?.flags?.png ?
+									<Image
+										src={country?.flags?.png}
+										alt={`${country?.name?.common}`}
+										width={20}
+										height={20}
+										className={styles.img}
+									/> :
+									<div style={{width: '20px', height: '20px'}} />
+								}
 							</div>
 							<p>{country?.name?.common}</p>
 						</div>
@@ -121,13 +124,17 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 								className={styles.content}
 								onClick={(e) => handleCountrySelect(e, c)}
 							>
-								<Image
-									src={c?.flags?.png}
-									alt={c?.name?.common}
-									width="20"
-									height="20"
-									className={styles.img}
-								/>
+								{
+									c?.flags?.png ?
+									<Image
+										src={c?.flags?.png}
+										alt={c?.name?.common}
+										width="20"
+										height="20"
+										className={styles.img}
+									/> :
+									<div style={{width: '20px', height: '20px'}} />
+								}
 								<p>{c?.name?.common}</p>
 							</div>
 						))}

@@ -18,12 +18,11 @@ export default function AuthLayout({
     pathname.includes('/auth/signup/individual') ||
     pathname.includes('/auth/signup/business')
 	return (
-		<div>
+		<>
 			<Head>
 				<title>{`${pageTitle} | Auth | Passpoint Go`}</title>
 			</Head>
 			<AuthHeader />
-
 			<div className={styles.auth_content_ctn}>
 				<div className={styles.auth_content}>
 					{LHSRequired ? (
@@ -36,6 +35,6 @@ export default function AuthLayout({
 				</div>
 			</div>
 			{fullScreenLoader ? <FullScreenLoader /> : <></>}
-		</div>
+		</>
 	)
 }

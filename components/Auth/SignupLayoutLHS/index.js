@@ -1,12 +1,10 @@
 'use client'
-import styles from '@/assets/styles/auth-screens.module.css'
+import styles from './signup-layout-lhs.module.css'
 import SignupLevel from './SignupLevel'
 import { getCredentials } from '@/services/localService'
 
 import {
-	// useRouter,
 	usePathname,
-	// useSearchParams
 }
 	from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,8 +14,6 @@ const SignupLayoutLHS = () => {
 	const savedCredentials = getCredentials()
 
 	const pathname = usePathname()
-	// const router = useRouter()
-	// const searchParams = useSearchParams()
 
 	const individualLevel = [
 		{
