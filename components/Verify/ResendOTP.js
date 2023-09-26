@@ -5,9 +5,10 @@ import { useEffect, useState, useCallback } from 'react'
 import { resendOtp } from '@/services/restService'
 import toast from '@/components/Toast'
 
-const ResendOTP = ({setCountDown, countDown, email}) => {
+const ResendOTP = ({email}) => {
 
 	const [resendOTPStatus, setResendOTPStatus] = useState('Resend OTP')
+	const [countDown, setCountDown] = useState(0)
 	const countDownTimer = () => {
 		if (countDown > 0) {
 			window.setTimeout(() => {
@@ -29,8 +30,6 @@ const ResendOTP = ({setCountDown, countDown, email}) => {
 	const resendOTP = async (e) => {
 		e.preventDefault()
 		setResendOTPStatus('Resending...')
-		// window.setTimeout(() => {
-		// }, 3000)
 		try {
 			const payload = {
 				email,

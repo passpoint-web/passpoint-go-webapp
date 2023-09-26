@@ -1,15 +1,15 @@
 "use client";
 import styles from "@/assets/styles/auth-screens.module.css";
-import PrimaryBtn from "@/components/Btn/Primary";
-import Link from "next/link";
-import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import PasswordField from "@/components/Auth/PasswordField";
-import functions from "@/utils/functions";
-import { login } from "@/services/restService";
-import Input from "@/components/Dashboard/Input";
-import toast from "@/components/Toast";
-import { getCredentials, saveCredentials } from "@/services/localService";
+import PrimaryBtn from '@/components/Btn/Primary'
+import Link from 'next/link'
+import { useEffect, useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
+import PasswordField from '@/components/Auth/PasswordField'
+import functions from '@/utils/functions'
+import { login } from '@/services/restService'
+import Input from '@/components/Dashboard/Input'
+import toast from '@/components/Toast'
+import { saveCredentials } from '@/services/localService'
 
 const Login = () => {
   const { validEmail } = functions;
@@ -22,8 +22,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-
-  // const savedCredentials = getCredentials()
 
   const notify = useCallback((type, message) => {
     toast({ type, message });
@@ -50,11 +48,7 @@ const Login = () => {
       console.log(response.data);
       localStorage.setItem("goToken", response.data.token);
       saveCredentials(data);
-      window.setTimeout(() => {
-        console.log(getCredentials());
-      }, 1000);
       directUser(data);
-      // setSignupLevel({'business', 2})
       notify("success", `You're logged in as ${payload.email}`);
     } catch (_err) {
       const { message } = _err.response?.data || _err;

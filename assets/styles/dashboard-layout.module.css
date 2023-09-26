@@ -2,8 +2,6 @@
 .dashHeader_main button,
 .dashHeader_main,
 .dashHeader_profile,
-.dashSide_main .logo,
-.dashSide_link,
 .dashMetric_content {
   display: flex;
   align-items: center;
