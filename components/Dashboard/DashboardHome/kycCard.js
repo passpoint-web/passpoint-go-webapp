@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../../../assets/styles/dashboard-layout.module.css";
+import styles from "@/assets/styles/dashboard-layout.module.css";
 
 const KycCard = () => {
   return (

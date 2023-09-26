@@ -7,26 +7,25 @@ const getRequestConfig = () => {
   };
 };
 
+const axios = axiosClient()
+const config = getRequestConfig();
+
 // register user
 export const registerUser = (path, data) => {
-  const config = getRequestConfig();
-  return axiosClient().post(path, data, config);
+  return axios.post(path, data, config);
 };
 
 // sign in
 export const login = (data) => {
-  const config = getRequestConfig();
-  return axiosClient().post("login", data, config);
+  return axios.post("login", data, config);
 };
 
 // verify
 export const resendOtp = (data) => {
-  const config = getRequestConfig();
-  return axiosClient().post("resendOtp", data, config);
+  return axios.post("resendOtp", data, config);
 };
 
 // metrics
 export const metrics = () => {
-  const config = getRequestConfig();
-  return axiosClient().get("dashboardMetrics", config);
+  return axios.get("dashboardMetrics", config);
 };

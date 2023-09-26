@@ -1,10 +1,12 @@
 // import CryptoJS from 'crypto-js'
 
 function number(num) {
-	return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+	let value = `${num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
+	// return sym ? (position === 'pre' ? `${sym} ${value}` : `${value} ${sym}`) : value
+	return value
 }
 
-function currency(num, currency, precision) {
+function formatMoney(num, currency, precision) {
 	const n = num ? num.toFixed(precision || 2) : num
 	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0`
 }
@@ -100,19 +102,20 @@ function getMonth(index) {
 	]
 	return months[index - 1]
 }
-
+const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
 	formatNumber: number,
 	daysDifference: getDaysDifference,
-	formatCurrency: currency,
+	formatMoney,
 	currencySymbol,
 	formatTimestamp: dateTimestamp,
 	truncateString,
 	maskedEmail,
 	validEmail,
 	getMonth,
-	resetModalState
+	resetModalState,
+	makeNumArr
 	// encryptData,
 	// decryptData
 }
