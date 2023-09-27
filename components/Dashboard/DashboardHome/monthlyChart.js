@@ -10,6 +10,9 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useEffect, useState, useCallback } from "react";
+import { metrics } from "@/services/restService";
+import toast from '@/components/Toast'
 
 ChartJS.register(
   CategoryScale,
@@ -42,16 +45,14 @@ var options = {
         lineType: "dash",
         color: "#D9D9D9",
       },
-      max: 25000,
-      min: 5000,
       ticks: {
         font: {
           size: 10,
           family: "GraphikRegular",
         },
         color: "#A0AEC0",
-        beginAtZero: false,
-        stepSize: 5000,
+        beginAtZero: true,
+        stepSize: 100,
       },
     },
   },
@@ -62,44 +63,71 @@ var options = {
   },
 };
 
-var data = {
-  labels: [
+export function MonthlyChart() {
+  const [chartData, setChartData] = useState({});
+  // const [chartLoading, setChartLoading] = useState(true)
+  const dataValues = chartData?.reveuneList
+    ? Object.values(chartData.reveuneList)
+    : [];
+
+  // Define the months in the normal order
+  const normalMonthsOrder = [
     "Jan",
     "Feb",
-    " Mar",
+    "Mar",
     "Apr",
     "May",
     "Jun",
     "Jul",
     "Aug",
-    "sept",
+    "Sept",
     "Oct",
     "Nov",
     "Dec",
-  ],
-  datasets: [
-    {
-      data: [
-        7500, 6000, 9000, 12500, 16500, 18500, 11000, 5000, 6500, 10000, 8000,
-        9500,
-      ],
-      backgroundColor: "#789DFB",
-      borderColor: "#789DFB",
-      barThickness: 50,
-      borderRadius: 3,
-      tension: 0.4,
-    },
-  ],
-};
+  ];
 
-export function MonthlyChart() {
+  var data = {
+    labels: normalMonthsOrder,
+    datasets: [
+      {
+        data: dataValues,
+        backgroundColor: "#789DFB",
+        borderColor: "#789DFB",
+        barThickness: 50,
+        borderRadius: 3,
+        tension: 0.4,
+      },
+    ],
+  };
+  const notify = useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
+
+  const getMetrics = async () => {
+    // setChartLoading(true)
+    try {
+      const response = await metrics();
+      setChartData(response.data.monthlyReveune)
+    } catch (error) {
+      notify("error", 'Could not retrieve monthly revenue');
+    } finally {
+      // setChartLoading(false)
+    }
+  };
+
+  useEffect(() => {
+    getMetrics();
+  }, []);
   return (
     <main className={styles.dashMonthChart}>
       <div className={styles.content}>
         <h3>Month on Month Revenue</h3>
-        <h3>
-          £12,283 <span>-8.39%</span>
-        </h3>
+        {chartData.totalMonthlyReveune !== undefined && (
+          <h3>
+            {`₦ ${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
+          </h3>
+        )}
       </div>
       <div>
         <Line options={options} height={182} data={data} />

@@ -2,8 +2,6 @@
 .dashHeader_main button,
 .dashHeader_main,
 .dashHeader_profile,
-.dashSide_main .logo,
-.dashSide_link,
 .dashMetric_content {
   display: flex;
   align-items: center;
@@ -62,7 +60,7 @@
 .dash_children .dash_outlet {
   height: calc(100vh - 100px);
   overflow-y: auto;
-  padding: 28px var(--btn-padding) 50px;
+  padding: var(--outer-component-mg) var(--inner-component-mg);
 }
 /* end  */
 
@@ -112,6 +110,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding: 0 var(--btn-padding);
 }
 
 .dashSide_main .logo {
@@ -152,8 +151,9 @@
   gap: var(--btn-padding);
   margin-top: var(--btn-padding);
 }
-.dashboard_chart > div {
+.dashboard_chart > main {
   width: 50%;
+  height: 100%;
 }
 /* end  */
 
@@ -201,11 +201,15 @@
   font-size: var(--btn-br);
   font-family: var(--graphikBold);
   outline-color: #718096;
+  animation: var(--anim-come-up-sm);
+  -webkit-animation: var(--anim-come-up-sm);
 }
 .dashMetric_content span {
   font-size: 20px;
   font-family: var(--graphikSemibold);
   color: #16192c;
+  animation: var(--anim-come-down-sm);
+  -webkit-animation: var(--anim-come-down-sm);
 }
 /* end  */
 

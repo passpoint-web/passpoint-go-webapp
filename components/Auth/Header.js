@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import styles from "@/assets/styles/auth-screens.module.css";
 import SecondaryLink from "../Link/Secondary";
-import Logo from "../Logo";
+import PasspointLogo from "../PasspointLogo";
 
 const AuthHeader = () => {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ const AuthHeader = () => {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <Logo />
+        <PasspointLogo href='/auth/login' />
         {Object.keys(btn).length ? (
           <div className={styles.rhs}>
             <SecondaryLink type="medium" href={`${btn.url}`} text={btn.text} />

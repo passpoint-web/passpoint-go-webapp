@@ -8,12 +8,11 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
 import functions from '@/utils/functions'
-import CheckBox from '@/components/Custom/Check/Check'
-import CustomSelect from '@/components/Custom/Select/Select'
+import CheckBox from '@/components/Custom/Check'
+import CustomSelect from '@/components/Custom/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-
 const BusinessInformation = () => {
 
 	// eslint-disable-next-line no-unused-vars
@@ -23,6 +22,7 @@ const BusinessInformation = () => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [checked, setChecked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [feedbackError, setFeedbackError] = useState('')
 	const [payload, setPayload] = useState({
 		businessName: '',
 		email: '',
@@ -67,6 +67,7 @@ const BusinessInformation = () => {
 			push('/auth/signup/business/address')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
+			setFeedbackError(message)
 			notify('error', message)
 		} finally {
 			setIsLoading(false)
@@ -78,6 +79,7 @@ const BusinessInformation = () => {
 	}
 
 	useEffect(() => {
+		setFeedbackError('')
 		const {
 			businessName,
 			email,
@@ -134,8 +136,8 @@ const BusinessInformation = () => {
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}
-								error={ctaClicked && !validEmail(payload.email)}
-								errorMsg={!payload.email ? 'Business email is required' : !validEmail(payload.email) ? 'Valid business email is required' : 'Business email is required'}
+								error={ctaClicked && (!validEmail(payload.email) || feedbackError.toLowerCase().includes('email'))}
+								errorMsg={!payload.email ? 'Business email is required' : !validEmail(payload.email) ? 'Valid business email is required' :  feedbackError.toLowerCase().includes('email') ? feedbackError : 'Business email is required'}
 							/>
 							<Input
 								id="business-type"
@@ -204,7 +206,12 @@ const BusinessInformation = () => {
 							<CheckBox error={ctaClicked && !checked}
 								value={checked}
 								onChange={toggleChecked} />
-							<p>By clicking, you accept our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
+							<p>By clicking, you accept our <a href="https://mypasspoint.com/terms_and_conditions"
+								rel='noreferrer'
+								target='_blank'>Terms of use</a> and <a href="https://mypasspoint.com/privacy_policy"
+								rel='noreferrer'
+								target='_blank'>Privacy Policy</a>
+							</p>
 						</div>
 						<div className={styles.action_ctn}>
 							<PrimaryBtn text="Open account"

@@ -9,6 +9,8 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { useState, useEffect } from "react";
+import { metrics } from "@/services/restService";
 
 ChartJS.register(
   CategoryScale,
@@ -19,43 +21,9 @@ ChartJS.register(
   Title
 );
 
-var data = {
-  labels: [
-    "Jan",
-    "Feb",
-    " Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ],
-  datasets: [
-    {
-      data: [60, 105, 150, 100, 90, 135, 130, 90, 55, 85, 88, 130],
-      backgroundColor: "#1B59F8",
-      borderColor: "#1B59F8",
-      barThickness: 11.3,
-    },
-  ],
-};
-
-var options = {
+const options = {
   maintainAspectRatio: false,
   responsive: true,
-  plugins: {
-    title: {
-      display: false,
-      text: "Chart.js Bar Chart - Stacked",
-    },
-    legend: {
-      display: false,
-    },
-  },
   elements: {
     bar: {
       borderWidth: 2,
@@ -85,25 +53,76 @@ var options = {
           family: "GraphikRegular",
         },
         color: "#A0AEC0",
-        stepSize: 50,
+        stepSize: 100,
       },
+    },
+  },
+  plugins: {
+    legend: {
+      display: false,
     },
   },
 };
 
 export function CustomerChart() {
+  const [chartData, setChartData] = useState({});
+  const dataValues = chartData?.growthList
+    ? Object.values(chartData.growthList)
+    : [];
+
+  const normalMonthsOrder = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const data = {
+    labels: normalMonthsOrder,
+    datasets: [
+      {
+        data: dataValues,
+        backgroundColor: "#1B59F8",
+        borderColor: "#1B59F8",
+        barThickness: 11.3,
+      },
+    ],
+  };
+
+  const getMetrics = async () => {
+    try {
+      const response = await metrics();
+      console.log(response);
+      setChartData(response.data.customerGrowth);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMetrics();
+  }, []);
+  console.log(chartData);
   return (
     <main className={styles.dashCustomerCahrt}>
       <div className={styles.content}>
         <h3>Customer Growth</h3>
-        <h3>
-          1000 <span>+33.39%</span>
-        </h3>
+        {chartData.totalCustomer !== undefined && (
+          <h3>
+            {chartData.totalCustomer} <span>-33.39%</span>
+          </h3>
+        )}
       </div>
       <div>
-        <Bar options={options}
-height={182}
-data={data} />
+        <Bar options={options} height={182} data={data} />
       </div>
     </main>
   );

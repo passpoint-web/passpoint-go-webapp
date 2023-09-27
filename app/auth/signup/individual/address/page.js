@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { registerUser } from '@/services/restService'
 import { CS } from '@/utils/CONSTANTS'
 import { getCredentials, saveCredentials } from '@/services/localService'
-import CustomSelect from '@/components/Custom/Select/Select'
+import CustomSelect from '@/components/Custom/Select'
 import CountrySelect from '@/components/Custom/CountrySelect'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
@@ -85,7 +85,12 @@ const BusinessAddress = () => {
 	},[payload.country?.name?.common])
 
 	useEffect(()=>{
-		setLgas(CS.getCities(payload?.country?.cca2, payload.state))
+		const cities = CS.getCities(payload?.country?.cca2, payload.state) || []
+		if (cities.length) {
+			setLgas(cities)
+		} else {
+			setLgas([payload.state])
+		}
 	},[payload.state])
 
 	useEffect(() => {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../../../assets/styles/dashboard-layout.module.css";
+import styles from "@/assets/styles/dashboard-layout.module.css";
 
 const KycCard = () => {
   return (
@@ -7,7 +7,7 @@ const KycCard = () => {
       <div className={styles.dashKyc_content}>
         <h3>Complete KYC</h3>
         <p>We want to know more about you and your business</p>
-        <Link href="" className="medium">Get Started</Link>
+        <Link href="#" className="primary_link medium">Get Started</Link>
       </div>
     </div>
   );

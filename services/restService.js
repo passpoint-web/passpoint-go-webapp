@@ -1,26 +1,31 @@
-import axiosClient from '@/utils/axios'
+import axiosClient from "@/utils/axios";
 
 const getRequestConfig = () => {
-	return {
-		headers: {},
-		params: {}
-	}
-}
+  return {
+    headers: {},
+    params: {},
+  };
+};
+
+const axios = axiosClient()
+const config = getRequestConfig();
 
 // register user
 export const registerUser = (path, data) => {
-	const config = getRequestConfig()
-	return axiosClient().post(path, data, config)
-}
+  return axios.post(path, data, config);
+};
 
 // sign in
 export const login = (data) => {
-	const config = getRequestConfig()
-	return axiosClient().post('login', data, config)
-}
+  return axios.post("login", data, config);
+};
 
 // verify
 export const resendOtp = (data) => {
-	const config = getRequestConfig()
-	return axiosClient().post('resendOtp', data, config)
-}
+  return axios.post("resendOtp", data, config);
+};
+
+// metrics
+export const metrics = () => {
+  return axios.get("dashboardMetrics", config);
+};
