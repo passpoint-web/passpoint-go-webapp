@@ -612,6 +612,7 @@ ul {
 
 @media screen and (max-width: 700px) {
   :root {
+    --header-height: 80px;
     --header-padding: 40px;
     --outer-component-mg: 25px;
     --inner-component-mg: 15px;
