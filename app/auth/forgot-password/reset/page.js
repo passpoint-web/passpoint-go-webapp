@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import PasswordField from '@/components/Auth/PasswordField'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-import { getForgotPasswordEmail } from '@/services/localService'
+import { getForgotPasswordEmail, saveForgotPasswordEmail } from '@/services/localService'
 import BackBtn from '@/components/Btn/Back'
 import { resetPassword } from '@/services/restService'
 
@@ -45,6 +45,7 @@ export default function ResetPassword () {
       const response = await resetPassword(payload);
       const {message} = response.data;
       notify("success", message);
+			saveForgotPasswordEmail('')
 			push('/auth/login')
     } catch (_err) {
       const { message } = _err.response?.data || _err;
