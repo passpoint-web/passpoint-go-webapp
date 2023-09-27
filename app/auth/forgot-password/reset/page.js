@@ -45,7 +45,7 @@ export default function ResetPassword () {
       const response = await resetPassword(payload);
       const {message} = response.data;
       notify("success", message);
-			push('/auth/forgot-password/verify')
+			push('/auth/login')
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
