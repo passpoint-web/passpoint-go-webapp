@@ -15,17 +15,27 @@ const getRequestConfig = () => {
 };
 
 
-// register user
 export const registerUser = (path, data) => {
   return restAgent.post(path, data);
 };
 
-// sign in
+export const verifyEmailOtp = (data) => {
+  return axios.post('verifyUserOtp', data);
+};
+
 export const login = (data) => {
   return restAgent.post("login", data);
 };
 
-// verify
+export const forgotPassword = (data) => {
+  return axios.post("forgotPassword", data);
+};
+
+
+export const resetPassword = (data) => {
+  return axios.post("resetPassword", data);
+};
+
 export const resendOtp = (data) => {
   return restAgent.post("resendOtp", data);
 };

@@ -101,8 +101,8 @@ const Login = () => {
                   !payload.email
                     ? "Email address is required"
                     : !validEmail(payload.email)
-                    ? "Valid business email is required"
-                    : "Business email is required"
+                    ? "Valid email is required"
+                    : "Email is required"
                 }
               />
               <Input

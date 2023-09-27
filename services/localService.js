@@ -23,7 +23,6 @@ export const saveUserType = (val) => {
 	)
 }
 
-
 export const getUserType = () => {
 	if (typeof window !== 'undefined') {
 		const user_type = localStorage.getItem('user_type')
@@ -33,23 +32,22 @@ export const getUserType = () => {
 	}
 }
 
-export const saveToken = (val) => {
+export const saveForgotPasswordEmail = (val) => {
 	if (val) {
 		localStorage.setItem(
-			'token',
+			'forgot_password_email',
 			JSON.stringify(val)
 		)
 	} else {
-		localStorage.removeItem('token')
+		localStorage.removeItem('forgot_password_email')
 	}
 }
 
-
-export const getToken = () => {
+export const getForgotPasswordEmail = () => {
 	if (typeof window !== 'undefined') {
-		const token = localStorage.getItem('token')
-		if (token !== 'undefined') {
-			return JSON.parse(token)
+		const forgot_password_email = localStorage.getItem('forgot_password_email')
+		if (forgot_password_email !== 'undefined') {
+			return JSON.parse(forgot_password_email)
 		}
 	}
 }
