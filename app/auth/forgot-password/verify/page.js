@@ -7,7 +7,7 @@ const ForgotPasswordVerifyEmail = () => {
   return (
     <>
       <VerifyEmail email={email}
-        otpType='PasswordReset'
+        otpType='passwordReset'
         backBtnNeeded={true}
         nextPath="/auth/forgot-password/reset"
       />

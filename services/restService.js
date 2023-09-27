@@ -14,13 +14,12 @@ const getRequestConfig = () => {
   };
 };
 
-
 export const registerUser = (path, data) => {
   return restAgent.post(path, data);
 };
 
 export const verifyEmailOtp = (data) => {
-  return axios.post('verifyUserOtp', data);
+  return restAgent.post('verifyUserOtp', data);
 };
 
 export const login = (data) => {
@@ -28,12 +27,12 @@ export const login = (data) => {
 };
 
 export const forgotPassword = (data) => {
-  return axios.post("forgotPassword", data);
+  return restAgent.post("forgotPassword", data);
 };
 
 
 export const resetPassword = (data) => {
-  return axios.post("resetPassword", data);
+  return restAgent.post("resetPassword", data);
 };
 
 export const resendOtp = (data) => {
