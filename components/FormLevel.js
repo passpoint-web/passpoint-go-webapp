@@ -1,10 +1,10 @@
-import styles from './signup-layout-lhs.module.css'
+import styles from '@/components/Auth/SignupLayoutLHS/signup-layout-lhs.module.css'
 
-const SignupLevel = ({ auth }) => {
+const FormLevel = ({ auth }) => {
 	return (
 		<div
-			className={`${styles.auth_level} ${auth.active ? styles.active : ''} ${
-				auth.completed ? styles.completed : ''
+			className={`${styles.auth_level} ${auth?.active ? styles.active : ''} ${
+				auth?.completed ? styles.completed : ''
 			}`}
 		>
 			<div className={styles.lhs}>
@@ -25,17 +25,17 @@ const SignupLevel = ({ auth }) => {
 								strokeLinejoin="round"
 							/>
 						</svg>
-						<span>{auth.level}</span>
+						<span>{auth?.level}</span>
 					</div>
 				</div>
 				<div className={styles.line} />
 			</div>
 			<div className={styles.content}>
-				<h3>{auth.title}</h3>
-				<p>{auth.sub_title}</p>
+				<h3>{auth?.title}</h3>
+				<p>{auth?.sub_title}</p>
 			</div>
 		</div>
 	)
 }
 
-export default SignupLevel
+export default FormLevel

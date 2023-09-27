@@ -1,7 +1,7 @@
 'use client'
 import '@/assets/styles/globals.css'
 import AuthHeader from '@/components/Auth/Header'
-import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+// import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import styles from '@/assets/styles/auth-screens.module.css'
 // import {notify} from '@/components/Toast'
 import Head from 'next/head'

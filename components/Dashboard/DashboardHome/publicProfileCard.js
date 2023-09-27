@@ -12,7 +12,7 @@ const PublicProfileCard = () => {
 				<PrimaryLink
 					type='medium'
 					text='Start setup'
-					href='#'
+					href='/dashboard/public-profile-setup'
 				/>
 			</div>
 		</div>

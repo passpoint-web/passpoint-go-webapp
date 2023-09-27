@@ -8,6 +8,7 @@ export default function DashboardLayout({ children }) {
 		<div className={styles.dashLayout}>
 			<aside>
 				<DashboardSidebar />
+				<input style={{border: '1px solid red', height: '100px'}} />
 			</aside>
 			<div className={styles.dash_children}>
 				<DashboardHeader />

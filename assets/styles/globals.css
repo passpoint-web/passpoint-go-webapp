@@ -311,6 +311,10 @@ li {
   color: var(--grey-2);
 }
 
+.white-bg {
+  background-color: #fff;
+}
+
 /* buttons */
 .primary_btn,
 .primary_link {

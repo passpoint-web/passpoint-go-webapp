@@ -1,12 +1,8 @@
 'use client'
 import styles from './signup-layout-lhs.module.css'
-import SignupLevel from './SignupLevel'
+import FormLevel from '../../FormLevel'
 import { getCredentials } from '@/services/localService'
-
-import {
-	usePathname,
-}
-	from 'next/navigation'
+import {usePathname} from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const SignupLayoutLHS = () => {
@@ -82,7 +78,7 @@ const SignupLayoutLHS = () => {
 		<div className={styles.auth_content_lhs}>
 			<div className={styles.inner}>
 				{levelsToDisplay.map((e, index) => (
-					<SignupLevel key={index}
+					<FormLevel key={index}
 						auth={{ ...e, level: index + 1 }} />
 				))}
 			</div>
