@@ -110,7 +110,7 @@ export function MonthlyChart() {
     const token = getToken()
     try {
       const response = await metrics(token);
-      setChartData(response.data.monthlyReveune)
+      setChartData(response.data.monthlyRevenue)
     } catch (error) {
       notify("error", 'Could not retrieve monthly revenue');
     } finally {
@@ -125,9 +125,9 @@ export function MonthlyChart() {
     <main className={styles.dashMonthChart}>
       <div className={styles.content}>
         <h3>Month on Month Revenue</h3>
-        {chartData.totalMonthlyReveune !== undefined && (
+        {chartData.totalMonthlyRevenue !== undefined && (
           <h3>
-            {`₦ ${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
+            {`₦ ${chartData.totalMonthlyRevenue}`} <span>-8.39%</span>
           </h3>
         )}
       </div>
