@@ -510,9 +510,6 @@
   }
 }
 @media screen and (max-width: 700px) {
-  /* .auth {
-    padding-top: 40px;
-  } */
   .header .inner {
     padding: 0 var(--header-padding);
   }

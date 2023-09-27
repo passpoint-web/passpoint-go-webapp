@@ -10,17 +10,22 @@ const getRequestConfig = () => {
 const axios = axiosClient()
 const config = getRequestConfig();
 
-// register user
 export const registerUser = (path, data) => {
   return axios.post(path, data, config);
 };
 
-// sign in
 export const login = (data) => {
   return axios.post("login", data, config);
 };
 
-// verify
+export const forgotPassword = (data) => {
+  return axios.post("forgotPassword", data, config);
+};
+
+export const resetPassword = (data) => {
+  return axios.post("resetPassword", data, config);
+};
+
 export const resendOtp = (data) => {
   return axios.post("resendOtp", data, config);
 };
