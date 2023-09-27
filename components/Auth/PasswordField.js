@@ -105,6 +105,7 @@ const PasswordField = ({
 				<button
 					className={`${styles.absolute_side} ${styles.show}`}
 					onClick={handlePasswordType}
+					disabled={props.disabled}
 				>
 					{type === 'password' ? <EyeOpen /> : <EyeClose />}
 				</button>

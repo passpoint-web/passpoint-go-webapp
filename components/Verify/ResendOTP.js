@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { resendOtp } from '@/services/restService'
 import toast from '@/components/Toast'
 
-const ResendOTP = ({email}) => {
+const ResendOTP = ({email, clearOtp}) => {
 
 	const [resendOTPStatus, setResendOTPStatus] = useState('Resend OTP')
 	const [countDown, setCountDown] = useState(0)
@@ -38,6 +38,7 @@ const ResendOTP = ({email}) => {
 			// console.log(response)
 			const {message} = response.data || 'OTP Resent Successfully to Email Address. Please Retry New OTP.'
 			notify('success', message)
+			clearOtp()
 			setCountDown(59)
 			countDownTimer()
 		} catch (_err) {
