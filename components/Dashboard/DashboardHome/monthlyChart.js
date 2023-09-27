@@ -44,16 +44,14 @@ var options = {
         lineType: "dash",
         color: "#D9D9D9",
       },
-      max: 25000,
-      min: 5000,
       ticks: {
         font: {
           size: 10,
           family: "GraphikRegular",
         },
         color: "#A0AEC0",
-        beginAtZero: false,
-        stepSize: 5000,
+        beginAtZero: true,
+        stepSize: 100,
       },
     },
   },
@@ -69,21 +67,25 @@ export function MonthlyChart() {
   const dataValues = chartData?.reveuneList
     ? Object.values(chartData.reveuneList)
     : [];
+
+  // Define the months in the normal order
+  const normalMonthsOrder = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   var data = {
-    labels: [
-      "Jan",
-      "Feb",
-      " Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: normalMonthsOrder,
     datasets: [
       {
         data: dataValues,
@@ -95,11 +97,10 @@ export function MonthlyChart() {
       },
     ],
   };
-  console.log(chartData);
+
   const getMetrics = async () => {
     try {
       const response = await metrics();
-      console.log(response);
       setChartData(response.data.monthlyReveune);
     } catch (error) {
       console.log(error);
