@@ -10,8 +10,9 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { metrics } from "@/services/restService";
+import toast from '@/components/Toast'
 
 ChartJS.register(
   CategoryScale,
@@ -64,6 +65,7 @@ var options = {
 
 export function MonthlyChart() {
   const [chartData, setChartData] = useState({});
+  // const [chartLoading, setChartLoading] = useState(true)
   const dataValues = chartData?.reveuneList
     ? Object.values(chartData.reveuneList)
     : [];
@@ -97,13 +99,20 @@ export function MonthlyChart() {
       },
     ],
   };
+  const notify = useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
 
   const getMetrics = async () => {
+    // setChartLoading(true)
     try {
       const response = await metrics();
-      setChartData(response.data.monthlyReveune);
+      setChartData(response.data.monthlyReveune)
     } catch (error) {
-      console.log(error);
+      notify("error", 'Could not retrieve monthly revenue');
+    } finally {
+      // setChartLoading(false)
     }
   };
 
@@ -116,7 +125,7 @@ export function MonthlyChart() {
         <h3>Month on Month Revenue</h3>
         {chartData.totalMonthlyReveune !== undefined && (
           <h3>
-            {`£${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
+            {`₦ ${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
           </h3>
         )}
       </div>

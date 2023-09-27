@@ -18,12 +18,8 @@ export default function Dashboard() {
         <MetricCard />
       </section>
       <section className={styles.dashboard_chart}>
-        <div>
           <MonthlyChart />
-        </div>
-        <div>
           <CustomerChart />
-        </div>
       </section>
     </main>
   );
