@@ -13,6 +13,7 @@ import { Line } from "react-chartjs-2";
 import { useEffect, useState, useCallback } from "react";
 import { metrics } from "@/services/restService";
 import toast from '@/components/Toast'
+import { getToken } from "@/services/localService";
 
 ChartJS.register(
   CategoryScale,
@@ -106,8 +107,9 @@ export function MonthlyChart() {
 
   const getMetrics = async () => {
     // setChartLoading(true)
+    const token = getToken()
     try {
-      const response = await metrics();
+      const response = await metrics(token);
       setChartData(response.data.monthlyReveune)
     } catch (error) {
       notify("error", 'Could not retrieve monthly revenue');

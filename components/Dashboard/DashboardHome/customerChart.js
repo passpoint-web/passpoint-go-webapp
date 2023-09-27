@@ -11,6 +11,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { metrics } from "@/services/restService";
+import { getToken } from "@/services/localService";
 
 ChartJS.register(
   CategoryScale,
@@ -98,8 +99,9 @@ export function CustomerChart() {
   };
 
   const getMetrics = async () => {
+    const token = getToken()
     try {
-      const response = await metrics();
+      const response = await metrics(token);
       console.log(response);
       setChartData(response.data.customerGrowth);
     } catch (error) {

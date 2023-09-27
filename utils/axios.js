@@ -1,10 +1,8 @@
 import axios from "axios"
+import { getToken } from "@/services/localService";
 
 const axiosClient = () => {
-  let token = ''
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem("goToken")
-  }
+  const token = getToken()
   return axios.create({
     baseURL: "https://api.jessecoders.com/passpointGo/v1/",
     headers: {

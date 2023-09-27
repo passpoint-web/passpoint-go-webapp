@@ -9,7 +9,7 @@ import functions from '@/utils/functions'
 import { login } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-import { saveCredentials } from '@/services/localService'
+import { saveCredentials, saveToken } from '@/services/localService'
 
 const Login = () => {
   const { validEmail } = functions;
@@ -45,7 +45,7 @@ const Login = () => {
     try {
       const response = await login(payload);
       const data = response.data.data;
-      localStorage.setItem("goToken", response.data.token);
+      saveToken(response.data.token)
       saveCredentials(data);
       directUser(data);
       notify("success", `You're logged in as ${payload.email}`);

@@ -1,4 +1,11 @@
-import axiosClient from "@/utils/axios";
+import axios from 'axios';
+
+const restAgent = axios.create({
+  baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
 
 const getRequestConfig = () => {
   return {
@@ -7,25 +14,25 @@ const getRequestConfig = () => {
   };
 };
 
-const axios = axiosClient()
-const config = getRequestConfig();
 
 // register user
 export const registerUser = (path, data) => {
-  return axios.post(path, data, config);
+  return restAgent.post(path, data);
 };
 
 // sign in
 export const login = (data) => {
-  return axios.post("login", data, config);
+  return restAgent.post("login", data);
 };
 
 // verify
 export const resendOtp = (data) => {
-  return axios.post("resendOtp", data, config);
+  return restAgent.post("resendOtp", data);
 };
 
 // metrics
-export const metrics = () => {
-  return axios.get("dashboardMetrics", config);
+export const metrics = (token) => {
+  const config = getRequestConfig();
+  config.headers.Authorization = `Bearer ${token}`;
+  return restAgent.get("dashboardMetrics", config);
 };
