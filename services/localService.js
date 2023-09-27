@@ -22,6 +22,13 @@ export const saveUserType = (val) => {
 		JSON.stringify(val)
 	)
 }
+export const saveForgotPasswordEmail = (val) => {
+	console.log(val)
+	localStorage.setItem(
+		'forgot_password_email',
+		JSON.stringify(val)
+	)
+}
 
 // getters
 export const getUserType = () => {
@@ -29,6 +36,14 @@ export const getUserType = () => {
 		const user_type = localStorage.getItem('user_type')
 		if (user_type !== 'undefined') {
 			return JSON.parse(user_type)
+		}
+	}
+}
+export const getForgotPasswordEmail = () => {
+	if (typeof window !== 'undefined') {
+		const forgot_password_email = localStorage.getItem('forgot_password_email')
+		if (forgot_password_email !== 'undefined') {
+			return JSON.parse(forgot_password_email)
 		}
 	}
 }
