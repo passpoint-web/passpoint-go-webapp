@@ -10,8 +10,9 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { metrics } from "@/services/restService";
+import toast from '@/components/Toast'
 
 ChartJS.register(
   CategoryScale,
@@ -44,16 +45,14 @@ var options = {
         lineType: "dash",
         color: "#D9D9D9",
       },
-      max: 25000,
-      min: 5000,
       ticks: {
         font: {
           size: 10,
           family: "GraphikRegular",
         },
         color: "#A0AEC0",
-        beginAtZero: false,
-        stepSize: 5000,
+        beginAtZero: true,
+        stepSize: 100,
       },
     },
   },
@@ -66,24 +65,29 @@ var options = {
 
 export function MonthlyChart() {
   const [chartData, setChartData] = useState({});
+  // const [chartLoading, setChartLoading] = useState(true)
   const dataValues = chartData?.reveuneList
     ? Object.values(chartData.reveuneList)
     : [];
+
+  // Define the months in the normal order
+  const normalMonthsOrder = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   var data = {
-    labels: [
-      "Jan",
-      "Feb",
-      " Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: normalMonthsOrder,
     datasets: [
       {
         data: dataValues,
@@ -95,14 +99,20 @@ export function MonthlyChart() {
       },
     ],
   };
-  console.log(chartData);
+  const notify = useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
+
   const getMetrics = async () => {
+    // setChartLoading(true)
     try {
       const response = await metrics();
-      console.log(response);
-      setChartData(response.data.monthlyReveune);
+      setChartData(response.data.monthlyReveune)
     } catch (error) {
-      console.log(error);
+      notify("error", 'Could not retrieve monthly revenue');
+    } finally {
+      // setChartLoading(false)
     }
   };
 
@@ -115,7 +125,7 @@ export function MonthlyChart() {
         <h3>Month on Month Revenue</h3>
         {chartData.totalMonthlyReveune !== undefined && (
           <h3>
-            {`£${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
+            {`₦ ${chartData.totalMonthlyReveune}`} <span>-8.39%</span>
           </h3>
         )}
       </div>
