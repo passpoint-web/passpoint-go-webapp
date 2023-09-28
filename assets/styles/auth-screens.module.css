@@ -40,9 +40,8 @@
 .auth {
   padding: var(--screen-padding-top) 0 30px;
   width: 100%;
-  width: clamp(400px, 50%, 600px);
+  width: clamp(400px, 40%, 500px);
 }
-
 .auth > .inner {
   display: flex;
   width: 100%;
@@ -50,12 +49,12 @@
 
 .auth > .inner > .center {
   margin: 0 auto;
-  width: clamp(550px, 40%, 600px);
+  width: clamp(100%, 40%, 500px);
 }
 
 .auth > .inner.business_type > .center {
   margin: 0 auto;
-  width: clamp(650px, 50%, 700px);
+  width: clamp(500px, 50%, 600px);
 }
 
 /* auth lhs */
@@ -76,6 +75,22 @@
 .auth_content_rhs,
 .auth_content_lhs_empty {
   border: none;
+}
+
+@media screen and (min-width: 1200px) {
+  .auth {
+    width: clamp(400px, 40%, 600px);
+  }
+  
+  .auth > .inner > .center {
+    margin: 0 auto;
+    width: clamp(100%, 40%, 600px);
+  }
+
+  .auth > .inner.business_type > .center {
+    margin: 0 auto;
+    width: clamp(650px, 50%, 700px);
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -340,6 +355,7 @@
 
 .form .action_ctn p {
   text-align: center;
+  color: var(--grey-1);
 }
 
 .form_group .otp_input > div {
@@ -510,9 +526,6 @@
   }
 }
 @media screen and (max-width: 700px) {
-  /* .auth {
-    padding-top: 40px;
-  } */
   .header .inner {
     padding: 0 var(--header-padding);
   }

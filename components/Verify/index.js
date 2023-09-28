@@ -5,22 +5,19 @@ import OtpInput from 'react-otp-input'
 import Input from '@/components/Dashboard/Input'
 import ResendOTP from '@/components/Verify/ResendOTP'
 import toast from '@/components/Toast'
-// import BackBtn from '@/components/Btn/Back'
+import BackBtn from '@/components/Btn/Back'
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { getCredentials } from '@/services/localService'
-import { registerUser } from '@/services/restService'
+import { verifyEmailOtp } from '@/services/restService'
 import functions from '@/utils/functions'
 
-const VerifyEmail = ({apiUserType = 'verifyUserOtp'}) => {
+const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, otpType = 'accountVerification'}) => {
 	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
-	const [email, setEmail] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const savedCredentials = getCredentials()
 
 	const notify = useCallback((type, message) => {
 		toast({ type, message })
@@ -38,14 +35,14 @@ const VerifyEmail = ({apiUserType = 'verifyUserOtp'}) => {
 		try {
 			const payload = {
 				otp,
-				email: savedCredentials?.email,
-				otpType:'accountVerification'
+				email,
+				otpType
 			}
-			const response = await registerUser(apiUserType, payload)
+			const response = await verifyEmailOtp(payload)
 			console.log(response)
 			// setSignupLevel({'business', 2})
 			notify('success', 'Your email has been verified!')
-			push('/auth/login')
+			push(nextPath)
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -55,23 +52,18 @@ const VerifyEmail = ({apiUserType = 'verifyUserOtp'}) => {
 	}
 
 	useEffect(() => {
-		if (
-			savedCredentials?.email) {
-			setEmail(savedCredentials?.email)
-		}
 		setErrorMsg('')
 	}, [])
 
 	return (
-		<div className={`${styles.auth} ${styles.no_pd_top}`}>
+		<div className={`${styles.auth} ${!backBtnNeeded ? styles.no_pd_top : ''}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-					{/* <BackBtn onClick={() => back()} /> */}
+				{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
               We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
-              code below, or click the verification link in your mail to
-              complete verification
+              code below.
 					</h4>
 					<form className={styles.form}
 						onSubmit={handleVerificationSubmit}>
@@ -90,14 +82,15 @@ const VerifyEmail = ({apiUserType = 'verifyUserOtp'}) => {
 										inputType="number"
 										inputMode={null}
 										renderSeparator={<span />}
-										renderInput={() => <input />}
+										renderInput={(props) => <input {...props} />}
 									/>
 								</div>
 							</Input>
 						</div>
 						<div className={styles.action_ctn}>
 							<ResendOTP 
-								email={email} 
+								email={email}
+								clearOtp={()=>setOtp('')}
 							/>
 							<PrimaryBtn
 								text="Verify"
