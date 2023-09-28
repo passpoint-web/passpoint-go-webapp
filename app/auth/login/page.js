@@ -46,7 +46,6 @@ const Login = () => {
       const response = await login(payload);
       const data = response.data.data;
       saveToken(response.data.token)
-      // saveToken('')
       saveCredentials(data);
       directUser(data);
       notify("success", `You're logged in as ${payload.email}`);
