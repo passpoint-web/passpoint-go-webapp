@@ -340,6 +340,7 @@
 
 .form .action_ctn p {
   text-align: center;
+  color: var(--grey-1);
 }
 
 .form_group .otp_input > div {
@@ -510,9 +511,6 @@
   }
 }
 @media screen and (max-width: 700px) {
-  /* .auth {
-    padding-top: 40px;
-  } */
   .header .inner {
     padding: 0 var(--header-padding);
   }

@@ -9,7 +9,7 @@ import functions from '@/utils/functions'
 import { login } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
 import toast from '@/components/Toast'
-import { saveCredentials } from '@/services/localService'
+import { saveCredentials, saveToken } from '@/services/localService'
 
 const Login = () => {
   const { validEmail } = functions;
@@ -45,9 +45,8 @@ const Login = () => {
     try {
       const response = await login(payload);
       const data = response.data.data;
-      const {token} = response.data
-      // localStorage.setItem("goToken", response.data.token);
-      setTokenOnServerSide(token)
+      saveToken(response.data.token)
+      // saveToken('')
       saveCredentials(data);
       directUser(data);
       notify("success", `You're logged in as ${payload.email}`);
@@ -59,16 +58,6 @@ const Login = () => {
       setIsLoading(false);
     }
   };
-
-  const setTokenOnServerSide = (token) => {
-    fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type' : 'application/json'
-      },
-      body: JSON.stringify({token})
-    })
-  }
 
   const directUser = ({ userType, is_active, regStage }) => {
     const businessLevels = ["", "address", "personal", "verify"];
@@ -113,8 +102,8 @@ const Login = () => {
                   !payload.email
                     ? "Email address is required"
                     : !validEmail(payload.email)
-                    ? "Valid business email is required"
-                    : "Business email is required"
+                    ? "Valid email is required"
+                    : "Email is required"
                 }
               />
               <Input

@@ -8,7 +8,7 @@ const AuthHeader = () => {
   const pathname = usePathname();
   const btn = pathname.includes("/signup")
     ? { url: "/auth/login", text: "Login" }
-    : { url: "/auth/signup", text: "Signup" };
+    : { url: "/auth/signup", text: "Create an account" };
   return (
     <header className={styles.header}>
       <div className={styles.inner}>

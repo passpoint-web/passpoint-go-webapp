@@ -4,7 +4,7 @@ import styles from "../../../assets/styles/dashboard-layout.module.css";
 import { metrics } from "@/services/restService";
 import { Metric1, Metric2, Metric3, Metric4 } from "@/constants/icons";
 import functions from "@/utils/functions";
-const {makeNumArr, formatMoney, formatNumber} = functions
+const { makeNumArr, formatMoney, formatNumber } = functions;
 const MetricCard = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
@@ -38,7 +38,7 @@ const MetricCard = () => {
     {
       title: "Booking Conversion Rate",
       icon: Metric2,
-      sym: '%',
+      sym: "%",
       value: data.bookingConversion,
     },
     {
@@ -56,16 +56,20 @@ const MetricCard = () => {
   return (
     <div className={styles.dashMetric}>
       {loading ? (
-         makeNumArr(4).map((_, i) => (
-          <div key={i} className={`${styles.dashMetric_content} skeleton`} style={{borderRadius: '16px', height: '94px', boxShadow: 'none'}} />
+        makeNumArr(4).map((_, i) => (
+          <div
+            key={i}
+            className={`${styles.dashMetric_content} skeleton`}
+            style={{ borderRadius: "16px", height: "94px", boxShadow: "none" }}
+          />
         ))
       ) : (
-          <>
+        <>
           <div className={styles.dashMetric_content}>
             <Metric1 />
             <div>
               <p>{metricData[0].title}</p>
-              <span>{formatMoney(metricData[0].value, 'NGN')}</span>
+              <span>{formatMoney(metricData[0].value, "NGN")}</span>
             </div>
           </div>
           <div className={styles.dashMetric_content}>
@@ -88,7 +92,8 @@ const MetricCard = () => {
               <p>{metricData[3].title}</p>
               <span>{formatNumber(metricData[3].value)}</span>
             </div>
-          </div></>
+          </div>
+        </>
       )}
     </div>
   );
