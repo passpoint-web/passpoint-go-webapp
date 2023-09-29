@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BackBtn = ({...props}) => {
+const BackBtn = ({text='Back', ...props}) => {
 	return (
 		<button className='back_btn medium'
 			{...props}>
@@ -22,7 +22,7 @@ const BackBtn = ({...props}) => {
 					strokeLinecap="round"
 					strokeLinejoin="round"/>
 			</svg>
-			<span>Back</span>
+			<span>{text}</span>
 		</button>
 	)
 }

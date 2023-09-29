@@ -17,6 +17,11 @@ const nextConfig = {
 				destination: '/kyc/business-type',
 				permanent: true,
 			},
+			{
+				source: '/dashboard/public-profile-setup',
+				destination: '/dashboard/public-profile-setup/identity',
+				permanent: true,
+			},
 		]
 	},
 	images: {

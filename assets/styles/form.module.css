@@ -13,7 +13,15 @@
 
 .feedback_info_ctn .content {
   font-size: 12px;
-  color: #FF3B2D;
   position: relative;
   bottom: -2px;
+}
+.feedback_info_ctn.error .content {
+  color: #FF3B2D;
+}
+.feedback_info_ctn.success .content {
+  color: var(--green);
+}
+.feedback_info_ctn.note .content {
+  color: var(--grey-2);
 }

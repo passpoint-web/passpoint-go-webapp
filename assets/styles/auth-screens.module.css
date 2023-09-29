@@ -119,8 +119,6 @@
   }
 }
 
-
-
 .form {
   padding-top: var(--outer-component-mg);
   max-width: 600px;
@@ -169,6 +167,22 @@
   display: block;
   width: 100%;
   transition: var(--input-transition);
+}
+
+.form_group textarea {
+  background-color: #fff;
+  border: 1px solid var(--input-border);
+  height: var(--textarea-height);
+  min-height: var(--input-height);
+  max-height: calc(var(--textarea-height) + 50px);
+  border-radius: var(--input-br);
+  padding: 10px var(--input-padding);
+  box-shadow: var(--input-box-shadow);
+  display: block;
+  width: 100%;
+  transition: var(--input-transition);
+  appearance: none;
+  resize: vertical;
 }
 
 /* countries select */
@@ -305,17 +319,20 @@
 /* end */
 
 .form_group input:not(:disabled):hover,
+.form_group textarea:not(:disabled):hover,
 .form_group select:not(:disabled):hover {
   border-color: var(--sky-blue);
 }
 
 .form_group input:disabled,
+.form_group textarea:disabled,
 .form_group select:disabled {
   background-color: var(--grey-6);
   border: 1px solid var(--input-border-disabled);
 }
 
 .form_group input:not(:disabled):focus,
+.form_group textarea:not(:disabled):focus,
 .form_group select:not(:disabled):focus {
   border: 1px solid var(--sky-blue);
   outline: transparent;
@@ -324,6 +341,7 @@
 }
 
 .form_group.error input,
+.form_group.error textarea,
 .form_group.error select {
   border: 1px solid var(--input-error-border) !important;
   /* box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow); */
@@ -331,6 +349,7 @@
 }
 
 .form_group.error input:focus,
+.form_group.error textarea:focus,
 .form_group.error select:focus {
   box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
   border: 1px solid var(--input-error-border) !important;

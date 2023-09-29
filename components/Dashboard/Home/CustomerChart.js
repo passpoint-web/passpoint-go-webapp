@@ -1,4 +1,5 @@
-import styles from "../../../assets/styles/dashboard-layout.module.css";
+'use client'
+import styles from "@/assets/styles/dashboard-layout.module.css";
 import {
   Chart as ChartJS,
   CategoryScale,

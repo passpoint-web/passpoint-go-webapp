@@ -12,14 +12,14 @@ import { resetPassword } from '@/services/restService'
 
 export default function ResetPassword () {
 	const {push, back} = useRouter()
-  const email = getForgotPasswordEmail()
+	const email = getForgotPasswordEmail()
 	const [passwordFieldsValid, setPasswordFieldsValid] = useState(false)
-  const [payload, setPayload] = useState({
+	const [payload, setPayload] = useState({
 		password: '',
-    confirm: '',
+		confirm: '',
 		email
-  })
-  const handleChange = (e) => {
+	})
+	const handleChange = (e) => {
 		const { name, value } = e.target
 		setPayload((prevState) => ({
 			...prevState,
@@ -31,8 +31,8 @@ export default function ResetPassword () {
 	const [ctaClicked, setCtaClicked] = useState(false)
 
 	const notify = useCallback((type, message) => {
-    toast({ type, message });
-  }, []);
+		toast({ type, message });
+	}, []);
 
 	const handleResetPasswordSubmit = async (e) => {
 		e.preventDefault()
@@ -41,22 +41,22 @@ export default function ResetPassword () {
 			return
 		}
 		setIsLoading(true);
-    try {
-      const response = await resetPassword(payload);
-      const {message} = response.data;
-      notify("success", message);
+		try {
+			const response = await resetPassword(payload);
+			const {message} = response.data;
+			notify("success", message);
 			saveForgotPasswordEmail('')
 			push('/auth/login')
-    } catch (_err) {
-      const { message } = _err.response?.data || _err;
-      notify("error", message);
-    } finally {
-      setIsLoading(false);
-    }
+		} catch (_err) {
+			const { message } = _err.response?.data || _err;
+			notify("error", message);
+		} finally {
+			setIsLoading(false);
+		}
 	}
 
 	useEffect(()=>{
-    const {password, confirm} = payload
+		const {password, confirm} = payload
 		if (password && password === confirm) {
 			setPasswordFieldsValid(true)
 		} else {
@@ -68,13 +68,13 @@ export default function ResetPassword () {
 		<div className={styles.auth}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-          <BackBtn onClick={() => back()} />
-				<h1 className="title">Create new password</h1>
-				<h4 className="sub-title">Kindly enter a unique password to secure your account</h4>
-				<form className={styles.form}
-					onSubmit={handleResetPasswordSubmit}>
-					<div className={styles.inner}>
-            <Input
+					<BackBtn onClick={() => back()} />
+					<h1 className="title">Create new password</h1>
+					<h4 className="sub-title">Kindly enter a unique password to secure your account</h4>
+					<form className={styles.form}
+						onSubmit={handleResetPasswordSubmit}>
+						<div className={styles.inner}>
+							<Input
 								label="Password"
 								id="password"
 								name="password"
@@ -100,9 +100,9 @@ export default function ResetPassword () {
 								errorMsg={ctaClicked && !payload.confirm ? 'Confirm password is required' : ctaClicked && payload.password !== payload.confirm ? 'Passwords do not match' : ''}
 							>
 								<PasswordField
-                  disabled={!payload.password}
+									disabled={!payload.password}
 									id="confirm-password-field"
-                  passwordStrengthNeeded={false}
+									passwordStrengthNeeded={false}
 									errorField={ctaClicked && !payload.confirm}
 									emitPassword={(e) =>
 										handleChange({
@@ -111,14 +111,14 @@ export default function ResetPassword () {
 									}
 								/>
 							</Input>
-					</div>
-					<div className={styles.action_ctn}>
-						<PrimaryBtn
-            loading={isLoading}
-							text='Login' />
-					</div>
-				</form>
-		
+						</div>
+						<div className={styles.action_ctn}>
+							<PrimaryBtn
+								loading={isLoading}
+								text='Login' />
+						</div>
+					</form>
+
 				</div>
 			</div>
 		</div>

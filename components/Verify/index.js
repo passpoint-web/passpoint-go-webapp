@@ -59,7 +59,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 		<div className={`${styles.auth} ${!backBtnNeeded ? styles.no_pd_top : ''}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-				{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
+					{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
               We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
@@ -88,7 +88,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 							</Input>
 						</div>
 						<div className={styles.action_ctn}>
-							<ResendOTP 
+							<ResendOTP
 								email={email}
 								clearOtp={()=>setOtp('')}
 							/>

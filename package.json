@@ -15,7 +15,6 @@
     "cookie": "^0.5.0",
     "countrycitystatejson": "^21.3.2702",
     "crypto-js": "^4.1.1",
-    "eslint-config-next": "13.4.13",
     "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
     "next": "13.4.13",
@@ -37,6 +36,7 @@
   },
   "devDependencies": {
     "eslint": "^8.47.0",
+    "eslint-config-next": "^13.5.3",
     "eslint-plugin-react": "^7.33.2"
   }
 }

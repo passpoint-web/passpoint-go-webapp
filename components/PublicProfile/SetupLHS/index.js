@@ -1,22 +1,24 @@
 
 
 
-import {usePathname} from 'next/navigation'
-import styles from './Auth/SignupLayoutLHS/signup-layout-lhs.module.css'
-import FormLevel from './FormLevel'
+'use client'
+import {usePathname, useRouter} from 'next/navigation'
+import FormLevel from '../../FormLevel'
 import { useEffect, useState } from 'react'
+import BackBtn from '@/components/Btn/Back'
 
-const PublicProfileLHS = () => {
+const PublicProfileSetupLHS = () => {
 
 	const pathname = usePathname()
+	const {push} = useRouter()
 
 	const [levelsToDisplay, setLevelsToDisplay] = useState([])
 
-  const levels = [
+	const levels = [
 		{
 			title: 'Logo',
 			sub_title: 'Provide your official logo',
-			active: pathname === '/dashboard/public-profile-setup',
+			active: pathname === '/dashboard/public-profile-setup/identity',
 			completed: false,
 		},
 		{
@@ -42,16 +44,15 @@ const PublicProfileLHS = () => {
 	useEffect(()=>{
 		setLevelsToDisplay(levels)
 	},[])
-  return (
-    <div className={styles.auth_content_lhs}>
-			<div className={styles.inner}>
-				{levelsToDisplay.map((e, index) => (
-					<FormLevel key={index}
-						auth={{ ...e, level: index + 1 }} />
-				))}
-			</div>
-		</div>
-  )
+	return (
+		<>
+			<BackBtn text="Dashboard" onClick={()=>push('/dashboard')} />
+			{levelsToDisplay.map((e, index) => (
+				<FormLevel key={index}
+					auth={{ ...e, level: index + 1 }} />
+			))}
+		</>
+	)
 }
 
-export default PublicProfileLHS
+export default PublicProfileSetupLHS

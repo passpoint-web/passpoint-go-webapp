@@ -94,6 +94,7 @@
   --warning-bg: #fbeee680;
 
   --input-height: 48px;
+  --textarea-height: 150px;
   --input-br: 12px;
   --input-padding: 16px;
   --input-transition: 0.3s ease-in;
@@ -222,6 +223,7 @@ button .loading::before {
   top: 0;
   animation: btn-loading 2s linear infinite;
 }
+
 button .loading::after {
   animation-delay: 1s;
 }
@@ -281,7 +283,7 @@ h4 {
   font-size: 16px;
 }
 
-h1.title {
+h1 {
   /* letter-spacing:  -1.5px; */
   animation: slide-in-fr 0.7s forwards;
   -webkit-animation: slide-in-fr 0.7s forwards;
@@ -426,6 +428,15 @@ button.small {
   border: 1px solid var(--grey-5);
   background-color: unset;
   box-shadow: var(--btn-secondary-shadow);
+}
+
+.absolute_close_btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
 }
 
 .secondary_link:hover {

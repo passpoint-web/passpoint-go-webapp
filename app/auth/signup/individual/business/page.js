@@ -79,11 +79,11 @@ const BusinessInformation = () => {
 	return (
 		<>
 			{
-				showBusinessWarning ? 
-				<PasspointBusinessModal 
-					onClose={()=>setShowBusinessWarning(false)} 
-				/> : 
-				<></>
+				showBusinessWarning ?
+					<PasspointBusinessModal
+						onClose={()=>setShowBusinessWarning(false)}
+					/> :
+					<></>
 			}
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>

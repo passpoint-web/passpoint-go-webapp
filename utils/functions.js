@@ -1,7 +1,8 @@
 // import CryptoJS from 'crypto-js'
 
-function number(num) {
-	let value = `${num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
+function number(num, precision) {
+	const n = num ? num.toFixed(precision || 0) : num
+	let value = `${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
 	// return sym ? (position === 'pre' ? `${sym} ${value}` : `${value} ${sym}`) : value
 	return value
 }

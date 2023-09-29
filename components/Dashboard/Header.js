@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+'use client'
 import { PlusIcon } from "@/constants/icons";
 import styles from "@/assets/styles/dashboard-layout.module.css";
 import ProfileImage from "@/assets/images/dashboard/avatar.svg";

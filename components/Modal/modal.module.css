@@ -55,6 +55,7 @@
 
 .top {
   position: relative;
+  margin-bottom: var(--outer-component-gap);
 }
 
 .content {
@@ -64,6 +65,7 @@
 }
 
 .bottom {
+  margin-top: var(--outer-component-mg);
   display: flex;
   /* justify-self: flex-end; */
   align-self: flex-end;
