@@ -11,7 +11,7 @@ import ModalWrapper from '@/components/Modal/ModalWrapper'
 import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
 
-const AboutBusiness = () => {
+const BusinessServices = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -47,6 +47,10 @@ const AboutBusiness = () => {
 		setShowModal(true)
 	}
 
+	useEffect(()=>{
+		console.log(currentEditId)
+	},[currentEditId])
+
 	const handleFeatureChange = (e) => {
 		const { name, value } = e.target;
 		setFeature((prevState) => ({
@@ -60,7 +64,7 @@ const AboutBusiness = () => {
 		if (!feature.headline && !feature.description || feature.description.length > 200) {
 			return
 		}
-		// map through features, and look for the feature with current edit id, then update with feature object
+		// map through features, and look for the feature current edit id, then update with feature object
 		const update = features.map(oldFeature =>
 			oldFeature.id === currentEditId ?
 				feature : oldFeature
@@ -72,7 +76,6 @@ const AboutBusiness = () => {
 		setCurrentEditId(null)
 		setModalCtaClicked(false)
 	}
-
 	const addToFeatures = () => {
 		setModalCtaClicked(true)
 		if (!feature.headline || !feature.description || feature.description.length > 200) {
@@ -251,4 +254,4 @@ const AboutBusiness = () => {
 	)
 }
 
-export default AboutBusiness
+export default BusinessServices
