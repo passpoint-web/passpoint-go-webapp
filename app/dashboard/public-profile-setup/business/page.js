@@ -3,12 +3,10 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from '../public-profile.module.css'
-import formStyles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import toast from '@/components/Toast'
 import Input from '@/components/Dashboard/Input'
-// import { getCredentials } from '@/features/localFeature'
-import { AddIcon, CancelIcon } from '@/constants/icons'
+import { AddIcon, CancelIcon_border } from '@/constants/icons'
 import ModalWrapper from '@/components/Modal/ModalWrapper'
 import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
@@ -18,32 +16,42 @@ const AboutBusiness = () => {
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
+	const [modalCtaClicked, setModalCtaClicked] = useState(false)
 	const [aboutBusiness, setAboutBusiness] = useState('');
 	const [showModal, setShowModal] = useState(false);
 	const [features, setFeatures] = useState([]);
 	const [feature, setFeature] = useState(
 		{
-			id: 0,
+			id: null,
 			headline: '',
 			description: ''
 		}
 	);
 
-	const openFeatureModal = (e, val) => {
+	const [currentEditId, setCurrentEditId] = useState(null)
+
+	const addFeatureModal = (e) => {
 		e.preventDefault()
-		if (val === 'new') {
-			// setFeatures([...features, {id: features.length, headline: '', description: ''}])
-		} else {
-			setFeature(val)
-		}
+		setFeature({
+			id: null,
+			headline: '',
+			description: ''
+		})
 		setShowModal(true)
 	}
 
-	// const addFeature = (e)=> {
-	// 	e.preventDefault()
-	// }
+	const editFeatureModal = (e, val) => {
+		e.preventDefault()
+		setCurrentEditId(val.id)
+		setFeature(val)
+		setShowModal(true)
+	}
 
-	const updateFeature = (e) => {
+	useEffect(()=>{
+		console.log(currentEditId)
+	},[currentEditId])
+
+	const handleFeatureChange = (e) => {
 		const { name, value } = e.target;
 		setFeature((prevState) => ({
 			...prevState,
@@ -51,9 +59,50 @@ const AboutBusiness = () => {
 		}));
 	};
 
-	const updateFeatures = (e) => {
-		e.preventDefault()
+	const editFeature = () => {
+		setModalCtaClicked(true)
+		if (!feature.headline && !feature.description || feature.description.length > 200) {
+			return
+		}
+		// map through features, and look for the feature current edit id, then update with feature object
+		const update = features.map(oldFeature =>
+			oldFeature.id === currentEditId ?
+				feature : oldFeature
+		)
+		setFeatures(update)
+
+		// reset state
+		setShowModal(false)
+		setCurrentEditId(null)
+		setModalCtaClicked(false)
+	}
+	const addToFeatures = () => {
+		setModalCtaClicked(true)
+		if (!feature.headline || !feature.description || feature.description.length > 200) {
+			return
+		}
+		setFeatures([...features, {...feature, id: features.length}])
+		setFeature({
+			id: null,
+			headline: '',
+			description: ''
+		})
+		// reset state
+		setShowModal(false)
+		setCurrentEditId(null)
+		setModalCtaClicked(false)
 	};
+
+	const hideFeatureModal = () => {
+		setShowModal(false)
+		setCurrentEditId(null)
+		setModalCtaClicked(false)
+	}
+
+	const removeFeature = (e, id) => {
+		e.preventDefault()
+		setFeatures(features.filter((s)=>s.id !== id))
+	}
 
 	const notify = useCallback((type, message) => {
 		toast({ type, message })
@@ -93,8 +142,8 @@ const AboutBusiness = () => {
 					<ModalWrapper
 						heading='Why Choose Us'
 						subHeading='Describe in details why you chose us'
-						onClose={()=>setShowModal(false)}
-						handleCta={(e)=>updateFeatures(e)}
+						onClose={hideFeatureModal}
+						handleCta={currentEditId !== null ? editFeature : addToFeatures}
 					>
 						<div>
 							<Input
@@ -103,14 +152,14 @@ const AboutBusiness = () => {
 								placeholder="Add headline"
 								name="headline"
 								value={feature.headline}
-								error={ctaClicked && !feature.headline}
+								error={modalCtaClicked && !feature.headline}
 								errorMsg="Headline of feature is required"
-								onChange={(e)=>updateFeature(e)}
+								onChange={handleFeatureChange}
 							/>
 							<Input
 								label="Description"
-								error={ctaClicked && !feature.description}
-								errorMsg="Description of feature is required"
+								error={(modalCtaClicked && !feature.description) || feature.description.length > 200}
+								errorMsg={modalCtaClicked && !feature.description ? 'Description of feature is required' : feature.description.length > 200 ? 'Maximum of 200 characters' : ''}
 								id="description"
 							>
 								<textarea
@@ -118,11 +167,15 @@ const AboutBusiness = () => {
 									id="description"
 									name="description"
 									value={feature.description}
-									onChange={(e)=>updateFeature(e)}
+									onChange={handleFeatureChange}
 								/>
-								<FeedbackInfo
-									message="Maximum of 200 characters"
-									type="note" />
+								{
+									feature.description.length <= 200 ?
+										<FeedbackInfo
+											message="Maximum of 200 characters"
+											type='note' />
+										: <></>
+								}
 							</Input>
 						</div>
 					</ModalWrapper> :
@@ -135,7 +188,6 @@ const AboutBusiness = () => {
 					<Input
 						label="About Business"
 						id="about-business"
-						placeholder="John@mail.com"
 						error={ctaClicked && !aboutBusiness}
 						errorMsg="Description of business is required"
 					>
@@ -149,63 +201,37 @@ const AboutBusiness = () => {
 					</Input>
 					<div className={styles.features_ctn}>
 						<button className={styles.add_feature_card}
-							onClick={(e)=>openFeatureModal(e, 'new')}>
+							onClick={(e)=>addFeatureModal(e)}>
 							<div className={styles.add_feature_card_content}>
 								<h3>Why choose us</h3>
 								<p>You can add mutiple points in this section</p>
 							</div>
 							<AddIcon />
 						</button>
-						{features.map((e, id)=>(
+						{features.filter(e=>e.headline && e.description).map((e, id)=>(
 							<div key={id}
-								className={styles.features_card}>
-								<div>
-									<h3>{e.headline}</h3>
-									<p>{e.description}</p>
-								</div>
+								className={styles.features_card_ctn}>
 								<button
 									className='absolute_close_btn button'
-									onClick={(id)=>setFeatures(features.filter((s)=>s.id !== id))}>
-									<CancelIcon />
+									onClick={(e)=>removeFeature(e, id)}>
+									<CancelIcon_border />
 								</button>
-								{
-									showModal ?
-										<ModalWrapper
-											onClose={()=>setShowModal(false)}
-											handleCta={(e)=>updateFeatures(e, id)}
-										>
-											<div>
-												<Input
-													label="Headline"
-													id="headline"
-													placeholder="Add headline"
-													name="headline"
-													value={feature.headline}
-													error={ctaClicked && !feature.headline}
-													errorMsg="Headline of feature is required"
-													onChange={(e)=>updateFeature(e)}
-												/>
-												{/* <Input
-													label="About Business"
-													id="about-business"
-													placeholder="John@mail.com"
-													error={ctaClicked && !aboutBusiness}
-													errorMsg="Description of business is required"
-												>
-													<textarea
-														placeholder='Description of your business'
-														id="about-business"
-														name="about-business"
-														value={aboutBusiness}
-														onChange={(e)=>setAboutBusiness(e.target.value)}
-													/>
-												</Input> */}
-											</div>
-										</ModalWrapper> :
-										<></>
-								}
+								<div
+									className={styles.features_card}
+									onClick={(x)=>editFeatureModal(x, e)}
+								>
+									<div>
+										<h3>{e.headline}</h3>
+										<p>{e.description}</p>
+									</div>
+								</div>
 							</div>
 						))}
+						{ctaClicked && !features.length ?
+							<FeedbackInfo
+								message="minimum of one feature is required"
+								type='error' /> :
+							<></>}
 					</div>
 					<div className={styles.action_ctn}>
 						<PrimaryBtn

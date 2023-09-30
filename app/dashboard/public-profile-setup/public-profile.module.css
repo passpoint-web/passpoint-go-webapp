@@ -130,8 +130,22 @@
   text-align: left;
 }
 
+.features_card_ctn {
+  position: relative;
+}
+
+.features_card_ctn button {
+  right: 16px;
+  top: 16px;
+  width: fit-content;
+  height: fit-content;
+  z-index: var(--z-index-input-icon);
+}
+
 .features_card {
-  height: 150px;
+  /* height: 150px; */
+  max-height: 150px;
+  overflow-y: scroll;
   border-radius: var(--input-br);
   padding: 15px var(--input-padding);
   display: block;
@@ -141,5 +155,11 @@
   outline: transparent;
   box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
   background-color: var(--input-focus-bg);
+  cursor: pointer;
 }
 
+.features_card h3 {
+  position: sticky;
+  position: -webkit-sticky;
+  top: -10px;
+}
