@@ -117,6 +117,14 @@
   border-color: var(--sky-blue);
 }
 
+.add_feature_card:disabled {
+  background-color: var(--grey-6);
+}
+
+.add_feature_card:disabled h3 {
+  opacity: 0.3;
+}
+
 .add_feature_card:not(:disabled):focus {
   border: 1px solid var(--sky-blue);
   outline: transparent;

@@ -201,6 +201,7 @@ const AboutBusiness = () => {
 					</Input>
 					<div className={styles.features_ctn}>
 						<button className={styles.add_feature_card}
+							disabled={features.length >=5}
 							onClick={(e)=>addFeatureModal(e)}>
 							<div className={styles.add_feature_card_content}>
 								<h3>Why choose us</h3>
