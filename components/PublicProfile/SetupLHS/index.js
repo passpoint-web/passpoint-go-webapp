@@ -6,7 +6,7 @@ import {usePathname, useRouter} from 'next/navigation'
 import FormLevel from '../../FormLevel'
 import { useEffect, useState } from 'react'
 import BackBtn from '@/components/Btn/Back'
-
+import styles from '@/app/dashboard/public-profile-setup/public-profile.module.css'
 const PublicProfileSetupLHS = () => {
 
 	const pathname = usePathname()
@@ -46,11 +46,14 @@ const PublicProfileSetupLHS = () => {
 	},[])
 	return (
 		<>
-			<BackBtn text="Dashboard" onClick={()=>push('/dashboard')} />
-			{levelsToDisplay.map((e, index) => (
-				<FormLevel key={index}
-					auth={{ ...e, level: index + 1 }} />
-			))}
+			<BackBtn text="Dashboard"
+				onClick={()=>push('/dashboard')} />
+			<div className={styles.levels_ctn}>
+				{levelsToDisplay.map((e, index) => (
+					<FormLevel key={index}
+						auth={{ ...e, level: index + 1 }} />
+				))}
+			</div>
 		</>
 	)
 }

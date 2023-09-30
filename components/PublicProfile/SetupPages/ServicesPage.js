@@ -10,8 +10,11 @@ import BackBtn from '@/components/Btn/Back'
 import { useNotify } from '@/utils/hooks'
 import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
 import FeatureCard from '@/components/PublicProfile/FeatureCard'
+import CustomSelect from '@/components/Custom/Select'
+import { services as apiServices } from '@/services/restService'
+import FileUpload from '@/components/FileUpload'
 
-const ServicesPage = ({styles}) => {
+const BusinessPage = ({styles}) => {
 	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
@@ -19,12 +22,15 @@ const ServicesPage = ({styles}) => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [modalCtaClicked, setModalCtaClicked] = useState(false)
 	const [showModal, setShowModal] = useState(false);
-	const [features, setFeatures] = useState([]);
-	const [feature, setFeature] = useState(
+	const [services, setServices] = useState([]);
+	const [serviceBanner, setServiceBanner] = useState({});
+	const [serviceTypes, setServiceTypes] = useState([]);
+	const [service, setService] = useState(
 		{
 			id: null,
-			headline: '',
-			description: ''
+			serviceType: '',
+			serviceDesc: '',
+			serviceBanner: {}
 		}
 	);
 
@@ -32,10 +38,10 @@ const ServicesPage = ({styles}) => {
 
 	const addFeatureModal = (e) => {
 		e.preventDefault()
-		setFeature({
+		setService({
 			id: null,
 			headline: '',
-			description: ''
+			serviceDesc: ''
 		})
 		setShowModal(true)
 	}
@@ -43,13 +49,13 @@ const ServicesPage = ({styles}) => {
 	const editFeatureModal = (e, val) => {
 		e.preventDefault()
 		setCurrentEditId(val.id)
-		setFeature(val)
+		setService(val)
 		setShowModal(true)
 	}
 
-	const handleFeatureChange = (e) => {
+	const handleServiceChange = (e) => {
 		const { name, value } = e.target;
-		setFeature((prevState) => ({
+		setService((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
@@ -57,15 +63,15 @@ const ServicesPage = ({styles}) => {
 
 	const editFeature = () => {
 		setModalCtaClicked(true)
-		if (!feature.headline && !feature.description || feature.description.length > 200) {
+		if (!service.headline && !service.serviceDesc || service.serviceDesc.length > 200) {
 			return
 		}
 		// map through features, and look for the feature with current edit id, then update with feature object
-		const update = features.map(oldFeature =>
-			oldFeature.id === currentEditId ?
-				feature : oldFeature
+		const update = services.map(oldService =>
+			oldService.id === currentEditId ?
+				service: oldService
 		)
-		setFeatures(update)
+		setServices(update)
 		// reset state
 		setShowModal(false)
 		setCurrentEditId(null)
@@ -74,14 +80,14 @@ const ServicesPage = ({styles}) => {
 
 	const addToFeatures = () => {
 		setModalCtaClicked(true)
-		if (!feature.headline || !feature.description || feature.description.length > 200) {
+		if (!service.headline || !service.serviceDesc || service.serviceDesc.length > 200) {
 			return
 		}
-		setFeatures([...features, {...feature, id: features.length}])
-		setFeature({
+		setServices([...services, {...service, id: services.length}])
+		setService({
 			id: null,
 			headline: '',
-			description: ''
+			serviceDesc: ''
 		})
 		// reset state
 		setShowModal(false)
@@ -97,7 +103,7 @@ const ServicesPage = ({styles}) => {
 
 	const removeFeature = (e, id) => {
 		e.preventDefault()
-		setFeatures(features.filter((s)=>s.id !== id))
+		setServices(services.filter((s)=>s.id !== id))
 	}
 
 	const handleSubmit = async (e) => {
@@ -108,8 +114,8 @@ const ServicesPage = ({styles}) => {
 		}
 		setIsLoading(true)
 		try {
-			notify('success', 'Your business Services have been saved')
-			push('/dashboard/public-profile-setup/contact')
+			notify('success', 'Your business Information has been saved')
+			push('/dashboard/public-profile-setup/services')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -118,49 +124,54 @@ const ServicesPage = ({styles}) => {
 		}
 	}
 
+	const getApiServiceTypes = async () => {
+		try {
+			const response = await apiServices.getPrimaryServices()
+			setServiceTypes(response.data.data)
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			//
+		}
+	}
+
+	// useEffect(() => {
+	// 	console.log(serviceTypes)
+	// }, [serviceTypes])
+
 	useEffect(() => {
-		const conditionsMet = features.length
+		const conditionsMet = services.length
 		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [features])
+	}, [services])
+
+	useEffect(() => {
+		getApiServiceTypes()
+	}, [])
 
 	const AddBusinessFeatures = () => (
 		<div className={styles.features_ctn}>
-			<AddFeatureBtn disabled={features.length >=5}
+			<AddFeatureBtn disabled={services.length >=5}
 				title='Why Choose Us'
 				subTitlte='You can add mutiple points in this section'
 				addFeatureModal={addFeatureModal} />
-			{features.filter(f=>f.headline && f.description).map((feat, id)=>(
-				// <div key={id}
-				// 	className={styles.features_card_ctn}>
-				// 	<button
-				// 		className='absolute_close_btn button'
-				// 		onClick={(e)=>removeFeature(e, id)}>
-				// 		<CancelIcon_border />
-				// 	</button>
-				// 	<div
-				// 		className={styles.features_card}
-				// 		onClick={(x)=>editFeatureModal(x, e)}
-				// 	>
-				// 		<div>
-				// 			<h3>{e.headline}</h3>
-				// 			<p>{e.description}</p>
-				// 		</div>
-				// 	</div>
-				// </div>
+
+			{services.filter(f=>f.serviceDesc).map((feat, id)=>(
 				<FeatureCard key={id}
 					removeFeature={(e)=>removeFeature(e, id)}
 					editFeature={(e)=>editFeatureModal(e, feat)}>
 					<div>
 						<h3>{feat.headline}</h3>
-						<p>{feat.description}</p>
+						<p>{feat.serviceDesc}</p>
 					</div>
 				</FeatureCard>
 			))}
-			{ctaClicked && !features.length ?
+
+			{ctaClicked && !services.length ?
 				<FeedbackInfo
 					message="minimum of one feature is required"
 					type='error' /> :
@@ -178,36 +189,56 @@ const ServicesPage = ({styles}) => {
 		>
 			<div>
 				<Input
-					label="Headline"
-					id="headline"
-					placeholder="Add headline"
-					name="headline"
-					value={feature.headline}
-					error={modalCtaClicked && !feature.headline}
-					errorMsg="Headline of feature is required"
-					onChange={handleFeatureChange}
-				/>
+					id="serviceType"
+					label="Name of Service"
+					error={ctaClicked && !service.state}
+					errorMsg="Service name is required"
+				>
+					<CustomSelect
+						fieldError={ctaClicked && !service.serviceType}
+						selectOptions={serviceTypes}
+						objKey="serviceName"
+						disabled={!serviceTypes.length}
+						selectedOption={service.serviceType}
+						emitSelect={(s) => handleServiceChange({
+							target: { name: 'serviceType', value: s },
+						})}
+					/>
+				</Input>
 				<Input
 					label="Description"
-					error={(modalCtaClicked && !feature.description) || feature.description.length > 200}
-					errorMsg={modalCtaClicked && !feature.description ? 'Description of feature is required' : feature.description.length > 200 ? 'Maximum of 200 characters' : ''}
-					id="description"
+					error={(modalCtaClicked && !service.serviceDesc) || service.serviceDesc.length > 200}
+					errorMsg={modalCtaClicked && !service.serviceDesc ? 'Description of service is required' : service.serviceDesc.length > 200 ? 'Maximum of 200 characters' : ''}
+					id="serviceDesc"
 				>
 					<textarea
 						placeholder="Describe the reason stated above"
-						id="description"
-						name="description"
-						value={feature.description}
-						onChange={handleFeatureChange}
+						name="serviceDesc"
+						id="serviceDesc"
+						value={service.serviceDesc}
+						onChange={handleServiceChange}
 					/>
 					{
-						feature.description.length <= 200 ?
+						service.serviceDesc.length <= 200 ?
 							<FeedbackInfo
 								message="Maximum of 200 characters"
 								type='note' />
 							: <></>
 					}
 				</Input>
+				<FileUpload
+					subTitle='Add an Image that best describes your service'
+					fileObj={serviceBanner}
+					handlefileUpload={(e)=>
+						handleServiceChange({
+							target: { name: 'serviceBanner', value: e },
+						})
+					} />
+				{
+					ctaClicked && !serviceBanner.name ?
+						<FeedbackInfo message='Service photo is required' /> :
+						<></>
+				}
 			</div>
 		</ModalWrapper>
 	)
@@ -220,7 +251,7 @@ const ServicesPage = ({styles}) => {
 					<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/business')} />
+				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
 				<h1>Services</h1>
 				<form onSubmit={handleSubmit}>
 					{AddBusinessFeatures()}
@@ -236,4 +267,4 @@ const ServicesPage = ({styles}) => {
 	)
 }
 
-export default ServicesPage
+export default BusinessPage

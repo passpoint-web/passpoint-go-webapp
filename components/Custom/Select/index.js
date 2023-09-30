@@ -1,4 +1,4 @@
-import styles from './custom-select.module.css'
+import styles from './index.module.css'
 import { useState } from 'react'
 import OverlayScreen from '../../OverlayScreen'
 import { DropDownIcon } from '@/constants/icons'
@@ -8,6 +8,7 @@ const CustomSelect = ({
 	emitSelect,
 	selectedOption,
 	selectOptions,
+	objKey,
 	id,
 	fieldError,
 }) => {
@@ -18,7 +19,7 @@ const CustomSelect = ({
 		setShowSelect(!showSelect)
 	}
 
-	const handleSelect = (e, option) => {
+	const handleSelect = (option) => {
 		emitSelect(option)
 		window.setTimeout(() => {
 			setShowSelect(false)
@@ -43,8 +44,8 @@ const CustomSelect = ({
 					onClick={handleClick}
 				>
 					<div className={styles.content}>
-						{selectedOption ? (
-							<p className={styles.option}>{selectedOption}</p>
+						{(objKey ? selectedOption?.[objKey] : selectedOption) ? (
+							<p className={styles.option}>{objKey ? selectedOption?.[objKey] : selectedOption}</p>
 						) : (
 							<p>Please select</p>
 						)}
@@ -58,11 +59,11 @@ const CustomSelect = ({
 							<div
 								key={index}
 								className={`${styles.content} ${
-									option === selectedOption ? styles.content_selected : ''
+									(objKey ? option?.[objKey] === selectedOption?.[objKey] : option === selectedOption) ? styles.content_selected : ''
 								}`}
-								onClick={(e) => handleSelect(e, option)}
+								onClick={() => handleSelect(option)}
 							>
-								<p className={styles.option}>{option}</p>
+								<p className={styles.option}>{objKey ? option?.[objKey] : option}</p>
 							</div>
 						))}
 					</div>

@@ -45,7 +45,6 @@ const Login = () => {
 			const data = response.data.data;
 			saveToken(response.data.token)
 			saveCredentials(data);
-			console.log(data)
 			directUser(data);
 			notify("success", `You're logged in as ${payload.email}`);
 		} catch (_err) {

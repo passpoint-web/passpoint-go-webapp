@@ -152,7 +152,7 @@ const BusinessPage = ({styles}) => {
 					type='error' /> :
 				<></>}
 		</div>
-	)
+	).key.
 
 	const AddFeatureModal = () => (
 		<ModalWrapper
