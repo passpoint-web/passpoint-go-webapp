@@ -490,6 +490,10 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+input[type=file] {
+  display: none !important;
+}
+
 form {
   animation: var(--anim-come-down-sm);
   -webkit-animation: var(--anim-come-down-sm);

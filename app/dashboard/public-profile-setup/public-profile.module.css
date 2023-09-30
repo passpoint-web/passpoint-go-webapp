@@ -29,67 +29,11 @@
 
 /* identity */
 
-.business_logo {
-  border: 1px solid var(--grey-5);
-  border-radius: var(--input-br);
-  padding: var(--inner-component-mg);
-  margin-bottom: var(--inner-component-mg);
-  box-shadow: var(--input-box-shadow);
-}
-
-.business_logo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--outer-component-mg);
-}
-
-.business_logo input[type=file] {
-  display: none;
-}
-
-.business_logo .file_upload,
-.business_logo .file_uploaded {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--sm-inner-component-gap);
-  border: 1px solid var(--grey-5);
-  padding: var(--inner-component-gap);
-  border-radius: 8px;
-  box-shadow: var(--input-box-shadow);
-  position: relative;
-}
-
-.business_logo .file_upload {
-  cursor: pointer;
-}
-
-.business_logo .file_upload svg {
-  margin-bottom: 10px;
-}
-
-.business_logo .file_upload p {
-  font-size: 12px;
-  font-family: var(--graphikRegular);
-}
-
-.business_logo .file_uploaded button {
-  right: var(--inner-component-gap);
-  top: var(--inner-component-gap);
-  height: fit-content;
-}
-
-.business_logo .file_uploaded .top {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: var(--inner-component-gap)
-}
-
 /* end of identity */
 
 /* about business */
 
+.services_ctn,
 .features_ctn {
   display: flex;
   flex-direction: column;
@@ -97,6 +41,7 @@
   margin-bottom: var(--outer-component-mg);
 }
 
+.add_service_card,
 .add_feature_card {
   background-color: #fff;
   border: 1px solid var(--input-border);
