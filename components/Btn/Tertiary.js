@@ -1,5 +1,5 @@
 
-const SecondaryBtn = ({text, type, ...props}) => {
+const TertiaryBtn = ({text, type, ...props}) => {
 	return (
 		<button className={`tertiary_btn ${type || ''}`}
 			{...props}>
@@ -8,4 +8,4 @@ const SecondaryBtn = ({text, type, ...props}) => {
 	)
 }
 
-export default SecondaryBtn
+export default TertiaryBtn

@@ -1,14 +1,14 @@
 'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import PasswordField from '@/components/Auth/PasswordField'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
 import { getForgotPasswordEmail, saveForgotPasswordEmail } from '@/services/localService'
 import BackBtn from '@/components/Btn/Back'
 import { resetPassword } from '@/services/restService'
+import { useNotify } from '@/utils/hooks'
 
 export default function ResetPassword () {
 	const {push, back} = useRouter()
@@ -29,10 +29,8 @@ export default function ResetPassword () {
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
-
-	const notify = useCallback((type, message) => {
-		toast({ type, message });
-	}, []);
+	
+	const notify = useNotify()
 
 	const handleResetPasswordSubmit = async (e) => {
 		e.preventDefault()

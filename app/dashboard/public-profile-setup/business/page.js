@@ -1,17 +1,19 @@
 
 'use client'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from '../public-profile.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import toast from '@/components/Toast'
 import Input from '@/components/Dashboard/Input'
 import { AddIcon, CancelIcon_border } from '@/constants/icons'
 import ModalWrapper from '@/components/Modal/ModalWrapper'
 import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
+// import NeutralBtn from '@/components/Btn/NeutralBtn'
+import { useNotify } from '@/utils/hooks'
 
 const AboutBusiness = () => {
+	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -101,10 +103,6 @@ const AboutBusiness = () => {
 		setFeatures(features.filter((s)=>s.id !== id))
 	}
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
-
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setCtaClicked(true)
@@ -173,6 +171,7 @@ const AboutBusiness = () => {
 	const AddFeatureModal = () => (
 		<ModalWrapper
 			heading='Why Choose Us'
+			// otherBtns={<NeutralBtn text="Cancel" />}
 			subHeading='Describe in details why you chose us'
 			onClose={hideFeatureModal}
 			handleCta={currentEditId !== null ? editFeature : addToFeatures}
@@ -221,7 +220,7 @@ const AboutBusiness = () => {
 					<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/setup-public-profile/identity')} />
+				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
 				<h1>About Business</h1>
 				<form onSubmit={handleSubmit}>
 					<Input

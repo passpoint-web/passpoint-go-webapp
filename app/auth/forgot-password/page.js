@@ -2,12 +2,12 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import SecondaryLink from '@/components/Link/Secondary'
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import functions from '@/utils/functions'
 import { useRouter } from 'next/navigation'
 import { forgotPassword } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 import { saveForgotPasswordEmail } from '@/services/localService'
 
 export default function ForgotPassword () {
@@ -17,9 +17,7 @@ export default function ForgotPassword () {
 	const [isLoading, setIsLoading] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message });
-	}, []);
+	const notify = useNotify()
 
 	const handleEmailChange = (event) => {
 		setEmail(event.target.value)

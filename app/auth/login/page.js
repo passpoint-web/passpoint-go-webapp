@@ -2,14 +2,14 @@
 import styles from "@/assets/styles/auth-screens.module.css"
 import PrimaryBtn from '@/components/Btn/Primary'
 import Link from 'next/link'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import PasswordField from '@/components/Auth/PasswordField'
 import functions from '@/utils/functions'
 import { login } from '@/services/restService'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
 import { saveCredentials, saveToken } from '@/services/localService'
+import { useNotify } from "@/utils/hooks";
 
 const Login = () => {
 	const { validEmail } = functions;
@@ -23,9 +23,7 @@ const Login = () => {
 		password: "",
 	});
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message });
-	}, []);
+	const notify = useNotify()
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;

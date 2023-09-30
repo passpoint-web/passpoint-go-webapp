@@ -1,10 +1,10 @@
 
 'use client'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from '../public-profile.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 import Input from '@/components/Dashboard/Input'
 import { AddIcon, CancelIcon_border } from '@/constants/icons'
 import ModalWrapper from '@/components/Modal/ModalWrapper'
@@ -12,6 +12,7 @@ import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
 
 const BusinessServices = () => {
+	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -103,10 +104,6 @@ const BusinessServices = () => {
 		e.preventDefault()
 		setFeatures(features.filter((s)=>s.id !== id))
 	}
-
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -224,7 +221,7 @@ const BusinessServices = () => {
 					<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/setup-public-profile/identity')} />
+				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
 				<h1>About Business</h1>
 				<form onSubmit={handleSubmit}>
 					<Input

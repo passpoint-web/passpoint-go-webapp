@@ -1,10 +1,9 @@
 
 import styles from '@/assets/styles/auth-screens.module.css'
 import TertiaryBtn from '@/components/Btn/Tertiary'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { resendOtp } from '@/services/restService'
-import toast from '@/components/Toast'
-
+import { useNotify } from '@/utils/hooks'
 const ResendOTP = ({email, clearOtp}) => {
 
 	const [resendOTPStatus, setResendOTPStatus] = useState('Resend OTP')
@@ -19,9 +18,7 @@ const ResendOTP = ({email, clearOtp}) => {
 		}
 	}
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	useEffect(()=>{
 		countDownTimer()

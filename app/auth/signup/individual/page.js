@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { saveCredentials } from '@/services/localService'
 import { registerUser } from '@/services/restService'
@@ -12,7 +12,7 @@ import CheckBox from '@/components/Custom/Check'
 import PhoneInput from 'react-phone-input-2'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 
 const IndividualInformation = () => {
 	const { push, back } = useRouter()
@@ -32,9 +32,7 @@ const IndividualInformation = () => {
 		password: '',
 	})
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	const handleChange = (e) => {
 		const { name, value } = e.target

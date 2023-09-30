@@ -1,4 +1,3 @@
-import React from 'react'
 
 const BackBtn = ({text='Back', ...props}) => {
 	return (

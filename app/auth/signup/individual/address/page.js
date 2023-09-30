@@ -1,7 +1,7 @@
 'use client'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { registerUser } from '@/services/restService'
 import { CS } from '@/utils/CONSTANTS'
@@ -10,7 +10,7 @@ import CustomSelect from '@/components/Custom/Select'
 import CountrySelect from '@/components/Custom/CountrySelect'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 
 const BusinessAddress = () => {
 	// eslint-disable-next-line no-unused-vars
@@ -29,9 +29,7 @@ const BusinessAddress = () => {
 
 	const savedCredentials = getCredentials()
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	const handleChange = (e) => {
 		const { name, value } = e.target

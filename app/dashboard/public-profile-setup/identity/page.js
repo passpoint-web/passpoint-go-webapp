@@ -1,15 +1,16 @@
 
 'use client'
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from '../public-profile.module.css'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
-import toast from '@/components/Toast'
 import Input from '@/components/Dashboard/Input'
 import { getCredentials } from '@/services/localService'
 import { CancelIcon, FileIcon, UploadIcon} from '@/constants/icons'
+import { useNotify } from '@/utils/hooks'
 import functions from '@/utils/functions'
+
 const Identity = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const logoFileUpload = useRef()
@@ -24,9 +25,7 @@ const Identity = () => {
 		logoFileUpload.current.click();
 	};
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	useEffect(()=>{
 		setBusinessName(getCredentials().businessName)

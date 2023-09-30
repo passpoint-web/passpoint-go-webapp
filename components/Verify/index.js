@@ -4,9 +4,9 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import OtpInput from 'react-otp-input'
 import Input from '@/components/Dashboard/Input'
 import ResendOTP from '@/components/Verify/ResendOTP'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 import BackBtn from '@/components/Btn/Back'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { verifyEmailOtp } from '@/services/restService'
 import functions from '@/utils/functions'
@@ -19,9 +19,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	const {maskedEmail} = functions
 
