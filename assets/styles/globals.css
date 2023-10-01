@@ -322,6 +322,7 @@ li {
 
 /* buttons */
 .primary_btn,
+button.primary,
 .primary_link {
   width: 100%;
   display: flex;
@@ -337,28 +338,33 @@ li {
 }
 
 .primary_btn:hover,
+button.primary:hover,
 .primary_link:hover {
   background-color: var(--sky-blue);
 }
 
 .primary_btn:active,
+button.primary:active,
 .primary_link:active {
   background-color: var(--sky-blue-active);
 }
 
 a.standard,
+button.primary.sd,
 button.standard {
   border-radius: var(--btn-br-sd);
   border-radius: var(--btn-br-sd);
 }
 
 a.medium,
+button.md,
 button.medium {
   border-radius: var(--btn-br-md);
   height: var(--btn-height-md);
 }
 
 a.small,
+button.sm,
 button.small {
   border-radius: var(--btn-br-sm);
   height: var(--btn-height-sm);
@@ -380,6 +386,7 @@ button.small {
 }
 
 .secondary_btn,
+button.secondary,
 .secondary_link {
   display: flex;
   justify-content: center;
@@ -396,6 +403,7 @@ button.small {
 }
 
 .neutral_btn,
+button.neutral,
 .neutral_link {
   display: flex;
   justify-content: center;
@@ -412,8 +420,10 @@ button.small {
 }
 
 .secondary_btn.medium,
+button.secondary.md,
 .secondary_link.medium {
   height: var(--btn-height-md);
+  border-radius: var(--btn-br-md);
 }
 
 .close_btn {
@@ -445,6 +455,7 @@ button.small {
 }
 
 .tertiary_btn,
+button.tertirary,
 .tertiary_link {
   color: var(--sky-blue);
   border: none;
@@ -452,6 +463,7 @@ button.small {
 }
 
 .tertiary_btn:hover,
+button.tertiary:hover,
 .tertiary_link:hover {
   text-decoration: underline;
 }

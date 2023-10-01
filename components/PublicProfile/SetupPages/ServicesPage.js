@@ -2,7 +2,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import PrimaryBtn from '@/components/Btn/Primary'
 import Input from '@/components/Dashboard/Input'
 import ModalWrapper from '@/components/Modal/ModalWrapper'
 import FeedbackInfo from '@/components/FeedbackInfo'
@@ -13,6 +12,9 @@ import FeatureCard from '@/components/PublicProfile/FeatureCard'
 import CustomSelect from '@/components/Custom/Select'
 import { services as apiServices } from '@/services/restService'
 import FileUpload from '@/components/FileUpload'
+import CurrencyInput from 'react-currency-input-field'
+import Button from '@/components/Btn/Button'
+import CurrencySelect from '@/components/Custom/CurrencySelect'
 
 const BusinessPage = ({styles}) => {
 	const notify = useNotify()
@@ -24,24 +26,24 @@ const BusinessPage = ({styles}) => {
 	const [showModal, setShowModal] = useState(false);
 	const [services, setServices] = useState([]);
 	const [serviceTypes, setServiceTypes] = useState([]);
+	const initialService = {
+		id: null,
+		serviceType: {},
+		serviceDesc: '',
+		priceModel: 'Fixed Price',
+		serviceBanner: {},
+		servicePrice: 100
+	}
+	const priceModels = ['Fixed Price', 'Package']
 	const [service, setService] = useState(
-		{
-			id: null,
-			serviceType: {},
-			serviceDesc: '',
-			serviceBanner: {}
-		}
+		initialService
 	);
 
 	const [currentEditId, setCurrentEditId] = useState(null)
 
 	const addFeatureModal = (e) => {
 		e.preventDefault()
-		setService({
-			id: null,
-			headline: '',
-			serviceDesc: ''
-		})
+		setService(initialService)
 		setShowModal(true)
 	}
 
@@ -83,18 +85,14 @@ const BusinessPage = ({styles}) => {
 			return
 		}
 		setServices([...services, {...service, id: services.length}])
-		setService({
-			id: null,
-			headline: '',
-			serviceDesc: ''
-		})
+		setService(initialService)
 		// reset state
 		setShowModal(false)
 		setCurrentEditId(null)
 		setModalCtaClicked(false)
 	};
 
-	const hideFeatureModal = () => {
+	const hideServiceModal = () => {
 		setShowModal(false)
 		setCurrentEditId(null)
 		setModalCtaClicked(false)
@@ -135,10 +133,6 @@ const BusinessPage = ({styles}) => {
 		}
 	}
 
-	// useEffect(() => {
-	// 	console.log(serviceTypes)
-	// }, [serviceTypes])
-
 	useEffect(() => {
 		const conditionsMet = services.length
 		if (conditionsMet) {
@@ -159,7 +153,7 @@ const BusinessPage = ({styles}) => {
 				subTitlte='You can add mutiple points in this section'
 				addFeatureModal={addFeatureModal} />
 
-			{services.filter(f=>f.serviceDesc).map((feat, id)=>(
+			{services.filter(f=>f.id).map((feat, id)=>(
 				<FeatureCard key={id}
 					removeFeature={(e)=>removeFeature(e, id)}
 					editFeature={(e)=>editFeatureModal(e, feat)}>
@@ -178,12 +172,11 @@ const BusinessPage = ({styles}) => {
 		</div>
 	)
 
-	const AddFeatureModal = () => (
+	const AddServiceModal = () => (
 		<ModalWrapper
 			heading='Add Service'
-			// otherBtns={<NeutralBtn text="Cancel" />}
 			subHeading='Provide details of your service'
-			onClose={hideFeatureModal}
+			onClose={hideServiceModal}
 			handleCta={currentEditId !== null ? editFeature : addToFeatures}
 		>
 			<div>
@@ -239,12 +232,84 @@ const BusinessPage = ({styles}) => {
 			</div>
 		</ModalWrapper>
 	)
+	const AddPricingOptionsModal = () => (
+		<ModalWrapper
+			heading='Pricing Options'
+			subHeading='Customize your prizing options'
+			onClose={hideServiceModal}
+			cancelBtnText='Back'
+			ctaBtnText='Add'
+			handleCta={currentEditId !== null ? editFeature : addToFeatures}
+		>
+			<div>
+				<Input
+					id="priceModel"
+					label="Set Price Model"
+					error={modalCtaClicked && !service.priceModel}
+					errorMsg="Service price model is required"
+				>
+					<CustomSelect
+						styleProps={{
+							dropdown: {
+								height: '100px'
+							}
+						}}
+						fieldError={modalCtaClicked && !service.serviceType}
+						selectOptions={priceModels}
+						selectedOption={service.priceModel}
+						emitSelect={(s) => handleServiceChange({
+							target: { name: 'priceModel', value: s },
+						})}
+					/>
+				</Input>
+				<Input
+					id="currency-type"
+					label="Currency Type"
+					error={modalCtaClicked && !service.currency}
+					errorMsg="Currency Type is required"
+				>
+					<CurrencySelect
+						showSearch={false}
+						styleProps={{
+							dropdown: {
+								height: '150px'
+							}
+						}}
+						fieldError={modalCtaClicked && !service.currency}
+						emitCountry={(option) =>
+							handleServiceChange({
+								target: { name: 'currency', value: option },
+							})}
+					/>
+				</Input>
+				<Input
+					id="service-price"
+					label="Set Price"
+					error={modalCtaClicked && !service.servicePrice}
+					errorMsg="Service Price is required"
+				>
+					<CurrencyInput prefix='₦ '
+						id="servicePrice"
+						name="servicePrice"
+						decimalSeparator="."
+						groupSeparator=","
+						decimalsLimit={2}
+						defaultValue={100}
+						value={service.servicePrice}
+						onValueChange={(e)=>handleServiceChange({
+							target: { name: 'servicePrice', value: e }
+						})}
+					/>
+				</Input>
+			</div>
+		</ModalWrapper>
+	)
 
 	return (
 		<>
 			{
 				showModal ?
-					AddFeatureModal() :
+					AddPricingOptionsModal() :
 					<></>
 			}
 			<div className={styles.inner}>
@@ -253,10 +318,9 @@ const BusinessPage = ({styles}) => {
 				<form onSubmit={handleSubmit}>
 					{AddBusinessFeatures()}
 					<div className={styles.action_ctn}>
-						<PrimaryBtn
-							text="Save and continue"
-							loading={isLoading}
-						/>
+						<Button loading={isLoading}
+							className='primary sd'
+							text="Save and continue" />
 					</div>
 				</form>
 			</div>

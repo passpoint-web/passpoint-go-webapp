@@ -1,7 +1,7 @@
 
-const NeutralBtn = ({text, ...props}) => {
+const NeutralBtn = ({type, text, ...props}) => {
 	return (
-		<button className='back_btn medium'
+		<button className={`back_btn ${type}`}
 			{...props}>
 			{text}
 		</button>

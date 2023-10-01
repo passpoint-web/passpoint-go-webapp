@@ -67,7 +67,7 @@ x
 .bottom {
   margin-top: var(--outer-component-mg);
   display: flex;
-  /* justify-self: flex-end; */
+  justify-self: flex-end;
   align-self: flex-end;
   gap: var(--sm-inner-component-mg);
 }

@@ -2,7 +2,8 @@ import styles from './modal.module.css'
 import { CancelIcon } from '@/constants/icons'
 import PrimaryBtn from '../Btn/Primary'
 import { useRef } from 'react'
-const ModalWrapper = ({children, subHeading, heading, contentStyle, onClose, handleCta, overlayClose = false, ctaBtnText = 'Proceed', otherBtns}) => {
+import Button from '../Btn/Button'
+const ModalWrapper = ({children, subHeading, heading, contentStyle, onClose, handleCta, overlayClose = false, ctaBtnText = 'Proceed', cancelBtnText='Cancel'}) => {
 	const modalCtnRef = useRef(null)
 	const modalBgRef = useRef(null)
 	const modalChildRef = useRef(null)
@@ -44,9 +45,12 @@ const ModalWrapper = ({children, subHeading, heading, contentStyle, onClose, han
 				</div>
 				{children}
 				<div className={`${styles.bottom} ${styles.end}`}>
-					{otherBtns}
-					<PrimaryBtn text={ctaBtnText}
-						onClick={handleCta} />
+					<Button className="secondary md"
+						onClick={onClose}
+						text={cancelBtnText} />
+					<Button className="primary md"
+						onClick={handleCta}
+						text={ctaBtnText} />
 				</div>
 			</div>
 		</div>

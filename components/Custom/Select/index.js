@@ -11,6 +11,7 @@ const CustomSelect = ({
 	objKey,
 	id,
 	fieldError,
+	styleProps
 }) => {
 	const [showSelect, setShowSelect] = useState(false)
 
@@ -54,7 +55,8 @@ const CustomSelect = ({
 				</button>
 				{showSelect ? (
 					<div id={id}
-						className={`${styles.select} dropdown`}>
+						className={`${styles.select} dropdown`}
+						style={{...styleProps?.dropdown}}>
 						{selectOptions.map((option, index) => (
 							<div
 								key={index}

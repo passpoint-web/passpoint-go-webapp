@@ -6,7 +6,7 @@ import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
 import { DropDownIcon } from '@/constants/icons'
 
-const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
+const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, styleProps }) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
 
 	const [countries, setCountries] = useState([])
@@ -33,13 +33,21 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 		}, 200)
 	}
 	const retrieveCountries = () => {
-		const data = COUNTRIES
-		console.log(data)
+		const currencies = COUNTRIES.map(e=>{
+			const currencyName =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.name : 'no name'
+			const currencyAccronym = e.currencies ? Object.keys(e.currencies)?.[0] : 'no currency'
+			const currencySymbol =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.symbol : 'no symbol'
+			const flag = e.flags?.png
+			const name = e.name?.common
+			return {region: e.region, flag , name, currency: {accronym: currencyAccronym, name: currencyName, symbol: currencySymbol}}
+		})
+		// console.log(currencies)
+		const data = currencies
 		data.sort(function (a, b) {
-			if (a.name.common < b.name.common) {
+			if (a.name < b.name) {
 				return -1
 			}
-			if (a.name.common > b.name.common) {
+			if (a.name > b.name) {
 				return 1
 			}
 			return 0
@@ -47,19 +55,18 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 		const africa = data.filter((e) => e.region === 'Africa')
 		setCountries(africa)
 		setFilteredCountries(africa)
-		const defaultCountry = data.find((e) => e.name.common === 'Nigeria')
+		const defaultCountry = data.find((e) => e.name === 'Nigeria')
 		setCountry(defaultCountry)
 		emitCountry(defaultCountry)
 	}
-
 	const searchCountry = (item) => {
 		setSearch(item)
 		setFilteredCountries(
 			countries.filter((c) => {
-				return c.name?.common.toLowerCase().includes(item.toLowerCase())
+				return c.name.toLowerCase().includes(item.toLowerCase())
 			})
 		)
-		const countriesCtn = document.getElementById('signup_countries')
+		const countriesCtn = document.getElementById('countries_currency')
 		countriesCtn.scrollTop = 0
 	}
 
@@ -68,7 +75,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 	}, [])
 
 	useEffect(() => {
-		if (country?.name?.common) {
+		if (country?.name) {
 			setShowCountriesSelect(true)
 		}
 	}, [countriesSelectProps])
@@ -88,10 +95,10 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 					{!countries?.name ? (
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
-								{ country?.flags?.png ?
+								{ country?.flag ?
 									<Image
-										src={country?.flags?.png}
-										alt={`${country?.name?.common}`}
+										src={country?.flag}
+										alt={`${country?.name}`}
 										width={20}
 										height={20}
 										className={styles.img}
@@ -99,7 +106,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 									<div style={{width: '20px', height: '20px'}} />
 								}
 							</div>
-							<p>{country?.name?.common}</p>
+							<p>{country?.currency?.name} ({country?.currency?.accronym} - {country?.currency?.symbol})</p>
 						</div>
 					) : (
 						<div className={styles.content_name}>
@@ -110,15 +117,17 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 				</button>
 				{showCountriesSelect ? (
 					<div
-						id={'signup_countries'}
+						id={'countries_currency'}
 						className={`${styles.countries} dropdown`}
+						style={{...styleProps?.dropdown}}
 					>
-						<Search
-							search={search}
-							id={'country'}
-							placeholder={'Search country'}
-							searchCountry={(e) => searchCountry(e)}
-						/>
+						{showSearch ?
+							<Search
+								search={search}
+								id={'country'}
+								placeholder={'Search currency'}
+								searchCountry={(e) => searchCountry(e)}
+							/> : <></>}
 						{filteredCountries.map((c, index) => (
 							<div
 								key={index}
@@ -126,17 +135,17 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 								onClick={(e) => handleCountrySelect(e, c)}
 							>
 								{
-									c?.flags?.png ?
+									c?.flag ?
 										<Image
-											src={c?.flags?.png}
-											alt={c?.name?.common}
+											src={c?.flag}
+											alt={c?.name}
 											width="20"
 											height="20"
 											className={styles.img}
 										/> :
 										<div style={{width: '20px', height: '20px'}} />
 								}
-								<p>{c?.name?.common}</p>
+								<p>{c?.currency?.name} ({c?.currency?.accronym} - {c?.currency?.symbol})</p>
 							</div>
 						))}
 					</div>
@@ -148,4 +157,4 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 	)
 }
 
-export default CountrySelect
+export default CurrencySelect
