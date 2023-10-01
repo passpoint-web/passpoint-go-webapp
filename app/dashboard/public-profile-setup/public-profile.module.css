@@ -12,6 +12,12 @@
   width: 33%;
 }
 
+@media screen and (max-width: 1000px) {
+  .lhs_levels_ctn {
+    display: flex;
+  }
+}
+
 .pages {
   padding: 0 var(--outer-component-mg);
   display: flex;

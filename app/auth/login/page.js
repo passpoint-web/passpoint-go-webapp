@@ -42,8 +42,8 @@ const Login = () => {
 		setIsLoading(true);
 		try {
 			const response = await login(payload);
-			const data = response.data.data;
-			saveToken(response.data.token)
+			const {data, token} = response.data;
+			saveToken(token)
 			saveCredentials(data);
 			directUser(data);
 			notify("success", `You're logged in as ${payload.email}`);

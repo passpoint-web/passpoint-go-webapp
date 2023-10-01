@@ -94,7 +94,7 @@
   --warning-bg: #fbeee680;
 
   --input-height: 48px;
-  --textarea-height: 150px;
+  --textarea-height: 100px;
   --input-br: 12px;
   --input-padding: 16px;
   --input-transition: 0.3s ease-in;
@@ -516,7 +516,8 @@ ul {
 }
 
 .error input,
-.error select {
+.error select,
+.error textarea {
   border: 1px solid var(--input-error-border) !important;
   /* box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow); */
   background-color: var(--input-error-bg) !important;
@@ -529,7 +530,8 @@ ul {
 }
 
 .error input:focus,
-.error select:focus {
+.error select:focus,
+.error textarea:focus {
   box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
   border: 1px solid var(--input-error-border) !important;
   background-color: var(--input-error-bg) !important;

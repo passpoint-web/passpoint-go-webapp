@@ -23,12 +23,11 @@ const BusinessPage = ({styles}) => {
 	const [modalCtaClicked, setModalCtaClicked] = useState(false)
 	const [showModal, setShowModal] = useState(false);
 	const [services, setServices] = useState([]);
-	const [serviceBanner, setServiceBanner] = useState({});
 	const [serviceTypes, setServiceTypes] = useState([]);
 	const [service, setService] = useState(
 		{
 			id: null,
-			serviceType: '',
+			serviceType: {},
 			serviceDesc: '',
 			serviceBanner: {}
 		}
@@ -191,11 +190,11 @@ const BusinessPage = ({styles}) => {
 				<Input
 					id="serviceType"
 					label="Name of Service"
-					error={ctaClicked && !service.state}
+					error={modalCtaClicked && !service.serviceType}
 					errorMsg="Service name is required"
 				>
 					<CustomSelect
-						fieldError={ctaClicked && !service.serviceType}
+						fieldError={modalCtaClicked && !service.serviceType}
 						selectOptions={serviceTypes}
 						objKey="serviceName"
 						disabled={!serviceTypes.length}
@@ -227,18 +226,16 @@ const BusinessPage = ({styles}) => {
 					}
 				</Input>
 				<FileUpload
+					styleProps={{gap: '24px', padding: '16px'}}
 					subTitle='Add an Image that best describes your service'
-					fileObj={serviceBanner}
+					fileObj={service.serviceBanner}
+					error={modalCtaClicked && !service.serviceBanner?.name}
+					errorMsg="Service image is required"
 					handlefileUpload={(e)=>
 						handleServiceChange({
 							target: { name: 'serviceBanner', value: e },
 						})
 					} />
-				{
-					ctaClicked && !serviceBanner.name ?
-						<FeedbackInfo message='Service photo is required' /> :
-						<></>
-				}
 			</div>
 		</ModalWrapper>
 	)

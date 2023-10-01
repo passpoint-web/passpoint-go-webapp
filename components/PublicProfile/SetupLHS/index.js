@@ -48,9 +48,9 @@ const PublicProfileSetupLHS = () => {
 		<>
 			<BackBtn text="Dashboard"
 				onClick={()=>push('/dashboard')} />
-			<div className={styles.levels_ctn}>
+			<div className={styles.lhs_levels_ctn}>
 				{levelsToDisplay.map((e, index) => (
-					<FormLevel key={index}
+					<FormLevel mobileWidth='1000' key={index}
 						auth={{ ...e, level: index + 1 }} />
 				))}
 			</div>

@@ -55,7 +55,7 @@ x
 
 .top {
   position: relative;
-  margin-bottom: var(--outer-component-gap);
+  margin-bottom: var(--inner-component-gap);
 }
 
 .content {
