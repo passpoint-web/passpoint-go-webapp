@@ -10,7 +10,6 @@ import { login } from "@/services/restService";
 import Input from "@/components/Dashboard/Input";
 import toast from "@/components/Toast";
 import { saveCredentials, saveToken } from "@/services/localService";
-import Head from "next/head";
 
 const Login = () => {
   const { validEmail } = functions;
@@ -59,12 +58,12 @@ const Login = () => {
     }
   };
 
-  const directUser = ({ userType, is_active, regStage }) => {
+  const directUser = ({ userType, isActive, regStage }) => {
     const businessLevels = ["", "address", "personal", "verify"];
     const individualLevels = ["", "business", "address", "verify"];
-    if (!is_active && Number(userType) == 2) {
+    if (!isActive && Number(userType) == 2) {
       push(`/auth/signup/business/${businessLevels[regStage]}`);
-    } else if (!is_active && Number(userType) == 1) {
+    } else if (!isActive && Number(userType) == 1) {
       push(`/auth/signup/individual/${individualLevels[regStage]}`);
     } else {
       push("/dashboard");

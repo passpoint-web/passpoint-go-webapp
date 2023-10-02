@@ -13,11 +13,11 @@ import { useRouter } from "next/navigation";
 const DashboardHeader = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [savedCredentials, setSavedCredentials] = useState();
-  const router = useRouter();
+  const {push} = useRouter();
 
   const handleLogout = () => {
     removeToken();
-    router.push("/auth/login");
+    push("/auth/login");
   };
 
   const hideSelect = () => {
@@ -65,8 +65,7 @@ const DashboardHeader = () => {
             ))}
           </div>
         )}
-        
-        {/* {showDropDown ? <OverlayScreen onClick={hideSelect} /> : <></>} */}
+        {showDropDown ? <OverlayScreen onClick={hideSelect} /> : <></>}
       </div>
     </div>
   );

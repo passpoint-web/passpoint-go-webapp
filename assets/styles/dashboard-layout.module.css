@@ -86,6 +86,9 @@
   gap: 14px;
   position: relative;
   cursor: pointer;
+  min-width: 180px;
+  display: flex;
+  justify-content: space-between;
 }
 .dashHeader_profile h3 {
   font-size: var(--btn-fs);
@@ -95,7 +98,8 @@
 .dashHeader_profile .headerDropdown {
   position: absolute;
   top: 60px;
-  left: 0;
+  right: 0;
+  min-width: 200px;
 }
 .headerDropdown {
   background-color: var(--white);
@@ -103,7 +107,7 @@
   border-radius: 8px;
   box-shadow: var(--input-box-shadow);
   display: grid;
-  gap: 16px;
+  gap: var(--inner-component-gap);
   z-index: var(--z-index-overlay);
 }
 .headerDropdown a,
