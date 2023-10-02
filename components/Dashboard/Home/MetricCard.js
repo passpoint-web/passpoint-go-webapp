@@ -4,7 +4,6 @@ import styles from "../../../assets/styles/dashboard-layout.module.css";
 import { metrics } from "@/services/restService";
 import { Metric1, Metric2, Metric3, Metric4 } from "@/constants/icons";
 import functions from "@/utils/functions";
-import { getToken } from "@/services/localService";
 const { makeNumArr, formatMoney, formatNumber } = functions;
 const MetricCard = () => {
   const [loading, setLoading] = useState(true);
@@ -16,9 +15,8 @@ const MetricCard = () => {
   });
 
   const getMetrics = async () => {
-    const token = getToken()
     try {
-      const response = await metrics(token);
+      const response = await metrics();
       setData(response.data.metrics);
     } catch (error) {
       console.log(error);

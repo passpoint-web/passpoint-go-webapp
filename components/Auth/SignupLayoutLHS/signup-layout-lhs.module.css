@@ -54,6 +54,7 @@
 
 .auth_level .lhs .round span {
   font-weight: 700;
+  color: inherit;
 }
 
 .auth_level.active .lhs .round {
