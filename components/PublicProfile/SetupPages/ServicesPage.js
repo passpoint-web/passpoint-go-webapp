@@ -17,7 +17,7 @@ import CurrencySelect from '@/components/Custom/CurrencySelect'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { CancelIcon } from '@/constants/icons'
 import MoneyInput from '@/components/Custom/MoneyInput'
-import AddVatChoice from '@/components/Business/AddVatChoice'
+import AddVatChoice from '@/components/Business/PublicProfileInfoChoice'
 
 const ServicesPage = ({styles}) => {
 	const notify = useNotify()
@@ -25,17 +25,19 @@ const ServicesPage = ({styles}) => {
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
+	const [modalFieldsValid, setModalFieldsValid] = useState(false)
 	const [modalCtaClicked, setModalCtaClicked] = useState(false)
 	const [showModal, setShowModal] = useState(false);
+	const [modalLevel, setModalLevel] = useState(0);
 	const [services, setServices] = useState([]);
 	const [serviceTypes, setServiceTypes] = useState([]);
 	const initialService = {
 		id: null,
-		serviceType: {},
+		serviceType: {}, // {serviceName, serviceId}
 		serviceDesc: '',
 		serviceCurrency: '',
 		servicePriceModel: 'Package',
-		serviceBanner: {},
+		serviceBanner: {}, // file
 		pricingType: 'Per night'
 	}
 	const [service, setService] = useState(
@@ -44,7 +46,7 @@ const ServicesPage = ({styles}) => {
 
 	const servicePriceModels = ['Fixed Price', 'Package']
 
-	const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', "Per month"]
+	const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', 'Per month']
 
 	const [fixedServicePrice, setFixedServicePrice] = useState()
 
@@ -75,6 +77,7 @@ const ServicesPage = ({styles}) => {
 		e.preventDefault()
 		setService(initialService)
 		setShowModal(true)
+		setModalLevel(0)
 	}
 
 	const editFeatureModal = (e, val) => {
@@ -151,6 +154,101 @@ const ServicesPage = ({styles}) => {
 		}
 	}
 
+	const handleModalCta = () => {
+		setModalCtaClicked(true)
+		if (modalLevel === 0) {
+			// console.log('0')
+			if (!modalFieldsValid) {
+				return
+			}
+			setModalLevel(1)
+		} else if (modalLevel === 1) {
+			// console.log('1')
+			if (!modalFieldsValid) {
+				return
+			}
+			currentEditId !== null ? editFeature : addToFeatures
+		}
+	}
+
+	useEffect(function resetModalCtaClickedOnLevelChange(){
+		setModalCtaClicked(false)
+	}, [modalLevel])
+
+	// useEffect(()=>{
+	// 	console.log('cta')
+	// }, [modalCtaClicked])
+
+	useEffect(()=>{
+		console.log('use effect')
+		// main service
+		const {
+			// level 0 part
+			serviceType,
+			serviceDesc,
+			serviceBanner,
+			// level 1 part
+			serviceCurrency,
+			servicePriceModel,
+			pricingType
+		} = service
+
+		// condition to check if all conditions are met in first modal
+		const mainServiceConditionsMet =
+			serviceType?.serviceName &&
+			serviceDesc &&
+			serviceBanner.name
+
+		// condition to check if all conditions are met in second modal for priceModel === 'Fixed Price
+		const fixedConditionsMet =
+			serviceCurrency &&
+			servicePriceModel &&
+			fixedServicePrice
+
+		// condition to check if all conditions are met in second modal for priceModel === 'Package
+		const packageConditionsMet =
+			serviceCurrency &&
+			servicePriceModel &&
+			pricingType &&
+			allPackagePriceFieldsValid
+
+		// if first modal, all main service conditions must be met
+		if (modalLevel === 0) {
+			console.log('0')
+			if (mainServiceConditionsMet) {
+				console.log('main service met')
+				setModalFieldsValid(true)
+			} else {
+				console.log('main not met')
+				setModalFieldsValid(false)
+			}
+			// if second modal
+		} else if (modalLevel === 1) {
+			console.log('1')
+			// if second modal, and price model is fixed
+			if (servicePriceModel === 'Fixed Price') {
+				console.log('fixed price')
+				if (fixedConditionsMet) {
+					console.log('fixed met')
+					setModalFieldsValid(true)
+				} else {
+					console.log('fixed not met')
+					setModalFieldsValid(false)
+				}
+				// if second modal, and price model is fixed
+			} else {
+				console.log('package price')
+				if (packageConditionsMet) {
+					console.log('package met')
+					setModalFieldsValid(true)
+				} else {
+					console.log('package not met')
+					setModalFieldsValid(false)
+				}
+			}
+		}
+	}, [modalLevel, service, fixedServicePrice, packageServicePrice])
+
 	const getApiServiceTypes = async () => {
 		try {
 			const response = await apiServices.getPrimaryServices()
@@ -171,10 +269,6 @@ const ServicesPage = ({styles}) => {
 			setAllFieldsValid(false)
 		}
 	}, [services])
-
-	// useEffect(() => {
-	// 	// console.log(service.serviceCurrency)
-	// }, [service.serviceCurrency])
 
 	useEffect(() => {
 		for (const p of packageServicePrice) {
@@ -213,7 +307,7 @@ const ServicesPage = ({styles}) => {
 
 			{ctaClicked && !services.length ?
 				<FeedbackInfo
-					message="minimum of one feature is required"
+					message='minimum of one service is required'
 					type='error' /> :
 				<></>}
 		</div>
@@ -224,19 +318,19 @@ const ServicesPage = ({styles}) => {
 			heading='Add Service'
 			subHeading='Provide details of your service'
 			onClose={hideServiceModal}
-			handleCta={currentEditId !== null ? editFeature : addToFeatures}
+			handleCta={handleModalCta}
 		>
 			<div>
 				<Input
-					id="serviceType"
-					label="Name of Service"
-					error={modalCtaClicked && !service.serviceType}
-					errorMsg="Service name is required"
+					id='serviceType'
+					label='Name of Service'
+					error={modalCtaClicked && !service.serviceType?.serviceName}
+					errorMsg='Service name is required'
 				>
 					<CustomSelect
-						fieldError={modalCtaClicked && !service.serviceType}
+						fieldError={modalCtaClicked && !service.serviceType?.serviceName}
 						selectOptions={serviceTypes}
-						objKey="serviceName"
+						objKey='serviceName'
 						disabled={!serviceTypes.length}
 						selectedOption={service.serviceType}
 						emitSelect={(s) => handleServiceChange({
@@ -245,22 +339,22 @@ const ServicesPage = ({styles}) => {
 					/>
 				</Input>
 				<Input
-					label="Description"
+					label='Description'
 					error={(modalCtaClicked && !service.serviceDesc) || service.serviceDesc.length > 200}
 					errorMsg={modalCtaClicked && !service.serviceDesc ? 'Description of service is required' : service.serviceDesc.length > 200 ? 'Maximum of 200 characters' : ''}
-					id="serviceDesc"
+					id='serviceDesc'
 				>
 					<textarea
-						placeholder="Describe the reason stated above"
-						name="serviceDesc"
-						id="serviceDesc"
+						placeholder='Describe the reason stated above'
+						name='serviceDesc'
+						id='serviceDesc'
 						value={service.serviceDesc}
 						onChange={handleServiceChange}
 					/>
 					{
 						service.serviceDesc.length <= 200 ?
 							<FeedbackInfo
-								message="Maximum of 200 characters"
+								message='Maximum of 200 characters'
 								type='note' />
 							: <></>
 					}
@@ -270,7 +364,7 @@ const ServicesPage = ({styles}) => {
 					subTitle='Add an Image that best describes your service'
 					fileObj={service.serviceBanner}
 					error={modalCtaClicked && !service.serviceBanner?.name}
-					errorMsg="Service image is required"
+					errorMsg='Service image is required'
 					handlefileUpload={(e)=>
 						handleServiceChange({
 							target: { name: 'serviceBanner', value: e },
@@ -282,13 +376,13 @@ const ServicesPage = ({styles}) => {
 
 	const FixedPriceModel = () => (
 		<Input
-			id="service-price"
-			label="Set Price"
+			id='service-price'
+			label='Set Price'
 			error={modalCtaClicked && !fixedServicePrice}
-			errorMsg="Service Price is required"
+			errorMsg='Service Price is required'
 		>
 			<MoneyInput
-				id="servicePrice"
+				id='servicePrice'
 				currency={service?.serviceCurrency?.currency?.symbol}
 				defaultValue={100}
 				value={fixedServicePrice}
@@ -300,10 +394,10 @@ const ServicesPage = ({styles}) => {
 	const PackageModel = () => (
 		<>
 			<Input
-				id="pricingType"
-				label="Set Pricing Type"
+				id='pricingType'
+				label='Set Pricing Type'
 				error={modalCtaClicked && !service.pricingType}
-				errorMsg="Pricing type is required"
+				errorMsg='Pricing type is required'
 			>
 				<CustomSelect
 					styleProps={{
@@ -324,11 +418,11 @@ const ServicesPage = ({styles}) => {
 					style={{marginBottom: '8px', justifyContent: 'space-between'}}
 					key={id}>
 					<Input
-						label="Category Name"
+						label='Category Name'
 						styleProps={{width: '60%'}}
 						id={`categoryName-${id}`}
 						name={`categoryName-${id}`}
-						placeholder="Name"
+						placeholder='Name'
 						value={p.categoryName}
 						onChange={(e)=>handlePackageServicePrice({
 							value: e.target.value, id, name: 'name'
@@ -338,11 +432,11 @@ const ServicesPage = ({styles}) => {
 					/>
 					<div style={{display: 'flex', justifyContent: 'space-between', width: '50%'}}>
 						<Input
-							id="service-price"
+							id='service-price'
 							styleProps={{width: '80%'}}
 							label={`Set Price ${service.pricingType}`}
 							error={modalCtaClicked && !p.price}
-							errorMsg="Service Price is required"
+							errorMsg='Service Price is required'
 						>
 							<MoneyInput
 								id={`servicePrice-${id}`}
@@ -355,7 +449,7 @@ const ServicesPage = ({styles}) => {
 								})}
 							/>
 						</Input>
-						<button title="Delete"
+						<button title='Delete'
 							disabled={packageServicePrice.length <= 1}
 							onClick={()=>setPackageServicePrice(packageServicePrice.filter((_p, i) => i !== id ))}
 							style={{
@@ -366,7 +460,7 @@ const ServicesPage = ({styles}) => {
 								bottom: `${modalCtaClicked && (!p.price || !p.categoryName) ? '28px' : '0'}`
 							}}
 						>
-							<CancelIcon color="#FF3B2D" />
+							<CancelIcon color='#FF3B2D' />
 						</button>
 					</div>
 				</div>
@@ -375,24 +469,24 @@ const ServicesPage = ({styles}) => {
 				disabled={packageServicePrice.length >= 4 || !allPackagePriceFieldsValid}
 				onClick={()=>setPackageServicePrice([...packageServicePrice, initialPckageServicePrice])}
 				style={{marginTop: '16px'}}
-				text="+ Add another category" />
+				text='+ Add another category' />
 		</>
 	)
 	const AddPricingOptionsModal = () => (
 		<ModalWrapper
 			heading='Pricing Options'
 			subHeading='Customize your prizing options'
-			onClose={hideServiceModal}
+			onClose={()=>setModalLevel(0)}
 			cancelBtnText='Back'
 			ctaBtnText='Add'
-			handleCta={currentEditId !== null ? editFeature : addToFeatures}
+			handleCta={handleModalCta}
 		>
 			<div className={styles.form}>
 				<Input
-					id="servicePriceModel"
-					label="Set Price Model"
+					id='servicePriceModel'
+					label='Set Price Model'
 					error={modalCtaClicked && !service.servicePriceModel}
-					errorMsg="Service price model is required"
+					errorMsg='Service price model is required'
 				>
 					<CustomSelect
 						styleProps={{
@@ -409,10 +503,10 @@ const ServicesPage = ({styles}) => {
 					/>
 				</Input>
 				<Input
-					id="serviceCurrency"
-					label="Service Currency"
+					id='serviceCurrency'
+					label='Service Currency'
 					error={modalCtaClicked && !service.serviceCurrency}
-					errorMsg="Service Currency is required"
+					errorMsg='Service Currency is required'
 				>
 					<CurrencySelect
 						showSearch={false}
@@ -441,9 +535,11 @@ const ServicesPage = ({styles}) => {
 	return (
 		<>
 			{
-				showModal ?
-					AddPricingOptionsModal() :
-					<></>
+				showModal && modalLevel === 0 ?
+					AddServiceModal() :
+					showModal && modalLevel === 1 ?
+						AddPricingOptionsModal() :
+						<></>
 			}
 			<div className={styles.inner}>
 				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
@@ -453,7 +549,7 @@ const ServicesPage = ({styles}) => {
 					<div className={styles.action_ctn}>
 						<Button loading={isLoading}
 							className='primary sd'
-							text="Save and continue" />
+							text='Save and continue' />
 					</div>
 				</form>
 			</div>

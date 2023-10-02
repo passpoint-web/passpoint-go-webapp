@@ -1,7 +1,7 @@
 import React from 'react'
 import CheckBox from '../../Custom/Check'
 import FeedbackInfo from '../../FeedbackInfo'
-import styles from './vat-choice.module.css'
+import styles from './public-profile-info-choice.module.css'
 const AddVatChoice = () => {
 	return (
 		<div className={styles.choice_ctn}>
