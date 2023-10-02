@@ -12,11 +12,14 @@ import FeatureCard from '@/components/PublicProfile/FeatureCard'
 import CustomSelect from '@/components/Custom/Select'
 import { services as apiServices } from '@/services/restService'
 import FileUpload from '@/components/FileUpload'
-import CurrencyInput from 'react-currency-input-field'
 import Button from '@/components/Btn/Button'
 import CurrencySelect from '@/components/Custom/CurrencySelect'
+import formStyles from '@/assets/styles/auth-screens.module.css'
+import { CancelIcon } from '@/constants/icons'
+import MoneyInput from '@/components/Custom/MoneyInput'
+import AddVatChoice from '@/components/Business/AddVatChoice'
 
-const BusinessPage = ({styles}) => {
+const ServicesPage = ({styles}) => {
 	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
@@ -30,14 +33,41 @@ const BusinessPage = ({styles}) => {
 		id: null,
 		serviceType: {},
 		serviceDesc: '',
-		priceModel: 'Fixed Price',
+		serviceCurrency: '',
+		servicePriceModel: 'Package',
 		serviceBanner: {},
-		servicePrice: 100
+		pricingType: 'Per night'
 	}
-	const priceModels = ['Fixed Price', 'Package']
 	const [service, setService] = useState(
 		initialService
 	);
+
+	const servicePriceModels = ['Fixed Price', 'Package']
+
+	const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', "Per month"]
+
+	const [fixedServicePrice, setFixedServicePrice] = useState()
+
+	const initialPckageServicePrice = {categoryName: '', price: 0}
+	const [packageServicePrice, setPackageServicePrice] = useState(
+		[
+			initialPckageServicePrice
+		])
+	const [allPackagePriceFieldsValid, setAllPackagePriceFieldsValid] = useState(false)
+
+	const handlePackageServicePrice = ({value, id, name}) =>{
+		const update = packageServicePrice.map((old, i) => {
+			if (i === id) {
+				if (name === 'name') {
+					old.categoryName = value
+				} else {
+					old.price = value
+				}
+			}
+			return old
+		})
+		setPackageServicePrice(update)
+	}
 
 	const [currentEditId, setCurrentEditId] = useState(null)
 
@@ -56,8 +86,8 @@ const BusinessPage = ({styles}) => {
 
 	const handleServiceChange = (e) => {
 		const { name, value } = e.target;
-		setService((prevState) => ({
-			...prevState,
+		setService((prev) => ({
+			...prev,
 			[name]: value,
 		}));
 	};
@@ -112,7 +142,7 @@ const BusinessPage = ({styles}) => {
 		setIsLoading(true)
 		try {
 			notify('success', 'Your business Information has been saved')
-			push('/dashboard/public-profile-setup/services')
+			push('/dashboard/public-profile-setup/contact')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -142,15 +172,32 @@ const BusinessPage = ({styles}) => {
 		}
 	}, [services])
 
+	// useEffect(() => {
+	// 	// console.log(service.serviceCurrency)
+	// }, [service.serviceCurrency])
+
+	useEffect(() => {
+		for (const p of packageServicePrice) {
+			if (
+				!p.categoryName ||
+				!p.price
+			) {
+				setAllPackagePriceFieldsValid(false)
+			} else {
+				setAllPackagePriceFieldsValid(true)
+			}
+		}
+	}, [packageServicePrice])
+
 	useEffect(() => {
 		getApiServiceTypes()
 	}, [])
 
-	const AddBusinessFeatures = () => (
+	const AddBusinessServices = () => (
 		<div className={styles.features_ctn}>
 			<AddFeatureBtn disabled={services.length >=5}
-				title='Why Choose Us'
-				subTitlte='You can add mutiple points in this section'
+				title='Add New Service'
+				subTitlte='you can add multiple services in this section'
 				addFeatureModal={addFeatureModal} />
 
 			{services.filter(f=>f.id).map((feat, id)=>(
@@ -232,6 +279,105 @@ const BusinessPage = ({styles}) => {
 			</div>
 		</ModalWrapper>
 	)
+
+	const FixedPriceModel = () => (
+		<Input
+			id="service-price"
+			label="Set Price"
+			error={modalCtaClicked && !fixedServicePrice}
+			errorMsg="Service Price is required"
+		>
+			<MoneyInput
+				id="servicePrice"
+				currency={service?.serviceCurrency?.currency?.symbol}
+				defaultValue={100}
+				value={fixedServicePrice}
+				onValueChange={(e)=>setFixedServicePrice(e)}
+			/>
+		</Input>
+	)
+
+	const PackageModel = () => (
+		<>
+			<Input
+				id="pricingType"
+				label="Set Pricing Type"
+				error={modalCtaClicked && !service.pricingType}
+				errorMsg="Pricing type is required"
+			>
+				<CustomSelect
+					styleProps={{
+						dropdown: {
+							height: '100px'
+						}
+					}}
+					fieldError={modalCtaClicked && !service.pricingType}
+					selectOptions={servicePricingTypes}
+					selectedOption={service.pricingType}
+					emitSelect={(s) => handleServiceChange({
+						target: { name: 'pricingType', value: s },
+					})}
+				/>
+			</Input>
+			{packageServicePrice.map((p, id)=>(
+				<div className={formStyles.form_row}
+					style={{marginBottom: '8px', justifyContent: 'space-between'}}
+					key={id}>
+					<Input
+						label="Category Name"
+						styleProps={{width: '60%'}}
+						id={`categoryName-${id}`}
+						name={`categoryName-${id}`}
+						placeholder="Name"
+						value={p.categoryName}
+						onChange={(e)=>handlePackageServicePrice({
+							value: e.target.value, id, name: 'name'
+						})}
+						error={modalCtaClicked && !p.categoryName}
+						errorMsg={'Category name is required'}
+					/>
+					<div style={{display: 'flex', justifyContent: 'space-between', width: '50%'}}>
+						<Input
+							id="service-price"
+							styleProps={{width: '80%'}}
+							label={`Set Price ${service.pricingType}`}
+							error={modalCtaClicked && !p.price}
+							errorMsg="Service Price is required"
+						>
+							<MoneyInput
+								id={`servicePrice-${id}`}
+								placeholder={'# price'}
+								currency={service?.serviceCurrency?.currency?.symbol}
+								defaultValue={100}
+								value={p.price}
+								onValueChange={(e)=>handlePackageServicePrice({
+									value: e, id, name: 'price'
+								})}
+							/>
+						</Input>
+						<button title="Delete"
+							disabled={packageServicePrice.length <= 1}
+							onClick={()=>setPackageServicePrice(packageServicePrice.filter((_p, i) => i !== id ))}
+							style={{
+								height: 48,
+								width: '8%',
+								position: 'absolute',
+								right: 0,
+								bottom: `${modalCtaClicked && (!p.price || !p.categoryName) ? '28px' : '0'}`
+							}}
+						>
+							<CancelIcon color="#FF3B2D" />
+						</button>
+					</div>
+				</div>
+			))}
+			<Button className='tertiary'
+				disabled={packageServicePrice.length >= 4 || !allPackagePriceFieldsValid}
+				onClick={()=>setPackageServicePrice([...packageServicePrice, initialPckageServicePrice])}
+				style={{marginTop: '16px'}}
+				text="+ Add another category" />
+		</>
+	)
 	const AddPricingOptionsModal = () => (
 		<ModalWrapper
 			heading='Pricing Options'
@@ -241,11 +387,11 @@ const BusinessPage = ({styles}) => {
 			ctaBtnText='Add'
 			handleCta={currentEditId !== null ? editFeature : addToFeatures}
 		>
-			<div>
+			<div className={styles.form}>
 				<Input
-					id="priceModel"
+					id="servicePriceModel"
 					label="Set Price Model"
-					error={modalCtaClicked && !service.priceModel}
+					error={modalCtaClicked && !service.servicePriceModel}
 					errorMsg="Service price model is required"
 				>
 					<CustomSelect
@@ -255,18 +401,18 @@ const BusinessPage = ({styles}) => {
 							}
 						}}
 						fieldError={modalCtaClicked && !service.serviceType}
-						selectOptions={priceModels}
-						selectedOption={service.priceModel}
+						selectOptions={servicePriceModels}
+						selectedOption={service.servicePriceModel}
 						emitSelect={(s) => handleServiceChange({
-							target: { name: 'priceModel', value: s },
+							target: { name: 'servicePriceModel', value: s },
 						})}
 					/>
 				</Input>
 				<Input
-					id="currency-type"
-					label="Currency Type"
-					error={modalCtaClicked && !service.currency}
-					errorMsg="Currency Type is required"
+					id="serviceCurrency"
+					label="Service Currency"
+					error={modalCtaClicked && !service.serviceCurrency}
+					errorMsg="Service Currency is required"
 				>
 					<CurrencySelect
 						showSearch={false}
@@ -275,32 +421,19 @@ const BusinessPage = ({styles}) => {
 								height: '150px'
 							}
 						}}
-						fieldError={modalCtaClicked && !service.currency}
+						fieldError={modalCtaClicked && !service.serviceCurrency}
 						emitCountry={(option) =>
 							handleServiceChange({
-								target: { name: 'currency', value: option },
+								target: { name: 'serviceCurrency', value: option },
 							})}
 					/>
 				</Input>
-				<Input
-					id="service-price"
-					label="Set Price"
-					error={modalCtaClicked && !service.servicePrice}
-					errorMsg="Service Price is required"
-				>
-					<CurrencyInput prefix='₦ '
-						id="servicePrice"
-						name="servicePrice"
-						decimalSeparator="."
-						groupSeparator=","
-						decimalsLimit={2}
-						defaultValue={100}
-						value={service.servicePrice}
-						onValueChange={(e)=>handleServiceChange({
-							target: { name: 'servicePrice', value: e }
-						})}
-					/>
-				</Input>
+				{
+					service.servicePriceModel === 'Fixed Price' ?
+						FixedPriceModel() :
+						PackageModel()
+				}
+				<AddVatChoice />
 			</div>
 		</ModalWrapper>
 	)
@@ -316,7 +449,7 @@ const BusinessPage = ({styles}) => {
 				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
 				<h1>Services</h1>
 				<form onSubmit={handleSubmit}>
-					{AddBusinessFeatures()}
+					{AddBusinessServices()}
 					<div className={styles.action_ctn}>
 						<Button loading={isLoading}
 							className='primary sd'
@@ -328,4 +461,4 @@ const BusinessPage = ({styles}) => {
 	)
 }
 
-export default BusinessPage
+export default ServicesPage

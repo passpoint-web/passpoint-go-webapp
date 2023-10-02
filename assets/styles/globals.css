@@ -196,6 +196,11 @@ button {
   transition: var(--input-transition);
 }
 
+a:disabled,
+button:disabled {
+  opacity: 0.5;
+}
+
 .skeleton {
   background: var(--grey-5) !important;
   /* background: linear-gradient(90deg, rgba(238, 238, 238, 0.0), rgba(137, 135, 135, 0.3), rgba(235, 235, 235, 0.0)) !important; */
@@ -455,7 +460,7 @@ button.secondary.md,
 }
 
 .tertiary_btn,
-button.tertirary,
+button.tertiary,
 .tertiary_link {
   color: var(--sky-blue);
   border: none;

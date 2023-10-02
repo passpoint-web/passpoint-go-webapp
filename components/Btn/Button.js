@@ -4,7 +4,7 @@ const Button = ({text,loading, ...props}) => {
 	return (
 		<button
 			{...props}
-			disabled={loading}
+			disabled={loading || props.disabled}
 		>
 			{!loading ? text : <Loader />}
 		</button>

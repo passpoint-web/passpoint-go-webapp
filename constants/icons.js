@@ -474,19 +474,20 @@ export const DropDownIcon = () => (
 	</svg>
 )
 
-export const CancelIcon = () => (
-	<svg xmlns="http://www.w3.org/2000/svg"
-		width="16"
-		height="17"
-		viewBox="0 0 16 17"
-		fill="none">
-		<path d="M3.33398 13.6366L12.6673 4.30322M3.33398 4.30322L12.6673 13.6366L3.33398 4.30322Z"
-			stroke="#565C69"
-			strokeWidth="1.5"
-			strokeLinecap="round"
-			strokeLinejoin="round"/>
-	</svg>
-)
+export const CancelIcon = ({color = '#565C69'}) => {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg"
+			width="16"
+			height="17"
+			viewBox="0 0 16 17"
+			fill="none">
+			<path d="M3.33398 13.6366L12.6673 4.30322M3.33398 4.30322L12.6673 13.6366L3.33398 4.30322Z"
+				stroke={color}
+				strokeWidth="1.5"
+				strokeLinecap="round"
+				strokeLinejoin="round"/>
+		</svg>
+	)}
 
 export const CancelIcon_border = () => (
 	<svg xmlns="http://www.w3.org/2000/svg"
