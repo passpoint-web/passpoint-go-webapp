@@ -67,9 +67,11 @@ var options = {
 export function MonthlyChart() {
 	const [chartData, setChartData] = useState({});
 	// const [chartLoading, setChartLoading] = useState(true)
-	const dataValues = chartData?.reveuneList
-		? Object.values(chartData.reveuneList)
+	const dataValues = chartData?.RevenueList
+		? Object.values(chartData.RevenueList)
 		: [];
+
+	const notify = useNotify()
 
 	// Define the months in the normal order
 	const normalMonthsOrder = [
@@ -101,16 +103,13 @@ export function MonthlyChart() {
 		],
 	};
 
-	const notify = useNotify()
-
-
 	const getMetrics = async () => {
 		// setChartLoading(true)
 		try {
 			const response = await metrics();
-			setChartData(response.data.monthlyRevenue)
+			setChartData(response.data.monthlyRevenue);
 		} catch (error) {
-			notify("error", 'Could not retrieve monthly revenue');
+			notify("error", "Could not retrieve monthly revenue");
 		} finally {
 			// setChartLoading(false)
 		}
@@ -125,7 +124,16 @@ export function MonthlyChart() {
 				<h3>Month on Month Revenue</h3>
 				{chartData.totalMonthlyRevenue !== undefined && (
 					<h3>
-						{`₦ ${chartData.totalMonthlyRevenue}`} <span>-8.39%</span>
+						{`₦ ${chartData.totalMonthlyRevenue}`}
+						<span
+							style={{
+								color: chartData.percentageGrowth >= 0 ? "#66cb9f" : "#ff3b2d",
+							}}
+						>
+							{chartData.percentageGrowth >= 0
+								? `+${chartData.percentageGrowth}`
+								: `${chartData.percentageGrowth}`}
+						</span>
 					</h3>
 				)}
 			</div>

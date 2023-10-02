@@ -67,7 +67,7 @@
   --graphikSemibold: "GraphikSemibold", sans-serif;
 
   --white: #ffffff;
-  --grey-1: #1c1132;
+  --grey-1: #303237;
   --grey-2: #565c69;
   --grey-3: #7e8494;
   --grey-4: #bdc0ce;
@@ -76,6 +76,7 @@
 
   --sky-blue: #009ec4;
   --sky-blue-active: #006f89;
+  --sky-blue-hover: #CBEBF3;
   --sky-blue-bg: #e6f5f980;
 
   --cta-bg: #121212;
@@ -523,7 +524,7 @@ form {
   position: fixed;
   inset: 0;
   /* background: rgb(0, 0, 0, 0); */
-  z-index: var(--z-index-overlay);
+  /* z-index: var(--z-index-overlay); */
   cursor: default;
 }
 

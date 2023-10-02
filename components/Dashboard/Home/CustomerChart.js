@@ -101,7 +101,6 @@ export function CustomerChart() {
   const getMetrics = async () => {
     try {
       const response = await metrics();
-      console.log(response);
       setChartData(response.data.customerGrowth);
     } catch (error) {
       console.log(error);
@@ -111,14 +110,23 @@ export function CustomerChart() {
   useEffect(() => {
     getMetrics();
   }, []);
-  console.log(chartData);
+
   return (
     <main className={styles.dashCustomerCahrt}>
       <div className={styles.content}>
         <h3>Customer Growth</h3>
         {chartData.totalCustomer !== undefined && (
           <h3>
-            {chartData.totalCustomer} <span>-33.39%</span>
+            {chartData.totalCustomer}{" "}
+            <span
+              style={{
+                color: chartData.percentageGrowth >= 0 ? "#66cb9f" : "#ff3b2d",
+              }}
+            >
+              {chartData.percentageGrowth >= 0
+                ? `+${chartData.percentageGrowth}`
+                : `${chartData.percentageGrowth}`}
+            </span>
           </h3>
         )}
       </div>
