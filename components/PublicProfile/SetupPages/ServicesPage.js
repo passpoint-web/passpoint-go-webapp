@@ -37,7 +37,7 @@ const ServicesPage = ({styles}) => {
 		serviceDesc: '',
 		serviceCurrency: '',
 		servicePriceModel: 'Package',
-		serviceBanner: {}, // file
+		serviceBanner: '', // file
 		pricingType: 'Per night'
 	}
 	const [service, setService] = useState(
@@ -197,7 +197,7 @@ const ServicesPage = ({styles}) => {
 		const mainServiceConditionsMet =
 			serviceType?.serviceName &&
 			serviceDesc &&
-			serviceBanner.name
+			serviceBanner
 
 		// condition to check if all conditions are met in second modal for priceModel === 'Fixed Price
 		const fixedConditionsMet =
@@ -362,8 +362,8 @@ const ServicesPage = ({styles}) => {
 				<FileUpload
 					styleProps={{gap: '24px', padding: '16px'}}
 					subTitle='Add an Image that best describes your service'
-					fileObj={service.serviceBanner}
-					error={modalCtaClicked && !service.serviceBanner?.name}
+					base64={service.serviceBanner}
+					error={modalCtaClicked && !service.serviceBanner}
 					errorMsg='Service image is required'
 					handlefileUpload={(e)=>
 						handleServiceChange({

@@ -112,9 +112,13 @@
   transition: var(--input-transition);
   border: 1px solid var(--sky-blue);
   outline: transparent;
-  box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
+  /* box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow); */
   background-color: var(--input-focus-bg);
   cursor: pointer;
+}
+
+.features_card.current_edit {
+  box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
 }
 
 .features_card h3 {

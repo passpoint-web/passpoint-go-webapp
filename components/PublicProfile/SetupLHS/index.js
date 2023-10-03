@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 import BackBtn from '@/components/Btn/Back'
 import styles from '@/app/dashboard/public-profile-setup/public-profile.module.css'
 const PublicProfileSetupLHS = () => {
-
 	const pathname = usePathname()
 	const {push} = useRouter()
 

@@ -79,7 +79,18 @@ x
   height: 34px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  /* width: 30px; */
+  /* height: 30px; */
+  height: unset;
+  padding: 5px;
+  border-radius: 5px;
 }
+
+.close_btn:hover {
+  background-color: var(--grey-5);
+}
+
 
 @media screen and (min-width: 500px) {
   .mobile_top {

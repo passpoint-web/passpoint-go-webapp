@@ -11,6 +11,7 @@ import { useNotify } from '@/utils/hooks'
 import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
 import FeatureCard from '@/components/PublicProfile/FeatureCard'
 import formStyles from '@/assets/styles/auth-screens.module.css'
+import { publicProfile } from '@/services/restService'
 
 const BusinessPage = ({styles}) => {
 	const notify = useNotify()
@@ -108,8 +109,20 @@ const BusinessPage = ({styles}) => {
 		if (!allFieldsValid) {
 			return
 		}
+		const desc = features.map(f => {
+			const obj = {
+				businessHeadline: f.headline,
+				businessDesc: f.description
+			}
+			return obj
+		})
 		setIsLoading(true)
 		try {
+			const response = await publicProfile.businessDescription({
+				aboutBusiness,
+				desc
+			})
+			console.log(response)
 			notify('success', 'Your business Information has been saved')
 			push('/dashboard/public-profile-setup/services')
 		} catch (_err) {
@@ -157,7 +170,7 @@ const BusinessPage = ({styles}) => {
 
 	const AddFeatureModal = () => (
 		<ModalWrapper
-			heading='Why Choose Us'
+			heading={`Why Choose Us ${currentEditId !== null ? `(${currentEditId+1})` : ''}`}
 			subHeading='Describe in details why you chose us'
 			onClose={hideFeatureModal}
 			handleCta={currentEditId !== null ? editFeature : addToFeatures}
