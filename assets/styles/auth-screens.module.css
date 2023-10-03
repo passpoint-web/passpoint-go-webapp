@@ -376,8 +376,7 @@
     no-repeat right var(--input-padding) center/1rem !important;
 }
 
-
-.form .action_ctn {
+.action_ctn {
   margin: 48px 0 var(--inner-component-mg);
   display: flex;
   flex-direction: column;

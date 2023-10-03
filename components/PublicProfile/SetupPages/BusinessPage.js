@@ -10,6 +10,7 @@ import BackBtn from '@/components/Btn/Back'
 import { useNotify } from '@/utils/hooks'
 import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
 import FeatureCard from '@/components/PublicProfile/FeatureCard'
+import formStyles from '@/assets/styles/auth-screens.module.css'
 
 const BusinessPage = ({styles}) => {
 	const notify = useNotify()
@@ -18,9 +19,9 @@ const BusinessPage = ({styles}) => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [modalCtaClicked, setModalCtaClicked] = useState(false)
-	const [aboutBusiness, setAboutBusiness] = useState('');
-	const [showModal, setShowModal] = useState(false);
-	const [features, setFeatures] = useState([]);
+	const [aboutBusiness, setAboutBusiness] = useState('')
+	const [showModal, setShowModal] = useState(false)
+	const [features, setFeatures] = useState([])
 	const [feature, setFeature] = useState(
 		{
 			id: null,
@@ -157,7 +158,6 @@ const BusinessPage = ({styles}) => {
 	const AddFeatureModal = () => (
 		<ModalWrapper
 			heading='Why Choose Us'
-			// otherBtns={<NeutralBtn text="Cancel" />}
 			subHeading='Describe in details why you chose us'
 			onClose={hideFeatureModal}
 			handleCta={currentEditId !== null ? editFeature : addToFeatures}
@@ -224,7 +224,7 @@ const BusinessPage = ({styles}) => {
 						/>
 					</Input>
 					{AddBusinessFeatures()}
-					<div className={styles.action_ctn}>
+					<div className={formStyles.action_ctn}>
 						<PrimaryBtn
 							text="Save and continue"
 							loading={isLoading}

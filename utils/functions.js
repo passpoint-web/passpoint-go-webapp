@@ -69,18 +69,6 @@ function truncateString(str) {
 	return str.slice(0, 12) + '...'
 }
 
-function resetModalState() {
-	document.querySelectorAll('.modal-container .child').forEach((modal) => {
-		modal.classList.remove('squeeze-in')
-	})
-	document
-		.querySelectorAll('.modal-container .backdrop-ctn')
-		.forEach((modal) => {
-			modal.classList.remove('blur-out')
-			modal.classList.add('blur')
-		})
-}
-
 function validEmail (email) {
 	const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	return regex.test(String(email).toLowerCase())
@@ -103,6 +91,24 @@ function getMonth(index) {
 	]
 	return months[index - 1]
 }
+
+const toBase64 = file => new Promise((resolve, reject) => {
+	const reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = () => resolve(reader.result);
+	reader.onerror = reject;
+})
+
+const returnBase64 = async (file) => {
+	try {
+		const result = await toBase64(file);
+		return result
+	} catch(error) {
+		console.error(error);
+		return;
+	}
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -115,8 +121,8 @@ const functions = {
 	maskedEmail,
 	validEmail,
 	getMonth,
-	resetModalState,
-	makeNumArr
+	makeNumArr,
+	returnBase64
 	// encryptData,
 	// decryptData
 }

@@ -386,7 +386,8 @@ button.small {
   padding: 0;
 }
 
-.primary_btn:disabled {
+.primary_btn:disabled,
+button.primary:disabled {
   background-color: var(--btn-disabled);
   color: var(--grey-3);
 }
@@ -453,6 +454,11 @@ button.secondary.md,
   height: 34px;
   display: flex;
   align-items: center;
+  border-radius: 5px;
+}
+
+.absolute_close_btn:hover {
+  background-color: var(--grey-5);
 }
 
 .secondary_link:hover {

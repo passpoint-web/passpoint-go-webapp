@@ -1,5 +1,6 @@
 import { CancelIcon_border } from "@/constants/icons"
 import styles from '@/app/dashboard/public-profile-setup/public-profile.module.css'
+
 const FeatureCard = ({children, removeFeature, editFeature}) => {
 	return (
 		<div

@@ -54,7 +54,15 @@ export const services = {
 		config.headers.Authorization = `Bearer ${token}`;
 		return restAgent.get('getPrimaryServices', config);
 	},
+}
 
+export const publicProfile = {
+	uploadBusinessLogo: (data) => {
+		const token = getToken()
+		const config = getRequestConfig();
+		config.headers.Authorization = `Bearer ${token}`;
+		return restAgent.post('publicProfileBusinessLogo', data, config);
+	},
 }
 
 // https://api.jessecoders.com/passpointGo/v1/getPrimaryServices
