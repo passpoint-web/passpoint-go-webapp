@@ -1,10 +1,10 @@
 import { CancelIcon_border } from "@/constants/icons"
 import styles from '@/app/dashboard/public-profile-setup/public-profile.module.css'
 
-const FeatureCard = ({children, removeFeature, editFeature, id, currentEditId}) => {
+const FeatureCard = ({feature, removeFeature, editFeature}) => {
 	return (
 		<div
-			className={`${styles.features_card_ctn} ${id === currentEditId ? styles.current_edit : ''}`}>
+			className={styles.features_card_ctn}>
 			<button
 				className='absolute_close_btn button'
 				onClick={removeFeature}>
@@ -14,7 +14,10 @@ const FeatureCard = ({children, removeFeature, editFeature, id, currentEditId}) 
 				className={styles.features_card}
 				onClick={editFeature}
 			>
-				{children}
+				<div>
+					<h3>{feature.headline}</h3>
+					<p>{feature.description}</p>
+				</div>
 			</div>
 		</div>
 	)

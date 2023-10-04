@@ -11,7 +11,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 
 	const [countries, setCountries] = useState([])
 	const [filteredCountries, setFilteredCountries] = useState([])
-	const [country, setCountry] = useState({})
+	const [currency, setCurrency] = useState({})
 	const [search, setSearch] = useState('')
 
 	const handleClick = (e) => {
@@ -19,9 +19,9 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		setShowCountriesSelect(!showCountriesSelect)
 	}
 
-	const handleCountrySelect = (e, country) => {
-		setCountry(country)
-		emitCountry(country)
+	const handleCountrySelect = (e, cu) => {
+		setCurrency(cu)
+		emitCountry(cu)
 		window.setTimeout(() => {
 			setShowCountriesSelect(false)
 		}, 200)
@@ -36,10 +36,10 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		const currencies = COUNTRIES.map(e=>{
 			const currencyName =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.name : 'no name'
 			const currencyAccronym = e.currencies ? Object.keys(e.currencies)?.[0] : 'no currency'
-			const currencySymbol =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.symbol : 'no symbol'
+			// const currencySymbol =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.symbol : 'no symbol'
 			const flag = e.flags?.png
-			const name = e.name?.common
-			return {region: e.region, flag , name, currency: {accronym: currencyAccronym, name: currencyName, symbol: currencySymbol}}
+			// const name = currencyName
+			return {region: e.region, flag, country: e.name.common, name: currencyName, currency: currencyAccronym}
 		})
 		// console.log(currencies)
 		const data = currencies
@@ -52,12 +52,12 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 			}
 			return 0
 		})
-		const africa = data.filter((e) => e.region === 'Africa')
-		setCountries(africa)
-		setFilteredCountries(africa)
-		const defaultCountry = data.find((e) => e.name === 'Nigeria')
-		setCountry(defaultCountry)
-		emitCountry(defaultCountry)
+		const value = data.filter((e) => ['United States', 'Nigeria'].includes(e.country))
+		setCountries(value)
+		setFilteredCountries(value)
+		const defaultCurrency = data.find((e) => e.country === 'Nigeria')
+		setCurrency(defaultCurrency)
+		emitCountry(defaultCurrency)
 	}
 	const searchCountry = (item) => {
 		setSearch(item)
@@ -75,7 +75,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 	}, [])
 
 	useEffect(() => {
-		if (country?.name) {
+		if (currency?.country) {
 			setShowCountriesSelect(true)
 		}
 	}, [countriesSelectProps])
@@ -92,13 +92,13 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 					className={`${showCountriesSelect ? styles.active : ''}`}
 					onClick={handleClick}
 				>
-					{!countries?.name ? (
+					{!currency.country ? (
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
-								{ country?.flag ?
+								{ currency?.flag ?
 									<Image
-										src={country?.flag}
-										alt={`${country?.name}`}
+										src={currency?.flag}
+										alt={`${currency?.name}`}
 										width={20}
 										height={20}
 										className={styles.img}
@@ -106,7 +106,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 									<div style={{width: '20px', height: '20px'}} />
 								}
 							</div>
-							<p>{country?.currency?.name} ({country?.currency?.accronym} - {country?.currency?.symbol})</p>
+							<p>{currency?.name} ({currency?.currency})</p>
 						</div>
 					) : (
 						<div className={styles.content_name}>
@@ -127,7 +127,8 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 								id={'country'}
 								placeholder={'Search currency'}
 								searchCountry={(e) => searchCountry(e)}
-							/> : <></>}
+							/> :
+							<></>}
 						{filteredCountries.map((c, index) => (
 							<div
 								key={index}
@@ -145,7 +146,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 										/> :
 										<div style={{width: '20px', height: '20px'}} />
 								}
-								<p>{c?.currency?.name} ({c?.currency?.accronym} - {c?.currency?.symbol})</p>
+								<p>{c?.name} ({c?.currency})</p>
 							</div>
 						))}
 					</div>

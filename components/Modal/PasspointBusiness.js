@@ -7,7 +7,7 @@ const PasspointBusinessModal = ({onClose}) => {
 			contentStyle={{maxWidth: '500px'}}
 			ctaBtnText='Proceed'
 			heading='Passpoint Business Warning'
-			onClick={onClose}
+			onClose={onClose}
 			handleCta={onClose}
 		>
 			<div className={styles.content}>

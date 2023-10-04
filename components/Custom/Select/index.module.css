@@ -40,7 +40,7 @@
 }
 
 .custom_select button svg {
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
 .custom_select button.active svg {
@@ -133,7 +133,7 @@
   height: var(--input-height);
   display: flex;
   align-items: center;
-  transition: var(--input-transition);
+  transition: 0.2;
   cursor: pointer;
 }
 

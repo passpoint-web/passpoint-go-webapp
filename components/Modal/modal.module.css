@@ -38,8 +38,13 @@ x
   animation: pulse 1s infinite;
 }
 
-.child {
+.child_ctn {
   min-width: 500px;
+  position: relative;
+}
+
+.child {
+  width: 100%;
   z-index: calc(var(--z-index-overlay)+ 1);
   background: #fff;
   position: relative;
@@ -73,18 +78,20 @@ x
 }
 
 .close_btn {
+  position:absolute;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: var(--inner-component-mg);
+  top: var(--inner-component-mg);
   height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   /* width: 30px; */
   /* height: 30px; */
-  height: unset;
+  height: 30px;
   padding: 5px;
   border-radius: 5px;
+  z-index: 30;
 }
 
 .close_btn:hover {
@@ -118,8 +125,11 @@ x
     width: 50px;
   }
 
-  .child {
+  .child_ctn {
     min-width: 90%;
+  }
+
+  .child {
     border-radius: calc(var(--input-br) * 2);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

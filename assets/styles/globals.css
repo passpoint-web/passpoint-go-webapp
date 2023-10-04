@@ -74,6 +74,8 @@
   --grey-5: #e5e7ef;
   --grey-6: #f4f5f8;
 
+  --v600: #00242D;
+
   --sky-blue: #009ec4;
   --sky-blue-active: #006f89;
   --sky-blue-hover: #CBEBF3;
@@ -824,8 +826,8 @@ ul {
 }
 
 .dropdown {
-  animation: dropdown 0.5s ease-in-out forwards;
-  -webkit-animation: dropdown 0.5s ease-in-out forwards;
+  animation: dropdown 0.2s ease-in-out forwards;
+  -webkit-animation: dropdown 0.2s ease-in-out forwards;
   transform-origin: top;
 }
 

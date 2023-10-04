@@ -152,14 +152,10 @@ const BusinessPage = ({styles}) => {
 			{features.filter(f=>f.headline && f.description).map((feat, id)=>(
 				<FeatureCard key={id}
 					removeFeature={(e)=>removeFeature(e, id)}
-					editFeature={(e)=>editFeatureModal(e, feat)}>
-					<div>
-						<h3>{feat.headline}</h3>
-						<p>{feat.description}</p>
-					</div>
-				</FeatureCard>
+					editFeature={(e)=>editFeatureModal(e, feat)}
+					feature={feat}
+				/>
 			))}
-
 			{ctaClicked && !features.length ?
 				<FeedbackInfo
 					message="minimum of one feature is required"

@@ -34,13 +34,13 @@ const ServicesPage = ({styles}) => {
 	const initialService = {
 		id: null,
 		serviceType: {
-			serviceId: '',
-			serviceName: ''
+			serviceId: 'PP1',
+			serviceName: 'Flights'
 		}, // {serviceName, serviceId}
-		serviceDesc: '',
-		serviceCurrency: '',
+		serviceDesc: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur ma. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+		serviceCurrency: 'NGN',
 		servicePriceModel: {name: 'Fixed Price', value: 'fixedPrice'},
-		serviceBanner: '', // file
+		serviceBanner: 'https://s3-alpha-sig.figma.com/img/2d31/c4ad/b98b53bf1525eec964e738e3b2373d18?Expires=1697414400&Signature=QQ4tUa7KDkgFnZ6Z80FBZAnGNxNLpAH8GQ9JaaY6romzcZcFjI3kvXIBtT0YDON0vwcdcAQU0wJMfR3J1SaKTUB30hLPF4WaWtT~nQfAQ9FSk3RY8a9lRHeJdBWfoLgwmIqIAufkaX4IrWADM9Cg~Teg~4TeDTOwmc6quqs1OVgsGQxHZUumiUZVxvh9gW29~ntDcrAfdABGGrM0NY6z4FDceH-QouuOR~QQchVeW8YCyLjaqBWs7aq0TnW3KS2STpzURUfTWcqMMcra8pG2-~yn0VrxBHSZRS17QVi28L81Ih4dvB-esVp5zHGbdIB8U68k9SmaDxXOVP-iD7cJ0w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4', // file
 		pricingType: 'Per night'
 	}
 
@@ -52,15 +52,26 @@ const ServicesPage = ({styles}) => {
 
 	const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', 'Per month']
 
-	const [fixedServicePrice, setFixedServicePrice] = useState(0)
+	const [fixedServicePrice, setFixedServicePrice] = useState(100)
 
-	const initialPackageServicePrice = {categoryName: '', price: 0}
+	const initialPackageServicePrice = {categoryName: 'yoyo', price: 100}
 	const [packageServicePrice, setPackageServicePrice] = useState(
 		[
-			initialPackageServicePrice
+			{categoryName: 'category name', price: 100000},
+			{categoryName: 'category name', price: 100000},
+			{categoryName: 'category name', price: 100000},
+			{categoryName: 'category name', price: 100000}
 		])
 	const [allPackagePriceFieldsValid, setAllPackagePriceFieldsValid] = useState(false)
+	// TODO: remove test
+	const testFixedService = {
+		...initialService, servicePriceModel: {name: 'Fixed Price', value: 'fixedPrice'},  servicePrice: fixedServicePrice
+	}
+	const testPackagedService = {
+		...initialService, servicePriceModel:  {name: 'Package', value: 'packagedPrice'}, servicePrice: packageServicePrice
+	}
 
+	console.log(initialService)
 	const handlePackageServicePrice = ({value, id, name}) =>{
 		const update = packageServicePrice.map((old, i) => {
 			if (i === id) {
@@ -427,7 +438,7 @@ const ServicesPage = ({styles}) => {
 							<MoneyInput
 								id={`servicePrice-${id}`}
 								placeholder={'# price'}
-								currency={service?.serviceCurrency?.currency}
+								currency={service?.serviceCurrency?.currency?.symbol}
 								value={p.price}
 								onValueChange={(e)=>handlePackageServicePrice({
 									value: e, id, name: 'price'
@@ -525,12 +536,20 @@ const ServicesPage = ({styles}) => {
 				subTitlte='you can add multiple services in this section'
 				addFeatureModal={addFeatureModal} />
 
-			{services.map((service, id)=>(
-				<ServiceCard key={id}
-					service={service}
+			{/* {services.map((feat, id)=>(
+				<FeatureCard key={id}
+					feature={feat}
 					removeFeature={(e)=>removeFeature(e, id)}
-					editFeature={(e)=>editFeatureModal(e, service)} />
-			))}
+					editFeature={(e)=>editFeatureModal(e, feat)}>
+				</FeatureCard>
+			))} */}
+
+			<ServiceCard
+				service={testFixedService}
+			/>
+			<ServiceCard
+				service={testPackagedService}
+			/>
 
 			{ctaClicked && !services.length ?
 				<FeedbackInfo
