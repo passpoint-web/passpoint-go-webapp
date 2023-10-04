@@ -456,6 +456,12 @@ button.small {
   text-decoration: underline;
 }
 
+.tertiary_btn:disabled,
+.tertiary_link:disabled {
+  text-decoration: unset;
+  color: var(--grey-3);
+}
+
 .back_btn {
   margin: 0 0 var(--outer-component-mg);
   width: fit-content;
