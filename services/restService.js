@@ -75,7 +75,10 @@ export const publicProfile = {
 	},
 	businessDescription: (data) => {
 		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
-	}
+	},
+	contact: (data) => {
+		return restAgent.post('publicProfileContactDetails', data, setConfig());
+	},
 }
 
 // https://api.jessecoders.com/passpointGo/v1/getPrimaryServices

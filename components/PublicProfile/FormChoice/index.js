@@ -2,21 +2,21 @@ import React from 'react'
 import CheckBox from '../../Custom/Check'
 import FeedbackInfo from '../../FeedbackInfo'
 import styles from './public-profile-info-choice.module.css'
-const AddVatChoice = () => {
+const FormChoice = ({message, checkValue, onChange}) => {
 	return (
 		<div className={styles.choice_ctn}>
 			<FeedbackInfo type="note"
-				message="Do you want to include VAT (7.5%)?"
+				message={message}
 				styleProps={
 					{
 						ctn: {marginTop: 0},
 						content:{fontSize: '14px'}
 					}
 				} />
-			<CheckBox styleProps={{bottom: 'unset'}} />
+			<CheckBox value={checkValue} onChange={onChange} styleProps={{bottom: 'unset'}} />
 		</div>
 	)
 }
 
-export default AddVatChoice
+export default FormChoice
 

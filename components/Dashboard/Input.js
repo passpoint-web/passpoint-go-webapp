@@ -6,13 +6,11 @@ const Input = ({
 	error,
 	errorMsg,
 	msgPositionCenter,
-	styleProps,
 	...props
 }) => {
 	return (
 		<>
-			<div className={`${styles.form_group} ${error ? "error" : ""}`}
-				style={{...styleProps}}>
+			<div className={`${styles.form_group} ${error ? "error" : ""}`}>
 				<label htmlFor={props.id}>{label}</label>
 				{children || <input {...props} />}
 				{error && errorMsg ? (

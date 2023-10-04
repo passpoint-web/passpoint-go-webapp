@@ -10,33 +10,54 @@ import { useState, useEffect } from "react";
 import functions from "@/utils/functions";
 import FeedbackInfo from "@/components/FeedbackInfo";
 import TertiaryBtn from "@/components/Btn/Tertiary";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+// import { getCredentials } from "@/services/localService";
+import { publicProfile } from "@/services/restService";
+import { useNotify } from '@/utils/hooks'
 import { useRouter } from "next/navigation";
+import FormChoice from "../FormChoice";
+// import TimePicker from 'react-time-picker';
+// import 'react-time-picker/dist/TimePicker.css';
+// import 'react-clock/dist/Clock.css';
+// import { TimePicker } from 'react-ios-time-picker';
+// import DateTimePicker from 'react-datetime-picker';
+// import 'react-datetime-picker/dist/DateTimePicker.css';
+// import 'react-calendar/dist/Calendar.css';
+// import 'react-clock/dist/Clock.css';
+// import Button from "@/components/Btn/Button";
 
 const ContactPage = ({ styles }) => {
-	const router = useRouter()
-	console.log(router)
+	// const savedCredentials = getCredentials()
+	const [isLoading, setIsLoading] = useState(false)
+	const { push } = useRouter()
+	const notify = useNotify()
+	// console.log(router)
 	const { validEmail, isValidUrl } = functions;
 	// const { push } = useRouter();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [finalCtaClicked, setFinalCtaClicked] = useState(false);
-	const [contactLevel, setContactLevel] = useState(1)
+	const [contactLevel, setContactLevel] = useState(true)
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [atleastTwoSocialsProvided, setAtleastTwoSocialsProvided] = useState(false)
 	const [payload, setPayload] = useState({
-		email: "",
-		phone: "",
-		address: "",
+		companyEmail: "",
+		companyPhone: "",
+		companyAddress: "",
 		openingDay: "",
 		closingDay: "",
 		openingHour: "",
 		closingHour: "",
+		hasWebContact: 0
 	});
 
-	const handleContactLevel = () => {
-		// router.replace('/dashboard/public-profile-setup', {query: {
-		// 	contactLevel: 'yo'
-		// }})
-	}
+	const [hasWebContact, setWebContact] = useState(false)
+
+	// const [value, setValue] = useState(new Date());
+
+	// const onChange = (timeValue) => {
+	// 	setValue(timeValue);
+	// }
 
 	const [socials, setSocials] = useState([
 		{
@@ -78,8 +99,8 @@ const ContactPage = ({ styles }) => {
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setPayload((prevState) => ({
-			...prevState,
+		setPayload((prev) => ({
+			...prev,
 			[name]: value,
 		}));
 	};
@@ -101,24 +122,167 @@ const ContactPage = ({ styles }) => {
 		if (!allFieldsValid) {
 			return;
 		}
-		setContactLevel(1)
+		setContactLevel(!contactLevel)
 	};
-	const handleFinalSubmit = (e) => {
+	const handleFinalSubmit = async (e) => {
 		e.preventDefault();
 		setFinalCtaClicked(true);
 		if (!atleastTwoSocialsProvided) {
 			return;
 		}
+
+		const formattedSocials = socials.map(s=>{
+			return { url: s.value, name: s.label }
+		})
+		setPayload((prev) => ({
+			...prev,
+			socials: formattedSocials,
+			hasWebContact: hasWebContact ? 1 : 0
+		}));
+		setIsLoading(true)
+		try {
+			const response = await publicProfile.contact({
+				...payload,
+				socials: formattedSocials,
+				hasWebContact: hasWebContact ? 1 : 0
+			})
+			console.log(response)
+			notify('success', 'Your business contacts info has been saved')
+			// push('/dashboard/public-profile-setup/contact')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	};
 
 	useEffect(() => {
-		const { openingDay, closingDay, phone, address, email } = payload;
-		if (openingDay && closingDay && phone && address && validEmail(email)) {
+		// console.log(payload)
+		const { openingDay, closingDay, companyPhone, companyAddress, companyEmail, openingHour, closingHour } = payload;
+		if (openingDay && closingDay && companyPhone && companyAddress && validEmail(companyEmail) && openingHour && closingHour) {
 			setAllFieldsValid(true);
 		} else {
 			setAllFieldsValid(false);
 		}
 	}, [payload]);
+
+	const ContactsForm = () => (
+		<form onSubmit={handleSubmit}>
+			{/* <TimePicker />
+			<TimePicker onChange={onChange} value={value} /> */}
+			{/* <DateTimePicker onChange={onChange}
+				disableClock={true}
+				value={value}
+				hourPlaceholder="HH"
+				disableCalendar={true} /> */}
+			<Input
+				label="Company’s Email Address"
+				id="companyEmail"
+				placeholder="Kelechi Tavels"
+				name="companyEmail"
+				value={payload.companyEmail}
+				onChange={handleChange}
+				error={ctaClicked && !validEmail(payload.companyEmail)}
+				errorMsg={
+					!payload.companyEmail
+						? "Email address is required"
+						: !validEmail(payload.companyEmail)
+							? "Valid email is required"
+							: "Email is required"
+				}
+			/>
+			<Input
+				id="phone"
+				label="Company's Phone Number"
+				error={ctaClicked && !payload.companyPhone}
+				errorMsg="Phone No is required"
+			>
+				<PhoneInput
+					country={'ng'}
+					value={payload.phone}
+					onChange={(phone) => handleChange({ target: { name: 'companyPhone', value: phone } })}
+				/>
+			</Input>
+			<Input
+				label="Physical Address"
+				id="companyAddress"
+				placeholder="Kelechi Tavels"
+				name="companyAddress"
+				value={payload.companyAddress}
+				error={ctaClicked && !payload.companyAddress}
+				errorMsg="Address is required"
+				onChange={handleChange}
+			/>
+			<div className={AuthStyles.form_row}>
+				<Input
+					id="openingDay"
+					label="Business Opening Day"
+					error={ctaClicked && !payload.openingDay}
+					errorMsg="opening day is required"
+				>
+					<CustomSelect
+						fieldError={ctaClicked && !payload.openingDay}
+						selectOptions={days}
+						selectedOption={payload.openingDay}
+						emitSelect={(e) =>
+							handleChange({
+								target: { name: "openingDay", value: e },
+							})
+						}
+					/>
+				</Input>
+				<Input
+					id="closingDay"
+					label="Business Closing Day"
+					error={ctaClicked && !payload.closingDay}
+					errorMsg="closing day is required"
+				>
+					<CustomSelect
+						fieldError={ctaClicked && !payload.closingDay}
+						selectOptions={days}
+						selectedOption={payload.closingDay}
+						emitSelect={(e) =>
+							handleChange({
+								target: { name: "closingDay", value: e },
+							})
+						}
+					/>
+				</Input>
+			</div>
+			{/* <Button text="open" onClick={(e)=>handleOpenHour(e)} /> */}
+			{/* <Button text="close" onClick={(e)=>closingHourRef.current.click()} /> */}
+			<div className={AuthStyles.form_row}>
+				<Input
+					label="Business Opening Hour"
+					id="openingHour"
+					type="time"
+					name="openingHour"
+					value={payload.openingHour}
+					error={ctaClicked && !payload.openingHour}
+					errorMsg="Opening hour is required"
+					onChange={handleChange}
+				/>
+				<Input
+					label="Business Closing Hour"
+					id="closingHour"
+					type="time"
+					name="closingHour"
+					value={payload.closingHour}
+					error={ctaClicked && !payload.closingHour}
+					errorMsg="Closing hour is required"
+					onChange={handleChange}
+				/>
+			</div>
+			<FormChoice message='Do you want to have web-contact form?' checkValue={hasWebContact} onChange={()=>setWebContact(!hasWebContact)}/>
+			<div className={AuthStyles.action_ctn}>
+				<PrimaryBtn
+					text="Save and continue"
+				// loading={isLoading}
+				/>
+			</div>
+		</form>
+	)
 
 	const SocialsForm = () => (
 		<form onSubmit={handleFinalSubmit}>
@@ -142,9 +306,10 @@ const ContactPage = ({ styles }) => {
 					message='Need atleast two of your social media links'
 				/> : <></>
 			}
-			<div className={styles.action_ctn}>
+			<div className={AuthStyles.action_ctn}>
 				<PrimaryBtn
-					text="Save and continue"
+					loading={isLoading}
+					text="Save and preview"
 					// loading={isLoading}
 				/>
 			</div>
@@ -156,116 +321,15 @@ const ContactPage = ({ styles }) => {
 			<h1>Contact Information</h1>
 			<div className={styles.contact_breadcrumbs}>
 				<TertiaryBtn text="Business Contact"
-					onClick={handleContactLevel('contact')}
-					disabled={contactLevel === 0} />
+					onClick={()=>setContactLevel(!contactLevel)}
+					disabled={contactLevel} />
 				{' >> '}
 				<TertiaryBtn text="Socials"
-					onClick={handleContactLevel('socials')}
-					disabled={contactLevel === 1} />
+					onClick={()=>setContactLevel(!contactLevel)}
+					disabled={!contactLevel || !allFieldsValid} />
 			</div>
-			{contactLevel === 0 ? (
-				<form onSubmit={handleSubmit}>
-					<Input
-						label="Company’s Email Address"
-						id="email"
-						placeholder="Kelechi Tavels"
-						name="email"
-						value={payload.email}
-						onChange={handleChange}
-						error={ctaClicked && !validEmail(payload.email)}
-						errorMsg={
-							!payload.email
-								? "Email address is required"
-								: !validEmail(payload.email)
-									? "Valid email is required"
-									: "Email is required"
-						}
-					/>
-					<Input
-						label="Company’s Phone Number"
-						id="phone"
-						placeholder="Kelechi Tavels"
-						name="phone"
-						value={payload.phone}
-						error={ctaClicked && !payload.phone}
-						errorMsg="Phone No is required"
-						onChange={handleChange}
-					/>
-					<Input
-						label="Physical Address"
-						id="address"
-						placeholder="Kelechi Tavels"
-						name="address"
-						value={payload.address}
-						error={ctaClicked && !payload.address}
-						errorMsg="Address is required"
-						onChange={handleChange}
-					/>
-					<div className={AuthStyles.form_row}>
-						<Input
-							id="openingDay"
-							label="Business Opening Day"
-							error={ctaClicked && !payload.openingDay}
-							errorMsg="opening day is required"
-						>
-							<CustomSelect
-								fieldError={ctaClicked && !payload.openingDay}
-								selectOptions={days}
-								selectedOption={payload.openingDay}
-								emitSelect={(e) =>
-									handleChange({
-										target: { name: "openingDay", value: e },
-									})
-								}
-							/>
-						</Input>
-						<Input
-							id="closingDay"
-							label="Business Closing Day"
-							error={ctaClicked && !payload.closingDay}
-							errorMsg="closing day is required"
-						>
-							<CustomSelect
-								fieldError={ctaClicked && !payload.closingDay}
-								selectOptions={days}
-								selectedOption={payload.closingDay}
-								emitSelect={(e) =>
-									handleChange({
-										target: { name: "closingDay", value: e },
-									})
-								}
-							/>
-						</Input>
-					</div>
-					<div className={AuthStyles.form_row}>
-						<Input
-							label="Business Opening Hour"
-							id="openingHour"
-							type="time"
-							name="openingHour"
-							value={payload.openingHour}
-							error={ctaClicked && !payload.openingHour}
-							errorMsg="Opening hour is required"
-							onChange={handleChange}
-						/>
-						<Input
-							label="Business Closing Hour"
-							id="closingHour"
-							type="time"
-							name="closingHour"
-							value={payload.closingHour}
-							error={ctaClicked && !payload.closingHour}
-							errorMsg="Closing hour is required"
-							onChange={handleChange}
-						/>
-					</div>
-					<div className={AuthStyles.action_ctn}>
-						<PrimaryBtn
-							text="Save and continue"
-							// loading={isLoading}
-						/>
-					</div>
-				</form>
+			{contactLevel ? (
+				ContactsForm()
 			) : (
 				SocialsForm()
 			)}

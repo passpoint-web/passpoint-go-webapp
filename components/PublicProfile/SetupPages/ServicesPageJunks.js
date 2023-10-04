@@ -17,8 +17,7 @@ import CurrencySelect from '@/components/Custom/CurrencySelect'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { CancelIcon } from '@/constants/icons'
 import MoneyInput from '@/components/Custom/MoneyInput'
-import AddVatChoice from '@/components/Business/PublicProfileInfoChoice'
-
+// import FormChoice from '../FormChoice'
 const ServicesPage = ({styles}) => {
 	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
@@ -524,7 +523,7 @@ const ServicesPage = ({styles}) => {
 						FixedPriceModel() :
 						PackageModel()
 				}
-				<AddVatChoice />
+				{/* <AddVatChoice /> */}
 			</div>
 		</ModalWrapper>
 	)
