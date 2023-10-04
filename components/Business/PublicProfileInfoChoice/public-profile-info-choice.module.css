@@ -1,0 +1,11 @@
+.choice_ctn {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--grey-6);
+  border-radius: var(--input-br);
+  /* border: 1px solid var(grey-6); */
+  height: var(--input-height);
+  align-items: center;
+  padding: 0 var(--input-padding);
+  margin-top: var(--inner-component-mg);
+}

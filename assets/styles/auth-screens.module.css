@@ -142,7 +142,9 @@
 }
 
 .form_group:last-child,
-.form-row:last-child {
+.form-row:last-child,
+.form-group:only-of-type,
+.form-row:only-of-type {
   margin-bottom: 0;
 }
 
@@ -239,14 +241,13 @@
 
 .form_group .custom_country_select .countries {
   padding: var(--sm-inner-component-mg) 0;
-  /* border: 1px solid var(--grey-4); */
   border-radius: var(--input-br);
   box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
     0px 0px 1px 0px rgba(12, 26, 75, 0.2);
   /* max-height: calc(var(--input-height)*5 - var(--sm-inner-component-mg)); */
   height: calc(var(--input-height) * 5 - var(--sm-inner-component-mg));
   overflow-y: auto;
-  margin-top: calc(var(--sm-inner-component-mg) * 2);
+  margin-top: calc(var(--sm-inner-component-mg)/2);
   position: absolute;
   top: var(--input-height);
   width: 100%;
@@ -254,7 +255,6 @@
   background-color: #fff;
 }
 
-/* hide countries container scroll bar */
 .form_group .custom_country_select .countries::-webkit-scrollbar {
   width: 0 !important;
 }
@@ -266,7 +266,6 @@
 .form_group .custom_country_select .countries {
   -ms-overflow-style: none;
 }
-/* end */
 
 .form_group .custom_country_select .countries .input_wrapper {
   position: sticky;
@@ -276,10 +275,8 @@
 }
 
 .form_group .custom_country_select .countries input[type="search"] {
-  /* height: 40px; */
   margin: 0 var(--sm-inner-component-mg);
   width: calc(100% - var(--sm-inner-component-mg) * 2);
-  /* calc to get inner br */
   border-radius: calc(var(--input-br) - var(--sm-inner-component-mg));
 }
 
@@ -344,7 +341,6 @@
 .form_group.error textarea,
 .form_group.error select {
   border: 1px solid var(--input-error-border) !important;
-  /* box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow); */
   background-color: var(--input-error-bg) !important;
 }
 
@@ -356,7 +352,31 @@
   background-color: var(--input-error-bg) !important;
 }
 
-.form .action_ctn {
+.form_group select {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: #fff
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(189, 192, 206)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
+    no-repeat right var(--input-padding) center/1rem !important;
+}
+
+.form_group select:focus {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: #fff
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(28, 17, 50)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
+    no-repeat right var(--input-padding) center/1rem !important;
+}
+
+.form_group.error select {
+  background: var(--input-error-bg)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(189, 192, 206)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
+    no-repeat right var(--input-padding) center/1rem !important;
+}
+
+.action_ctn {
   margin: 48px 0 var(--inner-component-mg);
   display: flex;
   flex-direction: column;
@@ -396,29 +416,6 @@
   background-color: var(--input-focus-bg);
 }
 
-.form_group select {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  background: #fff
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(189, 192, 206)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
-    no-repeat right var(--input-padding) center/1rem !important;
-}
-
-.form_group select:focus {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  background: #fff
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(28, 17, 50)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
-    no-repeat right var(--input-padding) center/1rem !important;
-}
-
-.form_group.error select {
-  background: var(--input-error-bg)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M16.6 7.45837L11.1667 12.8917C10.525 13.5334 9.47499 13.5334 8.83333 12.8917L3.39999 7.45837' stroke='rgb(189, 192, 206)' strokeWidth='2.5' strokeMiterlimit='10' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E")
-    no-repeat right var(--input-padding) center/1rem !important;
-}
 
 /* input icons */
 .input_wrapper {

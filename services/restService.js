@@ -1,48 +1,81 @@
 import axios from 'axios';
 import { getToken } from './localService';
+// import { Redirect } from 'next';
 
 const restAgent = axios.create({
-  baseURL: "https://api.jessecoders.com/passpointGo/v1/",
-  headers: {
-    'Content-Type': 'application/json'
-  }
+	baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+	headers: {
+		'Content-Type': 'application/json'
+	}
 });
 
 const getRequestConfig = () => {
-  return {
-    headers: {},
-    params: {},
-  };
+	return {
+		headers: {},
+		params: {},
+	};
 };
 
+restAgent.interceptors.response.use(undefined, (error) => {
+	const statusCode = error.response ? error.response.status : null;
+	console.log('Inte', statusCode);
+	if (
+		(statusCode && statusCode === 401) ||
+    (statusCode && statusCode === 403)
+	) {
+		// Redirect('/auth/login');
+	}
+});
+
+
+const setConfig = () => {
+	const token = getToken()
+	const config = getRequestConfig();
+	config.headers.Authorization = `Bearer ${token}`
+	return config
+}
 
 export const registerUser = (path, data) => {
-  return restAgent.post(path, data);
+	return restAgent.post(path, data);
 };
 
 export const verifyEmailOtp = (data) => {
-  return restAgent.post('verifyUserOtp', data);
+	return restAgent.post('verifyUserOtp', data);
 };
 
 export const login = (data) => {
-  return restAgent.post("login", data);
+	return restAgent.post("login", data);
 };
 
 export const forgotPassword = (data) => {
-  return restAgent.post("forgotPassword", data);
+	return restAgent.post("forgotPassword", data);
 };
 
 export const resetPassword = (data) => {
-  return restAgent.post("resetPassword", data);
+	return restAgent.post("resetPassword", data);
 };
 
 export const resendOtp = (data) => {
-  return restAgent.post("resendOtp", data);
+	return restAgent.post("resendOtp", data);
 };
 
 export const metrics = () => {
-  const token = getToken()
-  const config = getRequestConfig();
-  config.headers.Authorization = `Bearer ${token}`;
-  return restAgent.get("dashboardMetrics", config);
+	return restAgent.get("dashboardMetrics", setConfig());
 };
+
+export const services = {
+	getPrimaryServices: () => {
+		return restAgent.get('getPrimaryServices', setConfig());
+	},
+}
+
+export const publicProfile = {
+	uploadBusinessLogo: (data) => {
+		return restAgent.post('publicProfileBusinessLogo', data, setConfig());
+	},
+	businessDescription: (data) => {
+		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
+	}
+}
+
+// https://api.jessecoders.com/passpointGo/v1/getPrimaryServices

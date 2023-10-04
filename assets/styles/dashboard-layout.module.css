@@ -72,7 +72,7 @@
   padding: 0 30px;
   border-bottom: 1px solid var(--grey-5);
 }
-.dashHeader_main button {
+.dashHeader_main .generate {
   padding: 14px 20px;
   background-color: var(--grey-5);
   width: fit-content;
@@ -85,17 +85,64 @@
 }
 .dashHeader_profile {
   gap: 14px;
+  position: relative;
+  cursor: pointer;
+  min-width: 180px;
+  display: flex;
+  justify-content: space-between;
 }
 .dashHeader_profile h3 {
   font-size: var(--btn-fs);
   font-family: var(--graphikSemibold);
   color: var(--secondary);
 }
-.dashHeader_profile a {
-  font-size: 10px;
+.dashHeader_profile .headerDropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  min-width: 200px;
+}
+.headerDropdown {
+  background-color: var(--white);
+  padding: 14px 12px;
+  border-radius: 8px;
+  box-shadow: var(--input-box-shadow);
+  display: grid;
+  gap: var(--inner-component-gap);
+  z-index: var(--z-index-overlay);
+}
+.headerDropdown a,
+.headerDropdown button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 11px;
+  gap: 10px;
+  color: var(--grey-2);
+  font-size: 14px;
+  border-radius: 6px;
   text-decoration: none;
-  font-family: var(--graphikRegular);
-  color: var(--grey-3);
+}
+.headerDropdown a:hover {
+  background-color: var(--sky-blue-hover);
+  color: var(--sky-blue);
+}
+.headerDropdown a:hover svg path {
+  stroke: var(--sky-blue);
+}
+.headerDropdown button {
+  color: var(--negative);
+}
+.headerDropdown button:hover {
+  background-color: var(--negative-bg);
+}
+.openIcon {
+  transform: rotate(0deg);
+  transition: 0.2s ease;
+}
+.dropIcon {
+  transition: 0.2s ease;
+  transform: rotate(180deg);
 }
 /* end  */
 
