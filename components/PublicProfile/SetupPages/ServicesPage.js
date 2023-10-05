@@ -123,7 +123,6 @@ const ServicesPage = ({styles}) => {
 	}
 
 	const addToFeatures = () => {
-		console.log('yo')
 		setModalCtaClicked(true)
 		if (service.servicePriceModel?.name === 'Fixed Price') {
 			const formattedService = {...service, servicePrice: fixedServicePrice, id: services.length}
