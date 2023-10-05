@@ -15,7 +15,7 @@ import 'react-phone-input-2/lib/style.css'
 // import { getCredentials } from "@/services/localService";
 import { publicProfile } from "@/services/restService";
 import { useNotify } from '@/utils/hooks'
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import FormChoice from "../FormChoice";
 // import TimePicker from 'react-time-picker';
 // import 'react-time-picker/dist/TimePicker.css';
@@ -30,7 +30,7 @@ import FormChoice from "../FormChoice";
 const ContactPage = ({ styles }) => {
 	// const savedCredentials = getCredentials()
 	const [isLoading, setIsLoading] = useState(false)
-	const { push } = useRouter()
+	// const { push } = useRouter()
 	const notify = useNotify()
 	// console.log(router)
 	const { validEmail, isValidUrl } = functions;

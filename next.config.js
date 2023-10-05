@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+
 	async redirects() {
 		return [
 			{
@@ -26,6 +27,7 @@ const nextConfig = {
 	},
 	images: {
 		// for countries api
+		domains: [''],
 		remotePatterns: [
 			{
 				protocol: 'https',
@@ -38,6 +40,12 @@ const nextConfig = {
 				hostname: 's3-alpha-sig.figma.com',
 				port: '',
 				pathname: '/img/**',
+			},
+			{
+				protocol: 'http',
+				hostname: 'localhost:3000',
+				port: '',
+				pathname: '/',
 			},
 		],
 	},

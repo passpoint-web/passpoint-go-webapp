@@ -19,7 +19,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		setShowCountriesSelect(!showCountriesSelect)
 	}
 
-	const handleCountrySelect = (e, cu) => {
+	const handleCurrencySelect = (e, cu) => {
 		setCurrency(cu)
 		emitCountry(cu)
 		window.setTimeout(() => {
@@ -92,7 +92,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 					className={`${showCountriesSelect ? styles.active : ''}`}
 					onClick={handleClick}
 				>
-					{!currency.country ? (
+					{currency.country ? (
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
 								{ currency?.flag ?
@@ -133,7 +133,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 							<div
 								key={index}
 								className={styles.content}
-								onClick={(e) => handleCountrySelect(e, c)}
+								onClick={(e) => handleCurrencySelect(e, c)}
 							>
 								{
 									c?.flag ?

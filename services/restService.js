@@ -63,18 +63,18 @@ export const metrics = () => {
 	return restAgent.get("dashboardMetrics", setConfig());
 };
 
-export const services = {
+export const publicProfile = {
 	getPrimaryServices: () => {
 		return restAgent.get('getPrimaryServices', setConfig());
 	},
-}
-
-export const publicProfile = {
 	uploadBusinessLogo: (data) => {
 		return restAgent.post('publicProfileBusinessLogo', data, setConfig());
 	},
 	businessDescription: (data) => {
 		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
+	},
+	addServices: (data) => {
+		return restAgent.post('publicProfileAddServices', data, setConfig());
 	},
 	contact: (data) => {
 		return restAgent.post('publicProfileContactDetails', data, setConfig());

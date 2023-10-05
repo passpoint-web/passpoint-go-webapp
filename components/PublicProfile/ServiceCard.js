@@ -13,11 +13,14 @@ const ServiceCard = ({service, removeService, editService}) => {
 					height={120}
 					alt="image" />
 			</div>
-			<div className={styles.service_name}>
-				<h3>{service.serviceType?.serviceName}</h3>
+			<div className={styles.mid}>
+				<div className={styles.service_name}>
+					<h3>{service.serviceType?.serviceName}</h3>
+					{service.featuredService ? <span className='capsule'>Featured</span> : <></>}
+				</div>
 				<div className={styles.service_price}>
-					<h3>{formatMoney(service.servicePrice, service.serviceCurrency, 2)}</h3>
-					<span className={styles.vat}>VAT {service.addVat === 1 ? '' : 'not'} inclusive</span>
+					<h3>{formatMoney(service.servicePrice, service.serviceCurrency?.currency, 2)}</h3>
+					<span className={styles.vat}>VAT {service.addVat ? '' : 'not'} inclusive</span>
 				</div>
 			</div>
 			<div className={styles.description}>
@@ -33,8 +36,11 @@ const ServiceCard = ({service, removeService, editService}) => {
 					height={120}
 					alt="image" />
 			</div>
-			<div className={styles.service_name}>
-				<h3>{service.serviceType?.serviceName}</h3>
+			<div className={styles.mid}>
+				<div className={styles.service_name}>
+					<h3>{service.serviceType?.serviceName}</h3>
+					{service.featuredService ? <span className='capsule'>Featured</span> : <></>}
+				</div>
 			</div>
 			<div className={styles.service_price_ctn}>
 				{
@@ -42,8 +48,8 @@ const ServiceCard = ({service, removeService, editService}) => {
 						<div key={id}
 							className={styles.service_price}>
 							<h6>{p.categoryName}</h6>
-							<h3>{formatMoney(p.price, service.serviceCurrency, 2)}<span>/{service.pricingType?.toLowerCase()}</span></h3>
-							<span className={styles.vat}>VAT {service.addVat === 1 ? '' : 'not'} inclusive</span>
+							<h3>{formatMoney(p.price, service.serviceCurrency?.currency, 2)}<span>/{service.pricingType?.toLowerCase()}</span></h3>
+							<span className={styles.vat}>VAT {service.addVat ? '' : 'not'} inclusive</span>
 						</div>
 					))
 				}

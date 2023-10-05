@@ -10,7 +10,7 @@ import { useNotify } from '@/utils/hooks'
 import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
 import ServiceCard from '@/components/PublicProfile/ServiceCard'
 import CustomSelect from '@/components/Custom/Select'
-import { services as apiServices } from '@/services/restService'
+import { publicProfile } from '@/services/restService'
 import FileUpload from '@/components/FileUpload'
 import Button from '@/components/Btn/Button'
 import CurrencySelect from '@/components/Custom/CurrencySelect'
@@ -38,10 +38,12 @@ const ServicesPage = ({styles}) => {
 			serviceName: ''
 		}, // {serviceName, serviceId}
 		serviceDesc: '',
+		addVat: false,
+		featuredService: false,
 		serviceCurrency: '',
 		servicePriceModel: {name: 'Fixed Price', value: 'fixedPrice'},
-		serviceBanner: '', // file
-		pricingType: 'Per night'
+		serviceBanner: '', // base64
+		pricingType: ''
 	}
 
 	const [service, setService] = useState(
@@ -50,7 +52,7 @@ const ServicesPage = ({styles}) => {
 
 	const servicePriceModels = [{name: 'Fixed Price', value: 'fixedPrice'}, {name: 'Package', value: 'packagedPrice'}]
 
-	const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', 'Per month']
+	// const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', 'Per month']
 
 	const [fixedServicePrice, setFixedServicePrice] = useState(0)
 
@@ -88,6 +90,11 @@ const ServicesPage = ({styles}) => {
 		e.preventDefault()
 		setCurrentEditId(val.id)
 		setService(val)
+		if (val.servicePriceModel?.name === 'Fixed Price') {
+			setFixedServicePrice(val.servicePrice)
+		} else {
+			setPackageServicePrice(val.servicePrice)
+		}
 		setShowModal(true)
 	}
 
@@ -118,12 +125,15 @@ const ServicesPage = ({styles}) => {
 	const addToFeatures = () => {
 		console.log('yo')
 		setModalCtaClicked(true)
-		if (service.servicePriceModel?.name === 'Fixed price') {
+		if (service.servicePriceModel?.name === 'Fixed Price') {
 			const formattedService = {...service, servicePrice: fixedServicePrice, id: services.length}
+			console.log(formattedService)
 			setServices([...services, formattedService])
+			setFixedServicePrice(0)
 		} else {
 			const formattedService = {...service, servicePrice: packageServicePrice, id: services.length}
 			setServices([...services, formattedService])
+			setPackageServicePrice([initialPackageServicePrice])
 		}
 		// reset state
 		setShowModal(false)
@@ -150,9 +160,19 @@ const ServicesPage = ({styles}) => {
 		if (!allFieldsValid) {
 			return
 		}
+		const payload = services.map(e=> {
+			let formattedService = e
+			e.addVat = e.addVat ? '1' : '0'
+			e.serviceCurrency = e.serviceCurrency.currency
+			e.featuredService = e.featuredService ? '1' : '0'
+			e.servicePriceModel = e.servicePriceModel.value
+			return formattedService
+		})
 		setIsLoading(true)
 		try {
-			notify('success', 'Your business Information has been saved')
+			const response = await publicProfile.addServices(payload)
+			console.log(response)
+			notify('success', 'Your services have been saved')
 			push('/dashboard/public-profile-setup/contact')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
@@ -188,10 +208,6 @@ const ServicesPage = ({styles}) => {
 		setModalCtaClicked(false)
 	}, [modalLevel])
 
-	// useEffect(()=>{
-	// 	console.log('cta')
-	// }, [modalCtaClicked])
-
 	useEffect(()=>{
 		// console.log('use effect')
 		// main service
@@ -220,7 +236,7 @@ const ServicesPage = ({styles}) => {
 
 		// condition to check if all conditions are met in second modal for priceModel === 'Package
 		const packageConditionsMet =
-			serviceCurrency &&
+			serviceCurrency?.currency &&
 			servicePriceModel?.name &&
 			pricingType &&
 			allPackagePriceFieldsValid
@@ -264,7 +280,7 @@ const ServicesPage = ({styles}) => {
 
 	const getApiServiceTypes = async () => {
 		try {
-			const response = await apiServices.getPrimaryServices()
+			const response = await publicProfile.getPrimaryServices()
 			setServiceTypes(response.data.data)
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
@@ -357,6 +373,12 @@ const ServicesPage = ({styles}) => {
 							target: { name: 'serviceBanner', value: e },
 						})
 					} />
+				<FormChoice message='Do you want this as a featured service?'
+					checkValue={service.featuredService}
+					onChange={()=>
+						handleServiceChange({
+							target: { name: 'featuredService', value: !service.featuredService },
+						})} />
 			</div>
 		</ModalWrapper>
 	)
@@ -370,7 +392,8 @@ const ServicesPage = ({styles}) => {
 		>
 			<MoneyInput
 				id='servicePrice'
-				currency={service?.serviceCurrency?.currency?.symbol}
+				placeholder={'# price'}
+				currency={service?.serviceCurrency?.currency}
 				value={fixedServicePrice}
 				onValueChange={(e)=>setFixedServicePrice(e)}
 			/>
@@ -379,7 +402,7 @@ const ServicesPage = ({styles}) => {
 
 	const PackageModel = () => (
 		<>
-			<Input
+			{/* <Input
 				id='pricingType'
 				label='Set Pricing Type'
 				error={modalCtaClicked && !service.pricingType}
@@ -398,7 +421,17 @@ const ServicesPage = ({styles}) => {
 						target: { name: 'pricingType', value: s },
 					})}
 				/>
-			</Input>
+			</Input> */}
+			<Input
+				id='pricingType'
+				name='pricingType'
+				label='Set Pricing Type'
+				placeholder='Pricing Type e.g Basic'
+				value={service.pricingType}
+				error={modalCtaClicked && !service.pricingType}
+				errorMsg='Pricing type is required'
+				onChange={handleServiceChange}
+			/>
 			{packageServicePrice.map((p, id)=>(
 				<div className={formStyles.form_row}
 					style={{marginBottom: '8px', justifyContent: 'space-between'}}
@@ -420,7 +453,7 @@ const ServicesPage = ({styles}) => {
 						<Input
 							id='service-price'
 							styleProps={{width: '80%'}}
-							label={`Set Price ${service.pricingType}`}
+							label={`Set Price ${service.pricingType ? `(${service.pricingType})` : ''}`}
 							error={modalCtaClicked && !p.price}
 							errorMsg='Service Price is required'
 						>
@@ -513,7 +546,12 @@ const ServicesPage = ({styles}) => {
 						FixedPriceModel() :
 						PackageModel()
 				}
-				<FormChoice message='Do you want to include VAT (7.5%)?' />
+				<FormChoice message='Do you want to include VAT (7.5%)?'
+					checkValue={service.addVat}
+					onChange={()=>
+						handleServiceChange({
+							target: { name: 'addVat', value: !service.addVat }
+						})} />
 			</div>
 		</ModalWrapper>
 	)
@@ -528,8 +566,8 @@ const ServicesPage = ({styles}) => {
 			{services.map((service, id)=>(
 				<ServiceCard key={id}
 					service={service}
-					removeFeature={(e)=>removeFeature(e, id)}
-					editFeature={(e)=>editFeatureModal(e, service)} />
+					removeService={(e)=>removeFeature(e, id)}
+					editService={(e)=>editFeatureModal(e, service)} />
 			))}
 
 			{ctaClicked && !services.length ?

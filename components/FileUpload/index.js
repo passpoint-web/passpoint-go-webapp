@@ -1,80 +1,39 @@
 
-'use client'
 import styles from './index.module.css'
 import formStyles from '@/assets/styles/auth-screens.module.css'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import functions from '@/utils/functions'
-import { CancelIcon, UploadIcon, FileIcon } from '@/constants/icons'
+import { CancelIcon, UploadIcon } from '@/constants/icons'
 import FeedbackInfo from '../FeedbackInfo'
 import Image from 'next/image'
 import { useNotify } from '@/utils/hooks'
+import TertiaryBtn from '../Btn/Tertiary'
 
 const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, image/pdf", handlefileUpload, title, subTitle, base64}) => {
 	const notify = useNotify()
-	const onUploadClick = () => {
+	const onUploadClick = (e) => {
+		e.preventDefault()
 		logoFileUpload.current.click();
 	};
 	const logoFileUpload = useRef()
-	const { formatNumber, returnBase64 } = functions
-	const [fileReady, setFileReady] = useState(false)
-	const [file, setFile] = useState(
-		{
-			size: 0,
-			name: '',
-			src: ''
-		}
-	)
+	const { returnBase64 } = functions
 
 	const onFileUpload = async (e) => {
-		const fileObj = e.target.files[0] || file
-		if ((fileObj.size / 1024) > 5120) {
+		const fileObj = e.target.files[0]
+		if (!fileObj) {
+			return
+		}
+		if ((fileObj.size / 1024) > 5000) {
 			notify('error', 'File is larger than 5MB')
 			return
 		}
-		setFile(prev => ({
-			...prev,
-			name: fileObj.name,
-			size: fileObj.size,
-			src: URL.createObjectURL(fileObj),
-		}))
-		setFileReady(false)
-		// getFileDimension(fileObj)
 		const result = await returnBase64(fileObj)
 		handlefileUpload(result)
 	}
 
 	const removeFile = () => {
 		handlefileUpload('')
-		setFile({})
 	}
-
-	// const getFileDimension =(file) => {
-	// 	const img = document.createElement('img');
-	// 	const objectURL = URL.createObjectURL(file);
-	// 	img.onload = function handleLoad () {
-	// 		console.log(img.width, img.height)
-	// 		// const ratio = img.width/img.height
-	// 		// console.log(ratio)
-	// 		setFile(prev => ({
-	// 			...prev,
-	// 			size: file.size,
-	// 			name: file.name,
-	// 			// width: 70*ratio,
-	// 			// height: 70*ratio
-	// 		}))
-	// 		setFileReady(true)
-	// 	};
-	// 	img.src = objectURL
-
-	// 	setFile(prev => ({
-	// 		...prev,
-	// 		src: img.src,
-	// 	}))
-	// }
-
-	useEffect(()=>{
-		setFileReady(true)
-	},[file])
 
 	return (
 		<div style={{marginBottom: 24}}>
@@ -90,20 +49,20 @@ const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, 
 				</div>
 				<div className={formStyles.form_group}>
 					<label>Upload</label>
+					<input
+						type="file"
+						id={id}
+						name={id}
+						ref={logoFileUpload}
+						accept={accept}
+						onChange={(e)=>onFileUpload(e)}
+					/>
 					{
 						!base64 ? (<div className={styles.file_upload}
-							onClick={onUploadClick}>
+							onClick={(e)=>onUploadClick(e)}>
 							<UploadIcon />
 							<h3>Click here to upload</h3>
 							<p>PNG, PDF, JPG, SVG up to 5MB</p>
-							<input
-								type="file"
-								id={id}
-								name={id}
-								ref={logoFileUpload}
-								accept={accept}
-								onChange={(e)=>onFileUpload(e)}
-							/>
 						</div>) :
 							<div className={styles.file_uploaded}
 							>
@@ -114,16 +73,16 @@ const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, 
 								</button>
 								<div className={styles.top}>
 									{/* <FileIcon /> */}
-									<div className={styles.file_ctn}>
-										{fileReady ? <Image src={file.src}
-											alt="base 64 img"
-											width={100}
-											height={100} /> : <></>}
-									</div>
-									<div className={styles.file_desc}>
-										<h3>{file?.name}</h3>
-										<p>{formatNumber(file?.size / 1024, 1)}KB</p>
-									</div>
+									{base64 ? 
+										<div className={styles.file_ctn}>
+											<Image
+												src={base64}
+												alt="base 64 img"
+												width={100}
+												height={100} />
+											<TertiaryBtn text="Change"
+												onClick={(e)=>onUploadClick(e)} />
+										</div> : <></>}
 								</div>
 							</div>
 					}

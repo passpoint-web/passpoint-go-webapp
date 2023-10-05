@@ -41,9 +41,13 @@
 
 .file_ctn {
   width: 170px;
-  height: 120px;
+  /* height: 120px; */
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* align-items: flex-end; */
+  align-items: center;
+  gap: var(--inner-component-gap)
 }
 
 .file_ctn img {

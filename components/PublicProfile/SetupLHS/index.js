@@ -42,7 +42,7 @@ const PublicProfileSetupLHS = () => {
 
 	useEffect(()=>{
 		setLevelsToDisplay(levels)
-	},[])
+	},[pathname])
 	return (
 		<>
 			<BackBtn text="Dashboard"

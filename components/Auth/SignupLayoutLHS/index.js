@@ -11,6 +11,8 @@ const SignupLayoutLHS = () => {
 
 	const pathname = usePathname()
 
+	const [levelsToDisplay, setLevelsToDisplay] = useState([])
+
 	const individualLevel = [
 		{
 			title: 'Personal Information',
@@ -65,7 +67,6 @@ const SignupLayoutLHS = () => {
 		},
 	]
 
-	const [levelsToDisplay, setLevelsToDisplay] = useState([])
 	useEffect(()=>{
 		if (pathname.includes('/signup/business')) {
 			setLevelsToDisplay(businessLevel)
