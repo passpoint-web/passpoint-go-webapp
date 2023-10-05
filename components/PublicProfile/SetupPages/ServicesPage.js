@@ -40,7 +40,7 @@ const ServicesPage = ({styles}) => {
 		serviceDesc: '',
 		addVat: false,
 		featuredService: false,
-		serviceCurrency: '',
+		serviceCurrency: 'NGN',
 		servicePriceModel: {name: 'Fixed Price', value: 'fixedPrice'},
 		serviceBanner: '', // base64
 		pricingType: ''
@@ -107,7 +107,7 @@ const ServicesPage = ({styles}) => {
 	};
 
 	const editFeature = () => {
-		console.log('yo')
+		// console.log('yo')
 		setModalCtaClicked(true)
 		// map through features, and look for the feature with current edit id, then update with feature object
 		const update = services.map(oldService =>
@@ -162,7 +162,7 @@ const ServicesPage = ({styles}) => {
 		const payload = services.map(e=> {
 			let formattedService = e
 			e.addVat = e.addVat ? '1' : '0'
-			e.serviceCurrency = e.serviceCurrency.currency
+			// e.serviceCurrency = e.serviceCurrency
 			e.featuredService = e.featuredService ? '1' : '0'
 			e.servicePriceModel = e.servicePriceModel.value
 			return formattedService
@@ -235,7 +235,7 @@ const ServicesPage = ({styles}) => {
 
 		// condition to check if all conditions are met in second modal for priceModel === 'Package
 		const packageConditionsMet =
-			serviceCurrency?.currency &&
+			serviceCurrency &&
 			servicePriceModel?.name &&
 			pricingType &&
 			allPackagePriceFieldsValid
@@ -392,7 +392,7 @@ const ServicesPage = ({styles}) => {
 			<MoneyInput
 				id='servicePrice'
 				placeholder={'# price'}
-				currency={service?.serviceCurrency?.currency}
+				currency={service?.serviceCurrency}
 				value={fixedServicePrice}
 				onValueChange={(e)=>setFixedServicePrice(e)}
 			/>
@@ -459,7 +459,7 @@ const ServicesPage = ({styles}) => {
 							<MoneyInput
 								id={`servicePrice-${id}`}
 								placeholder={'# price'}
-								currency={service?.serviceCurrency?.currency}
+								currency={service?.serviceCurrency}
 								value={p.price}
 								onValueChange={(e)=>handlePackageServicePrice({
 									value: e, id, name: 'price'
@@ -491,7 +491,7 @@ const ServicesPage = ({styles}) => {
 	)
 	const AddPricingOptionsModal = () => (
 		<ModalWrapper
-			heading='Pricing Options'
+			heading={`Pricing Options ${currentEditId !== null ? `(${currentEditId+1})` : ''}`}
 			subHeading='Customize your prizing options'
 			onClose={()=>setModalLevel(0)}
 			cancelBtnText='Back'
@@ -533,8 +533,9 @@ const ServicesPage = ({styles}) => {
 								height: '150px'
 							}
 						}}
+						currencyProps={service.serviceCurrency}
 						fieldError={modalCtaClicked && !service.serviceCurrency}
-						emitCountry={(option) =>
+						emitCurrency={(option) =>
 							handleServiceChange({
 								target: { name: 'serviceCurrency', value: option },
 							})}

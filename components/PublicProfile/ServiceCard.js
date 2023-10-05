@@ -19,7 +19,7 @@ const ServiceCard = ({service, removeService, editService}) => {
 					{service.featuredService ? <span className='capsule'>Featured</span> : <></>}
 				</div>
 				<div className={styles.service_price}>
-					<h3>{formatMoney(service.servicePrice, service.serviceCurrency?.currency, 2)}</h3>
+					<h3>{formatMoney(service.servicePrice, service.serviceCurrency, 2)}</h3>
 					<span className={styles.vat}>VAT {service.addVat ? '' : 'not'} inclusive</span>
 				</div>
 			</div>
@@ -48,7 +48,7 @@ const ServiceCard = ({service, removeService, editService}) => {
 						<div key={id}
 							className={styles.service_price}>
 							<h6>{p.categoryName}</h6>
-							<h3>{formatMoney(p.price, service.serviceCurrency?.currency, 2)}<span>/{service.pricingType?.toLowerCase()}</span></h3>
+							<h3>{formatMoney(p.price, service.serviceCurrency, 2)}<span>/{service.pricingType?.toLowerCase()}</span></h3>
 							<span className={styles.vat}>VAT {service.addVat ? '' : 'not'} inclusive</span>
 						</div>
 					))

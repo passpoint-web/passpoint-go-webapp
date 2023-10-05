@@ -6,12 +6,12 @@ import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
 import { DropDownIcon } from '@/constants/icons'
 
-const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, styleProps }) => {
+const CurrencySelect = ({ emitCurrency, currencyProps, showSearch=true, styleProps }) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
 
-	const [countries, setCountries] = useState([])
-	const [filteredCountries, setFilteredCountries] = useState([])
-	const [currency, setCurrency] = useState({})
+	const [currencies, setCurrencies] = useState([])
+	const [filteredCurrencies, setFilteredCurrencies] = useState([])
+	const [currencyObj, setCurrencyObj] = useState({})
 	const [search, setSearch] = useState('')
 
 	const handleClick = (e) => {
@@ -20,8 +20,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 	}
 
 	const handleCurrencySelect = (e, cu) => {
-		setCurrency(cu)
-		emitCountry(cu)
+		emitCurrency(cu.currency)
 		window.setTimeout(() => {
 			setShowCountriesSelect(false)
 		}, 200)
@@ -41,7 +40,6 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 			// const name = currencyName
 			return {region: e.region, flag, country: e.name.common, name: currencyName, currency: currencyAccronym}
 		})
-		// console.log(currencies)
 		const data = currencies
 		data.sort(function (a, b) {
 			if (a.name < b.name) {
@@ -53,11 +51,10 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 			return 0
 		})
 		const value = data.filter((e) => ['United States', 'Nigeria'].includes(e.country))
-		setCountries(value)
-		setFilteredCountries(value)
-		const defaultCurrency = data.find((e) => e.country === 'Nigeria')
-		setCurrency(defaultCurrency)
-		emitCountry(defaultCurrency)
+		setCurrencies(value)
+		setFilteredCurrencies(value)
+		const defaultCurrency = value.find((e) => e.currency === (currencyProps || 'NGN'))
+		setCurrencyObj(defaultCurrency)
 	}
 	const searchCountry = (item) => {
 		setSearch(item)
@@ -74,11 +71,18 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		retrieveCountries()
 	}, [])
 
-	useEffect(() => {
-		if (currency?.country) {
-			setShowCountriesSelect(true)
+	useEffect(()=>{
+		if (filteredCurrencies.length) {
+			const cu = filteredCurrencies.find((e) => e.currency === (currencyProps || 'NGN'))
+			setCurrencyObj(cu)
 		}
-	}, [countriesSelectProps])
+	},[currencyProps])
+
+	// useEffect(() => {
+	// 	if (currency?.country) {
+	// 		setShowCountriesSelect(true)
+	// 	}
+	// }, [countriesSelectProps])
 
 	return (
 		<>
@@ -92,13 +96,13 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 					className={`${showCountriesSelect ? styles.active : ''}`}
 					onClick={handleClick}
 				>
-					{currency.country ? (
+					{currencyObj.country ? (
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
-								{ currency?.flag ?
+								{ currencyObj?.flag ?
 									<Image
-										src={currency?.flag}
-										alt={`${currency?.name}`}
+										src={currencyObj?.flag}
+										alt={`${currencyObj?.name}`}
 										width={20}
 										height={20}
 										className={styles.img}
@@ -106,7 +110,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 									<div style={{width: '20px', height: '20px'}} />
 								}
 							</div>
-							<p>{currency?.name} ({currency?.currency})</p>
+							<p>{currencyObj?.name} ({currencyObj?.currency})</p>
 						</div>
 					) : (
 						<div className={styles.content_name}>
@@ -129,7 +133,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 								searchCountry={(e) => searchCountry(e)}
 							/> :
 							<></>}
-						{filteredCountries.map((c, index) => (
+						{filteredCurrencies.map((c, index) => (
 							<div
 								key={index}
 								className={styles.content}
