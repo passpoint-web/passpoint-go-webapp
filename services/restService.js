@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from './localService';
+// import cookies from '@/plugins/cookies';
 // import { Redirect } from 'next';
 
 const restAgent = axios.create({
@@ -30,6 +31,7 @@ const getRequestConfig = () => {
 
 const setConfig = () => {
 	const token = getToken()
+	// console.log(cookies.get('token'))
 	const config = getRequestConfig();
 	config.headers.Authorization = `Bearer ${token}`
 	return config
