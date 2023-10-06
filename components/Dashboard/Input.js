@@ -5,6 +5,7 @@ const Input = ({
 	label,
 	error,
 	errorMsg,
+	info,
 	msgPositionCenter,
 	styleProps,
 	...props
@@ -18,7 +19,10 @@ const Input = ({
 					<FeedbackInfo center={msgPositionCenter}
 						message={errorMsg} />
 				) : (
-					<></>
+					info ? (
+						<FeedbackInfo center={msgPositionCenter} type='info'
+						message={info} />
+					) : <></>
 				)}
 			</div>
 		</>

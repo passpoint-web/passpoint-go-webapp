@@ -1,7 +1,7 @@
 "use client";
 import PrimaryBtn from "@/components/Btn/Primary";
 import Input from "@/components/Dashboard/Input";
-import FeedbackInfo from "@/components/FeedbackInfo";
+// import FeedbackInfo from "@/components/FeedbackInfo";
 import FileUpload from "@/components/FileUpload";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -53,7 +53,6 @@ const IdentityPageCop = ({ styles }) => {
     <div className={styles.inner} onSubmit={handleSubmit}>
       <h1>Proof of Identity</h1>
       <form>
-        <div>
           <Input
             label="Bank Verification Number"
             id="bvn"
@@ -62,48 +61,29 @@ const IdentityPageCop = ({ styles }) => {
             error={ctaClicked && !payload.bvn}
             onChange={(e) => handleChange(e.target.value, "bvn")}
             errorMsg="BVN is required"
+            info='To get your BVN, Dial *560# with your business phone number'
           />
-          <FeedbackInfo
-            type="info"
-            message="To get your BVN, Dial *560# with your business phone number"
-          />
-        </div>
-        <div className={styles.innerUpload}>
           <FileUpload
             subTitle="Business Registration Certificate"
             fileObj={payload.businessCert}
             handlefileUpload={(file) => handleChange(file, "businessCert")}
+            error={ctaClicked && !payload.businessCert.name}
+						errorMsg='Registration certificate is required'
           />
-          {ctaClicked && !payload.businessCert.name ? (
-            <FeedbackInfo message="Business Logo is required" />
-          ) : (
-            <></>
-          )}
-        </div>
-        <div className={styles.innerUpload}>
           <FileUpload
             subTitle="Business License"
             fileObj={payload.businessLicense}
             handlefileUpload={(file) => handleChange(file, "businessLicense")}
+            error={ctaClicked && !payload.businessLicense.name}
+						errorMsg='Business License is required'
           />
-          {ctaClicked && !payload.businessLicense.name ? (
-            <FeedbackInfo message="Business Logo is required" />
-          ) : (
-            <></>
-          )}
-        </div>
-        <div className={styles.innerUpload}>
           <FileUpload
             subTitle="Passport Photograph"
             fileObj={payload.businessPhoto}
             handlefileUpload={(file) => handleChange(file, "businessPhoto")}
+            error={ctaClicked && !payload.businessPhoto.name}
+						errorMsg='Passport photograph is required'
           />
-          {ctaClicked && !payload.businessPhoto.name ? (
-            <FeedbackInfo message="Business Logo is required" />
-          ) : (
-            <></>
-          )}
-        </div>
         <div className={styles.action_ctn}>
           <PrimaryBtn text="Save and continue" loading={isLoading} />
         </div>
