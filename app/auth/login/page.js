@@ -1,14 +1,14 @@
 "use client";
-import styles from "@/assets/styles/auth-screens.module.css"
-import PrimaryBtn from '@/components/Btn/Primary'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import PasswordField from '@/components/Auth/PasswordField'
-import functions from '@/utils/functions'
-import { login } from '@/services/restService'
-import Input from '@/components/Dashboard/Input'
-import { saveCredentials, saveToken } from '@/services/localService'
+import styles from "@/assets/styles/auth-screens.module.css";
+import PrimaryBtn from "@/components/Btn/Primary";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import PasswordField from "@/components/Auth/PasswordField";
+import functions from "@/utils/functions";
+import { login } from "@/services/restService";
+import Input from "@/components/Dashboard/Input";
+import { saveCredentials, saveToken } from "@/services/localService";
 import { useNotify } from "@/utils/hooks";
 
 const Login = () => {
@@ -23,7 +23,7 @@ const Login = () => {
 		password: "",
 	});
 
-	const notify = useNotify()
+	const notify = useNotify();
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;

@@ -67,15 +67,18 @@
   --graphikSemibold: "GraphikSemibold", sans-serif;
 
   --white: #ffffff;
-  --grey-1: #1c1132;
+  --grey-1: #303237;
   --grey-2: #565c69;
   --grey-3: #7e8494;
   --grey-4: #bdc0ce;
   --grey-5: #e5e7ef;
   --grey-6: #f4f5f8;
 
+  --v600: #00242D;
+
   --sky-blue: #009ec4;
   --sky-blue-active: #006f89;
+  --sky-blue-hover: #CBEBF3;
   --sky-blue-bg: #e6f5f980;
 
   --cta-bg: #121212;
@@ -194,6 +197,11 @@ button {
   cursor: pointer;
   white-space: nowrap;
   transition: var(--input-transition);
+}
+
+a:disabled,
+button:disabled {
+  opacity: 0.5;
 }
 
 .skeleton {
@@ -380,7 +388,8 @@ button.small {
   padding: 0;
 }
 
-.primary_btn:disabled {
+.primary_btn:disabled,
+button.primary:disabled {
   background-color: var(--btn-disabled);
   color: var(--grey-3);
 }
@@ -447,6 +456,11 @@ button.secondary.md,
   height: 34px;
   display: flex;
   align-items: center;
+  border-radius: 5px;
+}
+
+.absolute_close_btn:hover {
+  background-color: var(--grey-5);
 }
 
 .secondary_link:hover {
@@ -455,7 +469,7 @@ button.secondary.md,
 }
 
 .tertiary_btn,
-button.tertirary,
+button.tertiary,
 .tertiary_link {
   color: var(--sky-blue);
   border: none;
@@ -466,6 +480,12 @@ button.tertirary,
 button.tertiary:hover,
 .tertiary_link:hover {
   text-decoration: underline;
+}
+
+.tertiary_btn:disabled,
+.tertiary_link:disabled {
+  text-decoration: unset;
+  color: var(--grey-3);
 }
 
 .back_btn {
@@ -518,8 +538,26 @@ form {
   position: fixed;
   inset: 0;
   /* background: rgb(0, 0, 0, 0); */
-  z-index: var(--z-index-overlay);
+  /* z-index: var(--z-index-overlay); */
   cursor: default;
+}
+
+.capsule {
+  /* text-transform: uppercase; */
+  width: -moz-fit-content;
+  width: fit-content;
+  display: block;
+  /* margin: 0 8px; */
+  color: #fff;
+  font-size: 10px;
+  padding: 0px 8px;
+  border-radius: 30px;
+  font-family: var(--graphikMedium);
+  background-color: var(--sky-blue);
+  position: relative;
+  /* top: -4px; */
+  height: 20px;
+  line-height: 21px;
 }
 
 ol,
@@ -812,8 +850,8 @@ ul {
 }
 
 .dropdown {
-  animation: dropdown 0.5s ease-in-out forwards;
-  -webkit-animation: dropdown 0.5s ease-in-out forwards;
+  animation: dropdown 0.2s ease-in-out forwards;
+  -webkit-animation: dropdown 0.2s ease-in-out forwards;
   transform-origin: top;
 }
 

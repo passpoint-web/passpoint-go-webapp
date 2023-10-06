@@ -142,7 +142,9 @@
 }
 
 .form_group:last-child,
-.form-row:last-child {
+.form-row:last-child,
+.form-group:only-of-type,
+.form-row:only-of-type {
   margin-bottom: 0;
 }
 
@@ -152,6 +154,9 @@
   line-height: 21px;
   margin-bottom: 8px;
   font-family: var(--graphikRegular);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .form_group input,
@@ -245,7 +250,7 @@
   /* max-height: calc(var(--input-height)*5 - var(--sm-inner-component-mg)); */
   height: calc(var(--input-height) * 5 - var(--sm-inner-component-mg));
   overflow-y: auto;
-  margin-top: calc(var(--sm-inner-component-mg) * 2);
+  margin-top: calc(var(--sm-inner-component-mg)/2);
   position: absolute;
   top: var(--input-height);
   width: 100%;
@@ -374,8 +379,7 @@
     no-repeat right var(--input-padding) center/1rem !important;
 }
 
-
-.form .action_ctn {
+.action_ctn {
   margin: 48px 0 var(--inner-component-mg);
   display: flex;
   flex-direction: column;

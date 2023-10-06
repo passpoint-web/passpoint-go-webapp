@@ -6,12 +6,12 @@ import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
 import { DropDownIcon } from '@/constants/icons'
 
-const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, styleProps }) => {
+const CurrencySelect = ({ emitCurrency, currencyProps, showSearch=true, styleProps }) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
 
-	const [countries, setCountries] = useState([])
-	const [filteredCountries, setFilteredCountries] = useState([])
-	const [country, setCountry] = useState({})
+	const [currencies, setCurrencies] = useState([])
+	const [filteredCurrencies, setFilteredCurrencies] = useState([])
+	const [currencyObj, setCurrencyObj] = useState({})
 	const [search, setSearch] = useState('')
 
 	const handleClick = (e) => {
@@ -19,9 +19,8 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		setShowCountriesSelect(!showCountriesSelect)
 	}
 
-	const handleCountrySelect = (e, country) => {
-		setCountry(country)
-		emitCountry(country)
+	const handleCurrencySelect = (e, cu) => {
+		emitCurrency(cu.currency)
 		window.setTimeout(() => {
 			setShowCountriesSelect(false)
 		}, 200)
@@ -36,12 +35,11 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		const currencies = COUNTRIES.map(e=>{
 			const currencyName =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.name : 'no name'
 			const currencyAccronym = e.currencies ? Object.keys(e.currencies)?.[0] : 'no currency'
-			const currencySymbol =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.symbol : 'no symbol'
+			// const currencySymbol =  e.currencies ? e.currencies[Object.keys(e.currencies)?.[0]]?.symbol : 'no symbol'
 			const flag = e.flags?.png
-			const name = e.name?.common
-			return {region: e.region, flag , name, currency: {accronym: currencyAccronym, name: currencyName, symbol: currencySymbol}}
+			// const name = currencyName
+			return {region: e.region, flag, country: e.name.common, name: currencyName, currency: currencyAccronym}
 		})
-		// console.log(currencies)
 		const data = currencies
 		data.sort(function (a, b) {
 			if (a.name < b.name) {
@@ -52,17 +50,16 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 			}
 			return 0
 		})
-		const africa = data.filter((e) => e.region === 'Africa')
-		setCountries(africa)
-		setFilteredCountries(africa)
-		const defaultCountry = data.find((e) => e.name === 'Nigeria')
-		setCountry(defaultCountry)
-		emitCountry(defaultCountry)
+		const value = data.filter((e) => ['United States', 'Nigeria'].includes(e.country))
+		setCurrencies(value)
+		setFilteredCurrencies(value)
+		const defaultCurrency = value.find((e) => e.currency === (currencyProps || 'NGN'))
+		setCurrencyObj(defaultCurrency)
 	}
 	const searchCountry = (item) => {
 		setSearch(item)
-		setFilteredCountries(
-			countries.filter((c) => {
+		setFilteredCurrencies(
+			currencies.filter((c) => {
 				return c.name.toLowerCase().includes(item.toLowerCase())
 			})
 		)
@@ -74,11 +71,18 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 		retrieveCountries()
 	}, [])
 
-	useEffect(() => {
-		if (country?.name) {
-			setShowCountriesSelect(true)
+	useEffect(()=>{
+		if (filteredCurrencies.length) {
+			const cu = filteredCurrencies.find((e) => e.currency === (currencyProps || 'NGN'))
+			setCurrencyObj(cu)
 		}
-	}, [countriesSelectProps])
+	},[currencyProps])
+
+	// useEffect(() => {
+	// 	if (currency?.country) {
+	// 		setShowCountriesSelect(true)
+	// 	}
+	// }, [countriesSelectProps])
 
 	return (
 		<>
@@ -92,13 +96,13 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 					className={`${showCountriesSelect ? styles.active : ''}`}
 					onClick={handleClick}
 				>
-					{!countries?.name ? (
+					{currencyObj.country ? (
 						<div className={styles.content}>
 							<div className={styles.country_flag_ctn}>
-								{ country?.flag ?
+								{ currencyObj?.flag ?
 									<Image
-										src={country?.flag}
-										alt={`${country?.name}`}
+										src={currencyObj?.flag}
+										alt={`${currencyObj?.name}`}
 										width={20}
 										height={20}
 										className={styles.img}
@@ -106,7 +110,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 									<div style={{width: '20px', height: '20px'}} />
 								}
 							</div>
-							<p>{country?.currency?.name} ({country?.currency?.accronym} - {country?.currency?.symbol})</p>
+							<p>{currencyObj?.name} ({currencyObj?.currency})</p>
 						</div>
 					) : (
 						<div className={styles.content_name}>
@@ -127,12 +131,13 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 								id={'country'}
 								placeholder={'Search currency'}
 								searchCountry={(e) => searchCountry(e)}
-							/> : <></>}
-						{filteredCountries.map((c, index) => (
+							/> :
+							<></>}
+						{filteredCurrencies.map((c, index) => (
 							<div
 								key={index}
 								className={styles.content}
-								onClick={(e) => handleCountrySelect(e, c)}
+								onClick={(e) => handleCurrencySelect(e, c)}
 							>
 								{
 									c?.flag ?
@@ -145,7 +150,7 @@ const CurrencySelect = ({ emitCountry, countriesSelectProps, showSearch=true, st
 										/> :
 										<div style={{width: '20px', height: '20px'}} />
 								}
-								<p>{c?.currency?.name} ({c?.currency?.accronym} - {c?.currency?.symbol})</p>
+								<p>{c?.name} ({c?.currency})</p>
 							</div>
 						))}
 					</div>
