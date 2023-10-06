@@ -91,10 +91,8 @@ const ServicesPage = ({styles}) => {
 		setService(val)
 		if (val.servicePriceModel?.name === 'Fixed Price') {
 			setFixedServicePrice(val.servicePrice)
-			console.log(fixedServicePrice)
 		} else {
 			setPackageServicePrice(val.servicePrice)
-			console.log(packageServicePrice)
 		}
 		setShowModal(true)
 	}
@@ -125,7 +123,6 @@ const ServicesPage = ({styles}) => {
 	const updateService = () => {
 		if (service.servicePriceModel?.name === 'Fixed Price') {
 			let formattedService = {...service, servicePrice: fixedServicePrice }
-			console.log(formattedService)
 			if (currentEditId !== null) {
 				const update = services.map(oldService =>
 					oldService.id === currentEditId ?
@@ -181,13 +178,17 @@ const ServicesPage = ({styles}) => {
 			return
 		}
 		const payload = services.map(e=> {
-			let formattedService = e
-			e.addVat = e.addVat ? '1' : '0'
-			// e.serviceCurrency = e.serviceCurrency
-			e.featuredService = e.featuredService ? '1' : '0'
-			e.servicePriceModel = e.servicePriceModel.value
-			return formattedService
+			return {
+				...e, 
+				addVat: e.addVat ? '1' : '0', 
+				featuredService: e.featuredService ? '1' : '0', 
+				servicePriceModel: e.servicePriceModel.value, 
+				serviceType : e.serviceType.serviceId
+			}
 		})
+
+		// console.log(services)
+		console.log(payload)
 		setIsLoading(true)
 		try {
 			const response = await publicProfile.addServices(payload)
@@ -195,6 +196,7 @@ const ServicesPage = ({styles}) => {
 			notify('success', 'Your services have been saved')
 			push('/dashboard/public-profile-setup/contact')
 		} catch (_err) {
+			console.log(_err)
 			const { message } = _err.response?.data || _err
 			notify('error', message)
 		} finally {
@@ -205,10 +207,6 @@ const ServicesPage = ({styles}) => {
 	useEffect(function resetModalCtaClickedOnLevelChange(){
 		setModalCtaClicked(false)
 	}, [modalLevel])
-
-	useEffect(()=>{
-		console.log(fixedServicePrice)
-	},[fixedServicePrice])
 
 	useEffect(()=>{
 		// console.log('use effect')
@@ -227,14 +225,14 @@ const ServicesPage = ({styles}) => {
 		// condition to check if all conditions are met in first modal
 		const mainServiceConditionsMet =
 			serviceType?.serviceName &&
-			serviceDesc.trim() &&
+			serviceDesc.trim() && serviceDesc.trim().length <=200 &&
 			serviceBanner
 
 		// condition to check if all conditions are met in second modal for priceModel === 'Fixed Price
 		const fixedConditionsMet =
 			serviceCurrency &&
 			servicePriceModel?.name &&
-			fixedServicePrice
+			Number(fixedServicePrice) !== 0
 
 		// condition to check if all conditions are met in second modal for priceModel === 'Package
 		const packageConditionsMet =
@@ -283,9 +281,9 @@ const ServicesPage = ({styles}) => {
 	const getApiServiceTypes = async () => {
 		try {
 			const response = await publicProfile.getPrimaryServices()
-			setServiceTypes(response.data.data)
+			setServiceTypes(response?.data?.data)
 		} catch (_err) {
-			const { message } = _err.response?.data || _err
+			const { message } = _err?.response?.data || _err
 			notify('error', message)
 		} finally {
 			//
@@ -305,7 +303,7 @@ const ServicesPage = ({styles}) => {
 		for (const p of packageServicePrice) {
 			if (
 				!p.categoryName ||
-				!p.price
+				Number(p.price) === 0
 			) {
 				setAllPackagePriceFieldsValid(false)
 			} else {
@@ -317,11 +315,6 @@ const ServicesPage = ({styles}) => {
 	useEffect(() => {
 		getApiServiceTypes()
 	}, [])
-
-	useEffect(()=>{
-		console.log(fixedServicePrice)
-		console.log(packageServicePrice)
-	},[fixedServicePrice, packageServicePrice])
 
 	const AddServiceModal = () => (
 		<ModalWrapper
@@ -395,7 +388,7 @@ const ServicesPage = ({styles}) => {
 		<Input
 			id='service-price'
 			label='Set Price'
-			error={modalCtaClicked && !fixedServicePrice}
+			error={modalCtaClicked && Number(fixedServicePrice) === 0}
 			errorMsg='Service Price is required'
 		>
 			<MoneyInput
@@ -442,7 +435,7 @@ const ServicesPage = ({styles}) => {
 							id='service-price'
 							styleProps={{width: '80%'}}
 							label={`Set Price ${service.pricingType ? `(${service.pricingType})` : ''}`}
-							error={modalCtaClicked && !p.price}
+							error={modalCtaClicked && Number(p.price) ===0}
 							errorMsg='Service Price is required'
 						>
 							<MoneyInput
@@ -463,7 +456,7 @@ const ServicesPage = ({styles}) => {
 								width: '8%',
 								position: 'absolute',
 								right: 0,
-								bottom: `${modalCtaClicked && (!p.price || !p.categoryName) ? '28px' : '0'}`
+								bottom: `${modalCtaClicked && (Number(p.price) === 0 || !p.categoryName) ? '28px' : '0'}`
 							}}
 						>
 							<CancelIcon color='#FF3B2D' />
