@@ -18,9 +18,49 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import { CancelIcon } from '@/constants/icons'
 import MoneyInput from '@/components/Custom/MoneyInput'
 import FormChoice from '../FormChoice'
+// import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+import { savePublicProfile, 
+	// getPublicProfile as getSavedPublicProfile  
+} from '@/services/localService'
 
-const ServicesPage = ({styles}) => {
+
+const ServicesPage = ({styles}) => {	
+	// const savedPublicProfile = getSavedPublicProfile()
+	// eslint-disable-next-line no-unused-vars
+	const getPublicProfile = async () => {
+	try {
+		const response = await publicProfile.getPublicProfile()
+		const data = response.data.data[0]
+		console.log(data)
+		savePublicProfile(data)
+		if (data.services.length) {
+			// setBusinessLogo(data.logo)
+			const formattedService = data.services.map((d, id)=>{
+				let obj = {
+					...d,
+					id,
+					serviceType: {
+						serviceType: d.serviceType,
+						serviceName: d.serviceName
+					}
+				}
+				return obj
+			})
+			setServices(formattedService)
+			setSubmitType('EDIT')
+		}
+	} catch (_err) {
+		console.log(_err)
+	} finally {
+		// setDataLoading(false)
+	}
+}
+useEffect(()=>{
+	// getPublicProfile()
+},[])
 	const notify = useNotify()
+	// const [dataLoading, setDataLoading] = useState(true)
+	const [submitType, setSubmitType] = useState('NEW')
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -31,7 +71,6 @@ const ServicesPage = ({styles}) => {
 	const [modalLevel, setModalLevel] = useState(0);
 	const [services, setServices] = useState([]);
 	const [serviceTypes, setServiceTypes] = useState([]);
-	const [submitType, setSubmitType] = useState('NEW');
 	const initialService = {
 		id: null,
 		serviceType: {
@@ -178,7 +217,6 @@ const ServicesPage = ({styles}) => {
 		if (!allFieldsValid) {
 			return
 		}
-		setSubmitType('NEW')
 		const formattedServices = services.map(e=> {
 			const s = {
 				...e, 
@@ -200,6 +238,9 @@ const ServicesPage = ({styles}) => {
 		try {
 			const response = await publicProfile.addServices(payload)
 			console.log(response)
+			// savePublicProfile({...savedPublicProfile, productStage: 3})
+
+			savePublicProfile({productStage: 3})
 			notify('success', 'Your services have been saved')
 			push('/dashboard/public-profile-setup/contact')
 		} catch (_err) {
@@ -570,6 +611,7 @@ const ServicesPage = ({styles}) => {
 
 	return (
 		<>
+		{/* {dataLoading ? <FullScreenLoader /> : <></>} */}
 			{
 				showModal && modalLevel === 0 ?
 					AddServiceModal() :
@@ -578,7 +620,7 @@ const ServicesPage = ({styles}) => {
 						<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
+				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/business')} />
 				<h1>Services</h1>
 				<form onSubmit={handleSubmit}>
 					{AddBusinessServices()}

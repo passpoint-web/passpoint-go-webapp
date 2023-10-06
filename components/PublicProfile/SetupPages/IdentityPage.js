@@ -10,11 +10,12 @@ import Button from '@/components/Btn/Button'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
-import { savePublicProfile } from '@/services/localService'
-
+import { savePublicProfile, 
+	// getPublicProfile as getSavedPublicProfile 
+} from '@/services/localService'
 
 const IdentityPage = ({styles}) => {
-
+	// const savedPublicProfile = getSavedPublicProfile()
 	const [dataLoading, setDataLoading] = useState(true)
 	const [submitType, setSubmitType] = useState('NEW')
 	const [isLoading, setIsLoading] = useState(false)
@@ -27,12 +28,14 @@ const IdentityPage = ({styles}) => {
 	
 
 	const notify = useNotify()
-		const getPublicProfile = async () => {
+
+	// eslint-disable-next-line no-unused-vars
+	const getPublicProfile = async () => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data[0]
 			// console.log(data)
-			savePublicProfile(data)
+			// savePublicProfile(data)
 			if (data.logo) {
 				setBusinessLogo(data.logo)
 				setSubmitType('EDIT')
@@ -57,6 +60,8 @@ const IdentityPage = ({styles}) => {
 		try {
 			const response = await publicProfile.uploadBusinessLogo({logo: businessLogo, submitType})
 			console.log(response)
+			// savePublicProfile({...savedPublicProfile, productStage: 1})
+			savePublicProfile({productStage: 1})
 			notify('success', `Your business logo has been saved`)
 			push('/dashboard/public-profile-setup/business')
 		} catch (_err) {

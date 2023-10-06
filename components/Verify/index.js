@@ -12,6 +12,7 @@ import { verifyEmailOtp } from '@/services/restService'
 import functions from '@/utils/functions'
 
 const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, otpType = 'accountVerification'}) => {
+	console.log(email)
 	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
@@ -60,6 +61,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 					{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
+						{email}
               We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
               code below.
 					</h4>

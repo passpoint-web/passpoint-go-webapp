@@ -80,6 +80,7 @@ export const removeToken = () => {
 	if (typeof window !== "undefined") {
 		// localStorage.removeItem("token");
 		cookies.remove('token', '')
+		removePublicProfile()
 	}
 };
 
@@ -94,5 +95,11 @@ export const getPublicProfile = () => {
 		if (val !== "undefined") {
 			return JSON.parse(val);
 		}
+	}
+};
+
+export const removePublicProfile = () => {
+	if (typeof window !== "undefined") {
+		localStorage.removeItem("public_profile")
 	}
 };
