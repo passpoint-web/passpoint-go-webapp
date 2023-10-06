@@ -57,6 +57,7 @@ const IdentityPageCop = ({ styles }) => {
             label="Bank Verification Number"
             id="bvn"
             name="bvn"
+            type="number"
             placeholder="Enter your BVN"
             error={ctaClicked && !payload.bvn}
             onChange={(e) => handleChange(e.target.value, "bvn")}
@@ -64,21 +65,21 @@ const IdentityPageCop = ({ styles }) => {
             info='To get your BVN, Dial *560# with your business phone number'
           />
           <FileUpload
-            subTitle="Business Registration Certificate"
+            smTitle="Business Registration Certificate"
             fileObj={payload.businessCert}
             handlefileUpload={(file) => handleChange(file, "businessCert")}
             error={ctaClicked && !payload.businessCert.name}
 						errorMsg='Registration certificate is required'
           />
           <FileUpload
-            subTitle="Business License"
+            smTitle="Business License"
             fileObj={payload.businessLicense}
             handlefileUpload={(file) => handleChange(file, "businessLicense")}
             error={ctaClicked && !payload.businessLicense.name}
 						errorMsg='Business License is required'
           />
           <FileUpload
-            subTitle="Passport Photograph"
+            smTitle="Passport Photograph"
             fileObj={payload.businessPhoto}
             handlefileUpload={(file) => handleChange(file, "businessPhoto")}
             error={ctaClicked && !payload.businessPhoto.name}

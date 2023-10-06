@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { useNotify } from '@/utils/hooks'
 import TertiaryBtn from '../Btn/Tertiary'
 
-const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, image/pdf", handlefileUpload, title, subTitle, base64}) => {
+const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, image/pdf", handlefileUpload, title, smTitle, subTitle, base64}) => {
 	const notify = useNotify()
 	const onUploadClick = (e) => {
 		e.preventDefault()
@@ -40,10 +40,13 @@ const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, 
 			<div className={`${styles.upload_ctn} ${error ? styles.error : ''}`}
 				style={{...styleProps}}>
 				<div>
-					<h2>
+					<h2 className={styles.title}>
 						{title}
 					</h2>
-					<p>
+					<h3 className={styles.sm_title}>
+						{smTitle}
+					</h3>
+					<p className={styles.sub_title}>
 						{subTitle}
 					</p>
 				</div>
