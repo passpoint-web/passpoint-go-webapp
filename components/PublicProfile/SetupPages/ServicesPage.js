@@ -56,11 +56,10 @@ const ServicesPage = ({styles}) => {
 
 	const [fixedServicePrice, setFixedServicePrice] = useState(0)
 
-	const initialPackageServicePrice = {categoryName: '', price: 0}
+	const initialPackageServicePrice = [{categoryName: '', price: 0}]
 	const [packageServicePrice, setPackageServicePrice] = useState(
-		[
-			initialPackageServicePrice
-		])
+		initialPackageServicePrice
+	)
 	const [allPackagePriceFieldsValid, setAllPackagePriceFieldsValid] = useState(false)
 
 	const handlePackageServicePrice = ({value, id, name}) =>{
@@ -92,8 +91,10 @@ const ServicesPage = ({styles}) => {
 		setService(val)
 		if (val.servicePriceModel?.name === 'Fixed Price') {
 			setFixedServicePrice(val.servicePrice)
+			console.log(fixedServicePrice)
 		} else {
 			setPackageServicePrice(val.servicePrice)
+			console.log(packageServicePrice)
 		}
 		setShowModal(true)
 	}
@@ -106,34 +107,53 @@ const ServicesPage = ({styles}) => {
 		}));
 	};
 
-	const editFeature = () => {
-		// console.log('yo')
+	const handleModalCta = () => {
 		setModalCtaClicked(true)
-		// map through features, and look for the feature with current edit id, then update with feature object
-		const update = services.map(oldService =>
-			oldService.id === currentEditId ?
-				service: oldService
-		)
-		setServices(update)
-		// reset state
-		setShowModal(false)
-		setCurrentEditId(null)
-		setModalCtaClicked(false)
-		setModalLevel(0)
+		if (modalLevel === 0) {
+			if (!modalFieldsValid) {
+				return
+			}
+			setModalLevel(1)
+		} else if (modalLevel === 1) {
+			if (!modalFieldsValid) {
+				return
+			}
+			updateService()
+		}
 	}
 
-	const addToFeatures = () => {
-		setModalCtaClicked(true)
+	const updateService = () => {
 		if (service.servicePriceModel?.name === 'Fixed Price') {
-			const formattedService = {...service, servicePrice: fixedServicePrice, id: services.length}
+			let formattedService = {...service, servicePrice: fixedServicePrice }
 			console.log(formattedService)
-			setServices([...services, formattedService])
+			if (currentEditId !== null) {
+				const update = services.map(oldService =>
+					oldService.id === currentEditId ?
+						formattedService: oldService
+				)
+				setServices(update)
+			} else {
+				formattedService.id = services.length
+				setServices([...services, formattedService])
+			}
 			setFixedServicePrice(0)
 		} else {
-			const formattedService = {...service, servicePrice: packageServicePrice, id: services.length}
-			setServices([...services, formattedService])
-			setPackageServicePrice([initialPackageServicePrice])
+			let formattedService = {...service, servicePrice: packageServicePrice }
+			if (currentEditId !== null) {
+				const update = services.map(oldService =>
+					oldService.id === currentEditId ?
+						formattedService: oldService
+				)
+				setServices(update)
+			} else {
+				formattedService.id = services.length
+				setServices([...services, formattedService])
+			}
+			setPackageServicePrice(initialPackageServicePrice)
 		}
+		resetState()
+	}	
+	const resetState = () => {
 		// reset state
 		setShowModal(false)
 		setCurrentEditId(null)
@@ -141,6 +161,7 @@ const ServicesPage = ({styles}) => {
 		setModalCtaClicked(false)
 		setModalLevel(0)
 	};
+
 
 	const hideServiceModal = () => {
 		setShowModal(false)
@@ -181,31 +202,13 @@ const ServicesPage = ({styles}) => {
 		}
 	}
 
-	const handleModalCta = () => {
-		setModalCtaClicked(true)
-		if (modalLevel === 0) {
-			// console.log('0')
-			if (!modalFieldsValid) {
-				return
-			}
-			setModalLevel(1)
-		} else if (modalLevel === 1) {
-			// console.log('1')
-			if (!modalFieldsValid) {
-				return
-			}
-			console.log(currentEditId)
-			if (currentEditId === null) {
-				addToFeatures()
-			} else {
-				editFeature()
-			}
-		}
-	}
-
 	useEffect(function resetModalCtaClickedOnLevelChange(){
 		setModalCtaClicked(false)
 	}, [modalLevel])
+
+	useEffect(()=>{
+		console.log(fixedServicePrice)
+	},[fixedServicePrice])
 
 	useEffect(()=>{
 		// console.log('use effect')
@@ -315,10 +318,16 @@ const ServicesPage = ({styles}) => {
 		getApiServiceTypes()
 	}, [])
 
+	useEffect(()=>{
+		console.log(fixedServicePrice)
+		console.log(packageServicePrice)
+	},[fixedServicePrice, packageServicePrice])
+
 	const AddServiceModal = () => (
 		<ModalWrapper
-			heading={`Add Service ${currentEditId !== null ? `(${currentEditId+1})` : ''}`}
+			heading={`${currentEditId !== null ? `Edit Service (${currentEditId+1})` : 'Add Service'}`}
 			subHeading='Provide details of your service'
+			ctaBtnText='Continue'
 			onClose={hideServiceModal}
 			handleCta={handleModalCta}
 		>
@@ -391,7 +400,7 @@ const ServicesPage = ({styles}) => {
 		>
 			<MoneyInput
 				id='servicePrice'
-				placeholder={'# price'}
+				placeholder={`# price`}
 				currency={service?.serviceCurrency}
 				value={fixedServicePrice}
 				onValueChange={(e)=>setFixedServicePrice(e)}
@@ -401,26 +410,6 @@ const ServicesPage = ({styles}) => {
 
 	const PackageModel = () => (
 		<>
-			{/* <Input
-				id='pricingType'
-				label='Set Pricing Type'
-				error={modalCtaClicked && !service.pricingType}
-				errorMsg='Pricing type is required'
-			>
-				<CustomSelect
-					styleProps={{
-						dropdown: {
-							height: '100px'
-						}
-					}}
-					fieldError={modalCtaClicked && !service.pricingType}
-					selectOptions={servicePricingTypes}
-					selectedOption={service.pricingType}
-					emitSelect={(s) => handleServiceChange({
-						target: { name: 'pricingType', value: s },
-					})}
-				/>
-			</Input> */}
 			<Input
 				id='pricingType'
 				name='pricingType'
@@ -484,18 +473,18 @@ const ServicesPage = ({styles}) => {
 			))}
 			<Button className='tertiary'
 				disabled={packageServicePrice.length >= 4 || !allPackagePriceFieldsValid}
-				onClick={()=>setPackageServicePrice([...packageServicePrice, initialPackageServicePrice])}
+				onClick={()=>setPackageServicePrice([...packageServicePrice, {categoryName: '', price: 0}])}
 				style={{marginTop: '16px'}}
 				text='+ Add another category' />
 		</>
 	)
 	const AddPricingOptionsModal = () => (
 		<ModalWrapper
-			heading={`Pricing Options ${currentEditId !== null ? `(${currentEditId+1})` : ''}`}
+			heading={`${currentEditId !== null ? `Edit Pricing Options (${currentEditId+1})` : 'Add Pricing Options'}`}
 			subHeading='Customize your prizing options'
 			onClose={()=>setModalLevel(0)}
 			cancelBtnText='Back'
-			ctaBtnText='Add'
+			ctaBtnText={currentEditId === null ? 'Add' : 'Edit'}
 			handleCta={handleModalCta}
 		>
 			<div className={styles.form}>

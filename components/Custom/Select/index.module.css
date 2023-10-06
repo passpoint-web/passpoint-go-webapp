@@ -63,7 +63,7 @@
 }
 
 .custom_select button .content p {
-  color: var(--grey-4);
+  color: var(--grey-3);
 }
 
 .custom_select button .content p.option,
