@@ -3,7 +3,7 @@ import IdentityInd from "@/components/KYC/individual/IndentityInd";
 
 export const metadata = () => {
   return {
-    title: "Proof Of Identity - KYC-Individual | Passpoint Go",
+    title: "Proof Of Identity - KYC | Passpoint Go",
     description: "",
   };
 };

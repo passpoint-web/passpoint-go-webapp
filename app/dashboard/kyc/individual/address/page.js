@@ -3,7 +3,7 @@ import styles from "../../kyc.module.css";
 
 export const metadata = () => {
   return {
-    title: "Proof Of Address - KYC-Individual | Passpoint Go",
+    title: "Proof Of Address - KYC | Passpoint Go",
     description: "",
   };
 };

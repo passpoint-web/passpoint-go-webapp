@@ -3,7 +3,7 @@ import styles from "../../kyc.module.css";
 
 export const metadata = () => {
   return {
-    title: "Address - KYC-Corporate | Passpoint Go",
+    title: "Address - KYC | Passpoint Go",
     description: "",
   };
 };
