@@ -82,3 +82,17 @@ export const removeToken = () => {
 		cookies.remove('token', '')
 	}
 };
+
+
+export const savePublicProfile = (val) => {
+	localStorage.setItem("public_profile", JSON.stringify(val));
+};
+
+export const getPublicProfile = () => {
+	if (typeof window !== "undefined") {
+		const val = localStorage.getItem("public_profile");
+		if (val !== "undefined") {
+			return JSON.parse(val);
+		}
+	}
+};

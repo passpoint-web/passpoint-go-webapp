@@ -6,8 +6,11 @@ import {usePathname, useRouter} from 'next/navigation'
 import FormLevel from '../../FormLevel'
 import { useEffect, useState } from 'react'
 import BackBtn from '@/components/Btn/Back'
+import { getPublicProfile, savePublicProfile } from '@/services/localService'
 import styles from '@/app/dashboard/public-profile-setup/public-profile.module.css'
 const PublicProfileSetupLHS = () => {
+
+	const savedPublicProfile = getPublicProfile()
 	const pathname = usePathname()
 	const {push} = useRouter()
 
@@ -18,25 +21,25 @@ const PublicProfileSetupLHS = () => {
 			title: 'Logo',
 			sub_title: 'Provide your official logo',
 			active: pathname === '/dashboard/public-profile-setup/identity',
-			completed: false,
+			completed: savedPublicProfile?.profileStage>1,
 		},
 		{
 			title: 'About Business',
 			sub_title: 'Briefly tell us about your business and why they should choose you',
 			active: pathname === '/dashboard/public-profile-setup/business',
-			completed: false,
+			completed: savedPublicProfile?.profileStage>2,
 		},
 		{
 			title: 'Services',
 			sub_title: 'Kindly list all the services you offer including featured services',
 			active: pathname === '/dashboard/public-profile-setup/services',
-			completed: false,
+			completed: savedPublicProfile?.profileStage>3,
 		},
 		{
 			title: 'Contact Us',
 			sub_title: 'Kindly provide us with your contact information',
 			active: pathname === '/dashboard/public-profile-setup/contact',
-			completed: false,
+			completed: savedPublicProfile?.isCompleted,
 		},
 	]
 

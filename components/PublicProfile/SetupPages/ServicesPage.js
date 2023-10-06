@@ -31,6 +31,7 @@ const ServicesPage = ({styles}) => {
 	const [modalLevel, setModalLevel] = useState(0);
 	const [services, setServices] = useState([]);
 	const [serviceTypes, setServiceTypes] = useState([]);
+	const [submitType, setSubmitType] = useState('NEW');
 	const initialService = {
 		id: null,
 		serviceType: {
@@ -177,18 +178,24 @@ const ServicesPage = ({styles}) => {
 		if (!allFieldsValid) {
 			return
 		}
-		const payload = services.map(e=> {
-			return {
+		setSubmitType('NEW')
+		const formattedServices = services.map(e=> {
+			const s = {
 				...e, 
-				addVat: e.addVat ? '1' : '0', 
-				featuredService: e.featuredService ? '1' : '0', 
+				addVat: e.addVat ? 1 : 0, 
+				featuredService: e.featuredService ? 1 : 0, 
 				servicePriceModel: e.servicePriceModel.value, 
-				serviceType : e.serviceType.serviceId
+				serviceType : e.serviceType.serviceId,
+				serviceName : e.serviceType.serviceName,
+				pricingType: e.pricingType || 'N/A'
 			}
+			delete s.id
+			return s
 		})
-
-		// console.log(services)
-		console.log(payload)
+		const payload = {
+			submitType,
+			services: formattedServices
+		}
 		setIsLoading(true)
 		try {
 			const response = await publicProfile.addServices(payload)
