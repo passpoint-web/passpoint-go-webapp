@@ -30,14 +30,12 @@ import { savePublicProfile } from "@/services/localService";
 // import Button from "@/components/Btn/Button";
 
 const ContactPage = ({ styles }) => {
-	const {push} = useRouter
+	const {push} = useRouter()
 	// const savedCredentials = getCredentials()
 	const [isLoading, setIsLoading] = useState(false)
-	// const { push } = useRouter()
 	const notify = useNotify()
 	// console.log(router)
 	const { validEmail, isValidUrl } = functions;
-	// const { push } = useRouter();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [finalCtaClicked, setFinalCtaClicked] = useState(false);
 	const [contactLevel, setContactLevel] = useState(true)
@@ -323,7 +321,7 @@ const ContactPage = ({ styles }) => {
 
 	return (
 		<div className={styles.inner}>
-		<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
+		<BackBtn onClick={()=>push('/dashboard/public-profile-setup/services')} />
 			<h1>Contact Information</h1>
 			<div className={styles.contact_breadcrumbs}>
 				<TertiaryBtn text="Business Contact"
