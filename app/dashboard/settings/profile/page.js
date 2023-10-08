@@ -1,5 +1,8 @@
-const Profile = () => {
-	return <div>Profile</div>
+import AccountProfile from "@/components/AccountProfile"
+const ProfilePage = () => {
+	return (
+		<AccountProfile />
+	)
 }
 
-export default Profile
+export default ProfilePage

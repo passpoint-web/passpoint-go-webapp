@@ -16,17 +16,6 @@ const getRequestConfig = () => {
 	};
 };
 
-restAgent.interceptors.response.use(undefined, (error) => {
-	const statusCode = error.response ? error.response.status : null;
-	console.log('Inte', statusCode);
-	if (
-		(statusCode && statusCode === 401) ||
-    (statusCode && statusCode === 403)
-	) {
-		// Redirect('/auth/login');
-	}
-});
-
 
 const setConfig = () => {
 	const token = getToken()

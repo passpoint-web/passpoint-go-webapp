@@ -1360,3 +1360,29 @@ export const AddIcon = ({color='#BDC0CE'}) => (
 			strokeLinejoin="round"/>
 	</svg>
 )
+
+export const ProfileEditIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none">
+		<path d="M9.16797 1.66675H7.5013C3.33464 1.66675 1.66797 3.33341 1.66797 7.50008V12.5001C1.66797 16.6667 3.33464 18.3334 7.5013 18.3334H12.5013C16.668 18.3334 18.3346 16.6667 18.3346 12.5001V10.8334"
+			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M13.3675 2.51663L6.80088 9.0833C6.55088 9.3333 6.30088 9.82497 6.25088 10.1833L5.89254 12.6916C5.75921 13.6 6.40088 14.2333 7.30921 14.1083L9.81754 13.75C10.1675 13.7 10.6592 13.45 10.9175 13.2L17.4842 6.6333C18.6175 5.49997 19.1509 4.1833 17.4842 2.51663C15.8175 0.849966 14.5009 1.3833 13.3675 2.51663Z"
+			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12.4258 3.45825C12.9841 5.44992 14.5424 7.00825 16.5424 7.57492"
+			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+	</svg>
+)
