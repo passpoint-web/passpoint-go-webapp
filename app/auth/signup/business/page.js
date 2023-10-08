@@ -128,6 +128,7 @@ const BusinessInformation = () => {
 								label="Business Email Address"
 								id="business-email-address"
 								name="email"
+								type='email'
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}

@@ -171,6 +171,7 @@ const AccountProfile = () => {
 							label='Business Email Address'
 							id='email'
 							disabled
+							type='email'
 							name='email'
 							placeholder='Business Email Address'
 							value={payload.email}
