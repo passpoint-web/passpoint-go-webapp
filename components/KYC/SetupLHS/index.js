@@ -1,14 +1,14 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import FormLevel from "../../FormLevel";
 import { useEffect, useState } from "react";
-import BackBtn from "@/components/Btn/Back";
+// import BackBtn from "@/components/Btn/Back";
 import styles from "@/app/dashboard/public-profile-setup/public-profile.module.css";
 import { getCredentials } from "@/services/localService";
 
 const KycSetupLHS = () => {
   const pathname = usePathname();
-  const { push } = useRouter();
+  // const { push } = useRouter();
   const user = getCredentials();
 
   const [levelsToDisplay, setLevelsToDisplay] = useState([]);
@@ -72,7 +72,7 @@ const KycSetupLHS = () => {
   }, [pathname, user?.userType]);
   return (
     <>
-      <BackBtn text="Back" onClick={() => push("/dashboard")} />
+      {/* <BackBtn text="Back" onClick={() => push("/dashboard")} /> */}
       <div className={styles.lhs_levels_ctn}>
         {levelsToDisplay.map((e, index) => (
           <FormLevel
