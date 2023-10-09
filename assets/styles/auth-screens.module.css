@@ -122,6 +122,7 @@
 .form {
   padding-top: var(--outer-component-mg);
   max-width: 600px;
+  padding-bottom: var(--inner-component-mg);
 }
 
 .auth > .inner.business_type .form {

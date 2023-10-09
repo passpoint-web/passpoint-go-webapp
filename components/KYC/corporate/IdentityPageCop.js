@@ -5,6 +5,7 @@ import Input from "@/components/Dashboard/Input";
 import FileUpload from "@/components/FileUpload";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import formStyles from '@/assets/styles/auth-screens.module.css'
 
 const IdentityPageCop = ({ styles }) => {
   const { push } = useRouter();
@@ -52,7 +53,7 @@ const IdentityPageCop = ({ styles }) => {
   return (
     <div className={styles.inner} onSubmit={handleSubmit}>
       <h1>Proof of Identity</h1>
-      <form>
+      <form className={formStyles.form}>
           <Input
             label="Bank Verification Number"
             id="bvn"
@@ -85,7 +86,7 @@ const IdentityPageCop = ({ styles }) => {
             error={ctaClicked && !payload.businessPhoto.name}
 						errorMsg='Passport photograph is required'
           />
-        <div className={styles.action_ctn}>
+        <div className={formStyles.action_ctn}>
           <PrimaryBtn text="Save and continue" loading={isLoading} />
         </div>
       </form>
