@@ -50,7 +50,7 @@ const DashboardHeader = () => {
 				</i>
 
 				{showDropDown && (
-					<div className={styles.headerDropdown}>
+					<div className={`${styles.headerDropdown} dropdown`}>
 						{items.map((item, index) => (
 							<div key={index}>
 								{item.type === "link" ? (

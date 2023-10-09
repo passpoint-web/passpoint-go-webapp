@@ -1,14 +1,10 @@
 import {
 	LogoutIcon,
-	Metric1,
-	Metric2,
-	Metric3,
-	Metric4,
-	NotifyIcon,
+	NotificationIcon,
+	NewNotificationIcon,
 	ProfileIcon,
-	SettingPprofile,
+	SettingProfile,
 	SideIcon1,
-	SideIcon10,
 	SideIcon2,
 	SideIcon3,
 	SideIcon4,
@@ -70,20 +66,20 @@ export const sidebarData = [
 export const menuItems = (handleLogout) => [
 	{
 		type: "link",
-		href: "/dashboard/settings/profile",
+		href: "/dashboard/profile",
 		icon: <ProfileIcon />,
 		label: "Profile",
 	},
 	{
 		type: "link",
 		href: "/dashboard/notification",
-		icon: <NotifyIcon />,
+		icon: <NewNotificationIcon />,
 		label: "Notifications",
 	},
 	{
 		type: "link",
 		href: "/dashboard/settings",
-		icon: <SettingPprofile />,
+		icon: <SettingProfile />,
 		label: "Account Settings",
 	},
 	{

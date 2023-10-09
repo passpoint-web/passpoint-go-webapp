@@ -17,7 +17,7 @@ import CountrySelect from '../Custom/CountrySelect';
 
 const AccountProfile = () => {
 	const savedCredentials = getCredentials()
-	const [personalInfoEdit, setPrsonalInfoEdit] = useState(false)
+	const [personalInfoEdit, setPersonalInfoEdit] = useState(false)
 	const [businessInfoEdit, setBusinessInfoEdit] = useState(false)
 	const [addressInfoEdit, setAddressInfoEdit] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -86,7 +86,7 @@ const AccountProfile = () => {
 			{
 				personalInfoEdit && 
 				<ModalWrapper 
-					onClose={()=>setPrsonalInfoEdit(false)}
+					onClose={()=>setPersonalInfoEdit(false)}
 					heading='Edit Personal Information'
 					subHeading='Kindly update your personal information'
 					ctaBtnText='Update'
@@ -127,7 +127,7 @@ const AccountProfile = () => {
 			<div className={styles.profile_card}>
 				<div className={styles.top}>
 					<h3>Personal Information</h3>
-					<button onClick={()=>setPrsonalInfoEdit(true)}>
+					<button onClick={()=>setPersonalInfoEdit(true)}>
 						<ProfileEditIcon />
 					</button>
 				</div>
@@ -356,10 +356,10 @@ const AccountProfile = () => {
 
 	return (
 		<div className={styles.profile_ctn}>
-			{savedCredentials.hasPublicProfile ? <BusinessProfileCard /> : <></>}
-			<PersonalInfo />
-			<BusinessInfo />
-			<AddressInfo />
+			{savedCredentials.hasPublicProfile ? BusinessProfileCard() : <></>}
+			{PersonalInfo()}
+			{BusinessInfo()}
+			{AddressInfo()}
 		</div>
 	)
 }

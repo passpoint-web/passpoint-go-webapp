@@ -493,7 +493,7 @@ export const DropDownIconDark = () => (
 	</svg>
 );
 
-export const NotifyIcon = () => (
+export const NotificationIcon = ({color = '#565C69'}) => (
 	<svg
 		width="20"
 		height="20"
@@ -506,7 +506,7 @@ export const NotifyIcon = () => (
 				<path
 					id="Vector"
 					d="M10.0175 2.42578C7.25914 2.42578 5.01747 4.66745 5.01747 7.42578V9.83411C5.01747 10.3424 4.80081 11.1174 4.54247 11.5508L3.58414 13.1424C2.99247 14.1258 3.40081 15.2174 4.48414 15.5841C8.07581 16.7841 11.9508 16.7841 15.5425 15.5841C16.5508 15.2508 16.9925 14.0591 16.4425 13.1424L15.4841 11.5508C15.2341 11.1174 15.0175 10.3424 15.0175 9.83411V7.42578C15.0175 4.67578 12.7675 2.42578 10.0175 2.42578Z"
-					stroke="#565C69"
+					stroke={color}
 					strokeWidth="1.5"
 					strokeMiterlimit="10"
 					strokeLinecap="round"
@@ -514,7 +514,7 @@ export const NotifyIcon = () => (
 				<path
 					id="Vector_2"
 					d="M11.5579 2.66719C11.2996 2.59219 11.0329 2.53385 10.7579 2.50052C9.95794 2.40052 9.19128 2.45885 8.47461 2.66719C8.71628 2.05052 9.31628 1.61719 10.0163 1.61719C10.7163 1.61719 11.3163 2.05052 11.5579 2.66719Z"
-					stroke="#565C69"
+					stroke={color}
 					strokeWidth="1.5"
 					strokeMiterlimit="10"
 					strokeLinecap="round"
@@ -523,7 +523,7 @@ export const NotifyIcon = () => (
 				<path
 					id="Vector_3"
 					d="M12.5176 15.8828C12.5176 17.2578 11.3926 18.3828 10.0176 18.3828C9.33425 18.3828 8.70091 18.0995 8.25091 17.6495C7.80091 17.1995 7.51758 16.5661 7.51758 15.8828"
-					stroke="#303237"
+					stroke={color}
 					strokeWidth="1.5"
 					strokeMiterlimit="10"
 				/>
@@ -603,7 +603,7 @@ export const LogoutIcon = () => (
 		</g>
 	</svg>
 );
-export const SettingPprofile = () => (
+export const SettingProfile = () => (
 	<svg
 		width="20"
 		height="20"
@@ -1294,6 +1294,35 @@ export const NoteIcon = () => (
 			strokeLinejoin="round"/>
 	</svg>
 )
+export const NewNotificationIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none">
+		<path d="M10.0175 2.42499C7.25914 2.42499 5.01747 4.66665 5.01747 7.42499V9.83332C5.01747 10.3417 4.80081 11.1167 4.54247 11.55L3.58414 13.1417C2.99247 14.125 3.40081 15.2167 4.48414 15.5833C8.07581 16.7833 11.9508 16.7833 15.5425 15.5833C16.5508 15.25 16.9925 14.0583 16.4425 13.1417L15.4841 11.55C15.2341 11.1167 15.0175 10.3417 15.0175 9.83332V7.42499C15.0175 4.67499 12.7675 2.42499 10.0175 2.42499Z"
+			stroke="#565C69"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"/>
+		<path d="M11.5599 2.66664C11.3016 2.59164 11.0349 2.5333 10.7599 2.49997C9.9599 2.39997 9.19323 2.4583 8.47656 2.66664C8.71823 2.04997 9.31823 1.61664 10.0182 1.61664C10.7182 1.61664 11.3182 2.04997 11.5599 2.66664Z"
+			stroke="#565C69"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12.5156 15.8834C12.5156 17.2584 11.3906 18.3834 10.0156 18.3834C9.33229 18.3834 8.69896 18.1 8.24896 17.65C7.79896 17.2 7.51562 16.5667 7.51562 15.8834"
+			stroke="#303237"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"/>
+		<circle cx="15"
+			cy="6"
+			r="4.75"
+			fill="#FF3B2D"
+			stroke="white"
+			strokeWidth="0.5"/>
+	</svg>
+)
 
 export const SuccessIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg"
@@ -1380,6 +1409,51 @@ export const ProfileEditIcon = () => (
 			strokeLinejoin="round"/>
 		<path d="M12.4258 3.45825C12.9841 5.44992 14.5424 7.00825 16.5424 7.57492"
 			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+	</svg>
+)
+
+export const AccountProfileIcon = ({color='#009EC4'}) => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none">
+		<path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+	</svg>
+)
+
+export const AccountSecurityIcon = ({color='#009EC4'}) => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none">
+		<path d="M20.9099 11.12C20.9099 16.01 17.3599 20.59 12.5099 21.93C12.1799 22.02 11.8198 22.02 11.4898 21.93C6.63984 20.59 3.08984 16.01 3.08984 11.12V6.73003C3.08984 5.91003 3.70986 4.98004 4.47986 4.67004L10.0498 2.39007C11.2998 1.88007 12.7098 1.88007 13.9598 2.39007L19.5298 4.67004C20.2898 4.98004 20.9199 5.91003 20.9199 6.73003L20.9099 11.12Z"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12 12.5C13.1046 12.5 14 11.6046 14 10.5C14 9.39543 13.1046 8.5 12 8.5C10.8954 8.5 10 9.39543 10 10.5C10 11.6046 10.8954 12.5 12 12.5Z"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12 12.5V15.5"
+			stroke={color}
 			strokeWidth="1.5"
 			strokeMiterlimit="10"
 			strokeLinecap="round"

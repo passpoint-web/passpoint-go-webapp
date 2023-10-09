@@ -74,16 +74,22 @@ x
 .bottom {
   margin-top: var(--outer-component-mg);
   display: flex;
-  justify-content: flex-end;
-  /* justify-self: flex-end; */
   align-self: flex-end;
   gap: var(--sm-inner-component-mg);
+}
+
+.bottom.end {
+  justify-content: flex-end;
 }
 
 .bottom button {
   width: fit-content;
 }
 
+.bottom:not(.end) button {
+  width: 100%;
+}
+ 
 .close_btn {
   position:absolute;
   position: absolute;

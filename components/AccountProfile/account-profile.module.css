@@ -10,7 +10,8 @@
   border-radius: var(--ctn-br-md);
   display: flex;
   flex-direction: column;
-  gap: var(--outer-component-gap)
+  gap: var(--outer-component-gap);
+  animation: var(--anim-come-down-sm);
 }
 
 .profile_card > .top {

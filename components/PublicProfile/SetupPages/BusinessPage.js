@@ -171,7 +171,7 @@ const BusinessPage = ({styles}) => {
 			onClose={hideFeatureModal}
 			handleCta={currentEditId !== null ? editFeature : addToFeatures}
 		>
-			<div>
+			<form className={formStyles.form}>
 				<Input
 					label="Headline"
 					id="headline"
@@ -203,7 +203,7 @@ const BusinessPage = ({styles}) => {
 							: <></>
 					}
 				</Input>
-			</div>
+			</form>
 		</ModalWrapper>
 	)
 

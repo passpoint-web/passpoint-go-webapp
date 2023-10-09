@@ -8,7 +8,7 @@ import { useNotify } from '@/utils/hooks'
 import BackBtn from '@/components/Btn/Back'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { verifyEmailOtp } from '@/services/restService'
+import { authenticate } from '@/services/restService'
 import functions from '@/utils/functions'
 
 const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, otpType = 'accountVerification'}) => {
@@ -36,9 +36,8 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 				email,
 				otpType
 			}
-			const response = await verifyEmailOtp(payload)
+			const response = await authenticate.verifyEmailOtp(payload)
 			console.log(response)
-			// setSignupLevel({'business', 2})
 			notify('success', 'Your email has been verified!')
 			push(nextPath)
 		} catch (_err) {
