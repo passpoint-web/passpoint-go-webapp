@@ -69,11 +69,6 @@ const ForgotPasswordFlow = () => {
 		}
 	}
 
-	// useEffect(()=>{
-	// 	console.log('object')
-	// 	// handleForgotPasswordLevel('otp')
-	// },[])
-
 	const forgot = searchParams.get('forgotPasswordLevel') === 'forgot'
 	const verify = searchParams.get('forgotPasswordLevel') === 'verify'
 	const create = searchParams.get('forgotPasswordLevel') === 'create'
