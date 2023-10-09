@@ -86,4 +86,13 @@ export const publicProfile = {
 	},
 }
 
+
+export const kyc = {
+	uploadIdentity: (data) => {
+		return restAgent.post('kycProofIndividualIdentity', data, setConfig());
+	},
+	uploadAddress: (data) => {
+		return restAgent.post('kycProofIndividualAddress', data, setConfig());
+	},
+}
 // https://api.jessecoders.com/passpointGo/v1/getPrimaryServices

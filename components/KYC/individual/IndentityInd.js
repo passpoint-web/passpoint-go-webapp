@@ -2,20 +2,22 @@
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
-import FeedbackInfo from "@/components/FeedbackInfo";
 import FileUpload from "@/components/FileUpload";
+import { kyc } from "@/services/restService";
 import { indKycDocType } from "@/utils/CONSTANTS";
+import { useNotify } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const IdentityInd = ({ styles }) => {
   const { push } = useRouter();
+  const notify = useNotify();
   const [ctaClicked, setCtaClicked] = useState(false);
   const [allFieldsValid, setAllFieldsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [payload, setPayload] = useState({
     documentType: "",
-    document: {},
+    documentFile: "",
   });
 
   const handleChange = (name, value) => {
@@ -25,7 +27,7 @@ const IdentityInd = ({ styles }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(payload);
     setCtaClicked(true);
@@ -33,11 +35,26 @@ const IdentityInd = ({ styles }) => {
       return;
     }
     setIsLoading(true);
-    push("/dashboard/kyc/individual/address");
+    try {
+      const response = await kyc.uploadIdentity({
+        ...payload,
+      });
+      console.log(response);
+      notify("success", "Your identity has been saved");
+      push("/dashboard/kyc/individual/address");
+    } catch (_err) {
+      const { message } = _err.response?.data || _err;
+      notify("error", message);
+      if (message?.toLowerCase().includes("already uploaded")) {
+        push("/dashboard/kyc/individual/address");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    const conditionsMet = payload.documentType && payload.document.name;
+    const conditionsMet = payload.documentType && payload.documentFile;
     if (conditionsMet) {
       setAllFieldsValid(true);
     } else {
@@ -47,7 +64,7 @@ const IdentityInd = ({ styles }) => {
 
   return (
     <div className={styles.inner} onSubmit={handleSubmit}>
-      <h1>Proof of Address</h1>
+      <h1>Proof of Identity</h1>
       <form>
         <Input
           id="documentType"
@@ -66,15 +83,12 @@ const IdentityInd = ({ styles }) => {
         </Input>
         <div className={styles.innerUpload}>
           <FileUpload
-            subTitle="Upload the document selected"
-            fileObj={payload.document}
-            handlefileUpload={(file) => handleChange("document", file)}
+            smTitle="Upload the document selected"
+            base64={payload.documentFile}
+            handlefileUpload={(file) => handleChange("documentFile", file)}
+            error={ctaClicked && !payload.documentFile}
+            errorMsg="Identity is required"
           />
-          {ctaClicked && !payload.document.name ? (
-            <FeedbackInfo message="Document is required" />
-          ) : (
-            <></>
-          )}
         </div>
         <div className={styles.action_ctn}>
           <PrimaryBtn text="Save and continue" loading={isLoading} />
