@@ -1,32 +1,32 @@
 
 'use client'
 import styles from '@/components/Settings/settings.module.css'
-import formStyles from '@/assets/styles/auth-screens.module.css'
-import { useState } from 'react'
-import Input from '@/components/Dashboard/Input'
-import PasswordField from '@/components/Auth/PasswordField'
-import Button from '@/components/Btn/Button'
+// import formStyles from '@/assets/styles/auth-screens.module.css'
+// import { useState } from 'react'
+// import Input from '@/components/Dashboard/Input'
+// import PasswordField from '@/components/Auth/PasswordField'
+// import Button from '@/components/Btn/Button'
 // import ModalWrapper from '@/components/Modal/ModalWrapper'
 // import { getCredentials } from '@/services/localService'
 // import { useNotify } from '@/utils/hooks'
-import { useRouter, useSearchParams } from 'next/navigation'
+// import { useRouter, useSearchParams } from 'next/navigation'
 // import { forgotPassword } from '@/services/restService'
-import functions from '@/utils/functions'
-import ForgotPasswordFlow from '@/components/AccountProfile/ForgotPasswordFlow'
+// import functions from '@/utils/functions'
+// import ForgotPasswordFlow from '@/components/AccountProfile/ForgotPasswordFlow'
 import Switch from '@/components/Custom/Switch'
 // import Link from 'next/link'
 const Notification = () => {
-	const {createUrl} = functions
-	const {push} = useRouter()
-	const searchParams = useSearchParams()
+	// const {createUrl} = functions
+	// const {push} = useRouter()
+	// const searchParams = useSearchParams()
 	// const notify = useNotify()
-	const [ctaClicked, setCtaClicked] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
+	// const [ctaClicked, setCtaClicked] = useState(false)
+	// const [isLoading, setIsLoading] = useState(false)
 	// const [forgotPasswordModal, setForgotPasswordModal] = useState(false)
-	const [payload, setPayload] = useState({
-		password: '',
-		confirm: '',
-	})
+	// const [payload, setPayload] = useState({
+	// 	password: '',
+	// 	confirm: '',
+	// })
 
 	return (
 		<div className={styles.notification_page}>
