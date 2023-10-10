@@ -372,7 +372,7 @@ useEffect(()=>{
 			onClose={hideServiceModal}
 			handleCta={handleModalCta}
 		>
-			<div>
+			<form className={formStyles.form}>
 				<Input
 					id='serviceType'
 					label='Name of Service'
@@ -428,7 +428,7 @@ useEffect(()=>{
 						handleServiceChange({
 							target: { name: 'featuredService', value: !service.featuredService },
 						})} />
-			</div>
+			</form>
 		</ModalWrapper>
 	)
 
@@ -528,7 +528,7 @@ useEffect(()=>{
 			ctaBtnText={currentEditId === null ? 'Add' : 'Edit'}
 			handleCta={handleModalCta}
 		>
-			<div className={styles.form}>
+			<form className={formStyles.form}>
 				<Input
 					id='servicePriceModel'
 					label='Set Price Model'
@@ -582,7 +582,7 @@ useEffect(()=>{
 						handleServiceChange({
 							target: { name: 'addVat', value: !service.addVat }
 						})} />
-			</div>
+			</form>
 		</ModalWrapper>
 	)
 

@@ -1,19 +1,20 @@
-import "@/assets/styles/globals.css";
-import AuthHeader from "@/components/Auth/Header";
-import FullScreenLoader from "@/components/Modal/FullScreenLoader";
-import styles from "@/assets/styles/auth-screens.module.css";
-import SignupLayoutLHS from "@/components/Auth/SignupLayoutLHS";
+'use client'
+import '@/assets/styles/globals.css'
+import AuthHeader from '@/components/Auth/Header'
+import styles from '@/assets/styles/auth-screens.module.css'
+import { usePathname } from 'next/navigation'
+import SignupLayoutLHS from '@/components/Auth/SignupLayoutLHS'
 
 export default function AuthLayout({
 	children,
-	LHSRequired,
-	btn,
-	fullScreenLoader,
 }) {
+	const pathname = usePathname()
+	const LHSRequired =
+    pathname.includes('/auth/signup/individual') ||
+    pathname.includes('/auth/signup/business')
 	return (
-		<div>
-			<AuthHeader btn={btn || {}} />
-
+		<>
+			<AuthHeader />
 			<div className={styles.auth_content_ctn}>
 				<div className={styles.auth_content}>
 					{LHSRequired ? (
@@ -25,7 +26,7 @@ export default function AuthLayout({
 					<div className={styles.auth_content_rhs} />
 				</div>
 			</div>
-			{fullScreenLoader ? <FullScreenLoader /> : <></>}
-		</div>
-	);
+			{/* {fullScreenLoader ? <FullScreenLoader /> : <></>} */}
+		</>
+	)
 }

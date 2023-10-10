@@ -61,7 +61,7 @@ const ServiceCard = ({service, removeService, editService}) => {
 	)
 	return (
 		<div
-			className={`${styles.features_card_ctn} ${styles.services_card_ctn}`}>
+			className={`${styles.features_card_ctn} ${styles.services_card_ctn} dropdown`}>
 			<button
 				className='absolute_close_btn button'
 				onClick={removeService}>
