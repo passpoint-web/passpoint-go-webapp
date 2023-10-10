@@ -161,7 +161,7 @@
 .service_name {
   display: flex;
   align-items: center;
-  gap: 8px
+  gap: 8px;
 }
 
 .service_price_ctn {
@@ -201,5 +201,7 @@
 @media screen and (max-width: 1000px) {
   .layout_ctn {
     flex-direction: column;
-  }  
+  }
 }
+
+/* PREVIEW PAGE STYLES */
