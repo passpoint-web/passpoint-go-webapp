@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from './localService';
+// import cookies from '@/plugins/cookies';
 // import { Redirect } from 'next';
 
 const restAgent = axios.create({
@@ -16,20 +17,21 @@ const getRequestConfig = () => {
 	};
 };
 
-restAgent.interceptors.response.use(undefined, (error) => {
-	const statusCode = error.response ? error.response.status : null;
-	console.log('Inte', statusCode);
-	if (
-		(statusCode && statusCode === 401) ||
-    (statusCode && statusCode === 403)
-	) {
-		// Redirect('/auth/login');
-	}
-});
+// restAgent.interceptors.response.use(undefined, (error) => {
+// 	const statusCode = error.response ? error.response.status : null;
+// 	console.log('Inte', statusCode);
+// 	if (
+// 		(statusCode && statusCode === 401) ||
+//     (statusCode && statusCode === 403)
+// 	) {
+// 		// Redirect('/auth/login');
+// 	}
+// });
 
 
 const setConfig = () => {
 	const token = getToken()
+	// console.log(cookies.get('token'))
 	const config = getRequestConfig();
 	config.headers.Authorization = `Bearer ${token}`
 	return config
@@ -64,6 +66,9 @@ export const metrics = () => {
 };
 
 export const publicProfile = {
+	getPublicProfile: () => {
+		return restAgent.get('getPublicProfile', setConfig());
+	},
 	getPrimaryServices: () => {
 		return restAgent.get('getPrimaryServices', setConfig());
 	},

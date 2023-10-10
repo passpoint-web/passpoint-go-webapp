@@ -4,7 +4,7 @@ import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
 import AuthStyles from "@/assets/styles/auth-screens.module.css";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { days } from "@/utils/CONSTANTS";
 import { useState, useEffect } from "react";
 import functions from "@/utils/functions";
@@ -17,6 +17,8 @@ import { publicProfile } from "@/services/restService";
 import { useNotify } from '@/utils/hooks'
 // import { useRouter } from "next/navigation";
 import FormChoice from "../FormChoice";
+import BackBtn from "@/components/Btn/Back";
+import { savePublicProfile } from "@/services/localService";
 // import TimePicker from 'react-time-picker';
 // import 'react-time-picker/dist/TimePicker.css';
 // import 'react-clock/dist/Clock.css';
@@ -28,13 +30,12 @@ import FormChoice from "../FormChoice";
 // import Button from "@/components/Btn/Button";
 
 const ContactPage = ({ styles }) => {
+	const {push} = useRouter()
 	// const savedCredentials = getCredentials()
 	const [isLoading, setIsLoading] = useState(false)
-	// const { push } = useRouter()
 	const notify = useNotify()
 	// console.log(router)
 	const { validEmail, isValidUrl } = functions;
-	// const { push } = useRouter();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [finalCtaClicked, setFinalCtaClicked] = useState(false);
 	const [contactLevel, setContactLevel] = useState(true)
@@ -146,6 +147,8 @@ const ContactPage = ({ styles }) => {
 				socials: formattedSocials,
 				hasWebContact: hasWebContact ? 1 : 0
 			})
+
+			savePublicProfile({productStage: 2})
 			console.log(response)
 			notify('success', 'Your business contacts info has been saved')
 			// push('/dashboard/public-profile-setup/contact')
@@ -318,6 +321,7 @@ const ContactPage = ({ styles }) => {
 
 	return (
 		<div className={styles.inner}>
+		<BackBtn onClick={()=>push('/dashboard/public-profile-setup/services')} />
 			<h1>Contact Information</h1>
 			<div className={styles.contact_breadcrumbs}>
 				<TertiaryBtn text="Business Contact"

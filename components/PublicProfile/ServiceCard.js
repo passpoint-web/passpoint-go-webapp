@@ -15,7 +15,7 @@ const ServiceCard = ({service, removeService, editService}) => {
 			</div>
 			<div className={styles.mid}>
 				<div className={styles.service_name}>
-					<h3>{service.serviceType?.serviceName}</h3>
+					<h3>{service.serviceType.serviceName}</h3>
 					{service.featuredService ? <span className='capsule'>Featured</span> : <></>}
 				</div>
 				<div className={styles.service_price}>
@@ -44,7 +44,7 @@ const ServiceCard = ({service, removeService, editService}) => {
 			</div>
 			<div className={styles.service_price_ctn}>
 				{
-					service.servicePrice.map((p, id) => (
+					service.servicePrice?.map((p, id) => (
 						<div key={id}
 							className={styles.service_price}>
 							<h6>{p.categoryName}</h6>
