@@ -1,3 +1,4 @@
+'use client'
 import VerifyEmail from "@/components/Verify"
 import { getCredentials } from "@/services/localService"
 

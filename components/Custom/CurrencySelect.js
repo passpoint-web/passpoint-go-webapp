@@ -58,8 +58,8 @@ const CurrencySelect = ({ emitCurrency, currencyProps, showSearch=true, stylePro
 	}
 	const searchCountry = (item) => {
 		setSearch(item)
-		setFilteredCountries(
-			countries.filter((c) => {
+		setFilteredCurrencies(
+			currencies.filter((c) => {
 				return c.name.toLowerCase().includes(item.toLowerCase())
 			})
 		)

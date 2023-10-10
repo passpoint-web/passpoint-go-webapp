@@ -59,6 +59,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 					{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
+						{email}
               We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
               code below.
 					</h4>

@@ -12,10 +12,17 @@ import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
 import FeatureCard from '@/components/PublicProfile/FeatureCard'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
+import { savePublicProfile, 
+	// getPublicProfile as getSavedPublicProfile 
+} from '@/services/localService'
+import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 
 const BusinessPage = ({styles}) => {
+	// const savedPublicProfile = getSavedPublicProfile()
 	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
+	const [dataLoading, setDataLoading] = useState(true)
+	const [submitType, setSubmitType] = useState('NEW')
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
@@ -23,23 +30,20 @@ const BusinessPage = ({styles}) => {
 	const [aboutBusiness, setAboutBusiness] = useState('')
 	const [showModal, setShowModal] = useState(false)
 	const [features, setFeatures] = useState([])
+	const initialFeature = {
+		id: null,
+		businessHeadLine: '',
+		businessDesc: ''
+	}
 	const [feature, setFeature] = useState(
-		{
-			id: null,
-			headline: '',
-			description: ''
-		}
+		initialFeature
 	);
 
 	const [currentEditId, setCurrentEditId] = useState(null)
 
 	const addFeatureModal = (e) => {
 		e.preventDefault()
-		setFeature({
-			id: null,
-			headline: '',
-			description: ''
-		})
+		setFeature(initialFeature)
 		setShowModal(true)
 	}
 
@@ -60,7 +64,7 @@ const BusinessPage = ({styles}) => {
 
 	const editFeature = () => {
 		setModalCtaClicked(true)
-		if (!feature.headline && !feature.description || feature.description.length > 200) {
+		if (!feature.businessHeadLine && !feature.businessDesc|| feature.businessDesc.length > 200) {
 			return
 		}
 		// map through features, and look for the feature with current edit id, then update with feature object
@@ -77,14 +81,14 @@ const BusinessPage = ({styles}) => {
 
 	const addToFeatures = () => {
 		setModalCtaClicked(true)
-		if (!feature.headline || !feature.description || feature.description.length > 200) {
+		if (!feature.businessHeadLine || !feature.businessDesc || feature.businessDesc.length > 200) {
 			return
 		}
 		setFeatures([...features, {...feature, id: features.length}])
 		setFeature({
 			id: null,
-			headline: '',
-			description: ''
+			businessHeadLine: '',
+			businessDesc: ''
 		})
 		// reset state
 		setShowModal(false)
@@ -111,27 +115,60 @@ const BusinessPage = ({styles}) => {
 		}
 		const desc = features.map(f => {
 			const obj = {
-				businessHeadline: f.headline,
-				businessDesc: f.description
+				businessHeadLine: f.businessHeadLine,
+				businessDesc: f.businessDesc
 			}
 			return obj
 		})
 		setIsLoading(true)
 		try {
 			const response = await publicProfile.businessDescription({
+				submitType,
 				aboutBusiness,
 				desc
 			})
 			console.log(response)
+			// savePublicProfile({...savedPublicProfile, productStage: 2})
+			savePublicProfile({productStage: 2})
 			notify('success', 'Your business Information has been saved')
 			push('/dashboard/public-profile-setup/services')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
 		} finally {
-			//
+			setIsLoading(false)
 		}
 	}
+
+	const getPublicProfile = async () => {
+		try {
+			const response = await publicProfile.getPublicProfile()
+			const data = response.data.data[0]
+			console.log(data)
+			// savePublicProfile(data)
+			if (data.aboutBusiness) {
+				const {aboutBusiness, desc} = data
+				// setBusinessLogo(data.logo)
+				setAboutBusiness(aboutBusiness)
+				setFeatures(desc.map((d, id)=>{
+					let obj = {
+						id,
+						businessDesc: d.businessDesc || '',
+						businessHeadLine: d.businessHeadLine || ''
+					}
+					return obj
+				}))
+				setSubmitType('EDIT')
+			}
+		} catch (_err) {
+			console.log(_err)
+		} finally {
+			setDataLoading(false)
+		}
+	}
+	useEffect(()=>{
+		getPublicProfile()
+	},[])
 
 	useEffect(() => {
 		const conditionsMet = aboutBusiness && features.length
@@ -149,7 +186,7 @@ const BusinessPage = ({styles}) => {
 				subTitlte='You can add mutiple points in this section'
 				addFeatureModal={addFeatureModal} />
 
-			{features.filter(f=>f.headline && f.description).map((feat, id)=>(
+			{features.filter(f=>f.businessHeadLine || f.businessDesc).map((feat, id)=>(
 				<FeatureCard key={id}
 					removeFeature={(e)=>removeFeature(e, id)}
 					editFeature={(e)=>editFeatureModal(e, feat)}
@@ -174,29 +211,29 @@ const BusinessPage = ({styles}) => {
 			<form className={formStyles.form}>
 				<Input
 					label="Headline"
-					id="headline"
+					id="businessHeadLine"
 					placeholder="Add headline"
-					name="headline"
-					value={feature.headline}
-					error={modalCtaClicked && !feature.headline}
+					name="businessHeadLine"
+					value={feature.businessHeadLine}
+					error={modalCtaClicked && !feature.businessHeadLine}
 					errorMsg="Headline of feature is required"
 					onChange={handleFeatureChange}
 				/>
 				<Input
 					label="Description"
-					error={(modalCtaClicked && !feature.description) || feature.description.length > 200}
-					errorMsg={modalCtaClicked && !feature.description ? 'Description of feature is required' : feature.description.length > 200 ? 'Maximum of 200 characters' : ''}
+					error={(modalCtaClicked && !feature.businessDesc) || feature.businessDesc.length > 200}
+					errorMsg={modalCtaClicked && !feature.businessDesc ? 'Description of feature is required' : feature.businessDesc.length > 200 ? 'Maximum of 200 characters' : ''}
 					id="description"
 				>
 					<textarea
 						placeholder="Describe the reason stated above"
-						id="description"
-						name="description"
-						value={feature.description}
+						id="businessDesc"
+						name="businessDesc"
+						value={feature.businessDesc}
 						onChange={handleFeatureChange}
 					/>
 					{
-						feature.description.length <= 200 ?
+						feature.businessDesc.length <= 200 ?
 							<FeedbackInfo
 								message="Maximum of 200 characters"
 								type='note' />
@@ -209,6 +246,7 @@ const BusinessPage = ({styles}) => {
 
 	return (
 		<>
+		{dataLoading ? <FullScreenLoader /> : <></>}
 			{
 				showModal ?
 					AddFeatureModal() :

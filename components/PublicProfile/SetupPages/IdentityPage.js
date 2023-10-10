@@ -9,8 +9,15 @@ import FileUpload from '@/components/FileUpload'
 import Button from '@/components/Btn/Button'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
+import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+import { savePublicProfile, 
+	// getPublicProfile as getSavedPublicProfile 
+} from '@/services/localService'
 
 const IdentityPage = ({styles}) => {
+	// const savedPublicProfile = getSavedPublicProfile()
+	const [dataLoading, setDataLoading] = useState(true)
+	const [submitType, setSubmitType] = useState('NEW')
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -18,8 +25,30 @@ const IdentityPage = ({styles}) => {
 	const savedCredentials = getCredentials()
 	const businessName = savedCredentials?.businessName
 	const [businessLogo, setBusinessLogo] = useState('')
+	
 
 	const notify = useNotify()
+
+	// eslint-disable-next-line no-unused-vars
+	const getPublicProfile = async () => {
+		try {
+			const response = await publicProfile.getPublicProfile()
+			const data = response.data.data[0]
+			// console.log(data)
+			// savePublicProfile(data)
+			if (data.logo) {
+				setBusinessLogo(data.logo)
+				setSubmitType('EDIT')
+			}
+		} catch (_err) {
+			console.log(_err)
+		} finally {
+			setDataLoading(false)
+		}
+	}
+	useEffect(()=>{
+		getPublicProfile()
+	},[])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -29,18 +58,17 @@ const IdentityPage = ({styles}) => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await publicProfile.uploadBusinessLogo({logo: businessLogo})
+			const response = await publicProfile.uploadBusinessLogo({logo: businessLogo, submitType})
 			console.log(response)
-			notify('success', 'Your business logo has been saved')
+			// savePublicProfile({...savedPublicProfile, productStage: 1})
+			savePublicProfile({productStage: 1})
+			notify('success', `Your business logo has been saved`)
 			push('/dashboard/public-profile-setup/business')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
-			if (message.toLowerCase().includes('already uploaded')) {
-				push('/dashboard/public-profile-setup/business')
-			}
 		} finally {
-			setIsLoading(true)
+			setIsLoading(false)
 		}
 	}
 
@@ -55,6 +83,7 @@ const IdentityPage = ({styles}) => {
 
 	return (
 		<>
+		{dataLoading ? <FullScreenLoader /> : <></>}
 			<div className={styles.inner}>
 				<h1>Business Identity</h1>
 				<form onSubmit={handleSubmit}>

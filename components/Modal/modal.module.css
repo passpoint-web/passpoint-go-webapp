@@ -9,6 +9,17 @@
   place-items: center;
 }
 
+.loader_overlay_screen {
+  min-height: 100%;
+  width: 100%;
+  position: fixed;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  background: rgba(28, 17, 50, 0.6);
+  cursor: unset;
+  z-index: var(--z-index-overlay);
+}
 .overlay_screen {
   min-height: 100%;
   width: 100%;
@@ -16,7 +27,7 @@
   background: rgba(28, 17, 50, 0.6);
   cursor: unset;
 }
-x
+
 .loader_ctn {
   width: fit-content;
   border-radius: 12px;

@@ -15,8 +15,8 @@ const FeatureCard = ({feature, removeFeature, editFeature}) => {
 				onClick={editFeature}
 			>
 				<div>
-					<h3>{feature.headline}</h3>
-					<p>{feature.description}</p>
+					<h3>{feature.businessHeadLine}</h3>
+					<p>{feature.businessDesc}</p>
 				</div>
 			</div>
 		</div>
