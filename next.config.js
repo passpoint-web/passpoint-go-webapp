@@ -23,6 +23,11 @@ const nextConfig = {
 				destination: '/dashboard/public-profile-setup/identity',
 				permanent: true,
 			},
+			{
+				source: '/dashboard/settings',
+				destination: '/dashboard/settings/activity',
+				permanent: true,
+			},
 		]
 	},
 	images: {

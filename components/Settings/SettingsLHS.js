@@ -15,7 +15,7 @@ const SettingsLHS = () => {
 					<p>Monitor your account activity</p>
 				</div>
 			</Link>
-			<Link href='/dashboard/settings/notifications'
+			<Link href='/dashboard/settings/notification'
 				className={styles.nav_sec}>
 				<div className={styles.icon}>
 					<NotificationIcon color="#009EC4" />

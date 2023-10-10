@@ -1,4 +1,4 @@
-import SettingsLHS from './SettingsLHS'
+import SettingsLHS from '../SettingsLHS'
 
 function SettingsPage () {
 	return (

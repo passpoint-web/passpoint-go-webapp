@@ -1,15 +1,14 @@
 .main_ctn {
-  min-height: 120vh;
+  min-height: 100vh;
   display: flex;
   background-color: #fff;
   padding: var(--screen-padding-top) var(--inner-component-mg) var(--inner-component-mg);
   border-radius: var(--ctn-br-md);
 }
 
-
 .settings_lhs {
-  width: 320px;
-  max-width: 30%;
+  width: 350px;
+  max-width: 35%;
   border-right: 1px solid var(--grey-5);
   min-height: 100%;
   position: sticky;
@@ -66,12 +65,13 @@
 .settings_page {
   display: flex;
   justify-content: center;
-  width: calc(100% - 320px);
+  width: calc(100% - 350px);
   max-width: 800px;
   padding: 0 var(--inner-component-mg)
 }
 
-.security_box {
+.security_box,
+.notification_box {
   max-width: 650px;
   border: 1px solid var(--grey-5);
   border-radius: 16px;
@@ -79,6 +79,33 @@
   margin-bottom: var(--inner-component-mg);
 }
 
-.security_page h1 {
+.security_page h1,
+.notification_page h1 {
   margin-bottom: 40px;
+}
+
+.notification_box {
+
+  padding: 0;
+}
+
+.notification_box h3 {
+  padding: var(--inner-component-mg);
+}
+
+.notification_box .inner {
+  display: flex;
+  justify-content: space-between;
+  min-width: 500px;
+  padding: var(--inner-component-mg);
+}
+
+.notification_box .inner:not(:last-child) {
+  border-bottom: 1px solid var(--grey-5);
+}
+
+.notification_box h4 {
+  font-family: var(--graphikLight);
+  color: var(--grey-1);
+  font-size: 20px;
 }
