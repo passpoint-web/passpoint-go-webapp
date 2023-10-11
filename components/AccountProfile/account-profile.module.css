@@ -1,0 +1,81 @@
+.profile_ctn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inner-component-mg);
+}
+
+.profile_card {
+  background-color: #fff;
+  padding: var(--inner-component-mg);
+  border-radius: var(--ctn-br-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--outer-component-gap);
+  animation: var(--anim-come-down-sm);
+}
+
+.profile_card > .top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile_card > .top button {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--btn-br-md);
+  border: 1.5px solid var(--sky-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile_card > .top button:hover,
+.profile_card > .top button:focus {
+  background-color: var(--sky-blue);
+}
+
+.profile_card > .top button:hover svg path,
+.profile_card > .top button:focus svg path {
+  stroke: #fff
+}
+.inner {
+  display: flex;
+  gap: var(--inner-component-mg);
+}
+
+.content {
+  width: 100%;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 
+  25%);
+  gap: var(--inner-component-mg);
+}
+
+.profile_card .avatar {
+  width: 127px;
+  height: 127px;
+}
+
+.info {
+  flex-basis: calc();
+}
+
+.info .heading,
+.info .value {
+  font-size: 16px;
+  color: var(--grey-1);
+  margin-bottom: 3px;
+  line-height: 24px;
+}
+
+.info .heading {
+  color: var(--grey-3);
+  font-family: var(--graphikLight);
+}
+
+.info .value {
+  color: var(--grey-1);
+  font-family: var(--graphikMedium);
+}
