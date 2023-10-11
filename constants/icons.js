@@ -1460,3 +1460,16 @@ export const AccountSecurityIcon = ({color='#009EC4'}) => (
 			strokeLinejoin="round"/>
 	</svg>
 )
+
+export const ActionSuccessfulIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg" width="101" height="100" viewBox="0 0 101 100" fill="none">
+  <path d="M50.4987 91.6673C73.4154 91.6673 92.1654 72.9173 92.1654 50.0006C92.1654 27.084 73.4154 8.33398 50.4987 8.33398C27.582 8.33398 8.83203 27.084 8.83203 50.0006C8.83203 72.9173 27.582 91.6673 50.4987 91.6673Z" fill="#07B463" stroke="#E6F8EF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M32.793 50.0007L44.5846 61.7923L68.2096 38.209" stroke="#E6F8EF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+)
+
+export const ActionFailedIcon = () => (
+<svg xmlns="http://www.w3.org/2000/svg" width="101" height="100" viewBox="0 0 101 100" fill="none">
+  <path d="M50.4987 91.6673C73.4154 91.6673 92.1654 72.9173 92.1654 50.0006C92.1654 27.084 73.4154 8.33398 50.4987 8.33398C27.582 8.33398 8.83203 27.084 8.83203 50.0006C8.83203 72.9173 27.582 91.6673 50.4987 91.6673Z" fill="#FF3B2D" stroke="#FFE6E4" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+)

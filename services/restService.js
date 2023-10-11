@@ -112,4 +112,10 @@ export const publicProfile = {
 	},
 }
 
+export const accountProfile = {
+	changePassword: (data) => {
+		return restAgent.post('changeAccountPassword', data,  setConfig());
+	},
+}
+
 // https://api.jessecoders.com/passpointGo/v1/getPrimaryServices

@@ -70,8 +70,7 @@
   padding: 0 var(--inner-component-mg)
 }
 
-.security_box,
-.notification_box {
+.border_box {
   max-width: 650px;
   border: 1px solid var(--grey-5);
   border-radius: 16px;
@@ -79,33 +78,80 @@
   margin-bottom: var(--inner-component-mg);
 }
 
+.border_box.privacy {
+  padding: 0;
+}
+.border_box.privacy h3 {
+  padding: var(--inner-component-mg);
+  padding-bottom: 0;
+}
+
+.activity_page h1,
 .security_page h1,
 .notification_page h1 {
   margin-bottom: 40px;
 }
 
-.notification_box {
-
+.notification_page .border_box {
   padding: 0;
 }
 
-.notification_box h3 {
+.notification_page h3 {
   padding: var(--inner-component-mg);
 }
 
-.notification_box .inner {
+.border_box .inner.flex {
   display: flex;
   justify-content: space-between;
   min-width: 500px;
   padding: var(--inner-component-mg);
 }
 
-.notification_box .inner:not(:last-child) {
+.border_box .inner.flex:not(:last-child) {
   border-bottom: 1px solid var(--grey-5);
 }
 
-.notification_box h4 {
+.notification_page h4 {
   font-family: var(--graphikLight);
   color: var(--grey-1);
   font-size: 20px;
+}
+
+.activity_page .border_box {
+  padding: var(--inner-component-mg);
+}
+
+/* activity table */
+
+.table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  position: relative;
+  /* font-feature-settings: 'clig' off, 'liga' off; */
+}
+
+.table_header {
+  border-bottom: 1px solid var(--grey-5);
+  height: 55px;
+}
+
+.table_header .th_content {
+  font-family: var(--graphikMedium);
+  color: var(--grey-2)
+}
+
+
+.table td {
+  padding: 0 30px 0 0;
+}
+
+.table_row {
+  height: 45px;
+  /* padding: 10px 0; */
+  border-bottom: 1px solid var(--grey-5);
+}
+
+.table_row .td_content {
+  color: var(--grey-3);
 }

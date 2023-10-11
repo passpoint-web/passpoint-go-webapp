@@ -1,10 +1,7 @@
-import React from 'react'
-
+import Activity from "@/components/Settings/SettingsPages/ActivityPage"
 const ActivityPage = () => {
   return (
-    <div>
-      
-    </div>
+    <Activity />
   )
 }
 
