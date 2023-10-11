@@ -1,4 +1,5 @@
 "use client";
+import BackBtn from "@/components/Btn/Back";
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
@@ -16,6 +17,7 @@ const IdentityInd = ({ styles }) => {
   const [allFieldsValid, setAllFieldsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [payload, setPayload] = useState({
+    bvn: "",
     documentType: "",
     documentFile: "",
   });
@@ -81,17 +83,46 @@ const IdentityInd = ({ styles }) => {
             emitSelect={(option) => handleChange("documentType", option)}
           />
         </Input>
-        <div className={styles.innerUpload}>
-          <FileUpload
-            smTitle="Upload the document selected"
-            base64={payload.documentFile}
-            handlefileUpload={(file) => handleChange("documentFile", file)}
-            error={ctaClicked && !payload.documentFile}
-            errorMsg="Identity is required"
-          />
-        </div>
+        {payload.documentType && (
+          <>
+            {payload.documentType === "Bank Verification Number (BVN)" ? (
+              <Input
+                label="Bank Verification Number"
+                id="bvn"
+                name="bvn"
+                type="number"
+                placeholder="Enter your BVN"
+                error={ctaClicked && !payload.bvn}
+                onChange={(e) => handleChange(e.target.value, "bvn")}
+                errorMsg="BVN is required"
+                info="To get your BVN, Dial *560# with your business phone number"
+              />
+            ) : (
+              <div className={styles.innerUpload}>
+                <FileUpload
+                  smTitle="Upload the document selected"
+                  base64={payload.documentFile}
+                  handlefileUpload={(file) =>
+                    handleChange("documentFile", file)
+                  }
+                  error={ctaClicked && !payload.documentFile}
+                  errorMsg="Identity is required"
+                />
+              </div>
+            )}
+          </>
+        )}
         <div className={styles.action_ctn}>
-          <PrimaryBtn text="Save and continue" loading={isLoading} />
+          <BackBtn
+            type="button"
+            text="Back"
+            onClick={() => push("/dashboard/kyc/individual/contact")}
+          />
+          <PrimaryBtn
+            type="submit"
+            text="Save and continue"
+            loading={isLoading}
+          />
         </div>
       </form>
     </div>

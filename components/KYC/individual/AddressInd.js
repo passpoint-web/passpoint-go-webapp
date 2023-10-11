@@ -1,4 +1,5 @@
 "use client";
+import BackBtn from "@/components/Btn/Back";
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
@@ -46,7 +47,7 @@ const AddressInd = ({ styles }) => {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message.toLowerCase().includes("already uploaded")) {
-        push("/dashboard");
+        push("/dashboard/kyc/success");
       }
     } finally {
       setIsLoading(false);
@@ -91,7 +92,16 @@ const AddressInd = ({ styles }) => {
           />
         </div>
         <div className={styles.action_ctn}>
-          <PrimaryBtn text="Save and continue" loading={isLoading} />
+          <BackBtn
+            type="button"
+            text="Back"
+            onClick={() => push("/dashboard/kyc/individual/identity")}
+          />
+          <PrimaryBtn
+            type="submit"
+            text="Save and continue"
+            loading={isLoading}
+          />
         </div>
       </form>
     </div>

@@ -11,7 +11,9 @@
   border-right: 1px solid var(--grey-5);
   width: 33%;
 }
-
+.lhs_levels_ctn .lhs_kyc{
+margin-bottom: var(--screen-padding-top);
+}
 @media screen and (max-width: 1000px) {
   .lhs_levels_ctn {
     display: flex;

@@ -1,4 +1,5 @@
 "use client";
+import BackBtn from "@/components/Btn/Back";
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
@@ -77,7 +78,16 @@ const AddressCop = ({ styles }) => {
           )}
         </div>
         <div className={styles.action_ctn}>
-          <PrimaryBtn text="Save and continue" loading={isLoading} />
+          <BackBtn
+            type="button"
+            text="Back"
+            onClick={() => push("/dashboard/kyc/corporate/identity")}
+          />
+          <PrimaryBtn
+            type="submit"
+            text="Save and continue"
+            loading={isLoading}
+          />
         </div>
       </form>
     </div>

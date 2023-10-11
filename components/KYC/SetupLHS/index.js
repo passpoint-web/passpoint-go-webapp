@@ -74,6 +74,10 @@ const KycSetupLHS = () => {
     <>
       {/* <BackBtn text="Back" onClick={() => push("/dashboard")} /> */}
       <div className={styles.lhs_levels_ctn}>
+        <section className={styles.lhs_kyc}>
+          <h1>Complete KYC</h1>
+          <p>We want to know more about you and your business</p>
+        </section>
         {levelsToDisplay.map((e, index) => (
           <FormLevel
             mobileWidth="1000"
