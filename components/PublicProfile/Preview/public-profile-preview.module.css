@@ -1,34 +1,102 @@
-.layout_ctn {
-  background-color: #fff;
-  padding: var(--outer-component-mg) 0;
+/* WHOLE PAGE STYLES - POSSIBLY GLOBAL TOO */
+.section {
+  background: var(--white);
+  border-bottom: 1px solid var(--grey-6);
+  padding: 0 2%;
+}
+.section.nav > .inner {
+  height: 90px;
   display: flex;
-  max-width: 1200px;
-  border-radius: 8px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--desktop-width);
+  margin: 0 auto;
 }
 
-.layout_ctn > .lhs {
-  padding: 0 var(--inner-component-mg);
-  border-right: 1px solid var(--grey-5);
-  width: 33%;
-}
-
-@media screen and (max-width: 1000px) {
-  .lhs_levels_ctn {
-    display: flex;
-  }
-}
-
-.pages {
-  padding: 0 var(--outer-component-mg);
+/* NAV STYLES */
+.nav ul {
   display: flex;
-  /* justify-content: center; */
-  width: 70%;
+  list-style-type: none;
+  gap: 0.6rem;
+  padding: 0;
+  flex-basis: 40%;
+  margin: 0;
+}
+.nav__actions {
+  justify-content: flex-end;
+}
+.nav__actions button {
+  background-color: var(--sky-blue);
+}
+.nav__actions .fade__btn {
+  background-color: var(--sky-blue-light);
+  color: var(--sky-blue);
+}
+.nav__actions .icon__btn {
+  background-color: var(--sky-blue-light);
+  width: 50px;
+  height: 50px;
+  padding: 0;
 }
 
-.pages > .inner {
-  width: clamp(450px, 90%, 550px);
-}
+/* MAIN PAGE STYLES */
 
-.pages > .inner > h1 {
-  margin-bottom: var(--outer-component-mg);
+/* FOOTER STYLES */
+.section.footer {
+  padding: 2rem 2%;
+  background-color: var(--dark);
+  color: var(--white);
+}
+.section.footer * {
+  color: var(--white);
+}
+.section.footer > .inner {
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--desktop-width);
+  margin: 0 auto;
+}
+.footer h3 {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.footer ul {
+  display: flex;
+  list-style-type: none;
+  gap: 0.6rem;
+  padding: 0;
+  flex-basis: 40%;
+  margin: 0;
+}
+.footer .col {
+  flex-basis: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+.footer__social_actions {
+  transform: scale(0.7);
+  -webkit-transform: scale(0.7);
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  -o-transform: scale(0.7);
+  transform-origin: left;
+}
+.footer li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer li a {
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: "GraphikLight";
+}
+.footer .col:not(.footer .col:nth-child(1)) ul {
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.footer__copyright {
+  margin-top: 4rem;
+  font-size: 0.875rem;
 }

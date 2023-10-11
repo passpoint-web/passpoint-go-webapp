@@ -66,6 +66,9 @@
   --graphikBold: "GraphikBold", sans-serif;
   --graphikSemibold: "GraphikSemibold", sans-serif;
 
+  --desktop-width: 1150px;
+
+  --dark: #0b0d17;
   --white: #ffffff;
   --grey-1: #303237;
   --grey-2: #565c69;
@@ -74,12 +77,13 @@
   --grey-5: #e5e7ef;
   --grey-6: #f4f5f8;
 
-  --v600: #00242D;
+  --v600: #00242d;
 
   --sky-blue: #009ec4;
   --sky-blue-active: #006f89;
-  --sky-blue-hover: #CBEBF3;
+  --sky-blue-hover: #cbebf3;
   --sky-blue-bg: #e6f5f980;
+  --sky-blue-light: #009ec410;
 
   --cta-bg: #121212;
   --secondary: #303237;
@@ -207,7 +211,6 @@ button {
 a *,
 button * {
   transition: var(--input-transition);
-
 }
 
 a:disabled,
@@ -231,7 +234,7 @@ button .loading {
 }
 button .loading::after,
 button .loading::before {
-  content: '';
+  content: "";
   box-sizing: border-box;
   width: 40px;
   height: 40px;
@@ -529,7 +532,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-input[type=file] {
+input[type="file"] {
   display: none !important;
 }
 
@@ -787,7 +790,6 @@ ul {
   }
 }
 
-
 .reveals {
   animation: reveals 0.5s forwards;
   -webkit-animation: reveals 0.5s forwards;
@@ -930,13 +932,13 @@ ul {
 
 @keyframes skeleton {
   0% {
-    background-position:  0% 10%;
+    background-position: 0% 10%;
   }
   50% {
-    background-position:  100% 100%;
+    background-position: 100% 100%;
   }
   100% {
-    background-position:  0% 0%;
+    background-position: 0% 0%;
   }
 }
 
