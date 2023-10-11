@@ -6,6 +6,9 @@ import PreviewLogo from "./PreviewLogo";
 const PreviewFooter = () => {
   return (
     <div className={`${styles.footer} ${styles.section}`} >
+      <div className={styles.footer__absolute_wrapper}>
+        <PreviewLogo />
+      </div>
       <div className={styles.inner}>
         <div className={styles.col}>
           <PreviewLogo />

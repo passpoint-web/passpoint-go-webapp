@@ -94,6 +94,7 @@
 
   --positive: #66cb9f;
 
+  --warning-light: #ffd8bd;
   --warning-200: #df752b;
   --warning-300: #d85900;
   --warning-400: #973e00;
@@ -515,6 +516,10 @@ button.tertiary:hover,
 
 .back_btn:hover {
   background-color: var(--grey-5);
+}
+
+.p-relative {
+  position: relative;
 }
 
 /* end of buttons */

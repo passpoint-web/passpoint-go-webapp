@@ -67,7 +67,11 @@
 .auth_content_lhs_empty,
 .auth_content_rhs {
   display: flex;
-  width: clamp(var(--auth-layout-lhs-width), 30%, var(--auth-layout-lhs-max-width));
+  width: clamp(
+    var(--auth-layout-lhs-width),
+    30%,
+    var(--auth-layout-lhs-max-width)
+  );
   min-height: calc(100vh - var(--header-height));
   border-right: 1px solid var(--grey-5);
 }
@@ -81,7 +85,7 @@
   .auth {
     width: clamp(400px, 40%, 600px);
   }
-  
+
   .auth > .inner > .center {
     margin: 0 auto;
     width: clamp(100%, 40%, 600px);
@@ -188,6 +192,7 @@
   transition: var(--input-transition);
   appearance: none;
   resize: vertical;
+  padding-top: 1rem;
 }
 
 /* countries select */
@@ -250,7 +255,7 @@
   /* max-height: calc(var(--input-height)*5 - var(--sm-inner-component-mg)); */
   height: calc(var(--input-height) * 5 - var(--sm-inner-component-mg));
   overflow-y: auto;
-  margin-top: calc(var(--sm-inner-component-mg)/2);
+  margin-top: calc(var(--sm-inner-component-mg) / 2);
   position: absolute;
   top: var(--input-height);
   width: 100%;
@@ -418,7 +423,6 @@
 .form .otp_input > div input:focus {
   background-color: var(--input-focus-bg);
 }
-
 
 /* input icons */
 .input_wrapper {
@@ -594,7 +598,6 @@
     gap: 16px;
   }
 }
-
 
 @media screen and (max-width: 500px) {
   .logo svg {

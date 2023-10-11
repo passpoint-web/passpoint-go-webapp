@@ -9,11 +9,11 @@ import PreviewFooter from "./PreviewFooter";
 
 const PreviewPage = ({ styles }) => {
 	return (
-		<>
-		<PreviewNav />
-		<PreviewMain />
-		<PreviewFooter />
-		</>
+		<div className="p-relative">
+			<PreviewNav />
+			<PreviewMain />
+			<PreviewFooter />
+		</div>
 	)
 };
 
