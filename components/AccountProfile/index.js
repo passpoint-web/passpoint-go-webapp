@@ -16,9 +16,6 @@ import { businessIndustries, businessTypes, CS } from '@/utils/CONSTANTS'
 // eslint-disable-next-line no-unused-vars
 import CountrySelect from '../Custom/CountrySelect';
 
-const savedCredentials = getCredentials()
-console.log(savedCredentials)
-
 const AccountProfile = () => {
 	const [savedCredentials, setSavedCredentials] = useState({})
 	const [personalInfoEdit, setPersonalInfoEdit] = useState(false)
@@ -63,7 +60,7 @@ const AccountProfile = () => {
 		setSavedCredentials(getCredentials())
 		setPayload(getCredentials())
 	},[])
-	
+
 	useEffect(()=>{
 		setStates(CS.getStatesByShort(payload?.country?.cca2)) // cca2: country's shortname
 	},[payload.country?.name?.common])
