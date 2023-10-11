@@ -13,22 +13,27 @@ import 'react-phone-input-2/lib/style.css'
 import { useNotify } from '@/utils/hooks'
 import CustomSelect from '../Custom/Select';
 import { businessIndustries, businessTypes, CS } from '@/utils/CONSTANTS'
+// eslint-disable-next-line no-unused-vars
 import CountrySelect from '../Custom/CountrySelect';
 
+const savedCredentials = getCredentials()
+console.log(savedCredentials)
+
 const AccountProfile = () => {
-	const savedCredentials = getCredentials()
+	const [savedCredentials, setSavedCredentials] = useState({})
 	const [personalInfoEdit, setPersonalInfoEdit] = useState(false)
 	const [businessInfoEdit, setBusinessInfoEdit] = useState(false)
 	const [addressInfoEdit, setAddressInfoEdit] = useState(false)
+	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false)
+	// eslint-disable-next-line no-unused-vars
 	const [states, setStates] = useState([])
 	// const [allFieldsValid, setAllFieldsValid] = useState(false)
+	// eslint-disable-next-line no-unused-vars
 	const [lgas, setLgas] = useState([])
 	const [payload, setPayload] = useState({})
-	useEffect(()=>{
-		setPayload(savedCredentials)
-	},[])
 
+	// eslint-disable-next-line no-unused-vars
 	const notify = useNotify()
 
 	const handleChange = (e) => {
@@ -54,9 +59,11 @@ const AccountProfile = () => {
 		}
 	}
 
-	// useEffect(()=>{
-	// 	console.log(payload)
-	// },[payload])
+	useEffect(()=>{
+		setSavedCredentials(getCredentials())
+		setPayload(getCredentials())
+	},[])
+	
 	useEffect(()=>{
 		setStates(CS.getStatesByShort(payload?.country?.cca2)) // cca2: country's shortname
 	},[payload.country?.name?.common])

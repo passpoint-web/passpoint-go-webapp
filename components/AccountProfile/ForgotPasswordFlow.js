@@ -17,7 +17,7 @@ const ForgotPasswordFlow = () => {
 
 	const {maskedEmail, createUrl} = functions
 	const notify = useNotify()
-	const {push, replace} = useRouter()
+	const {replace} = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const searchParams = useSearchParams()
 	const [otp, setOtp] = useState('')
@@ -67,6 +67,7 @@ const ForgotPasswordFlow = () => {
 		if (otp?.length !== 6) {
 			return
 		}
+		setErrorMsg('')
 		setIsLoading(true)
 		try {
 			const payload = {
@@ -81,6 +82,9 @@ const ForgotPasswordFlow = () => {
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
+			if (message.toLowerCase().includes('otp')) {
+				setErrorMsg(message)
+			}
 		} finally {
 			setIsLoading(false)
 		}
@@ -187,13 +191,13 @@ const ForgotPasswordFlow = () => {
 								/>
 							</form> : 
 							verify ? 
-          	<form className={formStyles.form}>
+          <form className={formStyles.form}>
 									<Input
 										error={(ctaClicked && otp?.length !== 6) || errorMsg}
 										errorMsg={otp?.length !== 6 ? 'Valid OTP needed' : errorMsg}
 										msgPositionCenter={true}
 									>
-                	<div className={formStyles.otp_input}>
+                <div className={formStyles.otp_input}>
 											<OtpInput
 												value={otp}
 												onChange={setOtp}
