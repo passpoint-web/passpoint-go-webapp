@@ -2,7 +2,7 @@ import { ExpandIcon, InstagramIcon, TwitterIcon, WhatsappIcon, YoutubeIcon } fro
 import styles from "../Preview/public-profile-preview.module.css";
 import PreviewLogo from "./PreviewLogo";
 
-const PreviewNav = () => {
+const PreviewNav = ({ data }) => {
   return (
     <div className={`${styles.nav} ${styles.section}`} >
       <div className={styles.inner}>
@@ -29,7 +29,7 @@ const PreviewNav = () => {
           </li>
         </ul>
         <div className={styles.nav__logo}>
-          <PreviewLogo />
+          <PreviewLogo logo={data.logo} />
         </div>
         <ul className={styles.nav__actions}>
           <li>

@@ -6,7 +6,6 @@ export const metadata = () => {
     description: "",
   };
 };
-
 const Preview = () => {
   return <PreviewPage />;
 };

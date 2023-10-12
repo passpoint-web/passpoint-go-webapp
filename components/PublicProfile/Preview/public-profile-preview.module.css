@@ -13,6 +13,9 @@
   width: 120px;
   margin: 0 auto;
 }
+.preview__logo img {
+  width: 100px;
+}
 
 /* NAV STYLES */
 .section.nav {
@@ -267,7 +270,7 @@
 
 /* FOOTER STYLES */
 .section.footer {
-  padding: 2rem 2%;
+  padding: 5% 2%;
   background-color: var(--dark);
   color: var(--white);
 }

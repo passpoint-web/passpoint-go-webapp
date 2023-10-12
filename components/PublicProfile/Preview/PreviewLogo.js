@@ -1,9 +1,9 @@
 import styles from "../Preview/public-profile-preview.module.css";
 
-const PreviewLogo = () => {
+const PreviewLogo = ({ logo }) => {
   return (
     <div className={`${styles.preview__logo}`} >
-      <h4>YOUR LOGO HERE</h4>
+      <img src={logo} alt="" />
     </div>
   )
 };

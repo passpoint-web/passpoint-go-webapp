@@ -2,11 +2,12 @@ import PrimaryBtn from "@/components/Btn/Primary";
 import Input from "@/components/Dashboard/Input";
 import Textarea from "@/components/Dashboard/Textarea";
 import { ReasonIcon } from "@/constants/icons";
+import { useFormat24HourTime } from "@/utils/hooks";
 import Link from "next/link";
 import { useState } from "react";
 import styles from "../Preview/public-profile-preview.module.css";
 
-const PreviewMain = () => {
+const PreviewMain = ({ data }) => {
   const offerings = [
     { name: 'Flights', description: 'We provide flights that are punctual, comfortable, and safe, catering to passengers\' needs during their journey.', featured: true },
     { name: 'Hotels', description: 'We provide amenities such as comfortable rooms, dining options, and concierge services to ensure a pleasant stay.', featured: true },
@@ -20,28 +21,28 @@ const PreviewMain = () => {
     { name: 'Competitive Pricing', description: 'We offer competitive pricing without compromising on the quality of service, ensuring access to wide range of travelers. ' }
   ]
   const testimonials = [
-    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
-    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
-    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },]
+    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, consectur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
+    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, conctetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
+    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, cnsecteur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },]
   return (
     <div className={`${styles.main}`} >
       {/* HERO SECTION */}
       <div className={`${styles.section} ${styles.hero}`} >
         <div className={`${styles.inner}`} >
           <div className={styles.hero__texts}>
-            <h1>Kelechi Travels</h1>
-            <p>Welcome to Kelechi Travels, your gateway to unforgettable journeys. With a deep love for travel, we've become your trusted partner in crafting dream vacations. Our dedication to creating seamless, extraordinary experiences drives us to offer top-notch travel services. Explore the world with us and let your wanderlust lead the way.</p>
+            <h1>{data.businessName}</h1>
+            <p>{data.aboutBusiness}</p>
             <Link href="#" className={`primary_btn ${styles.book__btn}`}>
               Book Now
             </Link>
           </div>
           <div className={styles.hero__schedule}>
             <div className={styles.hero__schedule_col}>
-              <h5>Monday - Fridays</h5>
+              <h5>{data.openingDay} - {data.closingDay}s</h5>
               <p>Business Opening and Closing Days</p>
             </div>
             <div className={styles.hero__schedule_col}>
-              <h5>8:00 AM - 6:00 PM</h5>
+              <h5>{useFormat24HourTime(data.openingHour)} - {useFormat24HourTime(data.closingHour)}</h5>
               <p>Business Opening and Closing Hours</p>
             </div>
           </div>
@@ -94,7 +95,7 @@ const PreviewMain = () => {
             <p>Don’t just take our word for it, Hear from our happy clients.</p>
           </div>
           <div className={styles.testimonials__card_grid}>
-            {testimonials.map(testimonial => <div className={styles.testimonials__card} key={testimonial.name}>
+            {testimonials.map(testimonial => <div className={styles.testimonials__card} key={testimonial.content}>
               <div className={styles.testimonials__card_content}>
                 <p>
                   {testimonial.content}

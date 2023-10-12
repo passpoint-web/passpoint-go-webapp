@@ -3,17 +3,17 @@ import Link from "next/link";
 import styles from "../Preview/public-profile-preview.module.css";
 import PreviewLogo from "./PreviewLogo";
 
-const PreviewFooter = () => {
+const PreviewFooter = ({ data }) => {
   return (
     <div className={`${styles.footer} ${styles.section}`} >
       <div className={styles.footer__absolute_wrapper}>
-        <PreviewLogo />
+        <PreviewLogo logo={data.logo} />
       </div>
       <div className={styles.inner}>
         <div className={styles.col}>
-          <PreviewLogo />
+          <PreviewLogo logo={data.logo} />
           <p>
-            Our dedication to creating seamless, extraordinary experiences drives us to offer top-notch travel services. Explore the world with us and let your wanderlust lead the way.
+            {data.aboutBusiness}
           </p>
 
           <ul className={styles.footer__social_actions}>
@@ -39,7 +39,7 @@ const PreviewFooter = () => {
             </li>
           </ul>
           <div className={styles.footer__copyright}>
-            &copy; 2023 A business. All rights reserved
+            &copy; 2023 Passpoint. All rights reserved
           </div>
         </div>
         <div className={styles.col}>
@@ -61,16 +61,15 @@ const PreviewFooter = () => {
           <ul>
             <li>
               <MailIcon />
-              <a href="mailto:hello@kelechitravels.co">hello@kelechitravels.co</a>
+              <a href={`mailto:${data.companyEmail}`}>{data.companyEmail}</a>
             </li>
             <li>
               <PhoneIcon />
-              <a href="tel:+919876543210">+91 98765 43210</a>
+              <a href={`tel:${data.companyPhone}`}>+{data.companyPhone}</a>
             </li>
             <li>
               <LocationIcon />
-              772 Lyonwood Ave
-              Walnut, CA 91789
+              {data.companyAddress}
             </li>
           </ul>
         </div>
