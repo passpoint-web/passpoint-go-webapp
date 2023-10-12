@@ -7,8 +7,8 @@ import PasswordField from '@/components/Auth/PasswordField'
 import Input from '@/components/Dashboard/Input'
 import { getForgotPasswordEmail, saveForgotPasswordEmail } from '@/services/localService'
 import BackBtn from '@/components/Btn/Back'
-import { resetPassword } from '@/services/restService'
 import { useNotify } from '@/utils/hooks'
+import { authenticate } from '@/services/restService'
 
 export default function ResetPassword () {
 	const {push, back} = useRouter()
@@ -40,7 +40,7 @@ export default function ResetPassword () {
 		}
 		setIsLoading(true);
 		try {
-			const response = await resetPassword(payload);
+			const response = await authenticate.resetPassword(payload);
 			const {message} = response.data;
 			notify("success", message);
 			saveForgotPasswordEmail('')
@@ -113,7 +113,7 @@ export default function ResetPassword () {
 						<div className={styles.action_ctn}>
 							<PrimaryBtn
 								loading={isLoading}
-								text='Login' />
+								text='Confirm' />
 						</div>
 					</form>
 

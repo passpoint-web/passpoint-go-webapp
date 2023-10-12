@@ -1,10 +1,14 @@
-
-const Profile = () => {
+import AccountProfile from "@/components/AccountProfile"
+export const metadata = () => {
+	return {
+		title: 'Profile | Passpoint Go',
+		description: ''
+	}
+}
+const ProfilePage = () => {
 	return (
-		<div>
-			Profile
-		</div>
+		<AccountProfile />
 	)
 }
 
-export default Profile
+export default ProfilePage

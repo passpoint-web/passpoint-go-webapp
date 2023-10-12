@@ -18,6 +18,7 @@ const Login = () => {
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [feedbackError, setFeedbackError] = useState('')
 	const [payload, setPayload] = useState({
 		email: "",
 		password: "",
@@ -49,6 +50,7 @@ const Login = () => {
 			notify("success", `You're logged in as ${payload.email}`);
 		} catch (_err) {
 			const { message } = _err.response?.data || _err;
+			setFeedbackError(message)
 			notify("error", message);
 		} finally {
 			setIsLoading(false);
@@ -68,6 +70,7 @@ const Login = () => {
 	};
 
 	useEffect(() => {
+		setFeedbackError('')
 		const { email, password } = payload;
 		const conditionsMet = validEmail(email) && password;
 		if (conditionsMet) {
@@ -91,6 +94,7 @@ const Login = () => {
 								label="Email Address"
 								id="email-address"
 								name="email"
+								type='email'
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}
@@ -108,8 +112,8 @@ const Login = () => {
 								id="password"
 								name="password"
 								placeholder="Password"
-								error={ctaClicked && !payload.password}
-								errorMsg="Password is required"
+								error={ctaClicked && !payload.password || feedbackError.toLowerCase().includes('password')}
+								errorMsg={!payload.password ? 'Password is required' : feedbackError.toLowerCase().includes('password') ? feedbackError : 'Password is required'}
 							>
 								<PasswordField
 									errorField={ctaClicked && !payload.password}

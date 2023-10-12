@@ -11,6 +11,12 @@ function formatMoney(num, currency, precision) {
 	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
 	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0`
 }
+const createUrl = (pathname, params) => {
+	const paramsString = params.toString();
+	const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
+
+	return `${pathname}${queryString}`;
+};
 
 function currencySymbol(currency) {
 	return currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'
@@ -140,7 +146,8 @@ const functions = {
 	makeNumArr,
 	isValidUrl,
 	returnBase64,
-	splitOnCapsLetter
+	splitOnCapsLetter,
+	createUrl
 	// encryptData,
 	// decryptData
 }

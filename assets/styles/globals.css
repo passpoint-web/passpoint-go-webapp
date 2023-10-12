@@ -22,7 +22,7 @@
   src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
       format("embedded-opentype"),
     url("../fonts/Graphik-Font-Family/GraphikLight.otf") format("truetype");
-  font-weight: 400;
+  font-weight: light;
 }
 
 @font-face {
@@ -147,11 +147,16 @@
   --blue: #2b60e9;
   --green: #07b463;
 
+  --ctn-br-sd: 12px;
+  --ctn-br-md: 8px;
+  --ctn-br-sm: 6px;
+
   --anim-come-down-sm: come-down-sm 0.5s ease-in-out;
   --anim-come-down-sm-w-opacity: come-down-sm-w-opacity 0.5s ease-in-out;
   --anim-slide-up: slide-up 0.4s forwards;
   --anim-come-up-sm: come-up-sm 0.4s ease-in-out forwards;
-  --anim-come-down-sm: come-down-sm 0.4s ease-in-out;
+  --anim-come-down-sm: come-down-sm 0.6s ease-in-out;
+  --anim-dropdown: dropdown 0.2s ease-in-out forwards;
 }
 
 /* @media (prefers-color-scheme: dark) {} */
@@ -197,6 +202,12 @@ button {
   cursor: pointer;
   white-space: nowrap;
   transition: var(--input-transition);
+}
+
+a *,
+button * {
+  transition: var(--input-transition);
+
 }
 
 a:disabled,
@@ -272,10 +283,11 @@ h3 {
   line-height: 30px;
 }
 
-h3 {
+h4 {
   font-style: normal;
   font-size: 16px;
   line-height: 24px;
+  color: var(--grey-3);
 }
 
 h1 span {
@@ -284,11 +296,6 @@ h1 span {
   line-height: inherit;
   font-family: inherit;
   color: var(--grey-2);
-}
-
-h4 {
-  color: var(--grey-3);
-  font-size: 16px;
 }
 
 h1 {
@@ -850,8 +857,8 @@ ul {
 }
 
 .dropdown {
-  animation: dropdown 0.2s ease-in-out forwards;
-  -webkit-animation: dropdown 0.2s ease-in-out forwards;
+  animation: var(--anim-dropdown);
+  -webkit-animation: var(--anim-dropdown);
   transform-origin: top;
 }
 

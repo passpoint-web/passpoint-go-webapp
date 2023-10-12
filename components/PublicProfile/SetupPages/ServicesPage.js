@@ -370,7 +370,7 @@ const ServicesPage = ({styles}) => {
 			onClose={hideServiceModal}
 			handleCta={handleModalCta}
 		>
-			<div>
+			<form className={formStyles.form}>
 				<Input
 					id='serviceType'
 					label='Name of Service'
@@ -426,7 +426,7 @@ const ServicesPage = ({styles}) => {
 						handleServiceChange({
 							target: { name: 'featuredService', value: service.featuredService === 1 ? 0 : 1 },
 						})} />
-			</div>
+			</form>
 		</ModalWrapper>
 	)
 
@@ -526,7 +526,7 @@ const ServicesPage = ({styles}) => {
 			ctaBtnText={currentEditId === null ? 'Add' : 'Edit'}
 			handleCta={handleModalCta}
 		>
-			<div className={styles.form}>
+			<form className={formStyles.form}>
 				<Input
 					id='servicePriceModel'
 					label='Set Price Model'
@@ -579,7 +579,7 @@ const ServicesPage = ({styles}) => {
 						handleServiceChange({
 							target: { name: 'addVat', value: service.addVat === 1 ? 0 : 1 }
 						})} />
-			</div>
+			</form>
 		</ModalWrapper>
 	)
 

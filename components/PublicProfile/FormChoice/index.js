@@ -1,7 +1,7 @@
 import React from 'react'
-import CheckBox from '../../Custom/Check'
 import FeedbackInfo from '../../FeedbackInfo'
 import styles from './public-profile-info-choice.module.css'
+import Switch from '@/components/Custom/Switch'
 const FormChoice = ({message, checkValue=false, onChange}) => {
 	return (
 		<div className={styles.choice_ctn}>
@@ -13,9 +13,9 @@ const FormChoice = ({message, checkValue=false, onChange}) => {
 						content:{fontSize: '14px'}
 					}
 				} />
-			<CheckBox value={checkValue}
-				onChange={onChange}
-				styleProps={{bottom: 'unset'}} />
+			<Switch value={checkValue}
+				checked={checkValue}
+				onChange={onChange} />
 		</div>
 	)
 }

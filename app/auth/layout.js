@@ -1,38 +1,17 @@
-'use client'
-import '@/assets/styles/globals.css'
-import AuthHeader from '@/components/Auth/Header'
-// import FullScreenLoader from '@/components/Modal/FullScreenLoader'
-import styles from '@/assets/styles/auth-screens.module.css'
-// import {notify} from '@/components/Toast'
-import Head from 'next/head'
-import { usePathname } from 'next/navigation'
-import SignupLayoutLHS from '@/components/Auth/SignupLayoutLHS'
+import AuthLayout from '@/components/Layouts/AuthLayout'
+export const metadata = () => {
+	return {
+		title: 'Authentication | Passpoint Go',
+		description: '',
+	}
+}
 
-export default function AuthLayout({
-	children,
-}) {
-	const pathname = usePathname()
-	const LHSRequired =
-    pathname.includes('/auth/signup/individual') ||
-    pathname.includes('/auth/signup/business')
+const Layout = ({children}) => {
 	return (
-		<>
-			<Head>
-				<title>{`Auth | Passpoint Go`}</title>
-			</Head>
-			<AuthHeader />
-			<div className={styles.auth_content_ctn}>
-				<div className={styles.auth_content}>
-					{LHSRequired ? (
-						<SignupLayoutLHS />
-					) : (
-						<div className={styles.auth_content_lhs_empty} />
-					)}
-					{children}
-					<div className={styles.auth_content_rhs} />
-				</div>
-			</div>
-			{/* {fullScreenLoader ? <FullScreenLoader /> : <></>} */}
-		</>
+		<AuthLayout>
+			{children}
+		</AuthLayout>
 	)
 }
+
+export default Layout

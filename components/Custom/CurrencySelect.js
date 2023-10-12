@@ -7,8 +7,8 @@ import Search from './Search'
 import { DropDownIcon } from '@/constants/icons'
 
 const CurrencySelect = ({ emitCurrency, currencyProps, showSearch=true, styleProps }) => {
-	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
 
+	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
 	const [currencies, setCurrencies] = useState([])
 	const [filteredCurrencies, setFilteredCurrencies] = useState([])
 	const [currencyObj, setCurrencyObj] = useState({})

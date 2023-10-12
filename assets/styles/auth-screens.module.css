@@ -120,7 +120,7 @@
 }
 
 .form {
-  padding-top: var(--outer-component-mg);
+  padding-top: var(--inner-component-mg);
   max-width: 600px;
 }
 

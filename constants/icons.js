@@ -493,7 +493,7 @@ export const DropDownIconDark = () => (
 	</svg>
 );
 
-export const NotifyIcon = () => (
+export const NotificationIcon = ({color = '#565C69'}) => (
 	<svg
 		width="20"
 		height="20"
@@ -506,7 +506,7 @@ export const NotifyIcon = () => (
 				<path
 					id="Vector"
 					d="M10.0175 2.42578C7.25914 2.42578 5.01747 4.66745 5.01747 7.42578V9.83411C5.01747 10.3424 4.80081 11.1174 4.54247 11.5508L3.58414 13.1424C2.99247 14.1258 3.40081 15.2174 4.48414 15.5841C8.07581 16.7841 11.9508 16.7841 15.5425 15.5841C16.5508 15.2508 16.9925 14.0591 16.4425 13.1424L15.4841 11.5508C15.2341 11.1174 15.0175 10.3424 15.0175 9.83411V7.42578C15.0175 4.67578 12.7675 2.42578 10.0175 2.42578Z"
-					stroke="#565C69"
+					stroke={color}
 					strokeWidth="1.5"
 					strokeMiterlimit="10"
 					strokeLinecap="round"
@@ -514,7 +514,7 @@ export const NotifyIcon = () => (
 				<path
 					id="Vector_2"
 					d="M11.5579 2.66719C11.2996 2.59219 11.0329 2.53385 10.7579 2.50052C9.95794 2.40052 9.19128 2.45885 8.47461 2.66719C8.71628 2.05052 9.31628 1.61719 10.0163 1.61719C10.7163 1.61719 11.3163 2.05052 11.5579 2.66719Z"
-					stroke="#565C69"
+					stroke={color}
 					strokeWidth="1.5"
 					strokeMiterlimit="10"
 					strokeLinecap="round"
@@ -523,7 +523,7 @@ export const NotifyIcon = () => (
 				<path
 					id="Vector_3"
 					d="M12.5176 15.8828C12.5176 17.2578 11.3926 18.3828 10.0176 18.3828C9.33425 18.3828 8.70091 18.0995 8.25091 17.6495C7.80091 17.1995 7.51758 16.5661 7.51758 15.8828"
-					stroke="#303237"
+					stroke={color}
 					strokeWidth="1.5"
 					strokeMiterlimit="10"
 				/>
@@ -603,7 +603,7 @@ export const LogoutIcon = () => (
 		</g>
 	</svg>
 );
-export const SettingPprofile = () => (
+export const SettingProfile = () => (
 	<svg
 		width="20"
 		height="20"
@@ -1294,6 +1294,35 @@ export const NoteIcon = () => (
 			strokeLinejoin="round"/>
 	</svg>
 )
+export const NewNotificationIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none">
+		<path d="M10.0175 2.42499C7.25914 2.42499 5.01747 4.66665 5.01747 7.42499V9.83332C5.01747 10.3417 4.80081 11.1167 4.54247 11.55L3.58414 13.1417C2.99247 14.125 3.40081 15.2167 4.48414 15.5833C8.07581 16.7833 11.9508 16.7833 15.5425 15.5833C16.5508 15.25 16.9925 14.0583 16.4425 13.1417L15.4841 11.55C15.2341 11.1167 15.0175 10.3417 15.0175 9.83332V7.42499C15.0175 4.67499 12.7675 2.42499 10.0175 2.42499Z"
+			stroke="#565C69"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"/>
+		<path d="M11.5599 2.66664C11.3016 2.59164 11.0349 2.5333 10.7599 2.49997C9.9599 2.39997 9.19323 2.4583 8.47656 2.66664C8.71823 2.04997 9.31823 1.61664 10.0182 1.61664C10.7182 1.61664 11.3182 2.04997 11.5599 2.66664Z"
+			stroke="#565C69"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12.5156 15.8834C12.5156 17.2584 11.3906 18.3834 10.0156 18.3834C9.33229 18.3834 8.69896 18.1 8.24896 17.65C7.79896 17.2 7.51562 16.5667 7.51562 15.8834"
+			stroke="#303237"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"/>
+		<circle cx="15"
+			cy="6"
+			r="4.75"
+			fill="#FF3B2D"
+			stroke="white"
+			strokeWidth="0.5"/>
+	</svg>
+)
 
 export const SuccessIcon = () => (
 	<svg xmlns="http://www.w3.org/2000/svg"
@@ -1441,7 +1470,6 @@ export const ActionSuccessfulIcon = () => (
 
 export const ActionFailedIcon = () => (
 <svg xmlns="http://www.w3.org/2000/svg" width="101" height="100" viewBox="0 0 101 100" fill="none">
-<path d="M50.4987 91.6673C73.4154 91.6673 92.1654 72.9173 92.1654 50.0006C92.1654 27.084 73.4154 8.33398 50.4987 8.33398C27.582 8.33398 8.83203 27.084 8.83203 50.0006C8.83203 72.9173 27.582 91.6673 50.4987 91.6673Z" fill="#FF3B2D" stroke="#FFE6E4" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M35 66L67 34M35 34L67 66L35 34Z" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M50.4987 91.6673C73.4154 91.6673 92.1654 72.9173 92.1654 50.0006C92.1654 27.084 73.4154 8.33398 50.4987 8.33398C27.582 8.33398 8.83203 27.084 8.83203 50.0006C8.83203 72.9173 27.582 91.6673 50.4987 91.6673Z" fill="#FF3B2D" stroke="#FFE6E4" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 )

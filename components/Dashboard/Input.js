@@ -3,7 +3,7 @@ import styles from "@/assets/styles/auth-screens.module.css";
 const Input = ({
 	children,
 	label,
-	error,
+	error = false,
 	errorMsg,
 	msgPositionCenter,
 	styleProps,

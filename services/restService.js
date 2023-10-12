@@ -61,6 +61,32 @@ export const resendOtp = (data) => {
 	return restAgent.post("resendOtp", data);
 };
 
+export const authenticate = {
+	registerUser : (path, data) => {
+		return restAgent.post(path, data);
+	},
+	
+	verifyEmailOtp : (data) => {
+		return restAgent.post('verifyUserOtp', data);
+	},
+	
+	login : (data) => {
+		return restAgent.post("login", data);
+	},
+	
+	forgotPassword : (data) => {
+		return restAgent.post("forgotPassword", data);
+	},
+	
+	resetPassword : (data) => {
+		return restAgent.post("resetPassword", data);
+	},
+	
+	resendOtp : (data) => {
+		return restAgent.post("resendOtp", data);
+	}
+}
+
 export const metrics = () => {
 	return restAgent.get("dashboardMetrics", setConfig());
 };
@@ -83,6 +109,12 @@ export const publicProfile = {
 	},
 	contact: (data) => {
 		return restAgent.post('publicProfileContactDetails', data, setConfig());
+	},
+}
+
+export const accountProfile = {
+	changePassword: (data) => {
+		return restAgent.post('changeAccountPassword', data,  setConfig());
 	},
 }
 

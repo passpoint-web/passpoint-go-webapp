@@ -4,7 +4,7 @@ import styles from '@/app/dashboard/public-profile-setup/public-profile.module.c
 const FeatureCard = ({feature, removeFeature, editFeature}) => {
 	return (
 		<div
-			className={styles.features_card_ctn}>
+			className={`${styles.features_card_ctn} dropdown`}>
 			<button
 				className='absolute_close_btn button'
 				onClick={removeFeature}>
