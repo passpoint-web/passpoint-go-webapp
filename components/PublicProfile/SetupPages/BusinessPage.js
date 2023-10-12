@@ -143,9 +143,8 @@ const BusinessPage = ({styles}) => {
 	const getPublicProfile = async () => {
 		try {
 			const response = await publicProfile.getPublicProfile()
-			const data = response.data.data[0]
-			console.log(data)
-			// savePublicProfile(data)
+			const data = response.data.data
+			savePublicProfile(data)
 			if (data.aboutBusiness) {
 				const {aboutBusiness, desc} = data
 				// setBusinessLogo(data.logo)

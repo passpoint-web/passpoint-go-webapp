@@ -33,7 +33,7 @@ const IdentityPage = ({styles}) => {
 	const getPublicProfile = async () => {
 		try {
 			const response = await publicProfile.getPublicProfile()
-			const data = response.data.data[0]
+			const data = response.data.data
 			// console.log(data)
 			// savePublicProfile(data)
 			if (data.logo) {

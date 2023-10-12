@@ -33,6 +33,8 @@ const ContactPage = ({ styles }) => {
 	const {push} = useRouter()
 	// const savedCredentials = getCredentials()
 	const [isLoading, setIsLoading] = useState(false)
+	const [dataLoading, setDataLoading] = useState(true)
+	const [submitType, setSubmitType] = useState('NEW')
 	const notify = useNotify()
 	// console.log(router)
 	const { validEmail, isValidUrl } = functions;
@@ -144,6 +146,7 @@ const ContactPage = ({ styles }) => {
 		try {
 			const response = await publicProfile.contact({
 				...payload,
+				submitType,
 				socials: formattedSocials,
 				hasWebContact: hasWebContact ? 1 : 0
 			})
@@ -159,6 +162,27 @@ const ContactPage = ({ styles }) => {
 			setIsLoading(false)
 		}
 	};
+
+	const getPublicProfile = async () => {
+		try {
+			const response = await publicProfile.getPublicProfile()
+			const data = response.data.data
+			console.log(data)
+			savePublicProfile(data)
+			if (data.socials.length) {
+				// con
+				setSubmitType('EDIT')
+			}
+		} catch (_err) {
+			// console.log(_err)
+		} finally {
+			setDataLoading(false)
+		}
+	}
+
+	useEffect(()=>{
+		getPublicProfile()
+	},[])
 
 	useEffect(() => {
 		// console.log(payload)

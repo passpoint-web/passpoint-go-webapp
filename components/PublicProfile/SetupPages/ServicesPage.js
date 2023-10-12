@@ -174,9 +174,13 @@ const ServicesPage = ({styles}) => {
 		setModalCtaClicked(false)
 	}
 
-	const removeFeature = (e, id) => {
+	const removeFeature = (e, id, serviceId) => {
 		e.preventDefault()
-		setServices(services.filter((s)=>s.id !== id))
+		if (serviceId) {
+			deleteCurrentService(serviceId)
+		} else {
+			setServices(services.filter((s)=>s.id !== id))
+		}
 	}
 
 	const handleSubmit = async (e) => {
@@ -202,13 +206,25 @@ const ServicesPage = ({styles}) => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await publicProfile.addServices(payload)
-			console.log(response)
-			// savePublicProfile({...savedPublicProfile, productStage: 3})
-
+			await publicProfile.addServices(payload)
 			savePublicProfile({productStage: 3})
 			notify('success', 'Your services have been saved')
 			push('/dashboard/public-profile-setup/contact')
+		} catch (_err) {
+			console.log(_err)
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+	const deleteCurrentService = async (serviceId) => {
+		const payload = {serviceId}
+		setIsLoading(true)
+		try {
+			await publicProfile.deleteService(payload)
+			setServices(services.filter((s)=>s.serviceId !== serviceId))
+			notify('success', 'Deleted successfully')
 		} catch (_err) {
 			console.log(_err)
 			const { message } = _err.response?.data || _err
@@ -222,8 +238,7 @@ const ServicesPage = ({styles}) => {
 	const getPublicProfile = async () => {
 		try {
 			const response = await publicProfile.getPublicProfile()
-			const data = response.data.data[0]
-			console.log(data)
+			const data = response.data.data
 			savePublicProfile(data)
 			if (data.services.length) {
 				const formattedService = data.services.map((d, id)=>{
@@ -593,7 +608,7 @@ const ServicesPage = ({styles}) => {
 			{services.map((service, id)=>(
 				<ServiceCard key={id}
 					service={service}
-					removeService={(e)=>removeFeature(e, id)}
+					removeService={(e)=>removeFeature(e, id, service.serviceId)}
 					editService={(e)=>editFeatureModal(e, service)} />
 			))}
 
