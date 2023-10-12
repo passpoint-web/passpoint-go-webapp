@@ -116,6 +116,15 @@ const returnBase64 = async (file) => {
 	}
 }
 
+const splitOnCapsLetter = (string) => {
+	let str = string
+	str = str[0].toUpperCase() + str.slice(1) // incase the first letter is not in caps
+	str = str.split(/(?=[A-Z])/)
+	str = str.join(' ')
+	console.log(str)
+	return str.split(/(?=[A-Z])/)
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -130,7 +139,8 @@ const functions = {
 	getMonth,
 	makeNumArr,
 	isValidUrl,
-	returnBase64
+	returnBase64,
+	splitOnCapsLetter
 	// encryptData,
 	// decryptData
 }

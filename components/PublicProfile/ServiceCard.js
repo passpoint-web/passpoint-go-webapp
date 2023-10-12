@@ -72,9 +72,10 @@ const ServiceCard = ({service, removeService, editService}) => {
 				onClick={editService}
 			>
 				{
-					service.servicePriceModel?.name === 'Fixed Price' ?
+					service?.servicePriceModel === 'fixedPrice' ?
 						FixedPrice() :
-						PackagedPrice()
+						service?.servicePriceModel === 'packagedPrice' ?
+						PackagedPrice() : <></>
 				}
 			</div>
 		</div>

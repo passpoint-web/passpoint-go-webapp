@@ -10,6 +10,7 @@ import { useNotify } from '@/utils/hooks'
 import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
 import ServiceCard from '@/components/PublicProfile/ServiceCard'
 import CustomSelect from '@/components/Custom/Select'
+import ServicePriceModelSelect from '@/components/Custom/Select/ServicePriceModelSelect'
 import { publicProfile } from '@/services/restService'
 import FileUpload from '@/components/FileUpload'
 import Button from '@/components/Btn/Button'
@@ -18,48 +19,15 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import { CancelIcon } from '@/constants/icons'
 import MoneyInput from '@/components/Custom/MoneyInput'
 import FormChoice from '../FormChoice'
-// import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import { savePublicProfile, 
 	// getPublicProfile as getSavedPublicProfile  
 } from '@/services/localService'
 
-
 const ServicesPage = ({styles}) => {	
 	// const savedPublicProfile = getSavedPublicProfile()
-	// eslint-disable-next-line no-unused-vars
-	const getPublicProfile = async () => {
-	try {
-		const response = await publicProfile.getPublicProfile()
-		const data = response.data.data[0]
-		console.log(data)
-		savePublicProfile(data)
-		if (data.services.length) {
-			// setBusinessLogo(data.logo)
-			const formattedService = data.services.map((d, id)=>{
-				let obj = {
-					...d,
-					id,
-					serviceType: {
-						serviceType: d.serviceType,
-						serviceName: d.serviceName
-					}
-				}
-				return obj
-			})
-			setServices(formattedService)
-			setSubmitType('EDIT')
-		}
-	} catch (_err) {
-		console.log(_err)
-	} finally {
-		// setDataLoading(false)
-	}
-}
-useEffect(()=>{
-	// getPublicProfile()
-},[])
 	const notify = useNotify()
-	// const [dataLoading, setDataLoading] = useState(true)
+	const [dataLoading, setDataLoading] = useState(true)
 	const [submitType, setSubmitType] = useState('NEW')
 	const [isLoading, setIsLoading] = useState(false)
 	const { push } = useRouter()
@@ -78,10 +46,10 @@ useEffect(()=>{
 			serviceName: ''
 		}, // {serviceName, serviceId}
 		serviceDesc: '',
-		addVat: false,
-		featuredService: false,
+		addVat: 0,
+		featuredService: 0,
 		serviceCurrency: 'NGN',
-		servicePriceModel: {name: 'Fixed Price', value: 'fixedPrice'},
+		servicePriceModel: 'fixedPrice',
 		serviceBanner: '', // base64
 		pricingType: ''
 	}
@@ -90,7 +58,7 @@ useEffect(()=>{
 		initialService
 	);
 
-	const servicePriceModels = [{name: 'Fixed Price', value: 'fixedPrice'}, {name: 'Package', value: 'packagedPrice'}]
+	const servicePriceModels = ['fixedPrice', 'packagedPrice']
 
 	// const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', 'Per month']
 
@@ -129,7 +97,7 @@ useEffect(()=>{
 		e.preventDefault()
 		setCurrentEditId(val.id)
 		setService(val)
-		if (val.servicePriceModel?.name === 'Fixed Price') {
+		if (val.servicePriceModel === 'fixedPrice') {
 			setFixedServicePrice(val.servicePrice)
 		} else {
 			setPackageServicePrice(val.servicePrice)
@@ -161,7 +129,7 @@ useEffect(()=>{
 	}
 
 	const updateService = () => {
-		if (service.servicePriceModel?.name === 'Fixed Price') {
+		if (service.servicePriceModel === 'fixedPrice') {
 			let formattedService = {...service, servicePrice: fixedServicePrice }
 			if (currentEditId !== null) {
 				const update = services.map(oldService =>
@@ -219,10 +187,8 @@ useEffect(()=>{
 		}
 		const formattedServices = services.map(e=> {
 			const s = {
-				...e, 
-				addVat: e.addVat ? 1 : 0, 
-				featuredService: e.featuredService ? 1 : 0, 
-				servicePriceModel: e.servicePriceModel.value, 
+				...e,
+				servicePriceModel: e.servicePriceModel, 
 				serviceType : e.serviceType.serviceId,
 				serviceName : e.serviceType.serviceName,
 				pricingType: e.pricingType || 'N/A'
@@ -252,6 +218,38 @@ useEffect(()=>{
 		}
 	}
 
+
+	const getPublicProfile = async () => {
+		try {
+			const response = await publicProfile.getPublicProfile()
+			const data = response.data.data[0]
+			console.log(data)
+			savePublicProfile(data)
+			if (data.services.length) {
+				const formattedService = data.services.map((d, id)=>{
+					let obj = {
+						...d,
+						id,
+						serviceType: {
+							serviceType: d.serviceType,
+							serviceName: d.serviceName
+						}
+					}
+					return obj
+				})
+				setServices(formattedService)
+				setSubmitType('EDIT')
+			}
+		} catch (_err) {
+			// console.log(_err)
+		} finally {
+			setDataLoading(false)
+		}
+	}
+	useEffect(()=>{
+		getPublicProfile()
+	},[])
+
 	useEffect(function resetModalCtaClickedOnLevelChange(){
 		setModalCtaClicked(false)
 	}, [modalLevel])
@@ -279,13 +277,13 @@ useEffect(()=>{
 		// condition to check if all conditions are met in second modal for priceModel === 'Fixed Price
 		const fixedConditionsMet =
 			serviceCurrency &&
-			servicePriceModel?.name &&
+			servicePriceModel &&
 			Number(fixedServicePrice) !== 0
 
 		// condition to check if all conditions are met in second modal for priceModel === 'Package
 		const packageConditionsMet =
 			serviceCurrency &&
-			servicePriceModel?.name &&
+			servicePriceModel &&
 			pricingType &&
 			allPackagePriceFieldsValid
 
@@ -303,7 +301,7 @@ useEffect(()=>{
 		} else if (modalLevel === 1) {
 			// console.log('1')
 			// if second modal, and price model is fixed
-			if (servicePriceModel?.name === 'Fixed Price') {
+			if (servicePriceModel === 'fixedPrice') {
 				// console.log('fixed price')
 				if (fixedConditionsMet) {
 					// console.log('fixed met')
@@ -423,10 +421,10 @@ useEffect(()=>{
 						})
 					} />
 				<FormChoice message='Do you want this as a featured service?'
-					checkValue={service.featuredService}
+					checkValue={service.featuredService === 1}
 					onChange={()=>
 						handleServiceChange({
-							target: { name: 'featuredService', value: !service.featuredService },
+							target: { name: 'featuredService', value: service.featuredService === 1 ? 0 : 1 },
 						})} />
 			</div>
 		</ModalWrapper>
@@ -532,10 +530,10 @@ useEffect(()=>{
 				<Input
 					id='servicePriceModel'
 					label='Set Price Model'
-					error={modalCtaClicked && !service.servicePriceModel?.name}
+					error={modalCtaClicked && !service.servicePriceModel}
 					errorMsg='Service price model is required'
 				>
-					<CustomSelect
+					<ServicePriceModelSelect
 						styleProps={{
 							dropdown: {
 								height: '100px'
@@ -543,7 +541,6 @@ useEffect(()=>{
 						}}
 						fieldError={modalCtaClicked && !service.serviceType}
 						selectOptions={servicePriceModels}
-						objKey="name"
 						selectedOption={service.servicePriceModel}
 						emitSelect={(s) => handleServiceChange({
 							target: { name: 'servicePriceModel', value: s },
@@ -572,15 +569,15 @@ useEffect(()=>{
 					/>
 				</Input>
 				{
-					service.servicePriceModel?.name === 'Fixed Price' ?
+					service.servicePriceModel === 'fixedPrice' ?
 						FixedPriceModel() :
 						PackageModel()
 				}
 				<FormChoice message='Do you want to include VAT (7.5%)?'
-					checkValue={service.addVat}
+					checkValue={service.addVat === 1}
 					onChange={()=>
 						handleServiceChange({
-							target: { name: 'addVat', value: !service.addVat }
+							target: { name: 'addVat', value: service.addVat === 1 ? 0 : 1 }
 						})} />
 			</div>
 		</ModalWrapper>
@@ -611,7 +608,7 @@ useEffect(()=>{
 
 	return (
 		<>
-		{/* {dataLoading ? <FullScreenLoader /> : <></>} */}
+		{dataLoading ? <FullScreenLoader /> : <></>}
 			{
 				showModal && modalLevel === 0 ?
 					AddServiceModal() :

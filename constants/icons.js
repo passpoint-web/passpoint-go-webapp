@@ -1360,3 +1360,88 @@ export const AddIcon = ({color='#BDC0CE'}) => (
 			strokeLinejoin="round"/>
 	</svg>
 )
+
+export const ProfileEditIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none">
+		<path d="M9.16797 1.66675H7.5013C3.33464 1.66675 1.66797 3.33341 1.66797 7.50008V12.5001C1.66797 16.6667 3.33464 18.3334 7.5013 18.3334H12.5013C16.668 18.3334 18.3346 16.6667 18.3346 12.5001V10.8334"
+			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M13.3675 2.51663L6.80088 9.0833C6.55088 9.3333 6.30088 9.82497 6.25088 10.1833L5.89254 12.6916C5.75921 13.6 6.40088 14.2333 7.30921 14.1083L9.81754 13.75C10.1675 13.7 10.6592 13.45 10.9175 13.2L17.4842 6.6333C18.6175 5.49997 19.1509 4.1833 17.4842 2.51663C15.8175 0.849966 14.5009 1.3833 13.3675 2.51663Z"
+			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12.4258 3.45825C12.9841 5.44992 14.5424 7.00825 16.5424 7.57492"
+			stroke="#009EC4"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+	</svg>
+)
+
+export const AccountProfileIcon = ({color='#009EC4'}) => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none">
+		<path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+	</svg>
+)
+
+export const AccountSecurityIcon = ({color='#009EC4'}) => (
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none">
+		<path d="M20.9099 11.12C20.9099 16.01 17.3599 20.59 12.5099 21.93C12.1799 22.02 11.8198 22.02 11.4898 21.93C6.63984 20.59 3.08984 16.01 3.08984 11.12V6.73003C3.08984 5.91003 3.70986 4.98004 4.47986 4.67004L10.0498 2.39007C11.2998 1.88007 12.7098 1.88007 13.9598 2.39007L19.5298 4.67004C20.2898 4.98004 20.9199 5.91003 20.9199 6.73003L20.9099 11.12Z"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12 12.5C13.1046 12.5 14 11.6046 14 10.5C14 9.39543 13.1046 8.5 12 8.5C10.8954 8.5 10 9.39543 10 10.5C10 11.6046 10.8954 12.5 12 12.5Z"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+		<path d="M12 12.5V15.5"
+			stroke={color}
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"/>
+	</svg>
+)
+
+export const ActionSuccessfulIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg" width="101" height="100" viewBox="0 0 101 100" fill="none">
+  <path d="M50.4987 91.6673C73.4154 91.6673 92.1654 72.9173 92.1654 50.0006C92.1654 27.084 73.4154 8.33398 50.4987 8.33398C27.582 8.33398 8.83203 27.084 8.83203 50.0006C8.83203 72.9173 27.582 91.6673 50.4987 91.6673Z" fill="#07B463" stroke="#E6F8EF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M32.793 50.0007L44.5846 61.7923L68.2096 38.209" stroke="#E6F8EF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+)
+
+export const ActionFailedIcon = () => (
+<svg xmlns="http://www.w3.org/2000/svg" width="101" height="100" viewBox="0 0 101 100" fill="none">
+<path d="M50.4987 91.6673C73.4154 91.6673 92.1654 72.9173 92.1654 50.0006C92.1654 27.084 73.4154 8.33398 50.4987 8.33398C27.582 8.33398 8.83203 27.084 8.83203 50.0006C8.83203 72.9173 27.582 91.6673 50.4987 91.6673Z" fill="#FF3B2D" stroke="#FFE6E4" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M35 66L67 34M35 34L67 66L35 34Z" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+)
