@@ -9,6 +9,17 @@
   place-items: center;
 }
 
+.loader_overlay_screen {
+  min-height: 100%;
+  width: 100%;
+  position: fixed;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  background: rgba(28, 17, 50, 0.6);
+  cursor: unset;
+  z-index: var(--z-index-overlay);
+}
 .overlay_screen {
   min-height: 100%;
   width: 100%;
@@ -38,8 +49,15 @@
   animation: pulse 1s infinite;
 }
 
-.child {
+.child_ctn {
   min-width: 500px;
+  max-width: 500px;
+  position: relative;
+}
+
+.child {
+  width: 100%;
+  max-width: 500px;
   z-index: calc(var(--z-index-overlay)+ 1);
   background: #fff;
   position: relative;
@@ -48,13 +66,14 @@
   min-height: 250px;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  display: grid;
+  /* display: grid; */
   /* flex-direction: column; */
   gap: var(--sm-inner-component-mg);
 }
 
 .top {
   position: relative;
+  margin-bottom: var(--inner-component-gap);
 }
 
 .content {
@@ -64,20 +83,45 @@
 }
 
 .bottom {
+  margin-top: var(--outer-component-mg);
   display: flex;
-  /* justify-self: flex-end; */
   align-self: flex-end;
   gap: var(--sm-inner-component-mg);
 }
 
+.bottom.end {
+  justify-content: flex-end;
+}
+
+.bottom button {
+  width: fit-content;
+}
+
+.bottom:not(.end) button {
+  width: 100%;
+}
+ 
 .close_btn {
+  position:absolute;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: var(--inner-component-mg);
+  top: var(--inner-component-mg);
   height: 34px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  /* width: 30px; */
+  /* height: 30px; */
+  height: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 30;
 }
+
+.close_btn:hover {
+  background-color: var(--grey-5);
+}
+
 
 @media screen and (min-width: 500px) {
   .mobile_top {
@@ -105,8 +149,11 @@
     width: 50px;
   }
 
-  .child {
+  .child_ctn {
     min-width: 90%;
+  }
+
+  .child {
     border-radius: calc(var(--input-br) * 2);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

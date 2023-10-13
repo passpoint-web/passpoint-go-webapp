@@ -34,6 +34,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 	}
 	const retrieveCountries = () => {
 		const data = COUNTRIES
+		console.log(data)
 		data.sort(function (a, b) {
 			if (a.name.common < b.name.common) {
 				return -1
@@ -126,14 +127,14 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 							>
 								{
 									c?.flags?.png ?
-									<Image
-										src={c?.flags?.png}
-										alt={c?.name?.common}
-										width="20"
-										height="20"
-										className={styles.img}
-									/> :
-									<div style={{width: '20px', height: '20px'}} />
+										<Image
+											src={c?.flags?.png}
+											alt={c?.name?.common}
+											width="20"
+											height="20"
+											className={styles.img}
+										/> :
+										<div style={{width: '20px', height: '20px'}} />
 								}
 								<p>{c?.name?.common}</p>
 							</div>

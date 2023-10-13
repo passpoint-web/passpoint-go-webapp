@@ -70,6 +70,7 @@
   background-color: var(--white);
   justify-content: flex-end;
   padding: 0 30px;
+  border-bottom: 1px solid var(--grey-5);
 }
 .dashHeader_main .generate {
   padding: 14px 20px;

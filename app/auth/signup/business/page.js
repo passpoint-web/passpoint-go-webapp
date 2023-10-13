@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
 import { registerUser } from '@/services/restService'
@@ -12,7 +12,8 @@ import CheckBox from '@/components/Custom/Check'
 import CustomSelect from '@/components/Custom/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
+
 const BusinessInformation = () => {
 
 	// eslint-disable-next-line no-unused-vars
@@ -32,13 +33,7 @@ const BusinessInformation = () => {
 		password: ''
 	})
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
-
-	// const dismiss = useCallback(() => {
-	// 	toast.dismiss()
-	// }, [])
+	const notify = useNotify()
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -133,6 +128,7 @@ const BusinessInformation = () => {
 								label="Business Email Address"
 								id="business-email-address"
 								name="email"
+								type='email'
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}

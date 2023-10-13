@@ -2,15 +2,15 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 import { useRouter } from 'next/navigation'
 import { businessIndustries } from '@/utils/CONSTANTS'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { registerUser } from '@/services/restService'
 import { getCredentials, saveCredentials } from '@/services/localService'
 import CustomSelect from '@/components/Custom/Select'
 import PrimaryBtn from '@/components/Btn/Primary'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
 import PasspointBusinessModal from '@/components/Modal/PasspointBusiness'
+import { useNotify } from '@/utils/hooks'
 
 const BusinessInformation = () => {
 	// eslint-disable-next-line no-unused-vars
@@ -26,9 +26,7 @@ const BusinessInformation = () => {
 
 	const savedCredentials = getCredentials()
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -79,11 +77,11 @@ const BusinessInformation = () => {
 	return (
 		<>
 			{
-				showBusinessWarning ? 
-				<PasspointBusinessModal 
-					onClose={()=>setShowBusinessWarning(false)} 
-				/> : 
-				<></>
+				showBusinessWarning ?
+					<PasspointBusinessModal
+						onClose={()=>setShowBusinessWarning(false)}
+					/> :
+					<></>
 			}
 			<div className={`${styles.auth} ${styles.no_pd_top}`}>
 				<div className={styles.inner}>

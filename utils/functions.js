@@ -1,15 +1,22 @@
 // import CryptoJS from 'crypto-js'
 
-function number(num) {
-	let value = `${num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
+function number(num, precision) {
+	const n = num ? num.toFixed(precision || 0) : num
+	let value = `${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
 	// return sym ? (position === 'pre' ? `${sym} ${value}` : `${value} ${sym}`) : value
 	return value
 }
 
 function formatMoney(num, currency, precision) {
-	const n = num ? num.toFixed(precision || 2) : num
+	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
 	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0`
 }
+const createUrl = (pathname, params) => {
+	const paramsString = params.toString();
+	const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
+
+	return `${pathname}${queryString}`;
+};
 
 function currencySymbol(currency) {
 	return currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'
@@ -68,18 +75,6 @@ function truncateString(str) {
 	return str.slice(0, 12) + '...'
 }
 
-function resetModalState() {
-	document.querySelectorAll('.modal-container .child').forEach((modal) => {
-		modal.classList.remove('squeeze-in')
-	})
-	document
-		.querySelectorAll('.modal-container .backdrop-ctn')
-		.forEach((modal) => {
-			modal.classList.remove('blur-out')
-			modal.classList.add('blur')
-		})
-}
-
 function validEmail (email) {
 	const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	return regex.test(String(email).toLowerCase())
@@ -102,6 +97,31 @@ function getMonth(index) {
 	]
 	return months[index - 1]
 }
+function isValidUrl (url) {
+	// eslint-disable-next-line no-useless-escape
+	if (url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
+		return true
+	}
+	return false
+}
+
+const toBase64 = file => new Promise((resolve, reject) => {
+	const reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = () => resolve(reader.result);
+	reader.onerror = reject;
+})
+
+const returnBase64 = async (file) => {
+	try {
+		const result = await toBase64(file);
+		return result
+	} catch(error) {
+		console.error(error);
+		return;
+	}
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -114,8 +134,10 @@ const functions = {
 	maskedEmail,
 	validEmail,
 	getMonth,
-	resetModalState,
-	makeNumArr
+	makeNumArr,
+	isValidUrl,
+	returnBase64,
+	createUrl
 	// encryptData,
 	// decryptData
 }

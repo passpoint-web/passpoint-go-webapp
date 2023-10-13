@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { registerUser } from '@/services/restService'
 import { getCredentials, saveCredentials } from '@/services/localService'
@@ -10,7 +10,7 @@ import 'react-phone-input-2/lib/style.css'
 import CheckBox from '@/components/Custom/Check'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 
 const BusinessPersonalInfo = () => {
 	// eslint-disable-next-line no-unused-vars
@@ -29,9 +29,7 @@ const BusinessPersonalInfo = () => {
 	})
 	const savedCredentials = getCredentials()
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 
 	const handleChange = (e) => {

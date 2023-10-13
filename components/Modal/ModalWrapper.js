@@ -1,11 +1,12 @@
 import styles from './modal.module.css'
 import { CancelIcon } from '@/constants/icons'
-import PrimaryBtn from '../Btn/Primary'
+// import PrimaryBtn from '../Btn/Primary'
 import { useRef } from 'react'
-const ModalWrapper = ({children, heading, contentStyle, onClose, overlayClose = false, ctaBtnText = 'Proceed', otherBtns}) => {
+import Button from '../Btn/Button'
+const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, bottomCancelNeeded = true, subHeading, heading, contentStyle, onClose, handleCta, overlayClose = false, ctaBtnText = 'Proceed', cancelBtnText='Cancel'}) => {
 	const modalCtnRef = useRef(null)
 	const modalBgRef = useRef(null)
-	const modalChildRef = useRef(null)
+	// const modalChildRef = useRef(null)
 	// const closeModal = () => {
 	// 	// Take modals away with transition
 	// 	console.log(modalCtnRef.current.children)
@@ -25,26 +26,36 @@ const ModalWrapper = ({children, heading, contentStyle, onClose, overlayClose = 
 	return (
 		<div ref={modalCtnRef}
 			className={`${styles.modal_container} reveals`}>
-				<div ref={modalBgRef} className={styles.overlay_screen} onClick={overlayClose ? onClose : null} />
-				<div ref={modalChildRef} className={styles.child}
+			<div ref={modalBgRef}
+				className={styles.overlay_screen}
+				onClick={overlayClose ? onClose : null} />
+			<div className={styles.child_ctn}>
+				<button className={`${styles.close_btn} button`}
+					onClick={onClose}>
+					<CancelIcon />
+				</button>
+				<div
+					className={styles.child}
 					style={{...contentStyle}}>
 					<div className={styles.mobile_top}>
 						<div className={styles.dragger} />
 					</div>
 					<div className={styles.top}>
 						<h2>{heading}</h2>
-						<button className={`${styles.close_btn} button`}
-							onClick={onClose}>
-							<CancelIcon />
-						</button>
+						<p>{subHeading}</p>
 					</div>
-					{children}	
-					<div className={`${styles.bottom} ${styles.end}`}>
-						{otherBtns}
-						<PrimaryBtn text={ctaBtnText}
-							onClick={onClose} />
+					{children}
+					<div className={`${styles.bottom} ${bottomCancelNeeded  && styles.end}`}>
+						{bottomCancelNeeded && <Button className="secondary md"
+							onClick={onClose}
+							text={cancelBtnText} />}
+						<Button className={`primary ${ctaBtnType}`}
+							onClick={handleCta}
+							loading={loading}
+							text={ctaBtnText} />
 					</div>
 				</div>
+			</div>
 		</div>
 	)
 }

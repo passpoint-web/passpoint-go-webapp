@@ -1,8 +1,7 @@
-import React from 'react'
-
-const BackBtn = ({...props}) => {
+const BackBtn = ({text='Back',styleProps, ...props}) => {
 	return (
-		<button className='back_btn medium'
+		<button style={styleProps}
+    className='back_btn medium'
 			{...props}>
 			<svg xmlns="http://www.w3.org/2000/svg"
 				width="21"
@@ -22,7 +21,7 @@ const BackBtn = ({...props}) => {
 					strokeLinecap="round"
 					strokeLinejoin="round"/>
 			</svg>
-			<span>Back</span>
+			<span>{text}</span>
 		</button>
 	)
 }

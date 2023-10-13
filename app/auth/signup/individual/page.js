@@ -1,18 +1,18 @@
 'use client'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { saveCredentials } from '@/services/localService'
 import { registerUser } from '@/services/restService'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import PasswordField from '@/components/Auth/PasswordField'
-import 'react-phone-input-2/lib/style.css'
 import functions from '@/utils/functions'
 import CheckBox from '@/components/Custom/Check'
 import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 
 const IndividualInformation = () => {
 	const { push, back } = useRouter()
@@ -32,9 +32,7 @@ const IndividualInformation = () => {
 		password: '',
 	})
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	const handleChange = (e) => {
 		const { name, value } = e.target
@@ -122,6 +120,7 @@ const IndividualInformation = () => {
 								label="Email Address"
 								id="email-address"
 								name="email"
+								type='email'
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}

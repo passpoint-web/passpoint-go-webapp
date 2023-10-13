@@ -4,11 +4,11 @@ import PrimaryBtn from '@/components/Btn/Primary'
 import OtpInput from 'react-otp-input'
 import Input from '@/components/Dashboard/Input'
 import ResendOTP from '@/components/Verify/ResendOTP'
-import toast from '@/components/Toast'
+import { useNotify } from '@/utils/hooks'
 import BackBtn from '@/components/Btn/Back'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { verifyEmailOtp } from '@/services/restService'
+import { authenticate } from '@/services/restService'
 import functions from '@/utils/functions'
 
 const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, otpType = 'accountVerification'}) => {
@@ -19,9 +19,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
-	const notify = useCallback((type, message) => {
-		toast({ type, message })
-	}, [])
+	const notify = useNotify()
 
 	const {maskedEmail} = functions
 
@@ -38,9 +36,8 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 				email,
 				otpType
 			}
-			const response = await verifyEmailOtp(payload)
+			const response = await authenticate.verifyEmailOtp(payload)
 			console.log(response)
-			// setSignupLevel({'business', 2})
 			notify('success', 'Your email has been verified!')
 			push(nextPath)
 		} catch (_err) {
@@ -59,9 +56,10 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 		<div className={`${styles.auth} ${!backBtnNeeded ? styles.no_pd_top : ''}`}>
 			<div className={styles.inner}>
 				<div className={styles.center}>
-				{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
+					{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
+						{email}
               We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
               code below.
 					</h4>
@@ -88,7 +86,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 							</Input>
 						</div>
 						<div className={styles.action_ctn}>
-							<ResendOTP 
+							<ResendOTP
 								email={email}
 								clearOtp={()=>setOtp('')}
 							/>
