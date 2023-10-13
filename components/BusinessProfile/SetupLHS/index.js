@@ -23,19 +23,19 @@ const PublicProfileSetupLHS = () => {
 			title: 'Logo',
 			sub_title: 'Provide your official logo',
 			active: pathname === '/dashboard/business-profile-setup/identity',
-			completed: publicProfileState?.productStage > 0,
+			completed: publicProfileState?.profileStage > 0,
 		},
 		{
 			title: 'About Business',
 			sub_title: 'Briefly tell us about your business and why they should choose you',
 			active: pathname === '/dashboard/business-profile-setup/business',
-			completed: publicProfileState?.productStage > 1,
+			completed: publicProfileState?.profileStage > 1,
 		},
 		{
 			title: 'Services',
 			sub_title: 'Kindly list all the services you offer including featured services',
 			active: pathname === '/dashboard/business-profile-setup/services',
-			completed: publicProfileState?.productStage > 2,
+			completed: publicProfileState?.profileStage > 2,
 		},
 		{
 			title: 'Contact Us',

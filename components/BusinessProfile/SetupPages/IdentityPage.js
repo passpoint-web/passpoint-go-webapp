@@ -11,11 +11,11 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import { savePublicProfile, 
-	// getPublicProfile as getSavedPublicProfile 
+	getPublicProfile as getSavedPublicProfile 
 } from '@/services/localService'
 
 const IdentityPage = ({styles}) => {
-	// const savedPublicProfile = getSavedPublicProfile()
+	const savedPublicProfile = getSavedPublicProfile()
 	const [dataLoading, setDataLoading] = useState(true)
 	const [submitType, setSubmitType] = useState('NEW')
 	const [isLoading, setIsLoading] = useState(false)
@@ -35,7 +35,7 @@ const IdentityPage = ({styles}) => {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data
 			// console.log(data)
-			// savePublicProfile(data)
+			savePublicProfile(data)
 			if (data.logo) {
 				setBusinessLogo(data.logo)
 				setSubmitType('EDIT')
@@ -60,8 +60,7 @@ const IdentityPage = ({styles}) => {
 		try {
 			const response = await publicProfile.uploadBusinessLogo({logo: businessLogo, submitType})
 			console.log(response)
-			// savePublicProfile({...savedPublicProfile, productStage: 1})
-			savePublicProfile({productStage: 1})
+			savePublicProfile({...savedPublicProfile, profileStage: 1})
 			notify('success', `Your business logo has been saved`)
 			push('/dashboard/business-profile-setup/business')
 		} catch (_err) {

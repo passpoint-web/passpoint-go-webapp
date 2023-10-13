@@ -17,6 +17,7 @@ import { useNotify } from '@/utils/hooks'
 import FormChoice from "../FormChoice";
 import BackBtn from "@/components/Btn/Back";
 import { savePublicProfile } from "@/services/localService";
+import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 
 const ContactPage = ({ styles }) => {
 	const {push} = useRouter()
@@ -26,7 +27,7 @@ const ContactPage = ({ styles }) => {
 	const [submitType, setSubmitType] = useState('NEW')
 	const notify = useNotify()
 	// console.log(router)
-	const { validEmail, isValidUrl } = functions;
+	const { validEmail, isValidUrl, removeDuplicates } = functions;
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [finalCtaClicked, setFinalCtaClicked] = useState(false);
 	const [contactLevel, setContactLevel] = useState(true)
@@ -52,40 +53,41 @@ const ContactPage = ({ styles }) => {
 
 	const [socials, setSocials] = useState([
 		{
-			id: 'whatsapp',
-			label: 'Whatsapp',
+			name: 'Whatsapp',
 			placeholder: 'https://www.whatsapp.com/',
 			required: false,
-			value: ''
+			url: ''
 		},
 		{
-			id: 'facebook',
-			label: 'Facebook',
+			name: 'Facebook',
 			placeholder: 'https://www.facebook.com/',
 			required: false,
-			value: ''
+			url: ''
 		},
 		{
-			id: 'twitter',
-			label: 'Twitter',
+			name: 'Twitter',
 			placeholder: 'https://www.twitter.com/',
 			required: false,
-			value: ''
+			url: ''
 		},
 		{
-			id: 'youtube',
-			label: 'Youtube',
-			placeholder: 'https://www.youtube.com/',
+			name: 'Instagram',
+			placeholder: 'https://www.instagram.com/',
 			required: false,
-			value: ''
+			url: ''
 		},
-		{
-			id: 'tiktok',
-			label: 'Tiktok',
-			placeholder: 'https://www.tiktok.com/',
-			required: false,
-			value: ''
-		},
+		// {
+		// 	name: 'Youtube',
+		// 	placeholder: 'https://www.youtube.com/',
+		// 	required: false,
+		// 	url: ''
+		// },
+		// {
+		// 	name: 'Tiktok',
+		// 	placeholder: 'https://www.tiktok.com/',
+		// 	required: false,
+		// 	url: ''
+		// },
 	])
 
 	const handleChange = (e) => {
@@ -96,14 +98,16 @@ const ContactPage = ({ styles }) => {
 		}));
 	};
 
-	const handleSocialsChange = (value, id) =>{
+	const handleSocialsChange = (value, name) =>{
+		console.log(value)
+		console.log(name)
 		const update = socials.map((old) => {
-			if (id === old.id) {
-				old.value = value
+			if (name === old.name) {
+				old.url = value
 			}
 			return old
 		})
-		setAtleastTwoSocialsProvided(socials.filter(s=>isValidUrl(s.value)).length > 1)
+		setAtleastTwoSocialsProvided(socials.filter(s=>isValidUrl(s.url)).length > 1)
 		setSocials(update)
 	}
 
@@ -171,7 +175,15 @@ const ContactPage = ({ styles }) => {
 				openingHour,
 				closingHour
 			})
-				setSocials(data.socials)
+			const newArr = removeDuplicates(data.socials)
+			const socials = newArr.map((s)=>{
+				return {
+					name: s.name,
+					placeholder: s.name,
+					url: s.url
+				}
+			})
+			setSocials(socials)
 			savePublicProfile(data)
 			if (data.socials.length) {
 				// con
@@ -183,6 +195,8 @@ const ContactPage = ({ styles }) => {
 			setDataLoading(false)
 		}
 	}
+
+
 
 	useEffect(()=>{
 		getPublicProfile()
@@ -323,14 +337,14 @@ const ContactPage = ({ styles }) => {
 				socials.map((s, id)=> (
 					<Input
 						key={id}
-						label={s.label}
-						id={s.id}
+						label={s.name}
+						id={s.name}
 						placeholder={s.placeholder}
-						name={s.id}
-						value={s.value}
-						error={finalCtaClicked && s.value && !isValidUrl(s.value)}
+						name={s.name}
+						value={s.url}
+						error={finalCtaClicked && s.url && !isValidUrl(s.url)}
 						errorMsg={'this does not look like a valid url'}
-						onChange={(e)=>handleSocialsChange(e.target.value, s.id)}
+						onChange={(e)=>handleSocialsChange(e.target.value, e.target.name)}
 					/>
 				))
 			}
@@ -350,24 +364,27 @@ const ContactPage = ({ styles }) => {
 	)
 
 	return (
-		<div className={styles.inner}>
-		<BackBtn onClick={()=>push('/dashboard/business-profile-setup/services')} />
-			<h1>Contact Information</h1>
-			<div className={styles.contact_breadcrumbs}>
-				<TertiaryBtn text="Business Contact"
-					onClick={()=>setContactLevel(!contactLevel)}
-					disabled={contactLevel} />
-				{' >> '}
-				<TertiaryBtn text="Socials"
-					onClick={()=>setContactLevel(!contactLevel)}
-					disabled={!contactLevel || !allFieldsValid} />
+		<>
+		{dataLoading ? <FullScreenLoader /> : <></>}
+			<div className={styles.inner}>
+			<BackBtn onClick={()=>push('/dashboard/business-profile-setup/services')} />
+				<h1>Contact Information</h1>
+				<div className={styles.contact_breadcrumbs}>
+					<TertiaryBtn text="Business Contact"
+						onClick={()=>setContactLevel(!contactLevel)}
+						disabled={contactLevel} />
+					{' >> '}
+					<TertiaryBtn text="Socials"
+						onClick={()=>setContactLevel(!contactLevel)}
+						disabled={!contactLevel || !allFieldsValid} />
+				</div>
+				{contactLevel ? (
+					ContactsForm()
+				) : (
+					SocialsForm()
+				)}
 			</div>
-			{contactLevel ? (
-				ContactsForm()
-			) : (
-				SocialsForm()
-			)}
-		</div>
+		</>
 	);
 };
 

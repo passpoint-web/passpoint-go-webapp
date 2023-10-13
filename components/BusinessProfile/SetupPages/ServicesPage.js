@@ -21,12 +21,12 @@ import MoneyInput from '@/components/Custom/MoneyInput'
 import FormChoice from '../FormChoice'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import { savePublicProfile, 
-	// getPublicProfile as getSavedPublicProfile  
+	getPublicProfile as getSavedPublicProfile  
 } from '@/services/localService'
 import { v4 as useId } from 'uuid'
 
 const ServicesPage = ({styles}) => {	
-	// const savedPublicProfile = getSavedPublicProfile()
+	const savedPublicProfile = getSavedPublicProfile()
 	const notify = useNotify()
 	const [dataLoading, setDataLoading] = useState(true)
 	const [submitType, setSubmitType] = useState('NEW')
@@ -52,7 +52,9 @@ const ServicesPage = ({styles}) => {
 		serviceCurrency: 'NGN',
 		servicePriceModel: 'fixedPrice',
 		serviceBanner: '', // base64
-		pricingType: ''
+		pricingType: '',
+		// exclusive
+		commissionType: 'Amount based'
 	}
 
 	const [service, setService] = useState(
@@ -60,6 +62,10 @@ const ServicesPage = ({styles}) => {
 	);
 
 	const servicePriceModels = ['fixedPrice', 'packagedPrice']
+	const commissionTypes = [
+		'Amount based',
+		'Percentage based'
+	]
 
 	// const servicePricingTypes = ['Per night', 'Per 2 nights', 'Per week', 'Per month']
 
@@ -208,7 +214,7 @@ const ServicesPage = ({styles}) => {
 		setIsLoading(true)
 		try {
 			await publicProfile.addServices(payload)
-			savePublicProfile({productStage: 3})
+			savePublicProfile({...savedPublicProfile, profileStage: 3})
 			notify('success', 'Your services have been saved')
 			push('/dashboard/business-profile-setup/contact')
 		} catch (_err) {
@@ -404,13 +410,59 @@ const ServicesPage = ({styles}) => {
 						})}
 					/>
 				</Input>
+			{
+				['Logistics', 'Hotels', 'Flights'].includes(service.serviceType?.serviceName) ? 
+				<>
+						<Input
+					id='servicePriceModel'
+					label='Set Price Model'
+				>
+					<ServicePriceModelSelect
+						disabled
+						selectedOption={'Commission'}
+					/>
+				</Input>
 				<Input
+					id='commissionType'
+					label='Commission Type'
+				>
+					<ServicePriceModelSelect
+						styleProps={{
+							dropdown: {
+								height: '100px'
+							}
+						}}
+						selectOptions={commissionTypes}
+						selectedOption={service.commissionType}
+						emitSelect={(s) => handleServiceChange({
+							target: { name: 'commissionType', value: s },
+						})}
+					/>
+				</Input>
+				<Input
+			id='service-price'
+			label='Set Price'
+			error={modalCtaClicked && Number(fixedServicePrice) === 0}
+			errorMsg='Service Price is required'
+		>
+			<MoneyInput
+				id='servicePrice'
+				placeholder={`price`}
+				currency={service?.serviceCurrency}
+				value={fixedServicePrice}
+				onValueChange={(e)=>setFixedServicePrice(e)}
+			/>
+		</Input>
+					</> :
+					<>
+					<Input
 					label='Description'
 					error={(modalCtaClicked && !service.serviceDesc.trim()) || service.serviceDesc.length > 200}
 					errorMsg={modalCtaClicked && !service.serviceDesc.trim() ? 'Description of service is required' : service.serviceDesc.length > 200 ? 'Maximum of 200 characters' : ''}
 					id='serviceDesc'
 				>
 					<textarea
+						disabled={!service.serviceType?.serviceName}
 						placeholder='Describe the reason stated above'
 						name='serviceDesc'
 						id='serviceDesc'
@@ -426,6 +478,7 @@ const ServicesPage = ({styles}) => {
 					}
 				</Input>
 				<FileUpload
+					disabled={!service.serviceType?.serviceName}
 					styleProps={{gap: '24px', padding: '16px'}}
 					subTitle='Add an Image that best describes your service'
 					base64={service.serviceBanner}
@@ -436,6 +489,8 @@ const ServicesPage = ({styles}) => {
 							target: { name: 'serviceBanner', value: e },
 						})
 					} />
+					</>
+			}
 				<FormChoice message='Do you want this as a featured service?'
 					checkValue={service.featuredService === 1}
 					onChange={()=>

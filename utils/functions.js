@@ -131,6 +131,21 @@ const splitOnCapsLetter = (string) => {
 	return str.split(/(?=[A-Z])/)
 }
 
+const removeDuplicates =(arr, key)=> {
+	let newArray = [];
+	let uniqueObject = {};
+	for (let i in arr) {
+			let objTitle = arr[i][key];
+			uniqueObject[objTitle] = arr[i];
+	}
+
+	for (let i in uniqueObject) {
+			newArray.push(uniqueObject[i]);
+	}
+
+	return newArray
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -147,7 +162,8 @@ const functions = {
 	isValidUrl,
 	returnBase64,
 	splitOnCapsLetter,
-	createUrl
+	createUrl,
+	removeDuplicates
 	// encryptData,
 	// decryptData
 }

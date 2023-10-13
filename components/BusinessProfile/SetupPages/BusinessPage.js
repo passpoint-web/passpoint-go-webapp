@@ -13,13 +13,13 @@ import FeatureCard from '@/components/BusinessProfile/FeatureCard'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
 import { savePublicProfile, 
-	// getPublicProfile as getSavedPublicProfile 
+	getPublicProfile as getSavedPublicProfile 
 } from '@/services/localService'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import { v4 as useId } from 'uuid'
 
 const BusinessPage = ({styles}) => {
-	// const savedPublicProfile = getSavedPublicProfile()
+	const savedPublicProfile = getSavedPublicProfile()
 	const notify = useNotify()
 	const [isLoading, setIsLoading] = useState(false)
 	const [dataLoading, setDataLoading] = useState(true)
@@ -129,8 +129,7 @@ const BusinessPage = ({styles}) => {
 				desc
 			})
 			console.log(response)
-			// savePublicProfile({...savedPublicProfile, productStage: 2})
-			savePublicProfile({productStage: 2})
+			savePublicProfile({...savedPublicProfile, profileStage: 2})
 			notify('success', 'Your business Information has been saved')
 			push('/dashboard/business-profile-setup/services')
 		} catch (_err) {
