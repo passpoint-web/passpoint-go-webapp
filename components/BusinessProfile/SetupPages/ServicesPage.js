@@ -20,12 +20,12 @@ import { CancelIcon } from '@/constants/icons'
 import MoneyInput from '@/components/Custom/MoneyInput'
 import FormChoice from '../FormChoice'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
-import { savePublicProfile, 
-	getPublicProfile as getSavedPublicProfile  
+import { savePublicProfile,
+	getPublicProfile as getSavedPublicProfile
 } from '@/services/localService'
 import { v4 as useId } from 'uuid'
 
-const ServicesPage = ({styles}) => {	
+const ServicesPage = ({styles}) => {
 	const savedPublicProfile = getSavedPublicProfile()
 	const notify = useNotify()
 	const [dataLoading, setDataLoading] = useState(true)
@@ -54,7 +54,9 @@ const ServicesPage = ({styles}) => {
 		serviceBanner: '', // base64
 		pricingType: '',
 		// exclusive
-		commissionType: 'Amount based'
+		commissionType: 'Amount based',
+		commissionAmount: 0,
+		commissionPercentage: 0
 	}
 
 	const [service, setService] = useState(
@@ -164,7 +166,7 @@ const ServicesPage = ({styles}) => {
 			setPackageServicePrice(initialPackageServicePrice)
 		}
 		resetState()
-	}	
+	}
 	const resetState = () => {
 		// reset state
 		setShowModal(false)
@@ -199,7 +201,7 @@ const ServicesPage = ({styles}) => {
 		const formattedServices = services.map(e=> {
 			const s = {
 				...e,
-				servicePriceModel: e.servicePriceModel, 
+				servicePriceModel: e.servicePriceModel,
 				serviceType : e.serviceType.serviceId,
 				serviceName : e.serviceType.serviceName,
 				pricingType: e.pricingType || 'N/A'
@@ -410,87 +412,133 @@ const ServicesPage = ({styles}) => {
 						})}
 					/>
 				</Input>
-			{
-				['Logistics', 'Hotels', 'Flights'].includes(service.serviceType?.serviceName) ? 
-				<>
-						<Input
-					id='servicePriceModel'
-					label='Set Price Model'
-				>
-					<ServicePriceModelSelect
-						disabled
-						selectedOption={'Commission'}
-					/>
-				</Input>
-				<Input
-					id='commissionType'
-					label='Commission Type'
-				>
-					<ServicePriceModelSelect
-						styleProps={{
-							dropdown: {
-								height: '100px'
+				{
+					['Logistics', 'Hotels', 'Flights'].includes(service.serviceType?.serviceName) ?
+						<>
+							<Input
+								id='commision'
+								label='Price Model'
+							>
+								<ServicePriceModelSelect
+									disabled
+									selectedOption={'Commission'}
+								/>
+							</Input>
+							<Input
+								id='commissionType'
+								label='Commission Type'
+							>
+								<ServicePriceModelSelect
+									styleProps={{
+										dropdown: {
+											height: '100px'
+										}
+									}}
+									selectOptions={commissionTypes}
+									selectedOption={service.commissionType}
+									emitSelect={(s) => handleServiceChange({
+										target: { name: 'commissionType', value: s },
+									})}
+								/>
+							</Input>
+							{service.commissionType === 'Amount based' ?
+								<>
+									<Input
+										id='serviceCurrency'
+										label='Service Currency'
+										error={modalCtaClicked && !service.serviceCurrency}
+										errorMsg='Service Currency is required'
+									>
+										<CurrencySelect
+											showSearch={false}
+											styleProps={{
+												dropdown: {
+													height: '150px'
+												}
+											}}
+											currencyProps={service.serviceCurrency}
+											fieldError={modalCtaClicked && !service.serviceCurrency}
+											emitCurrency={(option) =>
+												handleServiceChange({
+													target: { name: 'serviceCurrency', value: option },
+												})}
+										/>
+									</Input>
+									<Input
+										id='commission-amount'
+										label='Set Amount'
+										error={modalCtaClicked && Number(service.commissionAmount) === 0}
+										errorMsg='Commission Amount is required'
+									>
+										<MoneyInput
+											id='commissionAmount'
+											placeholder={`0.00`}
+											currency={service?.serviceCurrency}
+											value={service.commissionAmount}
+											onValueChange={(e)=>handleServiceChange({
+												target: { name: 'commisionAmount', value: e },
+											})}
+										/>
+									</Input>
+								</>
+								:
+								<>
+									<Input
+										id='commission-percentage'
+										label='Set Percentage'
+										error={modalCtaClicked && !service.commissionPercentage}
+										errorMsg='Commission Percentage is required'
+									>
+										<MoneyInput
+											id='commissionPercentgage'
+											prefix={false}
+											placeholder={`0.00 %`}
+											currency={'percentage'}
+											value={service.commissionPercentage}
+											onValueChange={(e)=>handleServiceChange({
+												target: { name: 'commissionPercentage', value: e },
+											})}
+										/>
+									</Input></>
 							}
-						}}
-						selectOptions={commissionTypes}
-						selectedOption={service.commissionType}
-						emitSelect={(s) => handleServiceChange({
-							target: { name: 'commissionType', value: s },
-						})}
-					/>
-				</Input>
-				<Input
-			id='service-price'
-			label='Set Price'
-			error={modalCtaClicked && Number(fixedServicePrice) === 0}
-			errorMsg='Service Price is required'
-		>
-			<MoneyInput
-				id='servicePrice'
-				placeholder={`price`}
-				currency={service?.serviceCurrency}
-				value={fixedServicePrice}
-				onValueChange={(e)=>setFixedServicePrice(e)}
-			/>
-		</Input>
-					</> :
-					<>
-					<Input
-					label='Description'
-					error={(modalCtaClicked && !service.serviceDesc.trim()) || service.serviceDesc.length > 200}
-					errorMsg={modalCtaClicked && !service.serviceDesc.trim() ? 'Description of service is required' : service.serviceDesc.length > 200 ? 'Maximum of 200 characters' : ''}
-					id='serviceDesc'
-				>
-					<textarea
-						disabled={!service.serviceType?.serviceName}
-						placeholder='Describe the reason stated above'
-						name='serviceDesc'
-						id='serviceDesc'
-						value={service.serviceDesc}
-						onChange={handleServiceChange}
-					/>
-					{
-						service.serviceDesc.trim().length <= 200 ?
-							<FeedbackInfo
-								message='Maximum of 200 characters'
-								type='note' />
-							: <></>
-					}
-				</Input>
-				<FileUpload
-					disabled={!service.serviceType?.serviceName}
-					styleProps={{gap: '24px', padding: '16px'}}
-					subTitle='Add an Image that best describes your service'
-					base64={service.serviceBanner}
-					error={modalCtaClicked && !service.serviceBanner}
-					errorMsg='Service image is required'
-					handlefileUpload={(e)=>
-						handleServiceChange({
-							target: { name: 'serviceBanner', value: e },
-						})
-					} />
-					</>
-			}
+						</> :
+						<>
+							<Input
+								label='Description'
+								error={(modalCtaClicked && !service.serviceDesc.trim()) || service.serviceDesc.length > 200}
+								errorMsg={modalCtaClicked && !service.serviceDesc.trim() ? 'Description of service is required' : service.serviceDesc.length > 200 ? 'Maximum of 200 characters' : ''}
+								id='serviceDesc'
+							>
+								<textarea
+									disabled={!service.serviceType?.serviceName}
+									placeholder='Describe the reason stated above'
+									name='serviceDesc'
+									id='serviceDesc'
+									value={service.serviceDesc}
+									onChange={handleServiceChange}
+								/>
+								{
+									service.serviceDesc.trim().length <= 200 ?
+										<FeedbackInfo
+											message='Maximum of 200 characters'
+											type='note' />
+										: <></>
+								}
+							</Input>
+							<FileUpload
+								disabled={!service.serviceType?.serviceName}
+								styleProps={{gap: '24px', padding: '16px'}}
+								subTitle='Add an Image that best describes your service'
+								base64={service.serviceBanner}
+								error={modalCtaClicked && !service.serviceBanner}
+								errorMsg='Service image is required'
+								handlefileUpload={(e)=>
+									handleServiceChange({
+										target: { name: 'serviceBanner', value: e },
+									})
+								} />
+						</>
+				}
 				<FormChoice message='Do you want this as a featured service?'
 					checkValue={service.featuredService === 1}
 					onChange={()=>
@@ -510,7 +558,7 @@ const ServicesPage = ({styles}) => {
 		>
 			<MoneyInput
 				id='servicePrice'
-				placeholder={`# price`}
+				placeholder={`0.00`}
 				currency={service?.serviceCurrency}
 				value={fixedServicePrice}
 				onValueChange={(e)=>setFixedServicePrice(e)}
@@ -679,7 +727,7 @@ const ServicesPage = ({styles}) => {
 
 	return (
 		<>
-		{dataLoading ? <FullScreenLoader /> : <></>}
+			{dataLoading ? <FullScreenLoader /> : <></>}
 			{
 				showModal && modalLevel === 0 ?
 					AddServiceModal() :
