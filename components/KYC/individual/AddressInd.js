@@ -42,7 +42,7 @@ const AddressInd = ({ styles }) => {
       });
       console.log(response);
       notify("success", "Your address has been saved");
-      push("/dashboard");
+      push("/dashboard/kyc/success");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);

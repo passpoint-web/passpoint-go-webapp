@@ -88,7 +88,13 @@ export const publicProfile = {
 
 
 export const kyc = {
-	uploadIdentity: (data) => {
+	uploadKycIdentity: (data) => {
+		return restAgent.post('kycProofCooperateIdentity', data, setConfig());
+	},
+	uploadKycAddress: (data) => {
+		return restAgent.post('kycProofCooperateAddress', data, setConfig());
+	},
+	uploadIndIdentity: (data) => {
 		return restAgent.post('kycProofIndividualIdentity', data, setConfig());
 	},
 	uploadAddress: (data) => {

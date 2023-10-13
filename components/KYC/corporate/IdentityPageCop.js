@@ -7,27 +7,44 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import formStyles from "@/assets/styles/auth-screens.module.css";
 import BackBtn from "@/components/Btn/Back";
+import { useNotify } from "@/utils/hooks";
+import { kyc } from "@/services/restService";
 
 const IdentityPageCop = ({ styles }) => {
   const { push } = useRouter();
+  const notify = useNotify();
   const [ctaClicked, setCtaClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [allFieldsValid, setAllFieldsValid] = useState(false);
   const [payload, setPayload] = useState({
-    bvn: "",
-    businessCert: {},
-    businessLicense: {},
-    businessPhoto: {},
+    documents: [
+      {
+        documentType: "act of memorandum",
+        documentFile: "",
+      },
+      {
+        documentType: "business license",
+        documentFile: "",
+      },
+    ],
   });
 
-  const handleChange = (file, identifier) => {
-    setPayload((prev) => ({
-      ...prev,
-      [identifier]: file,
-    }));
+  // const handleChange = (file, identifier) => {
+  //   setPayload((prev) => ({
+  //     ...prev,
+  //     [identifier]: file,
+  //   }));
+  // };
+
+  const handleChange = (file, documentIndex) => {
+    setPayload((prev) => {
+      const updatedDocuments = [...prev.documents];
+      updatedDocuments[documentIndex].documentFile = file;
+      return { ...prev, documents: updatedDocuments };
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(payload);
     setCtaClicked(true);
@@ -35,15 +52,27 @@ const IdentityPageCop = ({ styles }) => {
       return;
     }
     setIsLoading(true);
-    push("/dashboard/kyc/corporate/address");
+    try {
+      const response = await kyc.uploadKycIdentity({
+        ...payload,
+      });
+      console.log(response);
+      notify("success", "Your identity has been saved");
+      push("/dashboard/kyc/corporate/address");
+    } catch (_err) {
+      const { message } = _err.response?.data || _err;
+      notify("error", message);
+      if (message?.toLowerCase().includes("already uploaded")) {
+        push("/dashboard/kyc/corporate/address");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     const conditionsMet =
-      payload.bvn &&
-      payload.businessCert.name &&
-      payload.businessLicense.name &&
-      payload.businessPhoto.name;
+      payload.documents[0].documentFile && payload.documents[1].documentFile;
     if (conditionsMet) {
       setAllFieldsValid(true);
     } else {
@@ -67,26 +96,26 @@ const IdentityPageCop = ({ styles }) => {
           info="To get your BVN, Dial *560# with your business phone number"
         /> */}
         <FileUpload
-          smTitle="Business Registration Certificate"
-          fileObj={payload.businessCert}
-          handlefileUpload={(file) => handleChange(file, "businessCert")}
-          error={ctaClicked && !payload.businessCert.name}
-          errorMsg="Registration certificate is required"
+          smTitle="Act of Memorandum"
+          base64={payload.documents[0].documentFile}
+          handlefileUpload={(file) => handleChange(file, 0)}
+          error={ctaClicked && !payload.documents[0].documentFile}
+          errorMsg="Act of Memorandum is required"
         />
         <FileUpload
           smTitle="Business License"
-          fileObj={payload.businessLicense}
-          handlefileUpload={(file) => handleChange(file, "businessLicense")}
-          error={ctaClicked && !payload.businessLicense.name}
+          base64={payload.documents[1].documentFile}
+          handlefileUpload={(file) => handleChange(file, 1)}
+          error={ctaClicked && !payload.documents[1].documentFile}
           errorMsg="Business License is required"
         />
-        <FileUpload
+        {/* <FileUpload
           smTitle="Passport Photograph"
           fileObj={payload.businessPhoto}
           handlefileUpload={(file) => handleChange(file, "businessPhoto")}
           error={ctaClicked && !payload.businessPhoto.name}
           errorMsg="Passport photograph is required"
-        />
+        /> */}
         <div className={styles.action_ctn}>
           <BackBtn
             type="button"

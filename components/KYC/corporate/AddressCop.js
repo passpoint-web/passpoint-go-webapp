@@ -5,18 +5,21 @@ import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
 import FeedbackInfo from "@/components/FeedbackInfo";
 import FileUpload from "@/components/FileUpload";
+import { kyc } from "@/services/restService";
 import { documentType } from "@/utils/CONSTANTS";
+import { useNotify } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const AddressCop = ({ styles }) => {
   const { push } = useRouter();
+  const notify = useNotify();
   const [ctaClicked, setCtaClicked] = useState(false);
   const [allFieldsValid, setAllFieldsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [payload, setPayload] = useState({
     documentType: "",
-    document: {},
+    documentFile: "",
   });
 
   const handleChange = (name, value) => {
@@ -26,7 +29,7 @@ const AddressCop = ({ styles }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(payload);
     setCtaClicked(true);
@@ -34,11 +37,26 @@ const AddressCop = ({ styles }) => {
       return;
     }
     setIsLoading(true);
-    push("/dashboard/kyc/corporate/ownership");
+    try {
+      const response = await kyc.uploadKycAddress({
+        ...payload,
+      });
+      console.log(response);
+      notify("success", "Your Address has been saved");
+      push("/dashboard/kyc/corporate/ownership");
+    } catch (_err) {
+      const { message } = _err.response?.data || _err;
+      notify("error", message);
+      if (message?.toLowerCase().includes("already uploaded")) {
+        push("/dashboard/kyc/corporate/ownership");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    const conditionsMet = payload.documentType && payload.document.name;
+    const conditionsMet = payload.documentType && payload.documentFile;
     if (conditionsMet) {
       setAllFieldsValid(true);
     } else {
@@ -68,14 +86,11 @@ const AddressCop = ({ styles }) => {
         <div className={styles.innerUpload}>
           <FileUpload
             subTitle="Upload the document selected"
-            fileObj={payload.document}
-            handlefileUpload={(file) => handleChange("document", file)}
+            base64={payload.documentFile}
+            handlefileUpload={(file) => handleChange("documentFile", file)}
+            error={ctaClicked && !payload.documentFile}
+            errorMsg="Address is required"
           />
-          {ctaClicked && !payload.document.name ? (
-            <FeedbackInfo message="Document is required" />
-          ) : (
-            <></>
-          )}
         </div>
         <div className={styles.action_ctn}>
           <BackBtn

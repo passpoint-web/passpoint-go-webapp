@@ -3,7 +3,6 @@ import BackBtn from "@/components/Btn/Back";
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
-import FileUpload from "@/components/FileUpload";
 import { kyc } from "@/services/restService";
 import { indKycDocType } from "@/utils/CONSTANTS";
 import { useNotify } from "@/utils/hooks";
@@ -17,9 +16,8 @@ const IdentityInd = ({ styles }) => {
   const [allFieldsValid, setAllFieldsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [payload, setPayload] = useState({
-    bvn: "",
     documentType: "",
-    documentFile: "",
+    documentNumber: "",
   });
 
   const handleChange = (name, value) => {
@@ -38,7 +36,7 @@ const IdentityInd = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadIdentity({
+      const response = await kyc.uploadIndIdentity({
         ...payload,
       });
       console.log(response);
@@ -56,7 +54,7 @@ const IdentityInd = ({ styles }) => {
   };
 
   useEffect(() => {
-    const conditionsMet = payload.documentType && payload.documentFile;
+    const conditionsMet = payload.documentType && payload.documentNumber;
     if (conditionsMet) {
       setAllFieldsValid(true);
     } else {
@@ -83,35 +81,21 @@ const IdentityInd = ({ styles }) => {
             emitSelect={(option) => handleChange("documentType", option)}
           />
         </Input>
-        {payload.documentType && (
-          <>
-            {payload.documentType === "Bank Verification Number (BVN)" ? (
-              <Input
-                label="Bank Verification Number"
-                id="bvn"
-                name="bvn"
-                type="number"
-                placeholder="Enter your BVN"
-                error={ctaClicked && !payload.bvn}
-                onChange={(e) => handleChange(e.target.value, "bvn")}
-                errorMsg="BVN is required"
-                info="To get your BVN, Dial *560# with your business phone number"
-              />
-            ) : (
-              <div className={styles.innerUpload}>
-                <FileUpload
-                  smTitle="Upload the document selected"
-                  base64={payload.documentFile}
-                  handlefileUpload={(file) =>
-                    handleChange("documentFile", file)
-                  }
-                  error={ctaClicked && !payload.documentFile}
-                  errorMsg="Identity is required"
-                />
-              </div>
-            )}
-          </>
-        )}
+        <Input
+          label="Document Number"
+          id="documentNumber"
+          name="documentNumber"
+          type="number"
+          placeholder="Enter your Document Number"
+          error={ctaClicked && !payload.documentNumber}
+          onChange={(e) => handleChange("documentNumber", e.target.value)}
+          errorMsg="Document number is required"
+          info={
+            payload.documentType === "Bank Verification Number (BVN)"
+              ? "To get your BVN, Dial *560# with your business phone number"
+              : ""
+          }
+        />
         <div className={styles.action_ctn}>
           <BackBtn
             type="button"
