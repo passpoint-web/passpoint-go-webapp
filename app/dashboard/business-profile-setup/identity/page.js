@@ -1,9 +1,9 @@
-import styles from '../public-profile.module.css'
-import IdentityPage from '@/components/PublicProfile/SetupPages/IdentityPage'
+import styles from '../business-profile.module.css'
+import IdentityPage from '@/components/BusinessProfile/SetupPages/IdentityPage'
 // import { publicProfile } from '@/services/restService'
 export const metadata = () => {
 	return {
-		title: 'Business Identity - Setup Public Profile | Passpoint Go',
+		title: 'Business Identity - Setup Business Profile | Passpoint Go',
 		description: ''
 	}
 }

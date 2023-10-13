@@ -7,8 +7,8 @@ import ModalWrapper from '@/components/Modal/ModalWrapper'
 import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
 import { useNotify } from '@/utils/hooks'
-import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
-import ServiceCard from '@/components/PublicProfile/ServiceCard'
+import AddFeatureBtn from '@/components/BusinessProfile/AddFeatureBtn'
+import ServiceCard from '@/components/BusinessProfile/ServiceCard'
 import CustomSelect from '@/components/Custom/Select'
 import ServicePriceModelSelect from '@/components/Custom/Select/ServicePriceModelSelect'
 import { publicProfile } from '@/services/restService'
@@ -23,6 +23,7 @@ import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import { savePublicProfile, 
 	// getPublicProfile as getSavedPublicProfile  
 } from '@/services/localService'
+import { v4 as useId } from 'uuid'
 
 const ServicesPage = ({styles}) => {	
 	// const savedPublicProfile = getSavedPublicProfile()
@@ -138,7 +139,7 @@ const ServicesPage = ({styles}) => {
 				)
 				setServices(update)
 			} else {
-				formattedService.id = services.length
+				formattedService.id = useId()
 				setServices([...services, formattedService])
 			}
 			setFixedServicePrice(0)
@@ -151,7 +152,7 @@ const ServicesPage = ({styles}) => {
 				)
 				setServices(update)
 			} else {
-				formattedService.id = services.length
+				formattedService.id = Date.now()
 				setServices([...services, formattedService])
 			}
 			setPackageServicePrice(initialPackageServicePrice)
@@ -209,7 +210,7 @@ const ServicesPage = ({styles}) => {
 			await publicProfile.addServices(payload)
 			savePublicProfile({productStage: 3})
 			notify('success', 'Your services have been saved')
-			push('/dashboard/public-profile-setup/contact')
+			push('/dashboard/business-profile-setup/contact')
 		} catch (_err) {
 			console.log(_err)
 			const { message } = _err.response?.data || _err
@@ -241,10 +242,10 @@ const ServicesPage = ({styles}) => {
 			const data = response.data.data
 			savePublicProfile(data)
 			if (data.services.length) {
-				const formattedService = data.services.map((d, id)=>{
+				const formattedService = data.services.map((d)=>{
 					let obj = {
 						...d,
-						id,
+						id: useId(),
 						serviceType: {
 							serviceType: d.serviceType,
 							serviceName: d.serviceName
@@ -608,7 +609,7 @@ const ServicesPage = ({styles}) => {
 			{services.map((service, id)=>(
 				<ServiceCard key={id}
 					service={service}
-					removeService={(e)=>removeFeature(e, id, service.serviceId)}
+					removeService={(e)=>removeFeature(e, service.id, service.serviceId)}
 					editService={(e)=>editFeatureModal(e, service)} />
 			))}
 
@@ -632,7 +633,7 @@ const ServicesPage = ({styles}) => {
 						<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/business')} />
+				<BackBtn onClick={()=>push('/dashboard/business-profile-setup/business')} />
 				<h1>Services</h1>
 				<form onSubmit={handleSubmit}>
 					{AddBusinessServices()}

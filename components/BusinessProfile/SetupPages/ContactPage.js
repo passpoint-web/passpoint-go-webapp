@@ -12,22 +12,11 @@ import FeedbackInfo from "@/components/FeedbackInfo";
 import TertiaryBtn from "@/components/Btn/Tertiary";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-// import { getCredentials } from "@/services/localService";
 import { publicProfile } from "@/services/restService";
 import { useNotify } from '@/utils/hooks'
-// import { useRouter } from "next/navigation";
 import FormChoice from "../FormChoice";
 import BackBtn from "@/components/Btn/Back";
 import { savePublicProfile } from "@/services/localService";
-// import TimePicker from 'react-time-picker';
-// import 'react-time-picker/dist/TimePicker.css';
-// import 'react-clock/dist/Clock.css';
-// import { TimePicker } from 'react-ios-time-picker';
-// import DateTimePicker from 'react-datetime-picker';
-// import 'react-datetime-picker/dist/DateTimePicker.css';
-// import 'react-calendar/dist/Calendar.css';
-// import 'react-clock/dist/Clock.css';
-// import Button from "@/components/Btn/Button";
 
 const ContactPage = ({ styles }) => {
 	const {push} = useRouter()
@@ -54,7 +43,6 @@ const ContactPage = ({ styles }) => {
 		hasWebContact: 0
 	});
 
-	const [hasWebContact, setWebContact] = useState(false)
 
 	// const [value, setValue] = useState(new Date());
 
@@ -139,8 +127,7 @@ const ContactPage = ({ styles }) => {
 		})
 		setPayload((prev) => ({
 			...prev,
-			socials: formattedSocials,
-			hasWebContact: hasWebContact ? 1 : 0
+			socials: formattedSocials
 		}));
 		setIsLoading(true)
 		try {
@@ -148,13 +135,12 @@ const ContactPage = ({ styles }) => {
 				...payload,
 				submitType,
 				socials: formattedSocials,
-				hasWebContact: hasWebContact ? 1 : 0
 			})
 
 			savePublicProfile({productStage: 2})
 			console.log(response)
 			notify('success', 'Your business contacts info has been saved')
-			// push('/dashboard/public-profile-setup/contact')
+			// push('/dashboard/business-profile-setup/contact')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -167,7 +153,25 @@ const ContactPage = ({ styles }) => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data
-			console.log(data)
+			const {
+			companyEmail,
+			companyPhone,
+			companyAddress,
+			openingDay,
+			closingDay,
+			openingHour,
+			closingHour
+			} = data
+			setPayload({
+				companyEmail,
+				companyPhone,
+				companyAddress,
+				openingDay,
+				closingDay,
+				openingHour,
+				closingHour
+			})
+				setSocials(data.socials)
 			savePublicProfile(data)
 			if (data.socials.length) {
 				// con
@@ -227,7 +231,7 @@ const ContactPage = ({ styles }) => {
 			>
 				<PhoneInput
 					country={'ng'}
-					value={payload.phone}
+					value={payload.companyPhone}
 					onChange={(phone) => handleChange({ target: { name: 'companyPhone', value: phone } })}
 				/>
 			</Input>
@@ -301,7 +305,9 @@ const ContactPage = ({ styles }) => {
 					onChange={handleChange}
 				/>
 			</div>
-			<FormChoice message='Do you want to have web-contact form?' checkValue={hasWebContact} onChange={()=>setWebContact(!hasWebContact)}/>
+			<FormChoice message='Do you want to have web-contact form?' checkValue={payload.hasWebContact} onChange={()=>{handleChange({
+				target: {name: 'hasWebContact', value: payload.hasWebContact === 1 ? 0 : 1}
+			})}}/>
 			<div className={AuthStyles.action_ctn}>
 				<PrimaryBtn
 					text="Save and continue"
@@ -345,7 +351,7 @@ const ContactPage = ({ styles }) => {
 
 	return (
 		<div className={styles.inner}>
-		<BackBtn onClick={()=>push('/dashboard/public-profile-setup/services')} />
+		<BackBtn onClick={()=>push('/dashboard/business-profile-setup/services')} />
 			<h1>Contact Information</h1>
 			<div className={styles.contact_breadcrumbs}>
 				<TertiaryBtn text="Business Contact"

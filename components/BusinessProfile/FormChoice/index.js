@@ -1,6 +1,6 @@
 import React from 'react'
 import FeedbackInfo from '../../FeedbackInfo'
-import styles from './public-profile-info-choice.module.css'
+import styles from './business-profile-info-choice.module.css'
 import Switch from '@/components/Custom/Switch'
 const FormChoice = ({message, checkValue=false, onChange}) => {
 	return (

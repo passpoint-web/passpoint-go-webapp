@@ -1,6 +1,6 @@
 
 
-import styles from '@/app/dashboard/public-profile-setup/public-profile.module.css'
+import styles from '@/app/dashboard/business-profile-setup/business-profile.module.css'
 import { AddIcon } from '@/constants/icons'
 
 const AddFeatureBtn = ({title, subTitlte, disabled, addFeatureModal}) => {

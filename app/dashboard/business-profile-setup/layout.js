@@ -1,9 +1,9 @@
 // 'use client'
-import PublicProfileSetupLHS from '@/components/PublicProfile/SetupLHS'
-import styles from './public-profile.module.css'
+import PublicProfileSetupLHS from '@/components/BusinessProfile/SetupLHS'
+import styles from './business-profile.module.css'
 export const metadata = () => {
 	return {
-		title: 'Setup Public Profile | Passpoint Go',
+		title: 'Setup Business Profile | Passpoint Go',
 		description: ''
 	}
 }

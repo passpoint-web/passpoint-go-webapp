@@ -63,7 +63,7 @@ const IdentityPage = ({styles}) => {
 			// savePublicProfile({...savedPublicProfile, productStage: 1})
 			savePublicProfile({productStage: 1})
 			notify('success', `Your business logo has been saved`)
-			push('/dashboard/public-profile-setup/business')
+			push('/dashboard/business-profile-setup/business')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)

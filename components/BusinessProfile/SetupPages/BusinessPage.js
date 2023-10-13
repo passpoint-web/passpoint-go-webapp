@@ -8,14 +8,15 @@ import ModalWrapper from '@/components/Modal/ModalWrapper'
 import FeedbackInfo from '@/components/FeedbackInfo'
 import BackBtn from '@/components/Btn/Back'
 import { useNotify } from '@/utils/hooks'
-import AddFeatureBtn from '@/components/PublicProfile/AddFeatureBtn'
-import FeatureCard from '@/components/PublicProfile/FeatureCard'
+import AddFeatureBtn from '@/components/BusinessProfile/AddFeatureBtn'
+import FeatureCard from '@/components/BusinessProfile/FeatureCard'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
 import { savePublicProfile, 
 	// getPublicProfile as getSavedPublicProfile 
 } from '@/services/localService'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+import { v4 as useId } from 'uuid'
 
 const BusinessPage = ({styles}) => {
 	// const savedPublicProfile = getSavedPublicProfile()
@@ -84,7 +85,7 @@ const BusinessPage = ({styles}) => {
 		if (!feature.businessHeadLine || !feature.businessDesc || feature.businessDesc.length > 200) {
 			return
 		}
-		setFeatures([...features, {...feature, id: features.length}])
+		setFeatures([...features, {...feature, id: useId()}])
 		setFeature({
 			id: null,
 			businessHeadLine: '',
@@ -131,7 +132,7 @@ const BusinessPage = ({styles}) => {
 			// savePublicProfile({...savedPublicProfile, productStage: 2})
 			savePublicProfile({productStage: 2})
 			notify('success', 'Your business Information has been saved')
-			push('/dashboard/public-profile-setup/services')
+			push('/dashboard/business-profile-setup/services')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -149,9 +150,9 @@ const BusinessPage = ({styles}) => {
 				const {aboutBusiness, desc} = data
 				// setBusinessLogo(data.logo)
 				setAboutBusiness(aboutBusiness)
-				setFeatures(desc.map((d, id)=>{
+				setFeatures(desc.map((d)=>{
 					let obj = {
-						id,
+						id: useId(),
 						businessDesc: d.businessDesc || '',
 						businessHeadLine: d.businessHeadLine || ''
 					}
@@ -180,14 +181,14 @@ const BusinessPage = ({styles}) => {
 
 	const AddBusinessFeatures = () => (
 		<div className={styles.features_ctn}>
-			<AddFeatureBtn disabled={features.length >=5}
+			<AddFeatureBtn disabled={features.length >=10}
 				title='Why Choose Us'
 				subTitlte='You can add mutiple points in this section'
 				addFeatureModal={addFeatureModal} />
 
 			{features.filter(f=>f.businessHeadLine || f.businessDesc).map((feat, id)=>(
 				<FeatureCard key={id}
-					removeFeature={(e)=>removeFeature(e, id)}
+					removeFeature={(e)=>removeFeature(e, feat.id)}
 					editFeature={(e)=>editFeatureModal(e, feat)}
 					feature={feat}
 				/>
@@ -252,7 +253,7 @@ const BusinessPage = ({styles}) => {
 					<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/public-profile-setup/identity')} />
+				<BackBtn onClick={()=>push('/dashboard/business-profile-setup/identity')} />
 				<h1>About Business</h1>
 				<form onSubmit={handleSubmit}>
 					<Input
