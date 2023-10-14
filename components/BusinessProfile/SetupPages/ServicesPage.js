@@ -425,6 +425,7 @@ const ServicesPage = ({styles}) => {
 								/>
 							</Input>
 							<Input
+								toolTipMessage={`"Commission Type" allows you to set a percentage-based  or amount based where your selected preference is how much you would earn when the service is used`}
 								id='commissionType'
 								label='Commission Type'
 							>
@@ -465,7 +466,7 @@ const ServicesPage = ({styles}) => {
 										/>
 									</Input>
 									<Input
-										id='commission-amount'
+										id='commissionAmount'
 										label='Set Amount'
 										error={modalCtaClicked && Number(service.commissionAmount) === 0}
 										errorMsg='Commission Amount is required'

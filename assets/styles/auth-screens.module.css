@@ -159,6 +159,10 @@
   white-space: nowrap;
 }
 
+.form-group > .label_ctn {
+  display: flex;
+}
+
 .form_group input,
 .form_group select,
 .form_group .custom_country_select button,
