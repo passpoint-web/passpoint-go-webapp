@@ -94,6 +94,9 @@ export const kyc = {
 	uploadKycAddress: (data) => {
 		return restAgent.post('kycProofCooperateAddress', data, setConfig());
 	},
+	uploadKycBusiness: (data) => {
+		return restAgent.post('kycProofCooperateURL', data, setConfig());
+	},
 	uploadIndIdentity: (data) => {
 		return restAgent.post('kycProofIndividualIdentity', data, setConfig());
 	},
