@@ -1,17 +1,17 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
-import { days } from "@/utils/CONSTANTS";
+// import { days } from "@/utils/CONSTANTS";
 import { useState, useEffect } from "react";
-import functions from "@/utils/functions";
+// import functions from "@/utils/functions";
 import PreviewNav from "./PreviewNav";
 import PreviewMain from "./PreviewMain";
 import PreviewFooter from "./PreviewFooter";
 import { publicProfile } from "@/services/restService";
 import { getCredentials } from "@/services/localService";
+import FullScreenLoader from "@/components/Modal/FullScreenLoader";
 
-const PreviewPage = ({ styles }) => {
+const PreviewPage = () => {
 
-	const [dataLoading, setDataLoading] = useState({})
+	const [dataLoading, setDataLoading] = useState(true)
 	const [savedCredentials, setSavedCredentials] = useState();
 	const [pubProfile, setPubProfile] = useState({})
 
@@ -33,11 +33,14 @@ const PreviewPage = ({ styles }) => {
 	}, [])
 
 	return (
+	<>
+		{dataLoading ? <FullScreenLoader /> : <></>}
 		<div className="p-relative">
-			<PreviewNav data={{ ...pubProfile, dataLoading, businessName: savedCredentials.businessName }} />
-			<PreviewMain data={{ ...pubProfile, dataLoading, businessName: savedCredentials.businessName }} />
-			<PreviewFooter data={{ ...pubProfile, dataLoading, businessName: savedCredentials.businessName }} />
+			<PreviewNav data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
+			<PreviewMain data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
+			<PreviewFooter data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
 		</div>
+		</>
 	)
 };
 
