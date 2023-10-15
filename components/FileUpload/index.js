@@ -1,7 +1,7 @@
 
 import styles from './index.module.css'
 import formStyles from '@/assets/styles/auth-screens.module.css'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import functions from '@/utils/functions'
 import { CancelIcon, UploadIcon } from '@/constants/icons'
 import FeedbackInfo from '../FeedbackInfo'
@@ -10,6 +10,9 @@ import { useNotify } from '@/utils/hooks'
 import TertiaryBtn from '../Btn/Tertiary'
 
 const FileUpload = ({styleProps, smTitle, disabled, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, image/pdf", handlefileUpload, title, subTitle, base64}) => {
+	useEffect(()=>{
+		console.log(error)
+	},[error])
 	const notify = useNotify()
 	const onUploadClick = (e) => {
 		e.preventDefault()
