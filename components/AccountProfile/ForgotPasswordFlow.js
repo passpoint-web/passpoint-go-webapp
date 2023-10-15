@@ -10,24 +10,41 @@ import { getCredentials } from '@/services/localService'
 import Input from '../Dashboard/Input'
 import OtpInput from 'react-otp-input'
 import ResendOTP from '../Verify/ResendOTP'
+import PasswordField from '@/components/Auth/PasswordField'
+import ActionFeedbackCard from '../ActionFeedbackCard'
 
 const ForgotPasswordFlow = () => {
 
 	const {maskedEmail, createUrl} = functions
 	const notify = useNotify()
-	const {push} = useRouter()
+	const {replace} = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const searchParams = useSearchParams()
 	const [otp, setOtp] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const savedCredentials = getCredentials()
+	// eslint-disable-next-line no-unused-vars
+	const [email, setEmail] = useState(savedCredentials.email)
 	const [modalContent, setModalContent] = useState({
 		heading: '',
 		subHeading: ''
 	})
-	// eslint-disable-next-line no-unused-vars
-	const [email, setEmail] = useState(savedCredentials.email)
+	// password reset
+	const [passwordFieldsValid, setPasswordFieldsValid] = useState(false)
+	const [payload, setPayload] = useState({
+		password: '',
+		confirm: '',
+		email
+	})
+
+	const handleChange = (e) => {
+		const { name, value } = e.target
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
+	}
 
 	const handleForgotPasswordSubmit = async () => {
 		setIsLoading(true);
@@ -50,6 +67,7 @@ const ForgotPasswordFlow = () => {
 		if (otp?.length !== 6) {
 			return
 		}
+		setErrorMsg('')
 		setIsLoading(true)
 		try {
 			const payload = {
@@ -64,6 +82,9 @@ const ForgotPasswordFlow = () => {
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
+			if (message.toLowerCase().includes('otp')) {
+				setErrorMsg(message)
+			}
 		} finally {
 			setIsLoading(false)
 		}
@@ -72,6 +93,7 @@ const ForgotPasswordFlow = () => {
 	const forgot = searchParams.get('forgotPasswordLevel') === 'forgot'
 	const verify = searchParams.get('forgotPasswordLevel') === 'verify'
 	const create = searchParams.get('forgotPasswordLevel') === 'create'
+	const success = searchParams.get('forgotPasswordLevel') === 'success'
 
 	const defineModalContents = () => {
 		const heading = forgot ? 'Forgot Password' : verify ? 'Verify Your Email' : create ? 'Create New Password' : ''
@@ -91,7 +113,7 @@ const ForgotPasswordFlow = () => {
 		} else {
 			newParams.delete('forgotPasswordLevel')
 		}
-		push(createUrl('/dashboard/settings/security', newParams))
+		replace(createUrl('/dashboard/settings/security', newParams))
 	}
 
 	const handleCta = () => {
@@ -99,11 +121,30 @@ const ForgotPasswordFlow = () => {
 			handleForgotPasswordSubmit()
 		} else if (verify) {
 			handleVerifyOtp()
-		} else {
+		} else if (create){
 			handleCreatePassword()
+		} else if (success) {
+			handleForgotPasswordLevel()
 		}
 	}
-	const handleCreatePassword = () => {}
+	const handleCreatePassword = async () => {
+		setCtaClicked(true)
+		if (!passwordFieldsValid) {
+			return
+		}
+		setIsLoading(true);
+		try {
+			const response = await authenticate.resetPassword(payload);
+			const {message} = response.data;
+			notify("success", message);
+			handleForgotPasswordLevel('success')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err;
+			notify("error", message);
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	const onClose = () => {
 		handleForgotPasswordLevel()
@@ -112,7 +153,17 @@ const ForgotPasswordFlow = () => {
 
 	useEffect(()=>{
 		defineModalContents()
+		setCtaClicked(false)
 	},[searchParams.get('forgotPasswordLevel')])
+
+	useEffect(()=>{
+		const {password, confirm} = payload
+		if (password && password === confirm) {
+			setPasswordFieldsValid(true)
+		} else {
+			setPasswordFieldsValid(false)
+		}
+	}, [payload.password, payload.confirm])
 
 
 	return (
@@ -140,13 +191,13 @@ const ForgotPasswordFlow = () => {
 								/>
 							</form> : 
 							verify ? 
-          	<form className={formStyles.form}>
+          <form className={formStyles.form}>
 									<Input
 										error={(ctaClicked && otp?.length !== 6) || errorMsg}
 										errorMsg={otp?.length !== 6 ? 'Valid OTP needed' : errorMsg}
 										msgPositionCenter={true}
 									>
-                	<div className={formStyles.otp_input}>
+                <div className={formStyles.otp_input}>
 											<OtpInput
 												value={otp}
 												onChange={setOtp}
@@ -169,13 +220,51 @@ const ForgotPasswordFlow = () => {
 								create ? 
 									<form className={formStyles.form}>
 										<Input
-											label='Email Address'
-											id='email'
-											name='email'
-											disabled
-											defaultValue={email}
-										/>
+								label="Password"
+								id="password"
+								name="password"
+								placeholder="Password"
+								error={ctaClicked && !payload.password}
+							>
+								<PasswordField
+									id="password-field"
+									errorField={ctaClicked && !payload.password}
+									emitPassword={(e) =>
+										handleChange({
+											target: { name: 'password', value: e },
+										})
+									}
+								/>
+							</Input>
+							<Input
+								label="Confirm Password"
+								id="confirm-password"
+								name="confirm-password"
+								placeholder="Confirm Password"
+								error={ctaClicked && (!payload.confirm || payload.password !== payload.confirm)}
+								errorMsg={ctaClicked && !payload.confirm ? 'Confirm password is required' : ctaClicked && payload.password !== payload.confirm ? 'Passwords do not match' : ''}
+							>
+								<PasswordField
+									disabled={!payload.password}
+									id="confirm-password-field"
+									passwordStrengthNeeded={false}
+									errorField={ctaClicked && !payload.confirm}
+									emitPassword={(e) =>
+										handleChange({
+											target: { name: 'confirm', value: e },
+										})
+									}
+								/>
+							</Input>
 									</form> : 
+									success ?
+									<ActionFeedbackCard 
+									content={{
+										success: true,
+										title: 'Password Changed!',
+										value: 'Your password has been changed successfully'
+									}}
+									/> : 
 									<></>
 					}
 				

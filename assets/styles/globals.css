@@ -1,37 +1,37 @@
 @font-face {
   font-family: "GraphikMedium";
   src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
-  src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
+  /* src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikMedium.otf") format("truetype");
-  font-weight: 500;
+    url("../fonts/Graphik-Font-Family/GraphikMedium.otf") format("truetype"); */
+  /* font-weight: 500; */
 }
 
 @font-face {
   font-family: "GraphikBold";
   src: url("../fonts/Graphik-Font-Family/GraphikBold.otf");
-  src: url("../fonts/Graphik-Font-Family/GraphikBold.otf")
+  /* src: url("../fonts/Graphik-Font-Family/GraphikBold.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikBold.otf") format("truetype");
-  font-weight: 700;
+    url("../fonts/Graphik-Font-Family/GraphikBold.otf") format("truetype"); */
+  /* font-weight: 700; */
 }
 
 @font-face {
   font-family: "GraphikLight";
   src: url("../fonts/Graphik-Font-Family/GraphikLight.otf");
-  src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
+  /* src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikLight.otf") format("truetype");
-  font-weight: light;
+    url("../fonts/Graphik-Font-Family/GraphikLight.otf") format("truetype"); */
+  /* font-weight: light; */
 }
 
 @font-face {
   font-family: "GraphikExtraLight";
   src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf");
-  src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
+  /* src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
       format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf") format("truetype");
-  font-weight: lighter;
+    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf") format("truetype"); */
+  /* font-weight: lighter; */
 }
 
 @font-face {
@@ -120,6 +120,7 @@
   --flag-dropdown-width: clamp(40px, 15%, 200px);
 
   --z-index-input-icon: 5;
+  --z-index-tooltip: 10;
   --z-index-select-dropdown: 20;
   --z-index-overlay: 30;
 

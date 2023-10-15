@@ -1,0 +1,71 @@
+
+.tip_btn_ctn {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  z-index: var(--z-index-tooltip);
+  transition: 0.2s;
+  width: 240px;
+  top: -8px
+  /* height: 0; */
+}
+
+.tip_btn_ctn > button {
+  font-size: 16px;
+  cursor: unset;
+  font-weight: 550;
+  transition: .3s;
+  cursor: pointer;
+  height: fit-content;
+  margin: 0 8px;
+}
+
+.indicator {
+  visibility: hidden;
+  transition: all 0.25s ease-in-out;
+  opacity: 0;
+}
+
+.tip_btn_ctn:hover .indicator {
+  opacity: 1;
+  visibility: visible;
+}
+
+.indicator {
+  position: absolute;
+  bottom: 18px;
+  z-index: 20;
+  min-width: 220px;
+}
+
+.details_indicator {
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--sky-blue-hover);
+  /* background-color: red; */
+  color: #fff;
+  padding: 10px;
+  position: relative;
+  left: -30px;
+  box-shadow: var(--input-box-shadow);
+  display: flex;
+  align-items: center;
+  gap: var(--sm-inner-component-mg);
+}
+
+.arrow_head {
+  background-color: var(--sky-blue-hover);
+  width: 13px;
+  height: 8px;
+  position: relative;
+  right: -6px;
+  clip-path: polygon(50% 100%, 0 0, 100% 0%);
+}
+
+.indicator p {
+  color: var(--sky-blue);
+  font-family: var(--graphikRegular);
+  font-size: 13px;
+  line-height: 17px;
+  width: 100%;
+}
