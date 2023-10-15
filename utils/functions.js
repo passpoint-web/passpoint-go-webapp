@@ -122,6 +122,30 @@ const returnBase64 = async (file) => {
 	}
 }
 
+const splitOnCapsLetter = (string) => {
+	let str = string
+	str = str[0].toUpperCase() + str.slice(1) // incase the first letter is not in caps
+	str = str.split(/(?=[A-Z])/)
+	str = str.join(' ')
+	console.log(str)
+	return str.split(/(?=[A-Z])/)
+}
+
+const removeDuplicates =(arr, key)=> {
+	let newArray = [];
+	let uniqueObject = {};
+	for (let i in arr) {
+			let objTitle = arr[i][key];
+			uniqueObject[objTitle] = arr[i];
+	}
+
+	for (let i in uniqueObject) {
+			newArray.push(uniqueObject[i]);
+	}
+
+	return newArray
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -137,7 +161,9 @@ const functions = {
 	makeNumArr,
 	isValidUrl,
 	returnBase64,
-	createUrl
+	splitOnCapsLetter,
+	createUrl,
+	removeDuplicates
 	// encryptData,
 	// decryptData
 }

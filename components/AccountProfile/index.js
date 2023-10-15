@@ -1,6 +1,6 @@
 'use client'
 import styles from './account-profile.module.css'
-import { ProfileEditIcon } from '@/constants/icons'
+// import { ProfileEditIcon } from '@/constants/icons'
 import { getCredentials } from '@/services/localService'
 import ProfileImage from "@/assets/images/dashboard/avatar.svg";
 import Image from 'next/image';
@@ -131,9 +131,9 @@ const AccountProfile = () => {
 			<div className={styles.profile_card}>
 				<div className={styles.top}>
 					<h3>Personal Information</h3>
-					<button onClick={()=>setPersonalInfoEdit(true)}>
+					{/* <button onClick={()=>setPersonalInfoEdit(true)}>
 						<ProfileEditIcon />
-					</button>
+					</button> */}
 				</div>
 				<div className={styles.content}>
 					<div className={styles.info}>
@@ -238,9 +238,9 @@ const AccountProfile = () => {
 			<div className={styles.profile_card}>
 				<div className={styles.top}>
 					<h3>Business Information</h3>
-					<button onClick={()=>setBusinessInfoEdit(true)}>
+					{/* <button onClick={()=>setBusinessInfoEdit(true)}>
 						<ProfileEditIcon />
-					</button>
+					</button> */}
 				</div>
 
 				<div className={styles.inner}>
@@ -345,9 +345,9 @@ const AccountProfile = () => {
 			<div className={styles.profile_card}>
 				<div className={styles.top}>
 					<h3>Address Information</h3>
-					<button onClick={()=>setAddressInfoEdit(true)}>
+					{/* <button onClick={()=>setAddressInfoEdit(true)}>
 						<ProfileEditIcon />
-					</button>
+					</button> */}
 				</div>
 				<div className={styles.content}>
 					<div className={styles.info}>

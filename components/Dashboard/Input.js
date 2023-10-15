@@ -1,5 +1,6 @@
 import FeedbackInfo from "../FeedbackInfo";
 import styles from "@/assets/styles/auth-screens.module.css";
+import ToolTip from "./ToolTip";
 const Input = ({
 	children,
 	label,
@@ -7,12 +8,18 @@ const Input = ({
 	errorMsg,
 	msgPositionCenter,
 	styleProps,
+	toolTipMessage,
 	...props
 }) => {
 	return (
 		<>
 			<div className={`${styles.form_group} ${error ? "error" : ""}`} style={styleProps}>
-				<label htmlFor={props.id}>{label}</label>
+				<div className={styles.label_ctn} style={{display: 'flex'}}>
+					<label htmlFor={props.id}>
+						{label}
+					</label>
+					{toolTipMessage ? <ToolTip message={toolTipMessage} /> : <></>}
+				</div>
 				{children || <input {...props} />}
 				{error && errorMsg ? (
 					<FeedbackInfo center={msgPositionCenter}

@@ -107,6 +107,9 @@ export const publicProfile = {
 	addServices: (data) => {
 		return restAgent.post('publicProfileAddServices', data, setConfig());
 	},
+	deleteService: (data) => {
+		return restAgent.post('deleteService', data, setConfig());
+	},
 	contact: (data) => {
 		return restAgent.post('publicProfileContactDetails', data, setConfig());
 	},
