@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { useNotify } from '@/utils/hooks'
 import TertiaryBtn from '../Btn/Tertiary'
 
-const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, image/pdf", handlefileUpload, title, smTitle, subTitle, base64}) => {
+const FileUpload = ({styleProps, smTitle, disabled, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, image/pdf", handlefileUpload, title, subTitle, base64}) => {
 	const notify = useNotify()
 	const onUploadClick = (e) => {
 		e.preventDefault()
@@ -55,13 +55,14 @@ const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, 
 					<input
 						type="file"
 						id={id}
+						disabled={disabled}
 						name={id}
 						ref={logoFileUpload}
 						accept={accept}
 						onChange={(e)=>onFileUpload(e)}
 					/>
 					{
-						!base64 ? (<div className={styles.file_upload}
+						!base64 ? (<div className={`${styles.file_upload} ${disabled ? styles.disabled : ''}`}
 							onClick={(e)=>onUploadClick(e)}>
 							<UploadIcon />
 							<h3>Click here to upload</h3>
@@ -76,7 +77,7 @@ const FileUpload = ({styleProps, error, errorMsg, id="file", accept="image/png, 
 								</button>
 								<div className={styles.top}>
 									{/* <FileIcon /> */}
-									{base64 ? 
+									{base64 ?
 										<div className={styles.file_ctn}>
 											<Image
 												src={base64}

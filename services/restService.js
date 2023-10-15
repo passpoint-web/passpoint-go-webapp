@@ -61,6 +61,32 @@ export const resendOtp = (data) => {
 	return restAgent.post("resendOtp", data);
 };
 
+export const authenticate = {
+	registerUser : (path, data) => {
+		return restAgent.post(path, data);
+	},
+	
+	verifyEmailOtp : (data) => {
+		return restAgent.post('verifyUserOtp', data);
+	},
+	
+	login : (data) => {
+		return restAgent.post("login", data);
+	},
+	
+	forgotPassword : (data) => {
+		return restAgent.post("forgotPassword", data);
+	},
+	
+	resetPassword : (data) => {
+		return restAgent.post("resetPassword", data);
+	},
+	
+	resendOtp : (data) => {
+		return restAgent.post("resendOtp", data);
+	}
+}
+
 export const metrics = () => {
 	return restAgent.get("dashboardMetrics", setConfig());
 };
@@ -81,11 +107,15 @@ export const publicProfile = {
 	addServices: (data) => {
 		return restAgent.post('publicProfileAddServices', data, setConfig());
 	},
+	deleteService: (data) => {
+		return restAgent.post('deleteService', data, setConfig());
+	},
 	contact: (data) => {
 		return restAgent.post('publicProfileContactDetails', data, setConfig());
 	},
 }
 
+<<<<<<< HEAD
 
 export const kyc = {
 	uploadKycIdentity: (data) => {
@@ -104,4 +134,12 @@ export const kyc = {
 		return restAgent.post('kycProofIndividualAddress', data, setConfig());
 	},
 }
+=======
+export const accountProfile = {
+	changePassword: (data) => {
+		return restAgent.post('changeAccountPassword', data,  setConfig());
+	},
+}
+
+>>>>>>> 16539c30b8c2312fc7a6dedc40f34192530b8ade
 // https://api.jessecoders.com/passpointGo/v1/getPrimaryServices

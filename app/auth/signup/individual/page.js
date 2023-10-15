@@ -120,6 +120,7 @@ const IndividualInformation = () => {
 								label="Email Address"
 								id="email-address"
 								name="email"
+								type='email'
 								placeholder="John@mail.com"
 								value={payload.email}
 								onChange={handleChange}

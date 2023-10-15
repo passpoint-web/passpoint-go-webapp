@@ -11,6 +11,12 @@ function formatMoney(num, currency, precision) {
 	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
 	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0`
 }
+const createUrl = (pathname, params) => {
+	const paramsString = params.toString();
+	const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
+
+	return `${pathname}${queryString}`;
+};
 
 function currencySymbol(currency) {
 	return currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'
@@ -116,6 +122,30 @@ const returnBase64 = async (file) => {
 	}
 }
 
+const splitOnCapsLetter = (string) => {
+	let str = string
+	str = str[0].toUpperCase() + str.slice(1) // incase the first letter is not in caps
+	str = str.split(/(?=[A-Z])/)
+	str = str.join(' ')
+	console.log(str)
+	return str.split(/(?=[A-Z])/)
+}
+
+const removeDuplicates =(arr, key)=> {
+	let newArray = [];
+	let uniqueObject = {};
+	for (let i in arr) {
+			let objTitle = arr[i][key];
+			uniqueObject[objTitle] = arr[i];
+	}
+
+	for (let i in uniqueObject) {
+			newArray.push(uniqueObject[i]);
+	}
+
+	return newArray
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -130,7 +160,10 @@ const functions = {
 	getMonth,
 	makeNumArr,
 	isValidUrl,
-	returnBase64
+	returnBase64,
+	splitOnCapsLetter,
+	createUrl,
+	removeDuplicates
 	// encryptData,
 	// decryptData
 }

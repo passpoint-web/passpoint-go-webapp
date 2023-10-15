@@ -80,5 +80,26 @@ export const removeToken = () => {
 	if (typeof window !== "undefined") {
 		// localStorage.removeItem("token");
 		cookies.remove('token', '')
+		removePublicProfile()
+	}
+};
+
+
+export const savePublicProfile = (val) => {
+	localStorage.setItem("public_profile", JSON.stringify(val));
+};
+
+export const getPublicProfile = () => {
+	if (typeof window !== "undefined") {
+		const val = localStorage.getItem("public_profile");
+		if (val !== "undefined") {
+			return JSON.parse(val);
+		}
+	}
+};
+
+export const removePublicProfile = () => {
+	if (typeof window !== "undefined") {
+		localStorage.removeItem("public_profile")
 	}
 };

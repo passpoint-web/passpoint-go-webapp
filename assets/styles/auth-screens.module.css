@@ -120,7 +120,7 @@
 }
 
 .form {
-  padding-top: var(--outer-component-mg);
+  padding-top: var(--inner-component-mg);
   max-width: 600px;
   padding-bottom: var(--inner-component-mg);
 }
@@ -158,6 +158,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.form-group > .label_ctn {
+  display: flex;
 }
 
 .form_group input,

@@ -2,7 +2,7 @@ import styles from './modal.module.css'
 import Image from 'next/image'
 const FullScreenLoader = ({loadingText}) => {
 	return (
-		<div className={styles.overlay_screen}>
+		<div className={styles.loader_overlay_screen}>
 			<div className={styles.content}>
 				<div className={styles.loader_ctn}>
 					<Image src={'/passpoint.png'}
