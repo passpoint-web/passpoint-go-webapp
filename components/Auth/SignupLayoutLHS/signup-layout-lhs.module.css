@@ -124,7 +124,7 @@
     padding: var(--screen-padding-top) 30px;
   }
 }
-
+/* 
 @media screen and (max-width: 1000px) {
   .auth_level.mobile_width_1000 {
     min-height: unset;
@@ -135,13 +135,11 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    /* justify-content: space-between; */
     justify-content: center;
   }
 
   .auth_level.mobile_width_1000 {
     display: flex;
-    /* flex: 1 1; */
   }
 
   .auth_level.mobile_width_1000 .lhs {
@@ -155,7 +153,6 @@
 
   .auth_level.mobile_width_1000 .lhs .line {
     width: 50px;
-    /* position: absolute; */
     left: calc(100% - 30px);
     height: 3px;
     z-index: 3;
@@ -164,9 +161,9 @@
   .auth_level.mobile_width_1000 .content {
     display: none;
   }
-}
+} */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
   .auth_level {
     min-height: unset;
     gap: 5px;

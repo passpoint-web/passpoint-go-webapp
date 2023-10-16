@@ -19,13 +19,18 @@ const nextConfig = {
 				permanent: true,
 			},
 			{
-				source: '/dashboard/public-profile-setup',
-				destination: '/dashboard/public-profile-setup/identity',
+				source: '/dashboard/business-profile-setup',
+				destination: '/dashboard/business-profile-setup/identity',
 				permanent: true,
 			},
 			{
 				source: '/dashboard/settings',
 				destination: '/dashboard/settings/activity',
+				permanent: true,
+			},
+			{
+				source: '/dashboard/business-profile',
+				destination: '/dashboard/business-profile/preview',
 				permanent: true,
 			},
 		]

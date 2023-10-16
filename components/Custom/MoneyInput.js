@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 
-const MoneyInput = ({id, placeholder, currency='#', value, defaultValue, onValueChange}) => {
+const MoneyInput = ({id, prefix=true, placeholder, currency='#', value, defaultValue, onValueChange}) => {
 	const [formattedCurrency, setFormattedCurrency] = useState('#')
 	useEffect(()=>{
-		setFormattedCurrency(currency === 'NGN' ? '₦ ' : currency === 'USD' ? '$ ' : '# ')
+		setFormattedCurrency(currency === 'NGN' ? '₦' : currency === 'USD' ? '$' : currency=== 'percentage' ? '%' : '#')
 	},[currency])
 	return (
-		<CurrencyInput 
-			prefix={formattedCurrency}
+		<CurrencyInput
+			prefix={prefix ? `${formattedCurrency}` : ''}
+			suffix={!prefix ? `${formattedCurrency}` : ''}
 			id={id}
 			name={id}
 			placeholder={placeholder}
