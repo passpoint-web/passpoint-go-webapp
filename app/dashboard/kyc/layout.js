@@ -1,6 +1,6 @@
 // 'use client'
-import styles from "./kyc.module.css";
-import KycSetupLHS from "@/components/KYC/SetupLHS";
+
+import LayoutLogic from "@/components/KYC/LayoutLogic";
 export const metadata = () => {
 	return {
 		title: "KYC | Passpoint Go",
@@ -9,14 +9,9 @@ export const metadata = () => {
 };
 const KYCLayout = ({ children }) => {
 	return (
-		<div className={styles.overlay_screen}>
-			<div className={styles.layout_ctn}>
-				<div className={styles.lhs}>
-					<KycSetupLHS />
-				</div>
-				<div className={styles.pages}>{children}</div>
-			</div>
-		</div>
+		<LayoutLogic>
+			{children}
+		</LayoutLogic>
 	);
 };
 

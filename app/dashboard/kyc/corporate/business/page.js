@@ -1,14 +1,14 @@
-import BusinessPageCop from "@/components/KYC/corporate/BusinessPageCop";
+import Business from "@/components/KYC/corporate/Business";
 import styles from "../../kyc.module.css";
 export const metadata = () => {
-  return {
-    title: "About Business - KYC | Passpoint Go",
-    description: "",
-  };
+	return {
+		title: "About Business - KYC | Passpoint Go",
+		description: "",
+	};
 };
 
-const Business = () => {
-  return <BusinessPageCop styles={styles} />;
+const BusinessPage = () => {
+	return <Business styles={styles} />;
 };
 
-export default Business;
+export default BusinessPage

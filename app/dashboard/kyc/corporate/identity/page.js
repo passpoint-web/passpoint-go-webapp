@@ -1,14 +1,14 @@
 import styles from "../../kyc.module.css";
-import IdentityPageCop from "@/components/KYC/corporate/IdentityPageCop";
+import Identity from "@/components/KYC/corporate/Identity";
 export const metadata = () => {
-  return {
-    title: "Identity - KYC | Passpoint Go",
-    description: "",
-  };
+	return {
+		title: "Identity - KYC | Passpoint Go",
+		description: "",
+	};
 };
 
-const Identity = () => {
-  return <IdentityPageCop styles={styles} />;
+const IdentityPage = () => {
+	return <Identity styles={styles} />;
 };
 
-export default Identity;
+export default IdentityPage;

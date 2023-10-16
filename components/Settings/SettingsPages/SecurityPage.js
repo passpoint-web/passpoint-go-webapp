@@ -80,7 +80,7 @@ const Security = () => {
 	const ChangePassword = () => (
 		<>
 			{
-				searchParams?.get('forgotPasswordLevel') && <ForgotPasswordFlow />}
+				searchParams?.get('forgotPasswordLevel') ? <ForgotPasswordFlow /> : <></>}
 			<form className={formStyles.form}
 				onSubmit={handleResetPasswordSubmit}>
 				<div className={styles.inner}>

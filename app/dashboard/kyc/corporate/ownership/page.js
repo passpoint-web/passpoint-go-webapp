@@ -1,14 +1,14 @@
 import styles from "../../kyc.module.css";
-import OwnershipCop from "@/components/KYC/corporate/OwnershipCop";
+import Ownership from "@/components/KYC/corporate/Ownership";
 
 export const metadata = () => {
-  return {
-    title: "Proof of Ownership - KYC-Corporate  | Passpoint Go",
-    description: "",
-  };
+	return {
+		title: "Proof of Ownership - KYC-Corporate  | Passpoint Go",
+		description: "",
+	};
 };
-const Ownership = () => {
-  return <OwnershipCop styles={styles} />;
+const OwnershipPage = () => {
+	return <Ownership styles={styles} />;
 };
 
-export default Ownership;
+export default OwnershipPage;

@@ -3,7 +3,6 @@ import BackBtn from "@/components/Btn/Back";
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
-import FeedbackInfo from "@/components/FeedbackInfo";
 import FileUpload from "@/components/FileUpload";
 import { kyc } from "@/services/restService";
 import { documentType } from "@/utils/CONSTANTS";
@@ -11,7 +10,7 @@ import { useNotify } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-const AddressCop = ({ styles }) => {
+const Address = ({ styles }) => {
 	const { push } = useRouter();
 	const notify = useNotify();
 	const [ctaClicked, setCtaClicked] = useState(false);
@@ -109,4 +108,4 @@ const AddressCop = ({ styles }) => {
 	);
 };
 
-export default AddressCop;
+export default Address;

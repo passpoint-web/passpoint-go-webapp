@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import FormLevel from "../../FormLevel";
 import { useEffect, useState } from "react";
 // import BackBtn from "@/components/Btn/Back";
-import styles from "@/app/dashboard/business-profile-setup/business-profile.module.css";
+import styles from "@/app/dashboard/kyc/kyc.module.css";
 import { getCredentials } from "@/services/localService";
 
 const KycSetupLHS = () => {

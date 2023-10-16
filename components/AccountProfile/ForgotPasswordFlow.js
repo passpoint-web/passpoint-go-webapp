@@ -62,7 +62,7 @@ const ForgotPasswordFlow = () => {
 		}
 	}
 
-  const handleVerifyOtp = async () => {
+	const handleVerifyOtp = async () => {
 		setCtaClicked(true)
 		if (otp?.length !== 6) {
 			return
@@ -180,7 +180,7 @@ const ForgotPasswordFlow = () => {
 					bottomCancelNeeded={false}
 				>
 					{
-						forgot ? 	
+						forgot ?
 							<form className={formStyles.form}>
 								<Input
 									label='Email Address'
@@ -189,15 +189,15 @@ const ForgotPasswordFlow = () => {
 									disabled
 									defaultValue={email}
 								/>
-							</form> : 
-							verify ? 
-          <form className={formStyles.form}>
+							</form> :
+							verify ?
+								<form className={formStyles.form}>
 									<Input
 										error={(ctaClicked && otp?.length !== 6) || errorMsg}
 										errorMsg={otp?.length !== 6 ? 'Valid OTP needed' : errorMsg}
 										msgPositionCenter={true}
 									>
-                <div className={formStyles.otp_input}>
+										<div className={formStyles.otp_input}>
 											<OtpInput
 												value={otp}
 												onChange={setOtp}
@@ -216,59 +216,59 @@ const ForgotPasswordFlow = () => {
 											clearOtp={()=>setOtp('')}
 										/>
 									</div>
-								</form> : 
-								create ? 
+								</form> :
+								create ?
 									<form className={formStyles.form}>
 										<Input
-								label="Password"
-								id="password"
-								name="password"
-								placeholder="Password"
-								error={ctaClicked && !payload.password}
-							>
-								<PasswordField
-									id="password-field"
-									errorField={ctaClicked && !payload.password}
-									emitPassword={(e) =>
-										handleChange({
-											target: { name: 'password', value: e },
-										})
-									}
-								/>
-							</Input>
-							<Input
-								label="Confirm Password"
-								id="confirm-password"
-								name="confirm-password"
-								placeholder="Confirm Password"
-								error={ctaClicked && (!payload.confirm || payload.password !== payload.confirm)}
-								errorMsg={ctaClicked && !payload.confirm ? 'Confirm password is required' : ctaClicked && payload.password !== payload.confirm ? 'Passwords do not match' : ''}
-							>
-								<PasswordField
-									disabled={!payload.password}
-									id="confirm-password-field"
-									passwordStrengthNeeded={false}
-									errorField={ctaClicked && !payload.confirm}
-									emitPassword={(e) =>
-										handleChange({
-											target: { name: 'confirm', value: e },
-										})
-									}
-								/>
-							</Input>
-									</form> : 
+											label="Password"
+											id="password"
+											name="password"
+											placeholder="Password"
+											error={ctaClicked && !payload.password}
+										>
+											<PasswordField
+												id="password-field"
+												errorField={ctaClicked && !payload.password}
+												emitPassword={(e) =>
+													handleChange({
+														target: { name: 'password', value: e },
+													})
+												}
+											/>
+										</Input>
+										<Input
+											label="Confirm Password"
+											id="confirm-password"
+											name="confirm-password"
+											placeholder="Confirm Password"
+											error={ctaClicked && (!payload.confirm || payload.password !== payload.confirm)}
+											errorMsg={ctaClicked && !payload.confirm ? 'Confirm password is required' : ctaClicked && payload.password !== payload.confirm ? 'Passwords do not match' : ''}
+										>
+											<PasswordField
+												disabled={!payload.password}
+												id="confirm-password-field"
+												passwordStrengthNeeded={false}
+												errorField={ctaClicked && !payload.confirm}
+												emitPassword={(e) =>
+													handleChange({
+														target: { name: 'confirm', value: e },
+													})
+												}
+											/>
+										</Input>
+									</form> :
 									success ?
-									<ActionFeedbackCard 
-									content={{
-										success: true,
-										title: 'Password Changed!',
-										value: 'Your password has been changed successfully'
-									}}
-									/> : 
-									<></>
+										<ActionFeedbackCard
+											content={{
+												success: true,
+												title: 'Password Changed!',
+												value: 'Your password has been changed successfully'
+											}}
+										/> :
+										<></>
 					}
-				
-						
+
+
 				</ModalWrapper>
 			}
 		</>

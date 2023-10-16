@@ -1,9 +1,10 @@
+'use client'
 import styles from './modal.module.css'
 import { CancelIcon } from '@/constants/icons'
 // import PrimaryBtn from '../Btn/Primary'
 import { useRef } from 'react'
 import Button from '../Btn/Button'
-const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, bottomCancelNeeded = true, subHeading, heading, contentStyle, onClose, handleCta, overlayClose = false, ctaBtnText = 'Proceed', cancelBtnText='Cancel'}) => {
+const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, topCancelNeeded = true, bottomCancelNeeded = true, subHeading, heading, contentStyle, onClose, handleCta, overlayClose = false, ctaBtnText = 'Proceed', cancelBtnText='Cancel'}) => {
 	const modalCtnRef = useRef(null)
 	const modalBgRef = useRef(null)
 	// const modalChildRef = useRef(null)
@@ -30,10 +31,10 @@ const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, bottomCancelN
 				className={styles.overlay_screen}
 				onClick={overlayClose ? onClose : null} />
 			<div className={styles.child_ctn}>
-				<button className={`${styles.close_btn} button`}
+				{topCancelNeeded ? <button className={`${styles.close_btn} button`}
 					onClick={onClose}>
 					<CancelIcon />
-				</button>
+				</button> : <></>}
 				<div
 					className={styles.child}
 					style={{...contentStyle}}>
