@@ -45,7 +45,7 @@ const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, bottomCancelN
 						<p>{subHeading}</p>
 					</div>
 					{children}
-					<div className={`${styles.bottom} ${bottomCancelNeeded  && styles.end}`}>
+					<div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
 						{bottomCancelNeeded && <Button className="secondary md"
 							onClick={onClose}
 							text={cancelBtnText} />}
