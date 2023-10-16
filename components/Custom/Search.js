@@ -1,7 +1,7 @@
 import styles from '@/assets/styles/auth-screens.module.css'
 const Search = ({search, searchCountry, id, placeholder}) => {
 	return (
-		<div className={`${styles.input_wrapper} ${styles.left}`}>
+		<div className={`custom-search ${styles.input_wrapper} ${styles.left}`}>
 			<input type="search"
 				id={id}
 				placeholder={placeholder}

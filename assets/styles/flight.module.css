@@ -1,0 +1,70 @@
+/* TRAVEL DASHBOARD */
+.travel__dashboard_header {
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.travel__dashboard_header .row_one {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+}
+.travel__dashboard_header .row_one a {
+  display: inline-flex;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--sky-blue);
+  font-size: 1rem;
+}
+
+.row_one .quick__filter {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.row_two {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+.to__fro_group {
+  display: flex;
+  gap: 1rem;
+  flex-basis: 40%;
+  position: relative;
+}
+.to__fro_group svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 27px;
+  z-index: 1;
+  width: 40px;
+}
+.row_two a {
+  flex-basis: 20%;
+  gap: 0.4rem;
+  font-size: 1rem;
+  margin-bottom: var(--inner-component-mg);
+}
+
+/* SELECT FLIGHTS */
+.row__wrapper {
+  padding: 1.5rem;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+}
+.row__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
