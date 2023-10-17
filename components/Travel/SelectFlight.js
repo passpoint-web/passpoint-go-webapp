@@ -49,8 +49,18 @@ const SelectFlight = () => {
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
-							<label className={styles.filter__input}>
-								<input type="range" name="" id="" />
+							<label className={`${styles.filter__input} ${styles.range__input}`}>
+								<div className={styles.range__ctn}>
+									<input type="range" name="" id="" />
+								</div>
+								<div className={styles.filter__input_col_two}>
+									<div>
+                    ₦ 400,000
+									</div>
+									<div>
+                    ₦ 1,000,000
+									</div>
+								</div>
 							</label>
 						</div>
 					</div>
@@ -78,21 +88,73 @@ const SelectFlight = () => {
 					{/* TIME FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Price</h5>
+							<h5 className="text-capitalize">Time</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
-							<label className={styles.filter__input}>
-								<input type="range" name="" id="" />
+							<label className={`${styles.filter__input} ${styles.range__input}`}>
+								<div className={styles.filter__input_col_one}>
+                  Take-off <span>New York (JFK)</span>
+								</div>
+								<div className={styles.range__ctn}>
+									<input type="range" name="" id="" />
+								</div>
+								<div className={styles.filter__input_col_two}>
+									<div>
+                    Thu 12:00AM
+									</div>
+									<div>
+                    12:00AM
+									</div>
+								</div>
 							</label>
-							<label className={styles.filter__input}>
-								<input type="range" name="" id="" />
+							<label className={`${styles.filter__input} ${styles.range__input}`}>
+								<div className={styles.filter__input_col_one}>
+                  Take-off <span>New York (JFK)</span>
+								</div>
+								<div className={styles.range__ctn}>
+									<input type="range" name="" id="" />
+								</div>
+								<div className={styles.filter__input_col_two}>
+									<div>
+                    Thu 12:00AM
+									</div>
+									<div>
+                    12:00AM
+									</div>
+								</div>
 							</label>
-							<label className={styles.filter__input}>
-								<input type="range" name="" id="" />
+							<label className={`${styles.filter__input} ${styles.range__input}`}>
+								<div className={styles.filter__input_col_one}>
+                  Take-off <span>New York (JFK)</span>
+								</div>
+								<div className={styles.range__ctn}>
+									<input type="range" name="" id="" />
+								</div>
+								<div className={styles.filter__input_col_two}>
+									<div>
+                    Thu 12:00AM
+									</div>
+									<div>
+                    12:00AM
+									</div>
+								</div>
 							</label>
-							<label className={styles.filter__input}>
-								<input type="range" name="" id="" />
+							<label className={`${styles.filter__input} ${styles.range__input}`}>
+								<div className={styles.filter__input_col_one}>
+                  Take-off <span>New York (JFK)</span>
+								</div>
+								<div className={styles.range__ctn}>
+									<input type="range" name="" id="" />
+								</div>
+								<div className={styles.filter__input_col_two}>
+									<div>
+                    Thu 12:00AM
+									</div>
+									<div>
+                    12:00AM
+									</div>
+								</div>
 							</label>
 						</div>
 					</div>
