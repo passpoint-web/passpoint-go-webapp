@@ -2,19 +2,159 @@
 
 import styles from "../../assets/styles/flight.module.css"
 import { FaChevronDown } from "react-icons/fa"
+import FlightCard from "./FlightCard"
 
 const SelectFlight = () => {
-  return (
-    <div className={`select-flight-wrapper ${styles.row__wrapper}`}>
-      <div className={styles.row__header}>
-        <div className="texts">
-          <h3 className="text-capitalize"> Select Flights (100)</h3>
-          {/* <p>Manage your bookings here</p> */}
-        </div>
-        <FaChevronDown />
-      </div>
-    </div>
-  )
+	const flights = [1, 2, 3, 4, 5, 6]
+	return (
+		<div className={`select-flight-wrapper ${styles.row__wrapper}`}>
+			<button className={styles.row__header}>
+				<div className="texts">
+					<h3 className="text-capitalize"> Select Flights (100)</h3>
+					{/* <p>Manage your bookings here</p> */}
+				</div>
+				<FaChevronDown />
+			</button>
+			<div className={styles.fs__row}>
+				<div className={styles.lhs}>
+					{/* CATEGORY FILTER */}
+					<div className={styles.filter__box}>
+						<button className={styles.header}>
+							<h5 className="text-capitalize">Category</h5>
+							<FaChevronDown />
+						</button>
+						<div className={styles.content}>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="category" />
+                Best
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="category" />
+                Cheapest
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="category" />
+                Quickest
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="category" />
+                Slowest
+							</label>
+						</div>
+					</div>
+					{/* PRICE FILTER */}
+					<div className={styles.filter__box}>
+						<button className={styles.header}>
+							<h5 className="text-capitalize">Price</h5>
+							<FaChevronDown />
+						</button>
+						<div className={styles.content}>
+							<label className={styles.filter__input}>
+								<input type="range" name="" id="" />
+							</label>
+						</div>
+					</div>
+					{/* STOPS FILTER */}
+					<div className={styles.filter__box}>
+						<button className={styles.header}>
+							<h5 className="text-capitalize">Stops</h5>
+							<FaChevronDown />
+						</button>
+						<div className={styles.content}>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="stops" />
+                Non-stop
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="stops" />
+                1 stop
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="stops" />
+                2+ stops
+							</label>
+						</div>
+					</div>
+					{/* TIME FILTER */}
+					<div className={styles.filter__box}>
+						<button className={styles.header}>
+							<h5 className="text-capitalize">Price</h5>
+							<FaChevronDown />
+						</button>
+						<div className={styles.content}>
+							<label className={styles.filter__input}>
+								<input type="range" name="" id="" />
+							</label>
+							<label className={styles.filter__input}>
+								<input type="range" name="" id="" />
+							</label>
+							<label className={styles.filter__input}>
+								<input type="range" name="" id="" />
+							</label>
+							<label className={styles.filter__input}>
+								<input type="range" name="" id="" />
+							</label>
+						</div>
+					</div>
+					{/* AIRLINE FILTER */}
+					<div className={styles.filter__box}>
+						<button className={styles.header}>
+							<h5 className="text-capitalize">Airlines</h5>
+							<FaChevronDown />
+						</button>
+						<div className={styles.content}>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="airline" />
+                Iberia
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="airline" />
+                Air Canada
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="airline" />
+                American Airlines
+							</label>
+							<label className={styles.filter__input}>
+								<input type="checkbox" name="airline" />
+                British Airways
+							</label>
+						</div>
+					</div>
+					{/* LAYOVER FILTER */}
+					<div className={styles.filter__box}>
+						<button className={styles.header}>
+							<h5 className="text-capitalize">Layover</h5>
+							<FaChevronDown />
+						</button>
+						<div className={styles.content}>
+							<div className={styles.filter__input_group}>
+								<h6>Canada</h6>
+								<label className={styles.filter__input}>
+									<input type="checkbox" name="layover" />
+                Iberia
+								</label>
+								<label className={styles.filter__input}>
+									<input type="checkbox" name="layover" />
+                Toronto
+								</label>
+							</div>
+							<div className={styles.filter__input_group}>
+								<h6>Egypt</h6>
+								<label className={styles.filter__input}>
+									<input type="checkbox" name="layover" />
+                Cairo
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className={styles.rhs}>
+					{flights.map(flight => <FlightCard key={flight} />)}
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default SelectFlight

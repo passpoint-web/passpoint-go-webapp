@@ -577,6 +577,10 @@ input[type="file"] {
   display: none !important;
 }
 
+input {
+  accent-color: var(--sky-blue);
+}
+
 .table-ctn .custom-search input {
   width: 100%;
   background-color: #fff;
@@ -670,6 +674,19 @@ form {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   background: #e9b500;
+  display: inline-block;
+}
+
+.primary-tag {
+  background: var(--sky-blue-light);
+  color: var(--sky-blue);
+  font-family: var(--graphikRegular);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
   display: inline-block;
 }
 

@@ -21,13 +21,13 @@
   font-size: 1rem;
 }
 
-.row_one .quick__filter {
+.travel__dashboard_header .row_one .quick__filter {
   display: flex;
   gap: 1rem;
   margin: 2rem 0;
 }
 
-.row_two {
+.travel__dashboard_header .row_two {
   display: flex;
   gap: 1rem;
   align-items: flex-end;
@@ -48,7 +48,7 @@
   z-index: 1;
   width: 40px;
 }
-.row_two a {
+.travel__dashboard_header .row_two a {
   flex-basis: 20%;
   gap: 0.4rem;
   font-size: 1rem;
@@ -57,14 +57,226 @@
 
 /* SELECT FLIGHTS */
 .row__wrapper {
-  padding: 1.5rem;
   background: var(--white);
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
     0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
 }
 .row__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem;
+  width: 100%;
+}
+.fs__row {
+  padding: 0 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+.fs__row .lhs {
+  width: 280px;
+  min-width: 280px;
+  border-radius: 12px;
+  background: var(--white);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  border: 1px solid var(--grey-grey-5, #e5e7ef);
+  height: fit-content;
+}
+.fs__row .rhs {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.filter__box {
+  border-bottom: 1px solid var(--grey-grey-5, #e5e7ef);
+}
+.filter__box:nth-last-child(1) {
+  border-bottom: 0;
+}
+.filter__box .header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+.filter__box .content {
+  padding: 1.5rem;
+  padding-top: 0;
+}
+.header h5 {
+  font-family: "GraphikMedium";
+}
+.filter__input_group h6 {
+  font-family: "GraphikMedium";
+  font-size: 0.875rem;
+  margin-bottom: 0.4rem;
+  margin-top: 1.4rem;
+}
+.filter__input_group:nth-child(1) h6 {
+  margin-top: 0;
+}
+.filter__input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+  font-family: "Graphik";
+  color: var(--grey-2);
+}
+
+/* FLIGHT CARD */
+.flight__card {
+  border-radius: 12px;
+  background: var(--white);
+  border: 1px solid var(--grey-grey-5, #e5e7ef);
+  padding: 1.5rem;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  width: 100%;
+}
+.fc__row_one {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.fc__row_two {
+  display: flex;
+  gap: 1.5rem;
+}
+.fc__airline {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.fc__airline h6 {
+  font-size: 0.875rem;
+  font-family: "GraphikMedium";
+}
+.fc__airline > div {
+  border-radius: 8px;
+  border: 1px solid var(--grey-5);
+  background: var(--sky-blue-light);
+  width: 65px;
+  min-width: 65px;
+  height: 65px;
+}
+.fc__tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.fc__row_one .fc__price {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-basis: 30%;
+  max-width: 200px;
+}
+.fc__price h4 {
+  color: var(--sky-blue);
+  font-family: "GraphikMedium";
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.fc__row_two > a {
+  flex-basis: 30%;
+  max-width: 200px;
+}
+
+/* FLIGHT CARD TIMELINE */
+.fc__timeline {
+  min-width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  flex-basis: 70%;
+  position: relative;
+}
+.fc__timeline .fc__col h5 {
+  font-family: "GraphikMedium";
+  color: var(--grey-2);
+  margin-bottom: 0.7rem;
+}
+.fc__timeline_range {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.circle__ctn {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.circle__ctn > div:not(.circle) {
+  position: absolute;
+  left: auto;
+  right: auto;
+  margin: auto;
+  font-size: 0.9rem;
+  font-family: "Graphik";
+  text-align: center;
+  width: 60px;
+  margin-left: -25px;
+}
+.circle__ctn > div:nth-child(1) {
+  top: 1rem;
+}
+.circle__ctn > div:nth-last-child(1) {
+  bottom: 1rem;
+}
+.fc__timeline .circle {
+  min-width: 10px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 1px dashed var(--sky-blue);
+  background: var(--white);
+}
+.fc__timeline .fc__timeline_stop:nth-child(1) .circle {
+  border: none;
+  background: #cbebf3;
+}
+.fc__timeline .fc__timeline_stop:nth-last-child(1) .circle {
+  border: none;
+  background: var(--sky-blue);
+}
+.fc__timeline_stop {
+  display: flex;
+  align-items: center;
+  flex-basis: 50%;
+}
+.fc__timeline_stop:nth-last-child(1) {
+  flex-basis: 0;
+}
+.fc__line {
+  height: 1px;
+  width: 100%;
+  border: 0.5px solid var(--sky-blue);
+}
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-child(1)
+  .fc__line {
+  border: 0.5px dashed var(--sky-blue);
 }

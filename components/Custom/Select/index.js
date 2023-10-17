@@ -62,7 +62,7 @@ const CustomSelect = ({
 							<div
 								key={index}
 								className={`${styles.content} ${(objKey ? option?.[objKey] === selectedOption?.[objKey] : option === selectedOption) ? styles.content_selected : ''
-									}`}
+								}`}
 								onClick={() => handleSelect(option)}
 							>
 								<p className={styles.option}>{objKey ? option?.[objKey] : option}</p>
