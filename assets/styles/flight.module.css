@@ -439,6 +439,11 @@
 .payment__option_btn.active {
   background: var(--grey-6);
 }
+.payments__row form {
+  width: 450px;
+  margin: 0 auto;
+  margin-bottom: 5%;
+}
 
 /* PAYMENT SUCCESSFUL */
 .payment__successful {
