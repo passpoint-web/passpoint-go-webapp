@@ -5,12 +5,12 @@ import React from 'react'
 // import { useRouter } from 'next/navigation'
 
 const PublicProfileSetup = () => {
-  // const {back} = useRouter()
-  return (
-    <>
-      
-    </>
-  )
+	// const {back} = useRouter()
+	return (
+		<>
+
+		</>
+	)
 }
 
 export default PublicProfileSetup

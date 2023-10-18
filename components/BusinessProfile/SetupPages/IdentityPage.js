@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,20 @@ import FileUpload from "@/components/FileUpload";
 import Button from "@/components/Btn/Button";
 import formStyles from "@/assets/styles/auth-screens.module.css";
 import { publicProfile } from "@/services/restService";
+=======
+
+'use client'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Input from '@/components/Dashboard/Input'
+import { getCredentials } from '@/services/localService'
+import { useNotify } from '@/utils/hooks'
+import FileUpload from '@/components/FileUpload'
+import Button from '@/components/Btn/Button'
+import formStyles from '@/assets/styles/auth-screens.module.css'
+import { publicProfile } from '@/services/restService'
+import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+>>>>>>> 4724d10025534d72113d604a7a146b5e10608318
 import { savePublicProfile,
 	getPublicProfile as getSavedPublicProfile
 } from '@/services/localService'
@@ -41,10 +56,11 @@ const IdentityPage = ({styles}) => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data
-			// console.log(data)
+			console.log(data)
 			savePublicProfile(data)
-			if (data.logo) {
-				setBusinessLogo(data.logo)
+			const {logo} = data.businessIdentity
+			if (logo) {
+				setBusinessLogo(logo)
 				setSubmitType('EDIT')
 			}
 		} catch (_err) {
@@ -67,7 +83,7 @@ const IdentityPage = ({styles}) => {
 		try {
 			const response = await publicProfile.uploadBusinessLogo({logo: businessLogo, submitType})
 			console.log(response)
-			savePublicProfile({...savedPublicProfile, profileStage: 1})
+			savePublicProfile({...savedPublicProfile, profileStage: savedPublicProfile.profileStage > 1 ? savedPublicProfile.profileStage : 1})
 			notify('success', `Your business logo has been saved`)
 			push('/dashboard/business-profile-setup/business')
 		} catch (_err) {
