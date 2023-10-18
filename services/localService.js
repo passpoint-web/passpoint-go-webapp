@@ -84,7 +84,6 @@ export const removeToken = () => {
 	}
 };
 
-
 export const savePublicProfile = (val) => {
 	localStorage.setItem("public_profile", JSON.stringify(val));
 };
