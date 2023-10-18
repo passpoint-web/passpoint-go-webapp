@@ -216,7 +216,7 @@ const ServicesPage = ({styles}) => {
 		setIsLoading(true)
 		try {
 			await publicProfile.addServices(payload)
-			savePublicProfile({...savedPublicProfile, profileStage: 3})
+			savePublicProfile({...savedPublicProfile, profileStage: savedPublicProfile.profileStage > 3 ? savedPublicProfile.profileStage : 3})
 			notify('success', 'Your services have been saved')
 			push('/dashboard/business-profile-setup/contact')
 		} catch (_err) {

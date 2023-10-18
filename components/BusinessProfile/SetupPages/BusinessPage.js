@@ -12,8 +12,8 @@ import AddFeatureBtn from '@/components/BusinessProfile/AddFeatureBtn'
 import FeatureCard from '@/components/BusinessProfile/FeatureCard'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
-import { savePublicProfile, 
-	getPublicProfile as getSavedPublicProfile 
+import { savePublicProfile,
+	getPublicProfile as getSavedPublicProfile
 } from '@/services/localService'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
 import { v4 as useId } from 'uuid'
@@ -103,9 +103,14 @@ const BusinessPage = ({styles}) => {
 		setModalCtaClicked(false)
 	}
 
-	const removeFeature = (e, id) => {
+	const removeFeature = (e, id, businessDescId) => {
 		e.preventDefault()
-		setFeatures(features.filter((s)=>s.id !== id))
+		console.log(businessDescId)
+		if (businessDescId) {
+			deleteCurrentBusinessDesc(businessDescId)
+		} else {
+			setFeatures(features.filter((s)=>s.id !== id))
+		}
 	}
 
 	const handleSubmit = async (e) => {
@@ -129,10 +134,26 @@ const BusinessPage = ({styles}) => {
 				desc
 			})
 			console.log(response)
-			savePublicProfile({...savedPublicProfile, profileStage: 2})
+			savePublicProfile({...savedPublicProfile, profileStage: savedPublicProfile.profileStage > 2 ? savedPublicProfile.profileStage : 2})
 			notify('success', 'Your business Information has been saved')
 			push('/dashboard/business-profile-setup/services')
 		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	const deleteCurrentBusinessDesc = async (businessDescId) => {
+		const payload = {businessDescId}
+		setIsLoading(true)
+		try {
+			await publicProfile.deleteBusinessDescription(payload)
+			setFeatures(features.filter((f)=>f.businessDescId !== businessDescId))
+			notify('success', 'Deleted successfully')
+		} catch (_err) {
+			console.log(_err)
 			const { message } = _err.response?.data || _err
 			notify('error', message)
 		} finally {
@@ -144,13 +165,14 @@ const BusinessPage = ({styles}) => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data
+			// console.log(data.aboutBusiness)
 			savePublicProfile(data)
 			if (data.aboutBusiness) {
-				const {aboutBusiness, desc} = data
+				const {aboutBusiness, desc} = data.aboutBusiness
 				// setBusinessLogo(data.logo)
 				setAboutBusiness(aboutBusiness)
 				setFeatures(desc.map((d)=>{
-					let obj = {
+					let obj = {...d,
 						id: useId(),
 						businessDesc: d.businessDesc || '',
 						businessHeadLine: d.businessHeadLine || ''
@@ -187,7 +209,7 @@ const BusinessPage = ({styles}) => {
 
 			{features.filter(f=>f.businessHeadLine || f.businessDesc).map((feat, id)=>(
 				<FeatureCard key={id}
-					removeFeature={(e)=>removeFeature(e, feat.id)}
+					removeFeature={(e)=>removeFeature(e, feat.id, feat.businessDescId)}
 					editFeature={(e)=>editFeatureModal(e, feat)}
 					feature={feat}
 				/>
@@ -245,7 +267,7 @@ const BusinessPage = ({styles}) => {
 
 	return (
 		<>
-		{dataLoading ? <FullScreenLoader /> : <></>}
+			{dataLoading ? <FullScreenLoader /> : <></>}
 			{
 				showModal ?
 					AddFeatureModal() :

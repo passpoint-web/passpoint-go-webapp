@@ -65,23 +65,23 @@ export const authenticate = {
 	registerUser : (path, data) => {
 		return restAgent.post(path, data);
 	},
-	
+
 	verifyEmailOtp : (data) => {
 		return restAgent.post('verifyUserOtp', data);
 	},
-	
+
 	login : (data) => {
 		return restAgent.post("login", data);
 	},
-	
+
 	forgotPassword : (data) => {
 		return restAgent.post("forgotPassword", data);
 	},
-	
+
 	resetPassword : (data) => {
 		return restAgent.post("resetPassword", data);
 	},
-	
+
 	resendOtp : (data) => {
 		return restAgent.post("resendOtp", data);
 	}
@@ -103,6 +103,9 @@ export const publicProfile = {
 	},
 	businessDescription: (data) => {
 		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
+	},
+	deleteBusinessDescription: (data) => {
+		return restAgent.post('deleteBusinessDesc', data, setConfig());
 	},
 	addServices: (data) => {
 		return restAgent.post('publicProfileAddServices', data, setConfig());
