@@ -3,7 +3,21 @@ import { CancelIcon } from '@/constants/icons'
 // import PrimaryBtn from '../Btn/Primary'
 import { useRef } from 'react'
 import Button from '../Btn/Button'
-const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, bottomCancelNeeded = true, subHeading, heading, contentStyle, onClose, handleCta, overlayClose = false, ctaBtnText = 'Proceed', cancelBtnText='Cancel'}) => {
+const ModalWrapper = ({
+	children,
+	ctaBtnType = 'md',
+	loading=false,
+	bottomCancelNeeded = true,
+	subHeading,
+	heading,
+	contentStyle,
+	onClose,
+	handleCta,
+	overlayClose = false,
+	ctaBtnText = 'Proceed',
+	cancelBtnText='Cancel',
+	containsTabLayout = false
+}) => {
 	const modalCtnRef = useRef(null)
 	const modalBgRef = useRef(null)
 	// const modalChildRef = useRef(null)
@@ -29,7 +43,7 @@ const ModalWrapper = ({children, ctaBtnType = 'md', loading=false, bottomCancelN
 			<div ref={modalBgRef}
 				className={styles.overlay_screen}
 				onClick={overlayClose ? onClose : null} />
-			<div className={styles.child_ctn}>
+			<div className={`${styles.child_ctn} ${containsTabLayout ? styles.contains_tab : ''}`}>
 				<button className={`${styles.close_btn} button`}
 					onClick={onClose}>
 					<CancelIcon />

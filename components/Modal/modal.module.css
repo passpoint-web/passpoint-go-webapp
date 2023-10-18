@@ -55,9 +55,15 @@
   position: relative;
 }
 
+.child_ctn.contains_tab {
+  min-width: 600px;
+  width: 65%;
+  max-width: 700px;
+  position: relative;
+}
+
 .child {
   width: 100%;
-  max-width: 500px;
   z-index: calc(var(--z-index-overlay)+ 1);
   background: #fff;
   position: relative;
@@ -74,6 +80,9 @@
 .top {
   position: relative;
   margin-bottom: var(--inner-component-gap);
+}
+.top p {
+  font-family: "Graphik";
 }
 
 .content {
@@ -100,9 +109,9 @@
 .bottom:not(.end) button {
   width: 100%;
 }
- 
+
 .close_btn {
-  position:absolute;
+  position: absolute;
   position: absolute;
   right: var(--inner-component-mg);
   top: var(--inner-component-mg);
@@ -121,7 +130,6 @@
 .close_btn:hover {
   background-color: var(--grey-5);
 }
-
 
 @media screen and (min-width: 500px) {
   .mobile_top {
@@ -151,6 +159,7 @@
 
   .child_ctn {
     min-width: 90%;
+    background: red;
   }
 
   .child {
@@ -162,7 +171,7 @@
     animation: var(--anim-slide-up);
     -webkit-animation: var(--anim-slide-up);
   }
-} 
+}
 
 @-webkit-keyframes spin {
   0% {
