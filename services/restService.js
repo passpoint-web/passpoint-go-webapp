@@ -125,10 +125,13 @@ export const kyc = {
 	uploadKycBusiness: (data) => {
 		return restAgent.post('kycProofCooperateURL', data, setConfig());
 	},
+	uploadKycOwnership: (data) => {
+		return restAgent.post('kycProofCooperateOwnership', data, setConfig());
+	},
 	uploadIndIdentity: (data) => {
 		return restAgent.post('kycProofIndividualIdentity', data, setConfig());
 	},
-	uploadAddress: (data) => {
+	uploadIndAddress: (data) => {
 		return restAgent.post('kycProofIndividualAddress', data, setConfig());
 	},
 }

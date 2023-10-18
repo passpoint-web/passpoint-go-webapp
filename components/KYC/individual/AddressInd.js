@@ -37,7 +37,7 @@ const AddressInd = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadAddress({
+      const response = await kyc.uploadIndAddress({
         ...payload,
       });
       console.log(response);
@@ -99,7 +99,7 @@ const AddressInd = ({ styles }) => {
           />
           <PrimaryBtn
             type="submit"
-            text="Save and continue"
+            text="Submit"
             loading={isLoading}
           />
         </div>
