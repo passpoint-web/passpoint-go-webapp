@@ -104,6 +104,9 @@ export const publicProfile = {
 	businessDescription: (data) => {
 		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
 	},
+	deleteBusinessDescription: (data) => {
+		return restAgent.post('deleteBusinessDesc', data, setConfig());
+	},
 	addServices: (data) => {
 		return restAgent.post('publicProfileAddServices', data, setConfig());
 	},

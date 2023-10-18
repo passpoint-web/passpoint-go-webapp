@@ -135,12 +135,12 @@ const removeDuplicates =(arr, key)=> {
 	let newArray = [];
 	let uniqueObject = {};
 	for (let i in arr) {
-			let objTitle = arr[i][key];
-			uniqueObject[objTitle] = arr[i];
+		let objTitle = arr[i][key];
+		uniqueObject[objTitle] = arr[i];
 	}
 
 	for (let i in uniqueObject) {
-			newArray.push(uniqueObject[i]);
+		newArray.push(uniqueObject[i]);
 	}
 
 	return newArray

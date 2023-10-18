@@ -1,12 +1,12 @@
-// 'use client'
+'use client'
 import PublicProfileSetupLHS from '@/components/BusinessProfile/SetupLHS'
 import styles from './business-profile.module.css'
-export const metadata = () => {
-	return {
-		title: 'Setup Business Profile | Passpoint Go',
-		description: ''
-	}
-}
+// export const metadata = () => {
+// 	return {
+// 		title: 'Setup Business Profile | Passpoint Go',
+// 		description: ''
+// 	}
+// }
 const PublicProfileSetupLayout = ({children}) => {
 	return (
 		<div className={styles.layout_ctn}>

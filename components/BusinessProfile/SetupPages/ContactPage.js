@@ -18,6 +18,8 @@ import FormChoice from "../FormChoice";
 import BackBtn from "@/components/Btn/Back";
 import { savePublicProfile } from "@/services/localService";
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
+import { CancelIcon } from "@/constants/icons";
+import { v4 as useId } from 'uuid'
 
 const ContactPage = ({ styles }) => {
 	const {push} = useRouter()
@@ -30,7 +32,7 @@ const ContactPage = ({ styles }) => {
 	const { validEmail, isValidUrl, removeDuplicates } = functions;
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [finalCtaClicked, setFinalCtaClicked] = useState(false);
-	const [contactLevel, setContactLevel] = useState(true)
+	const [contactLevel, setContactLevel] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [atleastTwoSocialsProvided, setAtleastTwoSocialsProvided] = useState(false)
 	const [payload, setPayload] = useState({
@@ -51,44 +53,44 @@ const ContactPage = ({ styles }) => {
 	// 	setValue(timeValue);
 	// }
 
-	const [socials, setSocials] = useState([
+	const allSocials = [
 		{
 			name: 'Whatsapp',
-			placeholder: 'https://www.whatsapp.com/',
-			required: false,
 			url: ''
 		},
 		{
 			name: 'Facebook',
-			placeholder: 'https://www.facebook.com/',
-			required: false,
 			url: ''
 		},
 		{
-			name: 'Twitter',
-			placeholder: 'https://www.twitter.com/',
-			required: false,
+			name: 'X (FKA Twitter)',
 			url: ''
 		},
 		{
 			name: 'Instagram',
-			placeholder: 'https://www.instagram.com/',
-			required: false,
 			url: ''
 		},
-		// {
-		// 	name: 'Youtube',
-		// 	placeholder: 'https://www.youtube.com/',
-		// 	required: false,
-		// 	url: ''
-		// },
-		// {
-		// 	name: 'Tiktok',
-		// 	placeholder: 'https://www.tiktok.com/',
-		// 	required: false,
-		// 	url: ''
-		// },
-	])
+		{
+			name: 'Youtube',
+			url: ''
+		},
+		{
+			name: 'Tiktok',
+			url: ''
+		},
+	]
+	const [socials, setSocials] = useState([])
+	const [filteredSocials, setFilteredSocials] = useState(allSocials)
+
+	useEffect(()=>{
+		// setFilteredSocials()
+	},[])
+
+	const handleSelectSocial = (e) => {
+		// console.log(e)
+		setSocials([...socials, e])
+		setFilteredSocials(filteredSocials.filter(s=>s.name !== e.name))
+	}
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -109,6 +111,11 @@ const ContactPage = ({ styles }) => {
 		})
 		setAtleastTwoSocialsProvided(socials.filter(s=>isValidUrl(s.url)).length > 1)
 		setSocials(update)
+	}
+
+	const handleDeleteSocials = (social) => {
+		setSocials(socials.filter((p) => p.name !== social.name))
+		setFilteredSocials([...filteredSocials, social])
 	}
 
 	const handleSubmit = (e) => {
@@ -157,15 +164,16 @@ const ContactPage = ({ styles }) => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data
+			// console.log(data)
 			const {
-			companyEmail,
-			companyPhone,
-			companyAddress,
-			openingDay,
-			closingDay,
-			openingHour,
-			closingHour
-			} = data
+				companyEmail,
+				companyPhone,
+				companyAddress,
+				openingDay,
+				closingDay,
+				openingHour,
+				closingHour
+			} = data.contactInfo
 			setPayload({
 				companyEmail,
 				companyPhone,
@@ -175,14 +183,15 @@ const ContactPage = ({ styles }) => {
 				openingHour,
 				closingHour
 			})
-			const newArr = removeDuplicates(data.socials)
+			const newArr = removeDuplicates(data.contactInfo.socials, 'name')
+			// console.log(newArr)
 			const socials = newArr.map((s)=>{
 				return {
-					name: s.name,
-					placeholder: s.name,
-					url: s.url
+					...s,
+					id: useId(),
 				}
 			})
+			console.log(socials)
 			setSocials(socials)
 			savePublicProfile(data)
 			if (data.socials.length) {
@@ -196,11 +205,13 @@ const ContactPage = ({ styles }) => {
 		}
 	}
 
-
-
 	useEffect(()=>{
 		getPublicProfile()
 	},[])
+
+	useEffect(()=>{
+		console.log(socials)
+	},[socials])
 
 	useEffect(() => {
 		// console.log(payload)
@@ -333,21 +344,50 @@ const ContactPage = ({ styles }) => {
 
 	const SocialsForm = () => (
 		<form onSubmit={handleFinalSubmit}>
-			{
-				socials.map((s, id)=> (
-					<Input
-						key={id}
-						label={s.name}
-						id={s.name}
-						placeholder={s.placeholder}
-						name={s.name}
-						value={s.url}
-						error={finalCtaClicked && s.url && !isValidUrl(s.url)}
-						errorMsg={'this does not look like a valid url'}
-						onChange={(e)=>handleSocialsChange(e.target.value, e.target.name)}
-					/>
-				))
-			}
+			<Input
+				id='serviceSelect'
+				label='Socials'
+				error={ctaClicked && !socials.length}
+				errorMsg='Service name is required'
+			>
+				<CustomSelect
+					fieldError={ctaClicked && !socials.length}
+					selectOptions={filteredSocials}
+					objKey='name'
+					emitSelect={(s) => handleSelectSocial(s)}
+				/>
+			</Input>
+			<div style={socials.length ? {borderTop: '1px solid #e5e7ef', paddingTop: '32px'} : {}}>
+				{
+					socials.map((s, id)=> (
+						<div key={id} style={{position: 'relative'}}>
+							{/* {console.log(socials)} */}
+							<Input
+								style={{width: '90%'}}
+								label={s.name}
+								id={s.name}
+								placeholder={`Insert ${s.name} profile link`}
+								name={s.name}
+								value={s.url}
+								error={finalCtaClicked && s.url && !isValidUrl(s.url)}
+								errorMsg={'this does not look like a valid url'}
+								onChange={(e) => handleSocialsChange(e.target.value, e.target.name)} />
+							<button title='Delete'
+								onClick={handleDeleteSocials(s)}
+								style={{
+									height: 48,
+									width: '8%',
+									position: 'absolute',
+									right: 0,
+									bottom: `${s.url && !isValidUrl(s.url) ? '28px' : '0'}`
+								}}
+							>
+								<CancelIcon color='#FF3B2D' />
+							</button>
+						</div>
+					))
+				}
+			</div>
 			{finalCtaClicked && !atleastTwoSocialsProvided ?
 				<FeedbackInfo
 					message='Need atleast two of your social media links'
@@ -365,9 +405,9 @@ const ContactPage = ({ styles }) => {
 
 	return (
 		<>
-		{dataLoading ? <FullScreenLoader /> : <></>}
+			{dataLoading ? <FullScreenLoader /> : <></>}
 			<div className={styles.inner}>
-			<BackBtn onClick={()=>push('/dashboard/business-profile-setup/services')} />
+				<BackBtn onClick={()=>push('/dashboard/business-profile-setup/services')} />
 				<h1>Contact Information</h1>
 				<div className={styles.contact_breadcrumbs}>
 					<TertiaryBtn text="Business Contact"
