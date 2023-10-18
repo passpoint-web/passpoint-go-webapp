@@ -71,7 +71,7 @@ const FlightPageHeader = ({ styles }) => {
 				</div>
 				<Link
 					className="primary_btn"
-					href={"/dashboard/travel/flights/search?query=flighting"}
+					href={"/dashboard/travel/flights/search"}
 				>
 					<AirplaneIcon />
           Search Flights

@@ -3,6 +3,8 @@
 import styles from "../../assets/styles/flight.module.css"
 import { FaChevronDown } from "react-icons/fa"
 import FlightCard from "./FlightCard"
+import Link from "next/link"
+import { ProfileEditIcon } from "@/constants/icons"
 
 const SelectFlight = () => {
 	const flights = [1, 2, 3, 4, 5, 6]

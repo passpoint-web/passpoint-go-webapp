@@ -4,7 +4,7 @@ import Link from "next/link"
 import styles from "../../assets/styles/flight.module.css"
 import FlightTimeline from "./FlightTimeline"
 
-const FlightCard = () => {
+const FlightCard = ({ selected }) => {
 	return (
 		<div className={`${styles.flight__card}`}>
 			{/* ROW ONE */}
@@ -15,10 +15,10 @@ const FlightCard = () => {
 				</div>
 				<FlightTimeline direct />
 				<div className={styles.fc__price}>
-					<div className={styles.fc__tags}>
+					{!selected && <div className={styles.fc__tags}>
 						<div className="primary-tag">Best</div>
 						<div className="success-tag">Cheapest</div>
-					</div>
+					</div>}
 					<h4>₦ 650,000</h4>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ const FlightCard = () => {
 					<h6>Iberia</h6>
 				</div>
 				<FlightTimeline />
-				<Link href="/dashboard/travel/flights" className="primary_btn">
+				<Link href="/dashboard/travel/flights/pay" className="primary_btn" style={{ visibility: selected ? 'hidden' : 'visible' }}>
           Book Now
 				</Link>
 			</div>
@@ -38,4 +38,4 @@ const FlightCard = () => {
 	)
 }
 
-export default FlightCard
+export default FlightCard;
