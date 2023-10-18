@@ -53,7 +53,7 @@ const ContactPage = ({ styles }) => {
 	// 	setValue(timeValue);
 	// }
 
-	const allSocials = [
+	const socialMedias = [
 		{
 			name: 'Whatsapp',
 			url: ''
@@ -80,16 +80,16 @@ const ContactPage = ({ styles }) => {
 		},
 	]
 	const [socials, setSocials] = useState([])
-	const [filteredSocials, setFilteredSocials] = useState(allSocials)
+	const [filteredSocialMedias, setFilteredSocialMedias] = useState(socialMedias)
 
 	useEffect(()=>{
-		// setFilteredSocials()
+		// setFilteredSocialMedias()
 	},[])
 
 	const handleSelectSocial = (e) => {
-		// console.log(e)
+		console.log(e)
 		setSocials([...socials, e])
-		setFilteredSocials(filteredSocials.filter(s=>s.name !== e.name))
+		setFilteredSocialMedias(filteredSocialMedias.filter(s=>s.name !== e.name))
 	}
 
 	const handleChange = (e) => {
@@ -113,9 +113,28 @@ const ContactPage = ({ styles }) => {
 		setSocials(update)
 	}
 
-	const handleDeleteSocials = (social) => {
-		setSocials(socials.filter((p) => p.name !== social.name))
-		setFilteredSocials([...filteredSocials, social])
+	const handleDeleteSocials = (e, social) => {
+		e.preventDefault()
+		if (social.socialId) {
+			deleteSavedSocial(social.socialId)
+		} else {
+			setSocials(socials.filter((p) => p.name !== social.name))
+			setFilteredSocialMedias([...filteredSocialMedias, social])
+		}
+	}
+
+	const deleteSavedSocial = async (socialId) => {
+		try {
+			await publicProfile.deleteSocial({socialId})
+			setSocials(socials.filter((s)=>s.socialId !== socialId))
+			notify('success', 'Deleted successfully')
+		} catch (_err) {
+			console.log(_err)
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	const handleSubmit = (e) => {
@@ -151,7 +170,7 @@ const ContactPage = ({ styles }) => {
 			savePublicProfile({productStage: 2})
 			console.log(response)
 			notify('success', 'Your business contacts info has been saved')
-			// push('/dashboard/business-profile-setup/contact')
+			push('/dashboard/business-profile/preview')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -164,7 +183,9 @@ const ContactPage = ({ styles }) => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			const data = response.data.data
-			// console.log(data)
+			if (data.contactInfo.socials.length) {
+				setSubmitType('EDIT')
+			}
 			const {
 				companyEmail,
 				companyPhone,
@@ -185,19 +206,22 @@ const ContactPage = ({ styles }) => {
 			})
 			const newArr = removeDuplicates(data.contactInfo.socials, 'name')
 			// console.log(newArr)
-			const socials = newArr.map((s)=>{
+			const selected = newArr.map((s)=>{
 				return {
 					...s,
 					id: useId(),
 				}
 			})
-			console.log(socials)
-			setSocials(socials)
-			savePublicProfile(data)
-			if (data.socials.length) {
-				// con
-				setSubmitType('EDIT')
+			// console.log(selected)
+			setSocials(selected)
+			const filtered = filteredSocialMedias
+			console.log(filtered)
+			for (let i of selected) {
+				// console.log(i.name)
+				console.log(filtered.filter((f)=>f.name !== i.name))
 			}
+			setFilteredSocialMedias(filtered)
+			savePublicProfile(data)
 		} catch (_err) {
 			// console.log(_err)
 		} finally {
@@ -208,10 +232,6 @@ const ContactPage = ({ styles }) => {
 	useEffect(()=>{
 		getPublicProfile()
 	},[])
-
-	useEffect(()=>{
-		console.log(socials)
-	},[socials])
 
 	useEffect(() => {
 		// console.log(payload)
@@ -348,11 +368,11 @@ const ContactPage = ({ styles }) => {
 				id='serviceSelect'
 				label='Socials'
 				error={ctaClicked && !socials.length}
-				errorMsg='Service name is required'
+				errorMsg='Atleast one social media link is required'
 			>
 				<CustomSelect
 					fieldError={ctaClicked && !socials.length}
-					selectOptions={filteredSocials}
+					selectOptions={filteredSocialMedias}
 					objKey='name'
 					emitSelect={(s) => handleSelectSocial(s)}
 				/>
@@ -361,7 +381,6 @@ const ContactPage = ({ styles }) => {
 				{
 					socials.map((s, id)=> (
 						<div key={id} style={{position: 'relative'}}>
-							{/* {console.log(socials)} */}
 							<Input
 								style={{width: '90%'}}
 								label={s.name}
@@ -373,7 +392,7 @@ const ContactPage = ({ styles }) => {
 								errorMsg={'this does not look like a valid url'}
 								onChange={(e) => handleSocialsChange(e.target.value, e.target.name)} />
 							<button title='Delete'
-								onClick={handleDeleteSocials(s)}
+								onClick={(e)=>handleDeleteSocials(e,s)}
 								style={{
 									height: 48,
 									width: '8%',

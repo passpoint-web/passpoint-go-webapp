@@ -116,6 +116,9 @@ export const publicProfile = {
 	contact: (data) => {
 		return restAgent.post('publicProfileContactDetails', data, setConfig());
 	},
+	deleteSocial: (data) => {
+		return restAgent.post('deleteSocials', data, setConfig());
+	}
 }
 
 export const accountProfile = {
