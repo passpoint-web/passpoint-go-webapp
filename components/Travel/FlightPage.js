@@ -21,7 +21,7 @@ const FlightPage = ({ styles }) => {
 		<div className={`${styles.inner} flight-services`}>
 			<FlightPageHeader styles={styles} />
 			<CustomTable title="flight" action="/dashboard/travel/flights?id=AH12345678" />
-			{flightDetailVisible && <FlightDetailsModal setFlightDetailVisible={setFlightDetailVisible} />}
+			{flightDetailVisible && <FlightDetailsModal styles={styles} setFlightDetailVisible={setFlightDetailVisible} />}
 		</div>
 	)
 }

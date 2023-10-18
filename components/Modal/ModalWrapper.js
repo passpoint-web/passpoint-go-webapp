@@ -16,7 +16,8 @@ const ModalWrapper = ({
 	overlayClose = false,
 	ctaBtnText = 'Proceed',
 	cancelBtnText='Cancel',
-	containsTabLayout = false
+	containsTabLayout = false,
+	hasBottomActions = true
 }) => {
 	const modalCtnRef = useRef(null)
 	const modalBgRef = useRef(null)
@@ -59,7 +60,7 @@ const ModalWrapper = ({
 						<p>{subHeading}</p>
 					</div>
 					{children}
-					<div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
+					{hasBottomActions && <div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
 						{bottomCancelNeeded && <Button className="secondary md"
 							onClick={onClose}
 							text={cancelBtnText} />}
@@ -67,7 +68,7 @@ const ModalWrapper = ({
 							onClick={handleCta}
 							loading={loading}
 							text={ctaBtnText} />
-					</div>
+					</div>}
 				</div>
 			</div>
 		</div>
