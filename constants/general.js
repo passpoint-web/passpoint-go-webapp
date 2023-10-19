@@ -24,7 +24,7 @@ export const sidebarData = [
 	{
 		title: "Travel Services",
 		icon: SideIcon2,
-		path: "/dashboard/services",
+		path: "/dashboard/travel",
 	},
 	{
 		title: "Marketplace",

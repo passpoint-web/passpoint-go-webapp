@@ -10,6 +10,13 @@ const restAgent = axios.create({
 	}
 });
 
+const flightRestAgent = axios.create({
+	baseURL: "travelapi-sandbox.mypasspoint.com/api/v1/",
+	headers: {
+		'Content-Type': 'application/json'
+	}
+});
+
 const getRequestConfig = () => {
 	return {
 		headers: {},
@@ -127,4 +134,8 @@ export const accountProfile = {
 	},
 }
 
-// https://api.jessecoders.com/passpointGo/v1/getPrimaryServices
+export const flights = {
+	getBookings: () => {
+		return flightRestAgent.get('flight/bookings', setConfig())
+	}
+}
