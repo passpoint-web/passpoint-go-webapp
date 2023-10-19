@@ -94,6 +94,7 @@ const AddressInd = ({ styles }) => {
         <div className={styles.action_ctn}>
           <BackBtn
             type="button"
+            className="half sd"
             text="Back"
             onClick={() => push("/dashboard/kyc/individual/identity")}
           />
@@ -101,6 +102,7 @@ const AddressInd = ({ styles }) => {
             type="submit"
             text="Submit"
             loading={isLoading}
+            className="primary sd half"
           />
         </div>
       </form>

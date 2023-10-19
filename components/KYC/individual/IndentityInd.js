@@ -97,11 +97,12 @@ const IdentityInd = ({ styles }) => {
           }
         />
         <div className={styles.action_ctn}>
-          <BackBtn
+          {/* <BackBtn
             type="button"
+            className="half sd"
             text="Back"
             onClick={() => push("/dashboard/kyc/individual/contact")}
-          />
+          /> */}
           <PrimaryBtn
             type="submit"
             text="Save and continue"

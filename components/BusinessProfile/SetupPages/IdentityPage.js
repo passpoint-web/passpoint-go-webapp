@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-"use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Input from "@/components/Dashboard/Input";
-import { getCredentials } from "@/services/localService";
-import { useNotify } from "@/utils/hooks";
-import FileUpload from "@/components/FileUpload";
-import Button from "@/components/Btn/Button";
-import formStyles from "@/assets/styles/auth-screens.module.css";
-import { publicProfile } from "@/services/restService";
-=======
 
 'use client'
 import { useState, useEffect } from 'react'
@@ -22,7 +10,6 @@ import Button from '@/components/Btn/Button'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { publicProfile } from '@/services/restService'
 import FullScreenLoader from '@/components/Modal/FullScreenLoader'
->>>>>>> 4724d10025534d72113d604a7a146b5e10608318
 import { savePublicProfile,
 	getPublicProfile as getSavedPublicProfile
 } from '@/services/localService'

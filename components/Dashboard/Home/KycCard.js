@@ -13,8 +13,8 @@ const KycCard = () => {
         <Link
           href={
             user?.userType === "1"
-              ? "/dashboard/kyc/individual/contact"
-              : "/dashboard/kyc/corporate/business"
+              ? "/dashboard/kyc/individual/identity"
+              : "/dashboard/kyc/corporate/identity"
           }
           className="primary_link medium"
         >

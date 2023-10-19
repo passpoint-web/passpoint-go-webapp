@@ -16,31 +16,22 @@ const Identity = ({ styles }) => {
   const [ctaClicked, setCtaClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [allFieldsValid, setAllFieldsValid] = useState(false);
-  const [payload, setPayload] = useState({
-    documents: [
-      {
-        documentType: "act of memorandum",
-        documentFile: "",
-      },
-      {
-        documentType: "business license",
-        documentFile: "",
-      },
-    ],
-  });
-
-  // const handleChange = (file, identifier) => {
-  //   setPayload((prev) => ({
-  //     ...prev,
-  //     [identifier]: file,
-  //   }));
-  // };
+  const [payload, setPayload] = useState([
+    {
+      documentType: "act of memorandum",
+      documentFile: "",
+    },
+    {
+      documentType: "business license",
+      documentFile: "",
+    },
+  ]);
 
   const handleChange = (file, documentIndex) => {
     setPayload((prev) => {
-      const updatedDocuments = [...prev.documents];
-      updatedDocuments[documentIndex].documentFile = file;
-      return { ...prev, documents: updatedDocuments };
+      const updatedPayload = [...prev];
+      updatedPayload[documentIndex].documentFile = file;
+      return updatedPayload;
     });
   };
 
@@ -54,7 +45,7 @@ const Identity = ({ styles }) => {
     setIsLoading(true);
     try {
       const response = await kyc.uploadKycIdentity({
-        ...payload,
+        documents: payload,
       });
       console.log(response);
       notify("success", "Your identity has been saved");
@@ -71,8 +62,7 @@ const Identity = ({ styles }) => {
   };
 
   useEffect(() => {
-    const conditionsMet =
-      payload.documents[0].documentFile && payload.documents[1].documentFile;
+    const conditionsMet = payload[0].documentFile && payload[1].documentFile;
     if (conditionsMet) {
       setAllFieldsValid(true);
     } else {
@@ -84,47 +74,29 @@ const Identity = ({ styles }) => {
     <div className={styles.inner} onSubmit={handleSubmit}>
       <h1>Proof of Identity</h1>
       <form className={formStyles.form}>
-        {/* <Input
-          label="Bank Verification Number"
-          id="bvn"
-          name="bvn"
-          type="number"
-          placeholder="Enter your BVN"
-          error={ctaClicked && !payload.bvn}
-          onChange={(e) => handleChange(e.target.value, "bvn")}
-          errorMsg="BVN is required"
-          info="To get your BVN, Dial *560# with your business phone number"
-        /> */}
         <FileUpload
           smTitle="Act of Memorandum"
-          base64={payload.documents[0].documentFile}
+          base64={payload[0].documentFile}
           handlefileUpload={(file) => handleChange(file, 0)}
-          error={ctaClicked && !payload.documents[0].documentFile}
+          error={ctaClicked && !payload[0].documentFile}
           errorMsg="Act of Memorandum is required"
         />
         <FileUpload
           smTitle="Business License"
-          base64={payload.documents[1].documentFile}
+          base64={payload[1].documentFile}
           handlefileUpload={(file) => handleChange(file, 1)}
-          error={ctaClicked && !payload.documents[1].documentFile}
+          error={ctaClicked && !payload[1].documentFile}
           errorMsg="Business License is required"
         />
-        {/* <FileUpload
-          smTitle="Passport Photograph"
-          fileObj={payload.businessPhoto}
-          handlefileUpload={(file) => handleChange(file, "businessPhoto")}
-          error={ctaClicked && !payload.businessPhoto.name}
-          errorMsg="Passport photograph is required"
-        /> */}
         <div className={styles.action_ctn}>
-          <BackBtn
+          {/* <BackBtn
             type="sd"
             text="Back"
             className="half sd"
-            onClick={() => push("/dashboard/kyc/corporate/business")}
-          />
+            onClick={() => push("/dashboard/kyc/corporate/identity")}
+          /> */}
           <Button
-            className="primary sd half"
+            className="primary sd"
             text="Save and continue"
             loading={isLoading}
           />
