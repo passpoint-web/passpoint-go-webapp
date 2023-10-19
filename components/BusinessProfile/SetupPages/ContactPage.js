@@ -214,12 +214,12 @@ const ContactPage = ({ styles }) => {
 			})
 			// console.log(selected)
 			setSocials(selected)
-			const filtered = filteredSocialMedias
-			console.log(filtered)
-			for (let i of selected) {
-				// console.log(i.name)
-				console.log(filtered.filter((f)=>f.name !== i.name))
-			}
+			let filtered = filteredSocialMedias
+			selected.map(i=>{
+				filtered = filtered.filter((f)=>f.name !== i.name)
+				return i
+			})
+			// console.log(filtered)
 			setFilteredSocialMedias(filtered)
 			savePublicProfile(data)
 		} catch (_err) {
