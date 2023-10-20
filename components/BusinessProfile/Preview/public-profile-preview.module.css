@@ -62,7 +62,7 @@
   text-decoration: none;
 } */
 .main * {
-  font-family: "Graphik";
+  ;
 }
 .main .section {
   padding: 5% 2%;
@@ -108,7 +108,7 @@
   font-size: 1.3rem;
   line-height: 2rem;
   margin: 1.5rem 0;
-  font-family: "Graphik";
+  ;
   font-weight: 300;
 }
 .hero__schedule {

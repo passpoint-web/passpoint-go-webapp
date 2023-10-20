@@ -861,7 +861,7 @@ td {
   white-space: nowrap;
   border-bottom: 1px solid var(--grey-6);
   height: 55px;
-  font-family: "Graphik";
+  ;
 }
 th {
   background-color: var(--grey-6);

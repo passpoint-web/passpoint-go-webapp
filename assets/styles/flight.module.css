@@ -138,7 +138,7 @@
   gap: 0.5rem;
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  font-family: "Graphik";
+  ;
   color: var(--grey-2);
 }
 
@@ -237,7 +237,7 @@
   right: auto;
   margin: auto;
   font-size: 0.9rem;
-  font-family: "Graphik";
+  ;
   text-align: center;
   width: 60px;
   margin-left: -25px;
@@ -303,7 +303,7 @@
   margin-bottom: 0.5rem;
 }
 .filter__input_col_one > span {
-  font-family: "Graphik";
+  ;
   color: var(--grey-2);
 }
 .filter__input_col_two {
@@ -313,7 +313,7 @@
   margin-top: 1.2rem;
 }
 .filter__input_col_two > div {
-  font-family: "Graphik";
+  ;
 }
 .range__ctn {
   position: relative;
@@ -454,7 +454,7 @@
 .payment__successful p {
   font-size: 1.15rem;
   margin-top: 1rem;
-  font-family: "Graphik";
+  ;
 }
 .payment__successful a {
   width: 250px;
@@ -532,12 +532,12 @@
 }
 .modal__flight_details .label {
   width: 200px;
-  font-family: "Graphik";
+  ;
   font-size: 1.15rem;
   color: var(--grey-3);
 }
 .modal__flight_details .value span {
-  font-family: "Graphik";
+  ;
   font-size: 1.15rem;
 }
 .modal__flight_details .value > span > span {
