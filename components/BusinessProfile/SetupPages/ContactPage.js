@@ -109,8 +109,8 @@ const ContactPage = ({ styles }) => {
 			}
 			return old
 		})
-		setAtleastTwoSocialsProvided(socials.filter(s=>isValidUrl(s.url)).length > 1)
 		setSocials(update)
+		setAtleastTwoSocialsProvided(update.filter(s=>isValidUrl(s.url)).length > 1)
 	}
 
 	const handleDeleteSocials = (e, social) => {
@@ -214,6 +214,7 @@ const ContactPage = ({ styles }) => {
 			})
 			// console.log(selected)
 			setSocials(selected)
+			setAtleastTwoSocialsProvided(selected.filter(s=>isValidUrl(s.url)).length > 1)
 			let filtered = filteredSocialMedias
 			selected.map(i=>{
 				filtered = filtered.filter((f)=>f.name !== i.name)
