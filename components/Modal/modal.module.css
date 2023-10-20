@@ -55,25 +55,44 @@
   position: relative;
 }
 
+.child_ctn.contains_tab {
+  min-width: 500px;
+  width: 65%;
+  max-width: 600px;
+  position: relative;
+}
+
 .child {
   width: 100%;
-  max-width: 500px;
   z-index: calc(var(--z-index-overlay)+ 1);
   background: #fff;
   position: relative;
   border-radius: var(--input-br);
-  padding: var(--inner-component-mg);
   min-height: 250px;
   max-height: calc(100vh - 100px);
+  padding: var(--inner-component-mg);
   overflow-y: auto;
   /* display: grid; */
   /* flex-direction: column; */
   gap: var(--sm-inner-component-mg);
 }
 
+.child_ctn.contains_tab .child {
+  padding: 0;
+}
+
 .top {
   position: relative;
   margin-bottom: var(--inner-component-gap);
+}
+
+.child_ctn.contains_tab .top {
+  padding: var(--inner-component-mg);
+  margin-bottom: 0;
+}
+
+.top p {
+  font-family: "Graphik";
 }
 
 .content {
@@ -100,9 +119,9 @@
 .bottom:not(.end) button {
   width: 100%;
 }
- 
+
 .close_btn {
-  position:absolute;
+  position: absolute;
   position: absolute;
   right: var(--inner-component-mg);
   top: var(--inner-component-mg);
@@ -121,7 +140,6 @@
 .close_btn:hover {
   background-color: var(--grey-5);
 }
-
 
 @media screen and (min-width: 500px) {
   .mobile_top {
@@ -151,6 +169,7 @@
 
   .child_ctn {
     min-width: 90%;
+    background: red;
   }
 
   .child {
@@ -162,7 +181,7 @@
     animation: var(--anim-slide-up);
     -webkit-animation: var(--anim-slide-up);
   }
-} 
+}
 
 @-webkit-keyframes spin {
   0% {
