@@ -156,7 +156,7 @@ export const travel = {
 }
 
 export const notifyAndAccess = {
-	getNotifications: () => {
+	getAllNotifications: () => {
 		return notifyAndAccessRestAgent.get('notify/page', setConfig())
 	}
 }

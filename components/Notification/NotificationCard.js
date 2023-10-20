@@ -1,6 +1,7 @@
 import Link from "next/link";
 import style from "./notification.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { notifyAndAccess } from "@/services/restService";
 
 const notificationData = [
 	{
@@ -38,13 +39,16 @@ const notificationData = [
 	},
 ];
 
-const NotificationCard = () => {
-  // const getNotifications = () => {
-  //   const response = getN
-  // }
-  // useEffect(()=>{
-  //   getNotifications()
-  // },[])
+const NotificationCard = ({triggerNotifications}) => {
+	const getNotifications = async () => {
+		const response = await notifyAndAccess.getAllNotifications()
+		console.log(response)
+	}
+	useEffect(()=>{
+		if (triggerNotifications) {
+			getNotifications()
+		}
+	},[triggerNotifications])
 	return (
 		<>
 			{notificationData.map((data, i) => (

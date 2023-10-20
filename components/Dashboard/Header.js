@@ -51,6 +51,7 @@ const DashboardHeader = ({ setOpenNotify, styles }) => {
 					<div className={`${styles.headerDropdown} dropdown`}>
 						{items.map((item, index) => (
 							<div key={index}>
+                {styles[item.label]}
 								{item.type === "link" ? (
 									<Link href={item.href}>
 										{item.icon} {item.label}
