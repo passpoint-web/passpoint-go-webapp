@@ -9,8 +9,21 @@ import PrimaryLink from "../Link/Primary"
 import MetricCard from "./MetricCard"
 import CustomSelect from '@/components/Custom/Select'
 import CustomTable from "../Custom/Table"
+import { travel } from '@/services/restService'
+import { useEffect } from "react"
 
 const TravelServicesPage = ({ styles }) => {
+	const getFlightBookings = async () => {
+		// const params = {
+		// 	page: 1
+		// }
+		const response = await travel.getFlightBookings()
+		console.log(response)
+	}
+
+	useEffect(()=>{
+		getFlightBookings()
+	},[])
 	return (
 		<div className={`${styles.inner} travel-services`}>
 			<div className={styles.travel__dashboard_header}>
@@ -60,7 +73,7 @@ const TravelServicesPage = ({ styles }) => {
 				</div>
 			</div>
 			<MetricCard />
-			<CustomTable action="/dashboard/travel/flights/AH12345678" />
+			<CustomTable action="/dashboard/travel/flights?id=AH12345678" />
 		</div>
 	)
 }

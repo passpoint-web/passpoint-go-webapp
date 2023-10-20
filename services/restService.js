@@ -11,7 +11,7 @@ const restAgent = axios.create({
 });
 
 const flightRestAgent = axios.create({
-	baseURL: "travelapi-sandbox.mypasspoint.com/api/v1/",
+	baseURL: "https://sandbox.tiqwa.com/v1/",
 	headers: {
 		'Content-Type': 'application/json'
 	}
@@ -41,6 +41,14 @@ const setConfig = () => {
 	// console.log(cookies.get('token'))
 	const config = getRequestConfig();
 	config.headers.Authorization = `Bearer ${token}`
+	return config
+}
+
+const setTravelConfig = () => {
+	// const token = getToken()
+	// console.log(cookies.get('token'))
+	const config = getRequestConfig();
+	config.headers.Authorization = `Bearer 123`
 	return config
 }
 
@@ -134,8 +142,8 @@ export const accountProfile = {
 	},
 }
 
-export const flights = {
-	getBookings: () => {
-		return flightRestAgent.get('flight/bookings', setConfig())
+export const travel = {
+	getFlightBookings: (params) => {
+		return flightRestAgent.get('flight/bookings', setTravelConfig())
 	}
 }
