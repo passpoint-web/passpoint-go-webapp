@@ -468,6 +468,7 @@
   border-bottom: 2px solid var(--grey-6);
   overflow-x: auto;
 }
+
 .modal__tab_group button {
   height: 40px;
   padding: 0 2rem;
