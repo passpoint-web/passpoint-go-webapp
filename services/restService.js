@@ -17,6 +17,13 @@ const flightRestAgent = axios.create({
 	}
 });
 
+const notifyAndAccessRestAgent = axios.create({
+	baseURL: "https://passpoint-go-app-qa-5na2.onrender.com/v1/",
+	headers: {
+		'Content-Type': 'application/json'
+	}
+});
+
 const getRequestConfig = () => {
 	return {
 		headers: {},
@@ -145,5 +152,11 @@ export const accountProfile = {
 export const travel = {
 	getFlightBookings: (params) => {
 		return flightRestAgent.get('flight/bookings', setTravelConfig())
+	}
+}
+
+export const notifyAndAccess = {
+	getNotifications: () => {
+		return notifyAndAccessRestAgent.get('notify/page', setConfig())
 	}
 }
