@@ -18,7 +18,7 @@ const CustomTable = ({ title, data, action = "/" }) => {
 					<Search id={"booking"} placeholder={"Search bookings"} />
 					<CustomSelect
 						id="status-type"
-						selectOptions={[]}
+						selectOptions={['Confirmed', 'Pending', 'Failed']}
 						selectedOption={""}
 						placeholder="Filter by Status"
 					/>
