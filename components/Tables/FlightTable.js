@@ -34,6 +34,7 @@ const FlightTable = ({ title}) => {
 			setIsLoading(false)
 		}
 	}
+
 	useEffect(()=>{
 		getFlightBookings()
 	},[])
