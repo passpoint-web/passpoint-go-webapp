@@ -1,11 +1,39 @@
 "use client"
-
 import Link from "next/link"
 import Search from "../Custom/Search"
 import CustomSelect from "@/components/Custom/Select"
 import styles from "../../assets/styles/table.module.css"
+import { useEffect, useState } from "react"
+import { travel } from "@/services/restService"
+import { useNotify } from '@/utils/hooks'
+import functions from "@/utils/functions"
 
-const CustomTable = ({ title, data, action = "/" }) => {
+const FlightTable = ({ title, action = "/" }) => {
+	const {formatMoney} = functions
+	const notify = useNotify()
+	const [data, setData] = useState([])
+	const [page, setPage] = useState(0)
+	const [isLoading, setIsLoading] = useState(false)
+	const [pageSize, setPageSize] = useState(10)
+	const getFlightBookings = async () => {
+		try {
+			const response = await travel.getFlightBookings({page, pageSize})
+			console.log(response.data.data)
+			const {content} = response.data.data
+      console.log(content)
+			if (content) {
+				setData(content)
+			}
+		} catch (_err) {
+			const { message } = _err.response?.data || _err
+			notify('error', message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+	useEffect(()=>{
+		getFlightBookings()
+	},[])
 	return (
 		<div className={`table-ctn ${styles.travel__dashboard_table}`}>
 			<div className={styles.table__outer}>
@@ -43,41 +71,32 @@ const CustomTable = ({ title, data, action = "/" }) => {
 							</tr>
 						</thead>
 						<tbody>
-							{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
-								<tr key={index}>
-									<td className="text-bold text-blue">AH12345678</td>
+							{data.map((c, i) => (
+								<tr key={i}>
+									<td className="text-bold text-blue">{c.reference}</td>
 									<td>Flights</td>
 									<td>
+										{'--'}
 										<div className="date-time">
-											<div className="date">Feb 15, 2020</div>
-											<div className="time">8:45 PM</div>
+											{/* <div className="date">Feb 15, 2020</div> */}
+											{/* <div className="time">8:45 PM</div> */}
 										</div>
 									</td>
 									<td>
-										{index % 3 == 0 ? (
-											<>
-												<div className="pending-tag">Pending</div>
-											</>
-										) : (
-											<>
-												<div className="success-tag">Confirmed</div>
-											</>
-										)}
+										{'--'}
+										{/* <div className="success-tag">Confirmed</div> */}
+										{/* <div className="pending-tag">Pending</div> */}
 									</td>
-									<td className="text-bold">₦200,000</td>
+									<td className="text-bold">{formatMoney(c.amount, c.currency)}</td>
 									<td>
-										{index % 2 == 0 ? (
-											<>
-												<div className="pending-circle" /> Not yet paid
-											</>
-										) : (
-											<>
-												<div className="success-circle" /> Paid
-											</>
-										)}
+										{'--'}
+										{/* <div className="pending-circle" /> Not yet paid */}
+
+										{/* <div className="success-circle" /> Paid */}
+
 									</td>
 									<td>
-										<Link className="secondary_btn outline_btn" href={action}>
+										<Link className="secondary_btn outline_btn" href={`./flights?id=${c.id}`}>
                     View Details
 										</Link>
 									</td>
@@ -94,4 +113,4 @@ const CustomTable = ({ title, data, action = "/" }) => {
 	)
 }
 
-export default CustomTable
+export default FlightTable

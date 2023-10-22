@@ -732,10 +732,6 @@ form {
   line-height: 21px;
 }
 
-.text-capitalize {
-  text-transform: capitalize;
-}
-
 .text-bold {
   font-family: var(--graphikMedium);
   font-weight: 500;
@@ -743,6 +739,18 @@ form {
 
 .text-blue {
   color: var(--sky-blue);
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
 }
 
 .success-circle {
@@ -861,7 +869,6 @@ td {
   white-space: nowrap;
   border-bottom: 1px solid var(--grey-6);
   height: 55px;
-  ;
 }
 th {
   background-color: var(--grey-6);

@@ -17,7 +17,7 @@ const FlightPaymentOptions = () => {
 		<div className={`select-flight-wrapper ${styles.row__wrapper}`}>
 			<button className={styles.row__header}>
 				<div className="texts">
-					<h3 className="text-capitalize"> Payment Options</h3>
+					<h3 className="capitalize"> Payment Options</h3>
 					{/* <p>Manage your bookings here</p> */}
 				</div>
 				<FaChevronDown />

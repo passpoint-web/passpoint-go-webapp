@@ -12,7 +12,7 @@ const SelectFlight = () => {
 		<div className={`select-flight-wrapper ${styles.row__wrapper}`}>
 			<button className={styles.row__header}>
 				<div className="texts">
-					<h3 className="text-capitalize"> Select Flights (100)</h3>
+					<h3 className="capitalize"> Select Flights (100)</h3>
 					{/* <p>Manage your bookings here</p> */}
 				</div>
 				<FaChevronDown />
@@ -22,7 +22,7 @@ const SelectFlight = () => {
 					{/* CATEGORY FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Category</h5>
+							<h5 className="capitalize">Category</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
@@ -47,7 +47,7 @@ const SelectFlight = () => {
 					{/* PRICE FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Price</h5>
+							<h5 className="capitalize">Price</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
@@ -69,7 +69,7 @@ const SelectFlight = () => {
 					{/* STOPS FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Stops</h5>
+							<h5 className="capitalize">Stops</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
@@ -90,7 +90,7 @@ const SelectFlight = () => {
 					{/* TIME FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Time</h5>
+							<h5 className="capitalize">Time</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
@@ -163,7 +163,7 @@ const SelectFlight = () => {
 					{/* AIRLINE FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Airlines</h5>
+							<h5 className="capitalize">Airlines</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>
@@ -188,7 +188,7 @@ const SelectFlight = () => {
 					{/* LAYOVER FILTER */}
 					<div className={styles.filter__box}>
 						<button className={styles.header}>
-							<h5 className="text-capitalize">Layover</h5>
+							<h5 className="capitalize">Layover</h5>
 							<FaChevronDown />
 						</button>
 						<div className={styles.content}>

@@ -1,21 +1,48 @@
 "use client"
-
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
+import { travel } from "@/services/restService"
+import { useNotify } from "@/utils/hooks"
 
 const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
+	const notify = useNotify()
+	const searchParams = useSearchParams()
+	const id = searchParams.get('id')
 	const path = usePathname()
+	const [isLoading, setIsLoading] = useState(true)
 	const router = useRouter()
 	const tabs = [
 		'General', 'Itinerary', 'Cost & Payment', 'Traveler\'s Info'
 	]
 	const [activeTab, setActiveTab] = useState(tabs[0])
+	const [data, setData] = useState({})
 
 	const closeModal = () => {
 		setFlightDetailVisible(null)
 		router.push(path.substring(path.indexOf('?')))
 	}
+
+	const getFlightBooking = async () => {
+		try {
+			const response = await travel.getFlightBooking(id)
+			console.log(response)
+			const {content} = response.data.data
+			if (content) {
+				setData(content)
+			}
+		} catch (_err) {
+			// console.log(_err.response.data.description)
+			const { message, description } = _err.response?.data || _err
+			notify('error', message || description)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	useEffect(()=>{
+		getFlightBooking()
+	},[])
 	return (
 		<ModalWrapper
 			loading={false}
@@ -45,7 +72,7 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
             Booking ID
 						</div>
 						<div className={styles.value}>
-							<span className="text-blue">AH12345678</span>
+							<span className="text-blue uppercase">{id}</span>
 						</div>
 					</div>
 					<div className={styles.row}>

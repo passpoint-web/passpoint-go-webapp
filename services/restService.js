@@ -11,7 +11,7 @@ const restAgent = axios.create({
 });
 
 const flightRestAgent = axios.create({
-	baseURL: "https://sandbox.tiqwa.com/v1/",
+	baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
 	headers: {
 		'Content-Type': 'application/json'
 	}
@@ -151,7 +151,12 @@ export const accountProfile = {
 
 export const travel = {
 	getFlightBookings: (params) => {
-		return flightRestAgent.get('flight/bookings', setTravelConfig())
+		const config = setTravelConfig()
+		config.params = params
+		return flightRestAgent.get('flight/bookings', config)
+	},
+	getFlightBooking: (id) => {
+		return flightRestAgent.get(`flight/${id}`, setTravelConfig())
 	}
 }
 
