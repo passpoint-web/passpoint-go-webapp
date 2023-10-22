@@ -21,14 +21,8 @@ export const sidebarData = [
 		icon: SideIcon1,
 		path: "/dashboard",
 	},
-	// not needed for MVP
-	// {
-	// 	title: "Travel Services",
-	// 	icon: SideIcon2,
-	// 	path: "/dashboard/travel",
-	// },
 	{
-		title: "Flights",
+		title: "Travel Services",
 		icon: SideIcon2,
 		path: "/dashboard/travel",
 	},
