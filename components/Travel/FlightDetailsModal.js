@@ -10,12 +10,13 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
 	const searchParams = useSearchParams()
 	const id = searchParams.get('id')
 	const path = usePathname()
-	const [isLoading, setIsLoading] = useState(true)
+	// const [isLoading, setIsLoading] = useState(true)
 	const router = useRouter()
 	const tabs = [
 		'General', 'Itinerary', 'Cost & Payment', 'Traveler\'s Info'
 	]
 	const [activeTab, setActiveTab] = useState(tabs[0])
+	// eslint-disable-next-line no-unused-vars
 	const [data, setData] = useState({})
 
 	const closeModal = () => {
@@ -36,13 +37,14 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
 			const { message, description } = _err.response?.data || _err
 			notify('error', message || description)
 		} finally {
-			setIsLoading(false)
+			// setIsLoading(false)
 		}
 	}
 
 	useEffect(()=>{
 		getFlightBooking()
 	},[])
+
 	return (
 		<ModalWrapper
 			loading={false}

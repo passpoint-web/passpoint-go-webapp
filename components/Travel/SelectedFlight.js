@@ -4,6 +4,7 @@ import styles from "../../assets/styles/flight.module.css"
 import { FaChevronDown } from "react-icons/fa"
 import FlightCard from "./FlightCard"
 import Link from "next/link"
+// eslint-disable-next-line no-unused-vars
 import { CheckIcon, GreenCheckIcon, ProfileEditIcon } from "@/constants/icons"
 
 const SelectedFlight = () => {

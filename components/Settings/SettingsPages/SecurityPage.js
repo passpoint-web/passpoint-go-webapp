@@ -24,6 +24,7 @@ const Security = () => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
+	const [feedbackMsg, setFeedbackMsg] = useState('')
 	const [payload, setPayload] = useState({
 		password: '',
 		newPassword: '',
@@ -57,12 +58,18 @@ const Security = () => {
 		setIsLoading(true)
 		try {
 			const {password, confirm} = payload
-			const response = await accountProfile.changePassword({password, confirm})
+			const response = await accountProfile.changePassword({former: password, password: confirm, confirm})
+			setPayload({
+				password: '',
+				newPassword: '',
+				confirm: ''
+			})
 			console.log(response)
 			notify('success', `Your account's password has been updated`)
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
+			setFeedbackMsg(message)
 		} finally {
 			setIsLoading(false)
 		}
@@ -77,6 +84,11 @@ const Security = () => {
 		}
 	},[payload])
 
+	useEffect(()=>{
+		setFeedbackMsg('')
+	},
+	[payload.password, searchParams])
+
 	const ChangePassword = () => (
 		<>
 			{
@@ -89,13 +101,13 @@ const Security = () => {
 						id="password"
 						name="password"
 						placeholder="Current Password"
-						error={ctaClicked && !payload.password}
-						errorMsg='Current password is required'
+						error={ctaClicked && !payload.password ||  feedbackMsg.toLowerCase().includes('password')}
+						errorMsg={ctaClicked && !payload.password ? 'Current password is required' : feedbackMsg.toLowerCase().includes('password') ? feedbackMsg : ''}
 					>
 						<PasswordField
 							id="password-field"
 							passwordStrengthNeeded={false}
-							errorField={ctaClicked && !payload.password}
+							errorField={ctaClicked && !payload.password || feedbackMsg.toLowerCase().includes('password')}
 							emitPassword={(e) =>
 								handleChange({
 									target: { name: 'password', value: e },

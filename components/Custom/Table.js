@@ -5,7 +5,7 @@ import Search from "../Custom/Search"
 import CustomSelect from "@/components/Custom/Select"
 import styles from "../../assets/styles/table.module.css"
 
-const CustomTable = ({ title, data, action = "/" }) => {
+const CustomTable = ({ title, action = "/" }) => {
 	return (
 		<div className={`table-ctn ${styles.travel__dashboard_table}`}>
 			<div className={styles.table__outer}>

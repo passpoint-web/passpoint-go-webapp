@@ -8,12 +8,15 @@ import { travel } from "@/services/restService"
 import { useNotify } from '@/utils/hooks'
 import functions from "@/utils/functions"
 
-const FlightTable = ({ title, action = "/" }) => {
+const FlightTable = ({ title}) => {
 	const {formatMoney} = functions
 	const notify = useNotify()
 	const [data, setData] = useState([])
+	// eslint-disable-next-line no-unused-vars
 	const [page, setPage] = useState(0)
+	// eslint-disable-next-line no-unused-vars
 	const [isLoading, setIsLoading] = useState(false)
+	// eslint-disable-next-line no-unused-vars
 	const [pageSize, setPageSize] = useState(10)
 	const getFlightBookings = async () => {
 		try {

@@ -1,6 +1,6 @@
 "use client"
 
-import FlightPageHeader from "./FlightPageHeader"
+// import FlightPageHeader from "./FlightPageHeader"
 import FlightPassengers from "./FlightPassengers"
 import FlightPaymentOptions from "./FlightPaymentOptions"
 import SelectedFlight from "./SelectedFlight"

@@ -2,7 +2,6 @@
 
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import CustomTable from "../Custom/Table"
 import FlightDetailsModal from "./FlightDetailsModal"
 import FlightPageHeader from "./FlightPageHeader"
 import FlightTable from "../Tables/FlightTable"

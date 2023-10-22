@@ -3,7 +3,7 @@
 import styles from "../../assets/styles/flight.module.css"
 import { FaChevronDown } from "react-icons/fa"
 import { useState } from "react"
-import PaymentSuccessful from "./PaymentSuccessful"
+// import PaymentSuccessful from "./PaymentSuccessful"
 import Input from "../Dashboard/Input"
 import PrimaryBtn from "../Btn/Primary"
 

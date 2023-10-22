@@ -2,7 +2,6 @@ import { ExpandIcon, InstagramIcon, TwitterIcon, WhatsappIcon, YoutubeIcon } fro
 import styles from "../Preview/public-profile-preview.module.css";
 import PreviewLogo from "./PreviewLogo";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
 
 const PreviewNav = ({ togglePreview, data }) => {
 	const {push} = useRouter()

@@ -2,12 +2,13 @@
 
 import styles from "../../assets/styles/flight.module.css"
 import { FaChevronDown } from "react-icons/fa"
-import FlightCard from "./FlightCard"
-import Link from "next/link"
+// import FlightCard from "./FlightCard"
+// import Link from "next/link"
+// eslint-disable-next-line no-unused-vars
 import { GreenCheckIcon, PlusIcon, ProfileEditIcon } from "@/constants/icons"
 import { useState } from "react"
 import Input from "../Dashboard/Input"
-import Textarea from "../Dashboard/Textarea"
+// import Textarea from "../Dashboard/Textarea"
 import PrimaryBtn from "../Btn/Primary"
 
 const FlightPassengers = () => {
