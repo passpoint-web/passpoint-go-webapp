@@ -67,7 +67,6 @@ export const getToken = () => {
 		}
 	}
 };
-
 // export const getToken = () => {
 // 	const token = cookies.get("token");
 // 	if (typeof window !== "undefined") {

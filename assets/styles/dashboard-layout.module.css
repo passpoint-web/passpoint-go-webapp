@@ -205,10 +205,10 @@
 }
 /* end  */
 
-/* public profile  */
+/* business profile  */
 .dashPublic {
   width: 68%;
-  background-image: url(../images/dashboard/public-profile.svg);
+  background-image: url(../images/dashboard/business-profile.svg);
 }
 .dashPublic_content p {
   width: 30%;

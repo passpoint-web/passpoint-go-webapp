@@ -11,7 +11,7 @@ const Notification = () => {
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Allow All Notifications</h4>
 					<Switch value={true}
-				checked={true} />
+						checked={true} />
 				</div>
 			</div>
 			<div className={styles.border_box}>
@@ -27,7 +27,7 @@ const Notification = () => {
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Credit and Debits</h4>
 					<Switch value={true}
-				checked={true} />
+						checked={true} />
 				</div>
 			</div>
 			<div className={styles.border_box}>
@@ -35,17 +35,17 @@ const Notification = () => {
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Bookings updates</h4>
 					<Switch value={false}
-				checked={false} />
+						checked={false} />
 				</div>
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Security Update</h4>
 					<Switch value={true}
-				checked={true} />
+						checked={true} />
 				</div>
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Credit and Debits</h4>
 					<Switch value={true}
-					checked={true} />
+						checked={true} />
 				</div>
 			</div>
 		</div>
