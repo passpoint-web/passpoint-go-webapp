@@ -97,7 +97,7 @@ const ForgotPasswordFlow = () => {
 
 	const defineModalContents = () => {
 		const heading = forgot ? 'Forgot Password' : verify ? 'Verify Your Email' : create ? 'Create New Password' : ''
-		const subHeading = forgot ? 'An OTP will be sent your email' : verify ? `We sent a 6 digit code to ${maskedEmail(email)}, please enter the code below, or click the verification link in your mail to complete verification ` : create ? 'Kindly enter a unique password to secure your account' : ''
+		const subHeading = forgot ? 'An OTP will be sent to your email' : verify ? `We sent a 6 digit code to ${maskedEmail(email)}, please enter the code below, or click the verification link in your mail to complete verification ` : create ? 'Kindly enter a unique password to secure your account' : ''
 		const content = {
 			heading,
 			subHeading,

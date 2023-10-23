@@ -1,7 +1,10 @@
+import Wallet from "@/components/Wallet";
 import React from "react";
 
-const Wallet = () => {
-  return <div>Wallet</div>;
+const WalletPage = () => {
+  return <>
+    <Wallet />
+  </>;
 };
 
-export default Wallet;
+export default WalletPage;
