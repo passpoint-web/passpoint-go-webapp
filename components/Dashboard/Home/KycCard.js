@@ -1,9 +1,18 @@
+"use client";
 import Link from "next/link";
 import styles from "@/assets/styles/dashboard-layout.module.css";
 import { getCredentials } from "@/services/localService";
+import { useEffect, useState } from "react";
 
 const KycCard = () => {
-  const user = getCredentials();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const credentials = getCredentials();
+    setUser(credentials);
+  }, []);
+
+  console.log(user);
 
   return (
     <div className={styles.dashKyc}>
@@ -14,7 +23,7 @@ const KycCard = () => {
           href={
             user?.userType === "1"
               ? "/dashboard/kyc/individual/identity"
-              : "/dashboard/kyc/corporate/identity"
+              : "/dashboard/kyc/corporate/business"
           }
           className="primary_link medium"
         >

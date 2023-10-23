@@ -4,7 +4,7 @@ import FormLevel from "../../FormLevel";
 import { useEffect, useState } from "react";
 // import BackBtn from "@/components/Btn/Back";
 import styles from "@/app/dashboard/kyc/kyc.module.css";
-import { getCredentials } from "@/services/localService";
+import { getCredentials, getKycDetails } from "@/services/localService";
 
 const KycSetupLHS = () => {
   const pathname = usePathname();
@@ -12,6 +12,7 @@ const KycSetupLHS = () => {
   const user = getCredentials();
 
   const [levelsToDisplay, setLevelsToDisplay] = useState([]);
+  const [kycDetailsState, setKycDetailsState] = useState({});
 
   const individualKycLevel = [
     // Not needed for MVP
@@ -26,36 +27,36 @@ const KycSetupLHS = () => {
       sub_title:
         "Verify your identity to ensure a secure and trusted experience.",
       active: pathname === "/dashboard/kyc/individual/identity",
-      completed: false,
+      completed: kycDetailsState?.profileStage > 0,
     },
     {
       title: "Proof of Address",
       sub_title: "Verify your current address for accurate communication.",
       active: pathname === "/dashboard/kyc/individual/address",
-      completed: false,
+      completed: kycDetailsState?.isCompleted,
     },
   ];
 
   const corporateKycLevel = [
     // Not needed for MVP
-    // {
-    // 	title: "Business Information",
-    // 	sub_title: "Please provide essential details about your business.",
-    // 	active: pathname === "/dashboard/kyc/corporate/business",
-    // 	completed: false,
-    // },
+    {
+      title: "Business Information",
+      sub_title: "Please provide essential details about your business.",
+      active: pathname === "/dashboard/kyc/corporate/business",
+      completed: kycDetailsState?.profileStage > 0,
+    },
     {
       title: "Proof Of Identity",
       sub_title:
         "Verify your identity to ensure a secure and trusted experience.",
       active: pathname === "/dashboard/kyc/corporate/identity",
-      completed: false,
+      completed: kycDetailsState?.profileStage > 1,
     },
     {
       title: "Proof of Address",
       sub_title: "Verify your current address for accurate communication.",
       active: pathname === "/dashboard/kyc/corporate/address",
-      completed: false,
+      completed: kycDetailsState?.isCompleted,
     },
     // Not needed for MVP
     // {
@@ -65,6 +66,17 @@ const KycSetupLHS = () => {
     //   completed: false,
     // },
   ];
+
+  useEffect(() => {
+    const fetchedKycDetails = getKycDetails();
+    const kycLevels =
+      user?.userType === "1" ? individualKycLevel : corporateKycLevel;
+
+    setKycDetailsState({
+      ...fetchedKycDetails,
+      levels: kycLevels,
+    });
+  }, [pathname, user?.userType]);
 
   useEffect(() => {
     if (user?.userType === "1") {
