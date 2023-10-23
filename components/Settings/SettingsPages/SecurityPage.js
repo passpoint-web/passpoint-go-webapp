@@ -25,6 +25,7 @@ const Security = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
 	const [feedbackMsg, setFeedbackMsg] = useState('')
+	const [passwordFormKey, setPasswordFormKey] = useState(0)
 	const [payload, setPayload] = useState({
 		password: '',
 		newPassword: '',
@@ -59,11 +60,7 @@ const Security = () => {
 		try {
 			const {password, confirm} = payload
 			const response = await accountProfile.changePassword({former: password, password: confirm, confirm})
-			setPayload({
-				password: '',
-				newPassword: '',
-				confirm: ''
-			})
+			setPasswordFormKey((prev)=> prev+1)
 			console.log(response)
 			notify('success', `Your account's password has been updated`)
 		} catch (_err) {
@@ -74,6 +71,16 @@ const Security = () => {
 			setIsLoading(false)
 		}
 	}
+
+	useEffect(()=>{
+		setCtaClicked(false)
+		setPayload({
+			password: '',
+			newPassword: '',
+			confirm: ''
+		})
+		setFeedbackMsg('')
+	},[passwordFormKey])
 
 	useEffect(()=>{
 		const {newPassword , password, confirm} = payload
@@ -93,7 +100,7 @@ const Security = () => {
 		<>
 			{
 				searchParams?.get('forgotPasswordLevel') && <ForgotPasswordFlow />}
-			<form className={formStyles.form}
+			<form key={passwordFormKey} className={formStyles.form}
 				onSubmit={handleResetPasswordSubmit}>
 				<div className={styles.inner}>
 					<Input
