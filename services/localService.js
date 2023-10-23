@@ -1,5 +1,6 @@
-import cookiesFunc from "@/plugins/cookies";
-const cookies = cookiesFunc();
+
+// import cookiesFunc from "@/plugins/cookies"
+// const cookies = cookiesFunc()
 // setters
 export const saveCredentials = (credentials) => {
   localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials));
@@ -45,35 +46,35 @@ export const getForgotPasswordEmail = () => {
   }
 };
 
+export const saveToken = (val) => {
+	if (val) {
+		localStorage.setItem("token", JSON.stringify(val));
+	} else {
+		localStorage.removeItem("token");
+	}
+};
 // export const saveToken = (val) => {
 // 	if (val) {
-// 		localStorage.setItem("token", JSON.stringify(val));
-// 	} else {
-// 		localStorage.removeItem("token");
+// 		cookies.set('token', val)
 // 	}
 // };
-export const saveToken = (val) => {
-  if (val) {
-    cookies.set("token", val);
-  }
-};
 
+export const getToken = () => {
+	if (typeof window !== "undefined") {
+		const token = localStorage.getItem("token");
+		if (token !== "undefined") {
+			return JSON.parse(token);
+		}
+	}
+};
 // export const getToken = () => {
+// 	const token = cookies.get("token");
 // 	if (typeof window !== "undefined") {
-// 		const token = localStorage.getItem("token");
 // 		if (token !== "undefined") {
-// 			return JSON.parse(token);
+// 			return token
 // 		}
 // 	}
 // };
-export const getToken = () => {
-  const token = cookies.get("token");
-  if (typeof window !== "undefined") {
-    if (token !== "undefined") {
-      return token;
-    }
-  }
-};
 
 export const setLogout = () => {
   if (typeof window !== "undefined") {

@@ -78,14 +78,15 @@ const Identity = ({ styles }) => {
     }
     setIsLoading(true);
     try {
+      console.log(submitType)
       const response = await kyc.uploadKycIdentity({
         documents: payload,
         submitType,
       });
       saveKycDetails({
         ...savedKycDetails,
-        profileStage:
-          savedKycDetails.profileStage > 2 ? savedKycDetails.profileStage : 2,
+        KycStage:
+          savedKycDetails.KycStage > 2 ? savedKycDetails.KycStage : 2,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/corporate/address");

@@ -76,7 +76,7 @@ const AddressInd = ({ styles }) => {
       });
       saveKycDetails({
         ...savedKycDetails,
-        profileStage: 2,
+        KycStage: 2,
       });
       notify("success", "Your address has been saved");
       push("/dashboard/kyc/success");

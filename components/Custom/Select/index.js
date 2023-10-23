@@ -10,6 +10,7 @@ const CustomSelect = ({
 	selectOptions,
 	objKey,
 	id,
+	placeholder = "Please Select",
 	fieldError,
 	styleProps
 }) => {
@@ -36,7 +37,7 @@ const CustomSelect = ({
 	return (
 		<>
 			<div
-				className={`${styles.custom_select} ${fieldError ? styles.error : ''}`}
+				className={`custom-select ${styles.custom_select} ${fieldError ? styles.error : ''}`}
 			>
 				{showSelect ? <OverlayScreen onClick={hideSelect} /> : <></>}
 				<button
@@ -48,20 +49,19 @@ const CustomSelect = ({
 						{(objKey ? selectedOption?.[objKey] : selectedOption) ? (
 							<p className={styles.option}>{objKey ? selectedOption?.[objKey] : selectedOption}</p>
 						) : (
-							<p>Please select</p>
+							<p>{placeholder}</p>
 						)}
 					</div>
-					<DropDownIcon />
+					<DropDownIcon className="icon" />
 				</button>
 				{showSelect ? (
 					<div id={id}
 						className={`${styles.select} dropdown`}
-						style={{...styleProps?.dropdown}}>
+						style={{ ...styleProps?.dropdown }}>
 						{selectOptions.map((option, index) => (
 							<div
 								key={index}
-								className={`${styles.content} ${
-									(objKey ? option?.[objKey] === selectedOption?.[objKey] : option === selectedOption) ? styles.content_selected : ''
+								className={`${styles.content} ${(objKey ? option?.[objKey] === selectedOption?.[objKey] : option === selectedOption) ? styles.content_selected : ''
 								}`}
 								onClick={() => handleSelect(option)}
 							>

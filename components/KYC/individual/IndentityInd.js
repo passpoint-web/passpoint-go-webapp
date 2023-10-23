@@ -42,7 +42,6 @@ const IdentityInd = ({ styles }) => {
       saveKycDetails(data);
       console.log(data);
       const documents = data.proofIdentity;
-      console.log(documents.identityDocumentNumber);
       if (documents) {
         setPayload({
           ...payload,
@@ -76,8 +75,8 @@ const IdentityInd = ({ styles }) => {
       });
       saveKycDetails({
         ...savedKycDetails,
-        profileStage:
-          savedKycDetails.profileStage > 1 ? savedKycDetails.profileStage : 1,
+        KycStage:
+          savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/individual/address");

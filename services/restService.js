@@ -10,6 +10,20 @@ const restAgent = axios.create({
   },
 });
 
+const flightRestAgent = axios.create({
+	baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
+	headers: {
+		'Content-Type': 'application/json'
+	}
+});
+
+const notifyAndAccessRestAgent = axios.create({
+	baseURL: "https://passpoint-go-app-qa-5na2.onrender.com/v1/",
+	headers: {
+		'Content-Type': 'application/json'
+	}
+});
+
 const getRequestConfig = () => {
   return {
     headers: {},
@@ -35,6 +49,14 @@ const setConfig = () => {
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 };
+
+const setTravelConfig = () => {
+	// const token = getToken()
+	// console.log(cookies.get('token'))
+	const config = getRequestConfig();
+	config.headers.Authorization = `Bearer 123`
+	return config
+}
 
 export const registerUser = (path, data) => {
   return restAgent.post(path, data);
@@ -91,31 +113,34 @@ export const metrics = () => {
 };
 
 export const publicProfile = {
-  getPublicProfile: () => {
-    return restAgent.get("getPublicProfile", setConfig());
-  },
-  getPrimaryServices: () => {
-    return restAgent.get("getPrimaryServices", setConfig());
-  },
-  uploadBusinessLogo: (data) => {
-    return restAgent.post("publicProfileBusinessLogo", data, setConfig());
-  },
-  businessDescription: (data) => {
-    return restAgent.post("publicProfileBusinessDesc", data, setConfig());
-  },
-  deleteBusinessDescription: (data) => {
-    return restAgent.post("deleteBusinessDesc", data, setConfig());
-  },
-  addServices: (data) => {
-    return restAgent.post("publicProfileAddServices", data, setConfig());
-  },
-  deleteService: (data) => {
-    return restAgent.post("deleteService", data, setConfig());
-  },
-  contact: (data) => {
-    return restAgent.post("publicProfileContactDetails", data, setConfig());
-  },
-};
+	getPublicProfile: () => {
+		return restAgent.get('getPublicProfile', setConfig());
+	},
+	getPrimaryServices: () => {
+		return restAgent.get('getPrimaryServices', setConfig());
+	},
+	uploadBusinessLogo: (data) => {
+		return restAgent.post('publicProfileBusinessLogo', data, setConfig());
+	},
+	businessDescription: (data) => {
+		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
+	},
+	deleteBusinessDescription: (data) => {
+		return restAgent.post('deleteBusinessDesc', data, setConfig());
+	},
+	addServices: (data) => {
+		return restAgent.post('publicProfileAddServices', data, setConfig());
+	},
+	deleteService: (data) => {
+		return restAgent.post('deleteService', data, setConfig());
+	},
+	contact: (data) => {
+		return restAgent.post('publicProfileContactDetails', data, setConfig());
+	},
+	deleteSocial: (data) => {
+		return restAgent.post('deleteSocials', data, setConfig());
+	}
+}
 
 export const kyc = {
   getKycDetails: () => {
@@ -146,4 +171,19 @@ export const accountProfile = {
   },
 };
 
-// https://api.jessecoders.com/passpointGo/v1/getPrimaryServices
+export const travel = {
+	getFlightBookings: (params) => {
+		const config = setTravelConfig()
+		config.params = params
+		return flightRestAgent.get('flight/bookings', config)
+	},
+	getFlightBooking: (id) => {
+		return flightRestAgent.get(`flight/${id}`, setTravelConfig())
+	}
+}
+
+export const notifyAndAccess = {
+	getNotifications: () => {
+		return notifyAndAccessRestAgent.get('notify/page', setConfig())
+	}
+}

@@ -24,33 +24,33 @@ export const sidebarData = [
 	{
 		title: "Travel Services",
 		icon: SideIcon2,
-		path: "/dashboard/services",
+		path: "/dashboard/travel",
 	},
-	{
-		title: "Marketplace",
-		icon: SideIcon3,
-		path: "/dashboard/marketplace",
-	},
-	{
-		title: "Invoices and Paylinks",
-		icon: SideIcon4,
-		path: "/dashboard/invoice",
-	},
-	{
-		title: "Customer Management",
-		icon: SideIcon5,
-		path: "/dashboard/customer",
-	},
+	// {
+	// 	title: "Marketplace",
+	// 	icon: SideIcon3,
+	// 	path: "/dashboard/marketplace",
+	// },
+	// {
+	// 	title: "Invoices and Paylinks",
+	// 	icon: SideIcon4,
+	// 	path: "/dashboard/invoice",
+	// },
+	// {
+	// 	title: "Customer Management",
+	// 	icon: SideIcon5,
+	// 	path: "/dashboard/customer",
+	// },
 	{
 		title: "Wallet",
 		icon: SideIcon6,
 		path: "/dashboard/wallet",
 	},
-	{
-		title: "Team Setup",
-		icon: SideIcon7,
-		path: "/dashboard/team",
-	},
+	// {
+	// 	title: "Team Setup",
+	// 	icon: SideIcon7,
+	// 	path: "/dashboard/team",
+	// },
 	{
 		title: "Settings",
 		icon: SideIcon8,

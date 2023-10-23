@@ -4,7 +4,6 @@ import Textarea from "@/components/Dashboard/Textarea";
 import { ReasonIcon } from "@/constants/icons";
 import { useFormat24HourTime } from "@/utils/hooks";
 import Link from "next/link";
-import { useState } from "react";
 import styles from "../Preview/public-profile-preview.module.css";
 
 const PreviewMain = ({ data }) => {
@@ -115,7 +114,7 @@ const PreviewMain = ({ data }) => {
         <div className={`${styles.inner}`} >
           <div className={styles.text__header}>
             <h2>Your Thoughts, Our Action!</h2>
-            <p>Your message matters.Fill out the form below, and we'll be in touch to make it happen.</p>
+            <p>{`Your message matters.Fill out the form below, and we'll be in touch to make it happen.`}</p>
           </div>
 
           <form>

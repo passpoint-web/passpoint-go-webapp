@@ -76,7 +76,7 @@ const Address = ({ styles }) => {
       });
       saveKycDetails({
         ...savedKycDetails,
-        profileStage: 3,
+        KycStage: 3,
       });
       console.log(response);
       notify("success", "Your Address has been saved");

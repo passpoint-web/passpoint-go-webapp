@@ -27,7 +27,7 @@ const KycSetupLHS = () => {
       sub_title:
         "Verify your identity to ensure a secure and trusted experience.",
       active: pathname === "/dashboard/kyc/individual/identity",
-      completed: kycDetailsState?.profileStage > 0,
+      completed: kycDetailsState?.KycStage > 0,
     },
     {
       title: "Proof of Address",
@@ -43,14 +43,14 @@ const KycSetupLHS = () => {
       title: "Business Information",
       sub_title: "Please provide essential details about your business.",
       active: pathname === "/dashboard/kyc/corporate/business",
-      completed: kycDetailsState?.profileStage > 0,
+      completed: kycDetailsState?.KycStage > 0,
     },
     {
       title: "Proof Of Identity",
       sub_title:
         "Verify your identity to ensure a secure and trusted experience.",
       active: pathname === "/dashboard/kyc/corporate/identity",
-      completed: kycDetailsState?.profileStage > 1,
+      completed: kycDetailsState?.KycStage > 1,
     },
     {
       title: "Proof of Address",
@@ -68,6 +68,10 @@ const KycSetupLHS = () => {
   ];
 
   useEffect(() => {
+    getKycDetails();
+  }, []);
+
+  useEffect(() => {
     const fetchedKycDetails = getKycDetails();
     const kycLevels =
       user?.userType === "1" ? individualKycLevel : corporateKycLevel;
@@ -77,6 +81,8 @@ const KycSetupLHS = () => {
       levels: kycLevels,
     });
   }, [pathname, user?.userType]);
+
+  console.log(kycDetailsState.KycStage);
 
   useEffect(() => {
     if (user?.userType === "1") {

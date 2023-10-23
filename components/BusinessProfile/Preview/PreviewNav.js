@@ -3,7 +3,7 @@ import styles from "../Preview/public-profile-preview.module.css";
 import PreviewLogo from "./PreviewLogo";
 import { useRouter } from "next/navigation";
 
-const PreviewNav = ({ data }) => {
+const PreviewNav = ({ togglePreview, data }) => {
 	const {push} = useRouter()
 	return (
 		<div className={`${styles.nav} ${styles.section}`} >
@@ -40,12 +40,12 @@ const PreviewNav = ({ data }) => {
 						</button>
 					</li>
 					<li>
-						<button className={`primary_btn ${styles.fade__btn}`} onClick={push('/dashboard/business-profile-setup/identity')}>
+						<button className={`primary_btn ${styles.fade__btn}`} onClick={()=>push('/dashboard/business-profile-setup/identity')}>
               Edit
 						</button>
 					</li>
 					<li>
-						<button className={`primary_btn ${styles.icon__btn} ${styles.fade__btn}`}>
+						<button className={`primary_btn ${styles.icon__btn} ${styles.fade__btn}`} onClick={togglePreview}>
 							<ExpandIcon />
 						</button>
 					</li>
