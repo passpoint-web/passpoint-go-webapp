@@ -26,6 +26,31 @@
   gap: 1rem;
   margin: 2rem 0;
 }
+.travel__dashboard_header .row_one .quick__filter input {
+  background: var(--grey-6);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  color: #000;
+}
+.travel__dashboard_header .row_one .quick__filter input::placeholder {
+  color: var(--grey-1);
+}
+.travel__dashboard_header
+  .row_one
+  .quick__filter
+  input::-webkit-outer-spin-button,
+.travel__dashboard_header
+  .row_one
+  .quick__filter
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: textfield;
+}
+
+.travel__dashboard_header .row_one .quick__filter input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
 
 .travel__dashboard_header .row_two {
   display: flex;
@@ -37,8 +62,13 @@
   gap: 1rem;
   flex-basis: 40%;
   position: relative;
+  margin-top: 0;
 }
-.to__fro_group svg {
+.to__fro_group:nth-child(1) > div {
+  width: 50%;
+  margin-bottom: var(--inner-component-mg);
+}
+.to__fro_group .svg__wrapper svg {
   position: absolute;
   left: 0;
   right: 0;
@@ -138,7 +168,6 @@
   gap: 0.5rem;
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  ;
   color: var(--grey-2);
 }
 
@@ -237,7 +266,6 @@
   right: auto;
   margin: auto;
   font-size: 0.9rem;
-  ;
   text-align: center;
   width: 60px;
   margin-left: -25px;
@@ -303,7 +331,6 @@
   margin-bottom: 0.5rem;
 }
 .filter__input_col_one > span {
-  ;
   color: var(--grey-2);
 }
 .filter__input_col_two {
@@ -313,7 +340,6 @@
   margin-top: 1.2rem;
 }
 .filter__input_col_two > div {
-  ;
 }
 .range__ctn {
   position: relative;
@@ -454,7 +480,6 @@
 .payment__successful p {
   font-size: 1.15rem;
   margin-top: 1rem;
-  ;
 }
 .payment__successful a {
   width: 250px;
@@ -533,12 +558,10 @@
 }
 .modal__flight_details .label {
   width: 200px;
-  ;
   font-size: 1.15rem;
   color: var(--grey-3);
 }
 .modal__flight_details .value span {
-  ;
   font-size: 1.15rem;
 }
 .modal__flight_details .value > span > span {

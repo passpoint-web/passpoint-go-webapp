@@ -369,6 +369,12 @@ button.primary:active,
   background-color: var(--sky-blue-active);
 }
 
+.primary_btn[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: var(--grey-4);
+}
+
 a.standard,
 button.primary.sd,
 button.standard {
@@ -691,7 +697,17 @@ input[type="range"]:focus::-moz-range-thumb {
 .table-ctn .custom-search label {
   top: -2px;
 }
+.flight-services .quick__filter .input__ctn {
+  max-width: 100px;
+}
 .flight-services .custom-select button:not(.table-ctn .custom-select button) {
+  background: var(--grey-6);
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.flight-services .custom-select button {
   background: var(--grey-6);
   outline: none;
   border: none;

@@ -102,3 +102,19 @@ export const removePublicProfile = () => {
 		localStorage.removeItem("public_profile")
 	}
 };
+
+export const setAirportsState = (val) => {
+	if (typeof window !== "undefined") {
+		localStorage.setItem("airports", JSON.stringify(val))
+	}
+};
+
+export const getAirportsState = () => {
+	if (typeof window !== "undefined") {
+		const val = localStorage.getItem("airports");
+		if (val !== "undefined") {
+			return JSON.parse(val);
+		}
+		return null
+	}
+};
