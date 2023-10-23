@@ -6,7 +6,7 @@ import KycCard from "@/components/Dashboard/Home/KycCard";
 import { CustomerChart } from "@/components/Dashboard/Home/CustomerChart";
 import MetricCard from "@/components/Dashboard/Home/MetricCard";
 export const metadata = {
-	title: 'Dashboad | Passpoint Go',
+	title: 'Dashboard | Passpoint Go',
 	description: '',
 }
 export default function Dashboard() {
