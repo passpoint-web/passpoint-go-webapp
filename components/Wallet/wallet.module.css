@@ -82,7 +82,7 @@
 }
 
 
-/* modal */
+/* transaction modal */
 
 .modal__wallet_details {
   /* padding: var(--inner-component-mg); */
@@ -118,4 +118,39 @@
 }
 .modal__wallet_details .value > span > span {
   color: var(--grey-3);
+}
+
+
+/* Add money modal */
+
+.add_money_modal__content {
+  margin-top: 40px;
+  background-color: var(--sky-blue-bg);
+  border: 1px solid var(--sky-blue);
+  width: 100%;
+  border-radius: 12px;
+  padding: var(--inner-component-mg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--inner-component-mg);
+}
+
+.modal__details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal__details h6 {
+  color: var(--grey-3);
+  font-size: 12px;
+}
+.modal__details h4 {
+  color: var(--grey-1);
+  font-size: 14px;
+}
+
+.modal__details >div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

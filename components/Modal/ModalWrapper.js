@@ -18,6 +18,8 @@ const ModalWrapper = ({
 	cancelBtnText='Cancel',
 	containsTabLayout = false,
 	hasBottomActions = true,
+	bottomSecAction = false,
+	handleBottomSecAction,
 	secText = '',
 	secNegative = false,
 	ctaBtnColor = ''
@@ -67,7 +69,7 @@ const ModalWrapper = ({
 						<div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
 							{bottomCancelNeeded ?
 								<Button className={`secondary ${ctaBtnType} ${secNegative ? 'negative' : ''}`}
-									onClick={onClose}
+									onClick={bottomSecAction ? handleBottomSecAction : onClose}
 									text={cancelBtnText} /> : <></>}
 							<Button className={`primary ${ctaBtnType}`}
 								style={{backgroundColor: ctaBtnColor || ""}}

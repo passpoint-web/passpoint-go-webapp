@@ -51,7 +51,7 @@
 
 .child_ctn {
   min-width: 500px;
-  /* max-width: 500px; */
+  max-width: 600px;
   position: relative;
 }
 

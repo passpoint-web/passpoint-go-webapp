@@ -11,6 +11,7 @@ import { useEffect, useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
 import Input from "../Dashboard/Input"
 import FileUpload from "../FileUpload"
+import ActionFeedbackCard from "../ActionFeedbackCard"
 
 const WalletTable = ({ title, action = "/", styles }) => {
 	const {formatMoney, createUrl} = functions
@@ -18,14 +19,15 @@ const WalletTable = ({ title, action = "/", styles }) => {
 	const {replace} = useRouter()
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
-	const [currentModal, setCurrentModal] = useState('')
+	const [transactionModal, setTransactionModal] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
+	const transactionReportIssues = ['Frauduluent Activity', 'Billing Descrepancy']
 	const [modalContent, setModalContent] = useState({
 		heading: '',
 		subHeading: ''
 	})
 	const defineModalContents = (level) => {
-		setCurrentModal(level)
+		setTransactionModal(level)
 		switch (level) {
 		case 'transaction':
 			setModalContent({
@@ -35,7 +37,14 @@ const WalletTable = ({ title, action = "/", styles }) => {
 				secText: 'Report',
 				secNegative: true,
 				ctaBtnColor: '#009EC4',
-				bottomCancelNeeded: true
+				bottomCancelNeeded: true,
+				bottomSecAction: true,
+				handleBottomSecAction: () =>{
+					handleModalFlow('report')
+				},
+				handleModalCta: ()=>{
+					console.log('shared')
+				}
 			})
 			break;
 		case 'report':
@@ -44,36 +53,50 @@ const WalletTable = ({ title, action = "/", styles }) => {
 				subHeading: 'Tell us anything you think went wrong',
 				ctaText: 'Submit',
 				secText: 'Back',
-				bottomCancelNeeded: true
+				bottomCancelNeeded: true,
+				bottomSecAction: true,
+				handleBottomSecAction: () =>{
+					handleModalFlow('transaction')
+				},
+				handleModalCta: ()=>{
+					handleModalFlow('report-success')
+				}
 			})
 			break;
 		case 'report-success':
 			setModalContent({
 				heading: '',
 				subHeading: '',
+				ctaText: 'Return to Dashboard',
 				bottomCancelNeeded: false,
-				hasBottomActions: false
+				handleModalCta: () => {
+					handleModalFlow()
+				}
+				// hasBottomActions: false
 			})
 		}
 	}
 
-	const handleModalContent = (val) => {
+	const handleModalFlow = (val) => {
 		const newParams = new URLSearchParams(searchParams.toString());
 		if (val) {
-			newParams.set('currentModal', val)
+			newParams.set('transactionModal', val)
 		} else {
-			newParams.delete('currentModal')
+			newParams.delete('transactionModal')
+			newParams.delete('transactionId')
 		}
 		replace(createUrl('/dashboard/wallet', newParams))
 	}
 
-	const handleCta = () => {}
+	// const handleModalCta = () => {}
+
+	const handleBottomSecAction = () => {}
 
 	const handleIssueSelect = () => {}
 
 	useEffect(()=>{
-		defineModalContents(searchParams.get('currentModal'))
-	},[searchParams.get('currentModal')])
+		defineModalContents(searchParams.get('transactionModal'))
+	},[searchParams.get('transactionModal')])
 
 	const TransactionDetails = () => (
 		<div className={styles.modal__wallet_details_section}>
@@ -172,7 +195,7 @@ const WalletTable = ({ title, action = "/", styles }) => {
 
 	const ReportTransactionContent = () => (
 		<form className={formStyles.form}>
-      	<Input
+      <Input
 				id='selectIssueType'
 				label='Issue Type'
 				placeholder="Select Issue Type"
@@ -181,7 +204,7 @@ const WalletTable = ({ title, action = "/", styles }) => {
 			>
 				<CustomSelect
 					fieldError={false}
-					selectOptions={['Frauduluent Activity']}
+					selectOptions={transactionReportIssues}
 					emitSelect={(s) => handleIssueSelect(s)}
 				/>
 			</Input>
@@ -200,7 +223,7 @@ const WalletTable = ({ title, action = "/", styles }) => {
 				/>
 			</Input>
 			<FileUpload
-				smTitle='Add an Image that best describes your report (optional)'
+				subTitle='Add an Image that best describes your report (optional)'
 				base64={''}
 				handlefileUpload={(e)=>setBusinessLogo(e)}
 				error={ctaClicked}
@@ -209,12 +232,12 @@ const WalletTable = ({ title, action = "/", styles }) => {
 		</form>
 	)
 
-	const Modals = () => (
+	const TransactionModals = () => (
 		<ModalWrapper
 			loading={isLoading}
-			// onClose={()=>onClose()}
+			onClose={()=>handleModalFlow()}
 			ctaBtnType='sd'
-			handleCta={handleCta}
+			handleCta={modalContent.handleModalCta}
 			heading={modalContent.heading}
 			subHeading={modalContent.subHeading}
 			ctaBtnText={modalContent.ctaText}
@@ -222,18 +245,28 @@ const WalletTable = ({ title, action = "/", styles }) => {
 			bottomCancelNeeded={modalContent.bottomCancelNeeded}
 			secNegative={modalContent.secNegative}
 			cancelBtnText={modalContent.secText}
+			bottomSecAction={modalContent.bottomSecAction}
+			handleBottomSecAction={modalContent.handleBottomSecAction}
 		>
 
 			<div className={styles.modal__wallet_details}>
-				{searchParams.get('currentModal') === 'transaction'?
-					<TransactionDetails /> : searchParams.get('currentModal') === 'report' ?  <ReportTransactionContent /> : <></>}
+				{searchParams.get('transactionModal') === 'transaction'?
+					<TransactionDetails /> : searchParams.get('transactionModal') === 'report' ?
+						<ReportTransactionContent /> : searchParams.get('transactionModal') === 'report-success' ?
+							<ActionFeedbackCard
+								content={{
+									success: true,
+									title: 'Your Report has been received',
+									value: 'Your case ID is 1234567890 , We have received your report and investigation will commence immediately, We are deeply sorry for any inconveniences.'
+								}}
+							/> : <></>}
 			</div>
 		</ModalWrapper>
 	)
 
 	return (
 		<>
-			{searchParams.get('currentModal') ? <Modals /> : <></>}
+			{searchParams.get('transactionModal') ? <TransactionModals /> : <></>}
 			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
 				<div className={tableStyles.table__outer}>
 					<div className={tableStyles.table__header}>
@@ -315,7 +348,7 @@ const WalletTable = ({ title, action = "/", styles }) => {
 										</td>
 										<td>
 											<Link className="secondary_btn outline_btn"
-												href={`/dashboard/wallet?currentModal=transaction&transactionId=${id}`}>
+												href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}>
                     View Details
 											</Link>
 										</td>
