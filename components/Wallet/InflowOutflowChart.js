@@ -1,5 +1,4 @@
 "use client";
-import styles from "@/assets/styles/dashboard-layout.module.css";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -65,7 +64,7 @@ const options = {
   },
 };
 
-export function CustomerChart() {
+export function InflowOutflowChart({ styles }) {
   const [chartData, setChartData] = useState({});
   const dataValues = chartData?.growthList
     ? Object.values(chartData.growthList)
@@ -90,10 +89,22 @@ export function CustomerChart() {
     labels: normalMonthsOrder,
     datasets: [
       {
+        label: "inflow",
         data: dataValues,
-        backgroundColor: "#1B59F8",
-        borderColor: "#1B59F8",
-        barThickness: 11.3,
+        backgroundColor: "#009EC4",
+        borderColor: "rgba(0,0,0,0)",
+        borderWidth: 1,
+        barThickness: 9,
+        borderRadius: 2,
+      },
+      {
+        label: "outflow",
+        data: dataValues,
+        backgroundColor: "#FF3B2D",
+        borderColor: "rgba(0,0,0,0)",
+        borderWidth: 1,
+        barThickness: 9,
+        borderRadius: 2,
       },
     ],
   };
@@ -112,26 +123,22 @@ export function CustomerChart() {
   }, []);
 
   return (
-    <main className={styles.dashCustomerCahrt}>
-      <div className={styles.content}>
-        <h3>Customer Growth</h3>
-        {chartData.totalCustomer !== undefined && (
-          <h3>
-            {chartData.totalCustomer}{" "}
-            <span
-              style={{
-                color: chartData.percentageGrowth >= 0 ? "#66cb9f" : "#ff3b2d",
-              }}
-            >
-              {chartData.percentageGrowth >= 0
-                ? `+${chartData.percentageGrowth}`
-                : `${chartData.percentageGrowth}`}
-            </span>
-          </h3>
-        )}
+    <main className={styles.inOutFlow}>
+      <div className={styles.inOutFlow_content}>
+        <h3>Inflow vs Outflow</h3>
+        <div className={styles.inOutFlow_label}>
+          <article>
+            <small></small>
+            <p>Inflow</p>
+          </article>
+          <article>
+            <small></small>
+            <p>Outflow</p>
+          </article>
+        </div>
       </div>
       <div>
-        <Bar options={options} height={182} data={data} />
+        <Bar options={options} data={data} height={275} />
       </div>
     </main>
   );
