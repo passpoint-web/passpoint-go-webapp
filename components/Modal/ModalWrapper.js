@@ -17,7 +17,10 @@ const ModalWrapper = ({
 	ctaBtnText = 'Proceed',
 	cancelBtnText='Cancel',
 	containsTabLayout = false,
-	hasBottomActions = true
+	hasBottomActions = true,
+	secText = '',
+	secNegative = false,
+	ctaBtnColor = ''
 }) => {
 	const modalCtnRef = useRef(null)
 	const modalBgRef = useRef(null)
@@ -60,15 +63,18 @@ const ModalWrapper = ({
 						<p>{subHeading}</p>
 					</div>
 					{children}
-					{hasBottomActions && <div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
-						{bottomCancelNeeded && <Button className="secondary md"
-							onClick={onClose}
-							text={cancelBtnText} />}
-						<Button className={`primary ${ctaBtnType}`}
-							onClick={handleCta}
-							loading={loading}
-							text={ctaBtnText} />
-					</div>}
+					{hasBottomActions ?
+						<div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
+							{bottomCancelNeeded ?
+								<Button className={`secondary ${ctaBtnType} ${secNegative ? 'negative' : ''}`}
+									onClick={onClose}
+									text={cancelBtnText} /> : <></>}
+							<Button className={`primary ${ctaBtnType}`}
+								style={{backgroundColor: ctaBtnColor || ""}}
+								onClick={handleCta}
+								loading={loading}
+								text={ctaBtnText} />
+						</div> : <></>}
 				</div>
 			</div>
 		</div>

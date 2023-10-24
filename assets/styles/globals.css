@@ -446,6 +446,11 @@ button.secondary,
   box-shadow: var(--btn-secondary-shadow);
 }
 
+button.negative {
+  border-color: var(--negative-box-shadow);
+  color: var(--negative);
+}
+
 .outline_btn {
   box-shadow: none;
 }
@@ -762,6 +767,7 @@ form {
 
 .text-blue {
   color: var(--sky-blue);
+  font-family: var(--graphikMedium);
 }
 
 .capitalize {

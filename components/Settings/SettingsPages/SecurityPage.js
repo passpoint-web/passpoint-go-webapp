@@ -14,7 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 // import { forgotPassword } from '@/services/restService'
 import functions from '@/utils/functions'
 import { accountProfile } from '@/services/restService'
-import ForgotPasswordFlow from '@/components/AccountProfile/ForgotPasswordFlow'
+import ForgotPasswordFlow from '@/components/Settings/ForgotPasswordFlow'
 // import Link from 'next/link'
 const Security = () => {
 	const {createUrl} = functions
