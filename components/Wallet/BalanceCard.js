@@ -2,10 +2,10 @@
 'use client'
 import functions from '@/utils/functions'
 // import Button from '../Btn/Button'
-import CopyValue from '../CopyValue'
 import BorderIconBtn from '../Btn/BorderIconBtn'
 import {useRouter,  useSearchParams } from 'next/navigation'
-import ModalWrapper from '../Modal/ModalWrapper'
+import AddMoneyModal from './AddMoneyModal'
+import CopyValue from '../CopyValue'
 
 const BalanceCard = ({styles}) => {
 	const {formatMoney, createUrl} = functions
@@ -128,45 +128,12 @@ const BalanceCard = ({styles}) => {
 		</svg>
 	)
 
-	const AddMoneyModal = () => (
-		<ModalWrapper
-      onClose={()=>handleAddMoneyModal()}
-			ctaBtnType='sd'
-			heading={'Add Money'}
-			subHeading={'Copy the credentials below to add money to your wallet.'}
-			hasBottomActions={false}
-		>
-			<div className={styles.add_money_modal__content}>
-				<div className={styles.modal__details}>
-					<h6>
-            Bank Account
-					</h6>
-					<h4>GT Bank</h4>
-				</div>
-				<div className={styles.modal__details}>
-					<h6>
-            Account Name
-					</h6>
-					<h4>Jon Doe</h4>
-				</div>
-				<div className={styles.modal__details}>
-					<h6>
-            Account Number
-					</h6>
-					<div>
-						<h4>1234567890</h4>
-						<CopyValue color='#009EC4'
-							value='1234567890' />
-					</div>
-				</div>
-			</div>
-		</ModalWrapper>
-	)
+
 
 	return (
 
 		<>
-    	{searchParams.get('addMoneyModal') === 'true' ? <AddMoneyModal /> : <></>}
+			<AddMoneyModal styles={styles} />
 			<div className={styles.balance_card}>
 				<div className={styles.lhs}>
 					<h4>Available Balance</h4>
