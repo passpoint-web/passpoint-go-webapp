@@ -10,6 +10,7 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import { useEffect, useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
 import Input from "../Dashboard/Input"
+import Button from "../Btn/Button"
 import FileUpload from "../FileUpload"
 import ActionFeedbackCard from "../ActionFeedbackCard"
 
@@ -195,7 +196,7 @@ const WalletTable = ({ title, action = "/", styles }) => {
 
 	const ReportTransactionContent = () => (
 		<form className={formStyles.form}>
-      <Input
+			<Input
 				id='selectIssueType'
 				label='Issue Type'
 				placeholder="Select Issue Type"
@@ -347,10 +348,14 @@ const WalletTable = ({ title, action = "/", styles }) => {
 
 										</td>
 										<td>
-											<Link className="secondary_btn outline_btn"
+											{/* <Link className="secondary_btn outline_btn"
 												href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}>
-                    View Details
-											</Link>
+                    			View Details
+											</Link> */}
+											<Button className='outline_btn secondary_btn'
+												text='View Details'
+												onClick={()=>handleModalFlow('transaction')}
+											/>
 										</td>
 									</tr>
 								))}

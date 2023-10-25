@@ -21,6 +21,7 @@ const ModalWrapper = ({
 	bottomSecAction = false,
 	handleBottomSecAction,
 	secText = '',
+	ctaDisabled=false,
 	secNegative = false,
 	ctaBtnColor = ''
 }) => {
@@ -74,6 +75,7 @@ const ModalWrapper = ({
 							<Button className={`primary ${ctaBtnType}`}
 								style={{backgroundColor: ctaBtnColor || ""}}
 								onClick={handleCta}
+								disabled={ctaDisabled}
 								loading={loading}
 								text={ctaBtnText} />
 						</div> : <></>}
