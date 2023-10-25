@@ -50,14 +50,16 @@ const Identity = ({ styles }) => {
       console.log(data);
       saveKycDetails(data);
       const documents = data.proofIdentity;
-      if (documents) {
+      if (documents && documents.length > 0) {
         setPayload((prev) => {
           const updatedPayload = [...prev];
-          updatedPayload[0].documentFile = documents[0].docFile;
-          updatedPayload[1].documentFile = documents[1].docFile;
+          updatedPayload[0].documentFile = documents[0]?.docFile;
+          updatedPayload[1].documentFile = documents[1]?.docFile;
           return updatedPayload;
         });
         setSubmitType("EDIT");
+      } else {
+        setSubmitType("NEW");
       }
     } catch (_err) {
       console.log(_err);
@@ -76,17 +78,18 @@ const Identity = ({ styles }) => {
     if (!allFieldsValid) {
       return;
     }
+    console.log(submitType);
+    console.log(payload);
     setIsLoading(true);
     try {
-      console.log(submitType)
       const response = await kyc.uploadKycIdentity({
         documents: payload,
         submitType,
       });
+      console.log(response);
       saveKycDetails({
         ...savedKycDetails,
-        KycStage:
-          savedKycDetails.KycStage > 2 ? savedKycDetails.KycStage : 2,
+        KycStage: savedKycDetails.KycStage > 2 ? savedKycDetails.KycStage : 2,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/corporate/address");

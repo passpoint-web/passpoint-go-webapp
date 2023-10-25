@@ -49,6 +49,8 @@ const IdentityInd = ({ styles }) => {
           documentNumber: documents.identityDocumentNumber,
         });
         setSubmitType("EDIT");
+      } else {
+        setSubmitType("NEW");
       }
     } catch (_err) {
       console.log(_err);
@@ -75,8 +77,7 @@ const IdentityInd = ({ styles }) => {
       });
       saveKycDetails({
         ...savedKycDetails,
-        KycStage:
-          savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
+        KycStage: savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/individual/address");

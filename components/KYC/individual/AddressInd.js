@@ -50,6 +50,8 @@ const AddressInd = ({ styles }) => {
           documentFile: documents.addressDocumentFile,
         });
         setSubmitType("EDIT");
+      } else {
+        setSubmitType("NEW");
       }
     } catch (_err) {
       console.log(_err);

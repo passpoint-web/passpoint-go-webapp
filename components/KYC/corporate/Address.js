@@ -13,6 +13,7 @@ import { kyc } from "@/services/restService";
 import { documentType } from "@/utils/CONSTANTS";
 import { useNotify } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 
 const Address = ({ styles }) => {
@@ -50,6 +51,8 @@ const Address = ({ styles }) => {
           documentFile: documents.addressDocumentFile,
         });
         setSubmitType("EDIT");
+      } else {
+        setSubmitType("NEW");
       }
     } catch (_err) {
       console.log(_err);
@@ -63,11 +66,12 @@ const Address = ({ styles }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(payload);
     setCtaClicked(true);
     if (!allFieldsValid) {
       return;
     }
+    console.log(payload);
+    console.log(submitType);
     setIsLoading(true);
     try {
       const response = await kyc.uploadKycAddress({

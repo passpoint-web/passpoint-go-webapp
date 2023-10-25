@@ -29,7 +29,6 @@ const Business = ({ styles }) => {
   const getKycDetails = async () => {
     try {
       const response = await kyc.getKycDetails();
-      console.log("helllo");
       const data = response.data.data;
       saveKycDetails(data);
       console.log(data);
@@ -54,6 +53,8 @@ const Business = ({ styles }) => {
     if (!allFieldsValid) {
       return;
     }
+    console.log(url);
+    console.log(submitType);
     setIsLoading(true);
     try {
       const response = await kyc.uploadKycBusiness({
@@ -62,8 +63,7 @@ const Business = ({ styles }) => {
       });
       saveKycDetails({
         ...savedKycDetails,
-        KycStage:
-          savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
+        KycStage: savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
       });
       notify("success", "Your information has been saved");
       push("/dashboard/kyc/corporate/identity");
