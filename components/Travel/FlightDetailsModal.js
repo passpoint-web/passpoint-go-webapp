@@ -4,8 +4,10 @@ import { useEffect, useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
 import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
+import functions from "@/utils/functions"
 
 const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
+	const {formatMoney} = functions
 	const notify = useNotify()
 	const searchParams = useSearchParams()
 	const id = searchParams.get('id')
@@ -27,11 +29,7 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
 	const getFlightBooking = async () => {
 		try {
 			const response = await travel.getFlightBooking(id)
-			console.log(response)
-			const {content} = response.data.data
-			if (content) {
-				setData(content)
-			}
+			setData(response.data.data)
 		} catch (_err) {
 			// console.log(_err.response.data.description)
 			const { message, description } = _err.response?.data || _err
@@ -69,12 +67,20 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
 			{/* MAIN FLIGHT DETAILS CONTENT - GENERAL */}
 			{activeTab === tabs[0] && (<div className={styles.modal__flight_details}>
 				<div className={styles.modal__flight_details_section}>
-					<div className={styles.row}>
+					{/* <div className={styles.row}>
 						<div className={styles.label}>
             Booking ID
 						</div>
 						<div className={styles.value}>
 							<span className="text-blue uppercase">{id}</span>
+						</div>
+					</div> */}
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Booking Reference
+						</div>
+						<div className={styles.value}>
+							<span className="text-blue text-bold uppercase">{id}</span>
 						</div>
 					</div>
 					<div className={styles.row}>
@@ -82,63 +88,16 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
             Booking Date & Time
 						</div>
 						<div className={styles.value}>
-							<span>Oct 15, 2023, <span>8:45 PM</span></span>
+							{/* <span>Oct 15, 2023, <span>8:45 PM</span></span> */}
+							- - -
 						</div>
 					</div>
 					<div className={styles.row}>
 						<div className={styles.label}>
-            Booking Reference
+            Flight Cost
 						</div>
-						<div className={styles.value}>
-							<span>XYZFlight20231101</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>
-            Flight Number
-						</div>
-						<div className={styles.value}>
-							<span>XYZ123</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>
-            Departure Location
-						</div>
-						<div className={styles.value}>
-							<span>JFK International Airport, New York</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>
-            Arrival Location
-						</div>
-						<div className={styles.value}>
-							<span>Heathrow Airport, London</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>
-            Departure Date & Time
-						</div>
-						<div className={styles.value}>
-							<span>November 1, 2023, 10:00 AM</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>
-            Arrival Date & Time
-						</div>
-						<div className={styles.value}>
-							<span>November 1, 2023, 10:00 AM</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>
-            Airline
-						</div>
-						<div className={styles.value}>
-							<span>Air Travel Express</span>
+						<div className={`${styles.value}`}>
+							<span className="text-bold">{formatMoney(data?.amount, data?.currency)}</span>
 						</div>
 					</div>
 					<div className={styles.row}>
@@ -146,12 +105,75 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
             Booking Status
 						</div>
 						<div className={styles.value}>
-							<div className="success-tag">Confirmed</div>
+							{/* <div className="success-tag">Confirmed</div>
 							<div className="pending-tag">Pending</div>
-							<div className="failed-tag">Failed</div>
+							<div className="failed-tag">Failed</div> */}
+							- - -
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Return Ticket
+						</div>
+						<div className={styles.value}>
+							{data?.inbound?.length > 0 ? 'Yes' : 'No'}
 						</div>
 					</div>
 				</div>
+				<div className={styles.modal__flight_details_section}>
+					<h5>Outbound Ticket</h5>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Airline/Flight Number
+						</div>
+						<div className={styles.value}>
+							<span>{data?.outbound?.at(0)?.airline_details?.name} <span className="text-bold text-blue">/</span> {data?.outbound?.at(0)?.flight_number}</span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Departure
+						</div>
+						<div className={styles.value}>
+							<span>{functions.getFormattedAirportByIata(data?.outbound?.at(0)?.airport_from)} <span className="text-bold">on</span> {new Date(data?.outbound?.at(0)?.departure_time)?.toDateString()}, <span>{functions.formatCustomTime(data?.outbound?.at(0)?.departure_time)}</span></span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Arrival
+						</div>
+						<div className={styles.value}>
+							<span>{functions.getFormattedAirportByIata(data?.outbound?.at(0)?.airport_to)} <span className="text-bold">on</span> {new Date(data?.outbound?.at(0)?.arrival_time)?.toDateString()}, <span>{functions.formatCustomTime(data?.outbound?.at(0)?.arrival_time)}</span></span>
+						</div>
+					</div>
+				</div>
+				{data?.inbound?.length > 0 && <div className={styles.modal__flight_details_section}>
+					<h5>Inbound (Return) Ticket</h5>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Airline/Flight Number
+						</div>
+						<div className={styles.value}>
+							<span>{data?.inbound?.at(0)?.airline_details?.name} <span className="text-bold text-blue">/</span> {data?.inbound?.at(0)?.flight_number}</span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Departure
+						</div>
+						<div className={styles.value}>
+							<span>{functions.getFormattedAirportByIata(data?.inbound?.at(0)?.airport_from)} <span className="text-bold">on</span> {new Date(data?.inbound?.at(0)?.departure_time)?.toDateString()}, <span>{functions.formatCustomTime(data?.inbound?.at(0)?.departure_time)}</span></span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>
+            Arrival
+						</div>
+						<div className={styles.value}>
+							<span>{functions.getFormattedAirportByIata(data?.inbound?.at(0)?.airport_to)} <span className="text-bold">on</span> {new Date(data?.inbound?.at(0)?.arrival_time)?.toDateString()}, <span>{functions.formatCustomTime(data?.inbound?.at(0)?.arrival_time)}</span></span>
+						</div>
+					</div>
+				</div>}
 			</div>)}
 
 			{/* MAIN FLIGHT DETAILS CONTENT - ITINERARY */}

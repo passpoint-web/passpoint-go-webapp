@@ -913,6 +913,9 @@ th {
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
+.form-row.bottom {
+  margin-bottom: 2rem;
+}
 .form-triple-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

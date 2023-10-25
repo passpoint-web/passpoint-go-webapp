@@ -191,11 +191,14 @@
 .fc__row_two {
   display: flex;
   gap: 1.5rem;
+  justify-content: flex-end;
 }
 .fc__airline {
   text-align: center;
   display: flex;
   flex-direction: column;
+  width: 100px;
+  align-items: center;
   gap: 0.5rem;
 }
 .fc__airline h6 {
@@ -209,6 +212,8 @@
   width: 65px;
   min-width: 65px;
   height: 65px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .fc__tags {
   display: flex;
@@ -437,6 +442,17 @@
   display: grid;
   place-items: center;
 }
+.payment__option_btn .option__btn_text {
+  font-family: "GraphikMedium";
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.2rem;
+}
 .payment__option_btn > div::after {
   content: ".";
   width: 0px;
@@ -563,6 +579,7 @@
 }
 .modal__flight_details .value span {
   font-size: 1.15rem;
+  line-height: 1.8rem;
 }
 .modal__flight_details .value > span > span {
   color: var(--grey-3);

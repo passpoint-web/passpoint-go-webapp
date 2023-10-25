@@ -17,15 +17,13 @@ const FlightTable = ({ title}) => {
 	// eslint-disable-next-line no-unused-vars
 	const [isLoading, setIsLoading] = useState(false)
 	// eslint-disable-next-line no-unused-vars
-	const [pageSize, setPageSize] = useState(10)
+	const [pageSize, setPageSize] = useState(100)
 	const getFlightBookings = async () => {
 		try {
 			const response = await travel.getFlightBookings({page, pageSize})
-			console.log(response.data.data)
 			const {content} = response.data.data
-      console.log(content)
 			if (content) {
-				setData(content)
+				setData(content.filter(c => c.reference))
 			}
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
@@ -92,14 +90,12 @@ const FlightTable = ({ title}) => {
 									</td>
 									<td className="text-bold">{formatMoney(c.amount, c.currency)}</td>
 									<td>
-										{'--'}
-										{/* <div className="pending-circle" /> Not yet paid */}
-
-										{/* <div className="success-circle" /> Paid */}
+										{ c.amount ? <><div className="success-circle" /> Paid</> : <><div className="pending-circle" /> Not yet paid</> }
+										
 
 									</td>
 									<td>
-										<Link className="secondary_btn outline_btn" href={`./flights?id=${c.id}`}>
+										<Link className="secondary_btn outline_btn" href={`./flights?id=${c.reference}`}>
                     View Details
 										</Link>
 									</td>
@@ -109,7 +105,7 @@ const FlightTable = ({ title}) => {
 					</table>
 				</div>
 				<div className={styles.table__pagination}>
-          Showing 10 items out of 250 results found
+          Showing {data?.length} items out of {data?.length} results found
 				</div>
 			</div>
 		</div>
