@@ -8,21 +8,38 @@ import { useEffect, useState } from "react"
 import { travel } from "@/services/restService"
 import { getAirportsState, setAirportsState } from "@/services/localService"
 import CustomObjectSelect from "../Custom/CustomObjectSelect"
+import { useSearchParams } from "next/navigation"
 
 const FlightPageHeader = ({ styles }) => {
-  const today = new Date().toLocaleDateString()
-  const [fromAirport, setFromAirport] = useState()
-  const [toAirport, setToAirport] = useState()
-  const [departureDate, setDepartureDate] = useState()
-  const [returnDate, setReturnDate] = useState()
-  const [tripType, setTripType] = useState()
-  const [infants, setInfants] = useState()
-  const [children, setChildren] = useState()
-  const [adult, setAdult] = useState()
-  const [flightClass, setFlightClass] = useState()
+  const searchParams = useSearchParams()
 
   let airports = getAirportsState()
   airports = airports?.filter((airport) => airport.country === "Nigeria")
+
+  const queryParams = {
+    adults: searchParams.get("adults"),
+    cabin: searchParams.get("cabin"),
+    children: searchParams.get("children"),
+    departureDate: searchParams.get("departureDate"),
+    destination: searchParams.get("destination"),
+    infants: searchParams.get("infants"),
+    origin: searchParams.get("origin"),
+    returnDate: searchParams.get("returnDate"),
+    tripType: searchParams.get("tripType"),
+  }
+  console.log(queryParams.tripType)
+
+  const today = new Date().toISOString().split("T")[0]
+
+  const [fromAirport, setFromAirport] = useState(queryParams.origin)
+  const [toAirport, setToAirport] = useState(queryParams.destination)
+  const [departureDate, setDepartureDate] = useState(queryParams.departureDate)
+  const [returnDate, setReturnDate] = useState(queryParams.returnDate)
+  const [tripType, setTripType] = useState(queryParams.tripType)
+  const [infants, setInfants] = useState(queryParams.infants)
+  const [children, setChildren] = useState(queryParams.children)
+  const [adult, setAdult] = useState(queryParams.adults)
+  const [flightClass, setFlightClass] = useState(queryParams.cabin)
 
   const getAirports = async () => {
     if (!airports) {
@@ -58,6 +75,7 @@ const FlightPageHeader = ({ styles }) => {
             name="passengers"
             type="number"
             placeholder="Adults"
+            value={adult}
             onChange={(e) => setAdult(e.target.value)}
           />
           <Input
@@ -65,6 +83,7 @@ const FlightPageHeader = ({ styles }) => {
             name="passengers"
             type="number"
             placeholder="Children"
+            value={children}
             onChange={(e) => setChildren(e.target.value)}
           />
           <Input
@@ -72,6 +91,7 @@ const FlightPageHeader = ({ styles }) => {
             name="passengers"
             type="number"
             placeholder="Infants"
+            value={infants}
             onChange={(e) => setInfants(e.target.value)}
           />
           <CustomSelect
@@ -122,6 +142,7 @@ const FlightPageHeader = ({ styles }) => {
             placeholder="Select Date"
             min={today}
             max={returnDate}
+            value={departureDate}
             onChange={(e) => setDepartureDate(e.target.value)}
           />
           <Input
@@ -130,8 +151,13 @@ const FlightPageHeader = ({ styles }) => {
             name="returnDate"
             type="date"
             placeholder="Select Date"
-            styleProps={tripType !== "Round Trip" ? { display: "none" } : ""}
+            styleProps={
+              !tripType?.includes("Round Trip")
+                ? { display: "none" }
+                : { display: "block" }
+            }
             min={departureDate || today}
+            value={returnDate}
             onChange={(e) => setReturnDate(e.target.value)}
           />
         </div>
@@ -141,11 +167,11 @@ const FlightPageHeader = ({ styles }) => {
             flightClass || ""
           }&children=${children || ""}&departureDate=${
             departureDate || ""
-          }&destination=${toAirport?.iataCode || ""}&infants=${
-            infants || ""
-          }&origin=${fromAirport?.iataCode || ""}&returnDate=${
-            returnDate || ""
-          }`}
+          }&destination=${toAirport || ""}&infants=${infants || ""}&origin=${
+            fromAirport || ""
+          }&returnDate=${
+            tripType === "Round Trip" ? returnDate || "" : ""
+          }&tripType=${tripType || ""}`}
           disabled={
             !(
               fromAirport &&

@@ -100,11 +100,23 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
             <div className={styles.row}>
               <div className={styles.label}>Booking Date & Time</div>
               <div className={styles.value}>
-                {/* <span>Oct 15, 2023, <span>8:45 PM</span></span> */}- - -
+                <span>
+                  {new Date(data?.created_at)?.toDateString()},{" "}
+                  <span>{functions.formatCustomTime(data?.created_at)}</span>
+                </span>
               </div>
             </div>
             <div className={styles.row}>
-              <div className={styles.label}>Flight Cost</div>
+              <div className={styles.label}>Booking Expiration Date</div>
+              <div className={styles.value}>
+                <span>
+                  {new Date(data?.expires_at)?.toDateString()},{" "}
+                  <span>{functions.formatCustomTime(data?.expires_at)}</span>
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Total Cost</div>
               <div className={`${styles.value}`}>
                 <span className="text-bold">
                   {formatMoney(data?.amount, data?.currency)}
@@ -123,7 +135,7 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
             <div className={styles.row}>
               <div className={styles.label}>Return Ticket</div>
               <div className={styles.value}>
-                {data?.inbound?.length > 0 ? "Yes" : "No"}
+                <span>{data?.inbound?.length > 0 ? "Yes" : "No"}</span>
               </div>
             </div>
           </div>
@@ -185,6 +197,16 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
                       data?.outbound?.at(0)?.arrival_time
                     )}
                   </span>
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Flight Duration</div>
+              <div className={styles.value}>
+                <span>
+                  {functions.convertMinutesToHHMM(
+                    data?.outbound?.at(0)?.duration
+                  )}
                 </span>
               </div>
             </div>
@@ -255,6 +277,16 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
                         data?.inbound?.at(0)?.arrival_time
                       )}
                     </span>
+                  </span>
+                </div>
+              </div>
+              <div className={styles.row}>
+                <div className={styles.label}>Flight Duration</div>
+                <div className={styles.value}>
+                  <span>
+                    {functions.convertMinutesToHHMM(
+                      data?.inbound?.at(0)?.duration
+                    )}
                   </span>
                 </div>
               </div>

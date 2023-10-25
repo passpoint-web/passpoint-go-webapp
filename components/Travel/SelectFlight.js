@@ -10,7 +10,7 @@ import { travel } from "@/services/restService"
 // import { ProfileEditIcon } from "@/constants/icons"
 
 const SelectFlight = () => {
-  const [flights, setFlights] = useState([1, 2, 3, 4, 5, 6])
+  const [flights, setFlights] = useState([])
   const searchParams = useSearchParams()
   const queryParams = {
     adults: searchParams.get("adults"),
@@ -30,7 +30,7 @@ const SelectFlight = () => {
 
   useEffect(() => {
     getFlights()
-  }, [])
+  }, [searchParams])
 
   return (
     <div className={`select-flight-wrapper ${styles.row__wrapper}`}>

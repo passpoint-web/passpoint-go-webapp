@@ -48,10 +48,8 @@ const CustomObjectSelect = ({
           onClick={handleClick}
         >
           <div className={styles.content}>
-            {(objKey ? selectedOption?.[objKey] : selectedOption) ? (
-              <p className={styles.option}>
-                {objKey ? selectedOption?.[objKey] : selectedOption}
-              </p>
+            {selectedOption ? (
+              <p className={styles.option}>{selectedOption}</p>
             ) : (
               <p>{placeholder}</p>
             )}
@@ -76,7 +74,7 @@ const CustomObjectSelect = ({
                     ? styles.content_selected
                     : ""
                 }`}
-                onClick={() => handleSelect(option)}
+                onClick={() => handleSelect(option?.[objKey])}
               >
                 <p className={styles.option}>
                   {objKey ? option?.[objKey] : option}
