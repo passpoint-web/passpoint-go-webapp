@@ -552,7 +552,10 @@
 .modal__flight_details {
   /* padding: var(--inner-component-mg); */
   padding: 2rem;
-  min-height: 560px;
+  /* min-height: 400px;
+  max-height: 57vh; */
+  height: 57vh;
+  overflow-y: auto;
 }
 .modal__flight_details_section {
   display: flex;
