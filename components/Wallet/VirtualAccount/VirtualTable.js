@@ -1,11 +1,10 @@
 "use client";
-
 import Link from "next/link";
-import Search from "../Custom/Search";
+import styles from "../../../assets/styles/table.module.css";
+import Search from "@/components/Custom/Search";
 import CustomSelect from "@/components/Custom/Select";
-import styles from "../../assets/styles/table.module.css";
 
-const CustomTable = ({ title, action = "/" }) => {
+const VirtualTable = ({ title, action = "/" }) => {
   return (
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
       <div className={styles.table__outer}>
@@ -94,4 +93,4 @@ const CustomTable = ({ title, action = "/" }) => {
   );
 };
 
-export default CustomTable;
+export default VirtualTable;

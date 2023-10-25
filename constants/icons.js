@@ -2045,3 +2045,42 @@ export const Outflow = () => (
     />
   </svg>
 );
+
+export const AddVirtual = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      d="M15.4193 16.25H12.0859"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M13.75 17.9173V14.584"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M10.1302 9.05768C10.0469 9.04935 9.94691 9.04935 9.85524 9.05768C7.87191 8.99102 6.29691 7.36602 6.29691 5.36602C6.28857 3.32435 7.94691 1.66602 9.98857 1.66602C12.0302 1.66602 13.6886 3.32435 13.6886 5.36602C13.6886 7.36602 12.1052 8.99102 10.1302 9.05768Z"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M9.99219 18.1741C8.47552 18.1741 6.96719 17.7908 5.81719 17.0241C3.80052 15.6741 3.80052 13.4741 5.81719 12.1324C8.10885 10.5991 11.8672 10.5991 14.1589 12.1324"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
