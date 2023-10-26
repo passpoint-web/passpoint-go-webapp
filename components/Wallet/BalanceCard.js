@@ -8,8 +8,33 @@ import AddMoneyModal from './AddMoneyModal'
 import CopyValue from '../CopyValue'
 import { AlertIcon, AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
+import { useEffect } from 'react'
+import { wallet } from '@/services/restService/wallet'
 
 const BalanceCard = ({styles}) => {
+	const createWallet = async () => {
+		try {
+			const response = await wallet.createWallet({
+				"currency":"NGN"
+			})
+		} catch (_err) {
+			console.log(_err)
+
+		} finally {}
+	}
+	const getWallet = async () => {
+		try {
+			const response = await wallet.getWalletDetails()
+			console.log(response)
+		} catch (_err) {
+			console.log(_err)
+
+		} finally {}
+	}
+	useEffect(()=>{
+		// createWallet()
+		// getWallet()
+	},[])
 	const {formatMoney, createUrl} = functions
 	const {replace} = useRouter()
 
@@ -44,8 +69,8 @@ const BalanceCard = ({styles}) => {
 
 	return (
 		<>
-			<CreatePinModal />
-			<AddMoneyModal styles={styles} />
+			{searchParams.get('createPinModal') ? <CreatePinModal /> : <></>}
+			{searchParams.get('addMoneyModal') === 'true' ? <AddMoneyModal styles={styles} /> : <></>}
 			<div className={styles.balance_card}>
 				<div className={styles.lhs}>
 					<h4>Available Balance</h4>

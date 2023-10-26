@@ -43,7 +43,7 @@ const getRequestConfig = () => {
 // });
 
 
-const setConfig = () => {
+export const setConfig = () => {
 	const token = getToken()
 	// console.log(cookies.get('token'))
 	const config = getRequestConfig();
