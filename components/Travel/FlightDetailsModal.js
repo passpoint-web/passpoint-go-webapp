@@ -30,7 +30,7 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
     try {
       const response = await travel.getFlightBooking(id)
       setData(response.data.data)
-      calculateBaseFare(response.data.data.travelers_price)
+      calculateBaseFare(response.data.data)
     } catch (_err) {
       // console.log(_err.response.data.description)
       const { message, description } = _err.response?.data || _err
@@ -40,14 +40,14 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
     }
   }
 
-  const calculateBaseFare = (travelersPrice) => {
+  const calculateBaseFare = (dataParam) => {
     let total = 0
-    travelersPrice.forEach((traveler) => {
+    dataParam.travelers_price.forEach((traveler) => {
       const amountValues = Object.values(traveler)
       total += Number(amountValues[0])
     })
     setBaseFare(total)
-    setFees(Number(data.amount) - total)
+    setFees(Number(dataParam.amount) - total)
     return total
   }
 
