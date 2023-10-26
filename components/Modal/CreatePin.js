@@ -9,7 +9,8 @@ import OtpInput from 'react-otp-input'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 // import { useNotify } from "@/utils/hooks";
 
-const CreatePinModal = () => {
+const CreatePinModal = ({handlePinCreation}) => {
+	const currentModal = 'createPinModal'
 	// const notify = useNotify();
 	const {createUrl} = functions
 	const searchParams = useSearchParams()
@@ -21,8 +22,11 @@ const CreatePinModal = () => {
 	// const [isLoading, setIsLoading] = useState(false);
 	const [feedbackError, setFeedbackError] = useState('')
 	const [modalContent, setModalContent] = useState({
-		heading: '',
-		subHeading: ''
+		heading: 'Confirm Password',
+		subHeading: 'Kindly enter your account password',
+		handleModalCta: ()=>{
+			handleModalFlow('pin')
+		}
 	})
 	const [pins, setPins] = useState({
 		pin: '',
@@ -40,15 +44,16 @@ const CreatePinModal = () => {
 	const [pinCreationModal, setPinCreationModal] = useState('password')
 
 	const handleModalFlow = (val) => {
+		console.log('da')
 		const newParams = new URLSearchParams(searchParams.toString());
 		if (val) {
-			newParams.set('createPinModal', val)
+			// console.log('yoyo')
+			newParams.set(currentModal, val)
 		} else {
-			newParams.delete('createPinModal')
+			newParams.delete(currentModal)
 		}
 		replace(createUrl('/dashboard/wallet', newParams))
 	}
-
 
 	const defineModalContents = (level) => {
 		setPinCreationModal(level)
@@ -67,22 +72,32 @@ const CreatePinModal = () => {
 				heading: 'Create PIN',
 				subHeading: 'Kindly create a unique PIN for your account',
 				handleModalCta: ()=>{
-					handleModalFlow('')
+					handleModalFlow('da')
+					window.setTimeout(()=>{
+						handlePinCreation()
+					}, 2000)
 				}
 			})
 			break;
+		default:
+			setModalContent({
+				handleModalCta: ()=>{
+					handleModalFlow('')
+				}
+			})
 		}
-		// updateInfo(true)
 	}
 
 	useEffect(()=>{
-		defineModalContents(searchParams.get('createPinModal'))
-	},[searchParams.get('createPinModal')])
+		if (['password', 'pin'].includes(searchParams.get(currentModal))) {
+			defineModalContents(searchParams.get(currentModal))
+		}
+	},[searchParams.get(currentModal)])
 
 	return (
 		<ModalWrapper
 			ctaBtnText={modalContent.ctaBtnText}
-			ctaDisabled={searchParams.get('createPinModal') === 'password' ? !password : (pins.pin.length < 4 || pins.confirmPin.length < 4)}
+			ctaDisabled={searchParams.get(currentModal) === 'password' ? !password : searchParams.get(currentModal) === 'pin' ? (pins.pin.length < 4 || pins.confirmPin.length < 4) : false}
 			heading={modalContent.heading}
 			subHeading={modalContent.subHeading}
 			onClose={()=>handleModalFlow('')}
@@ -106,44 +121,44 @@ const CreatePinModal = () => {
 								}
 							/>
 						</Input>
-					</> :
-					<div style={{width: '80%', margin: '0 auto'}}>
-						<Input label={'Create Pin'}
-							label_center={true}>
-							<div className={formStyles.otp_input_four}>
-								<OtpInput
-									value={pins.pin}
-									onChange={(e)=> handlePinsChange({ target: { name: 'pin', value: e } })}
-									numInputs={4}
-									shouldAutoFocus={true}
-									inputType="number"
-									inputMode={null}
-									renderSeparator={<span />}
-									renderInput={(props) => <input {...props} />}
-								/>
-							</div>
-						</Input>
-						<Input
-							label={'Confirm Pin'}
-							label_center={true}
-							error={ctaClicked && pins.pin !== pins.confirmPin}
-							errorMsg={'PINs do not match'}
-							msgPositionCenter={true}
-						>
-							<div className={formStyles.otp_input_four}>
-								<OtpInput
-									value={pins.confirmPin}
-									onChange={(e)=> handlePinsChange({ target: { name: 'confirmPin', value: e } })}
-									numInputs={4}
-									shouldAutoFocus={pins.pin.length ===4}
-									inputType="number"
-									inputMode={null}
-									renderSeparator={<span />}
-									renderInput={(props) => <input {...props} />}
-								/>
-							</div>
-						</Input>
-					</div>
+					</> : searchParams.get('createPinModal') === 'pin' ?
+						<div style={{width: '80%', margin: '0 auto'}}>
+							<Input label={'Create Pin'}
+								label_center={true}>
+								<div className={formStyles.otp_input_four}>
+									<OtpInput
+										value={pins.pin}
+										onChange={(e)=> handlePinsChange({ target: { name: 'pin', value: e } })}
+										numInputs={4}
+										shouldAutoFocus={true}
+										inputType="number"
+										inputMode={null}
+										renderSeparator={<span />}
+										renderInput={(props) => <input {...props} />}
+									/>
+								</div>
+							</Input>
+							<Input
+								label={'Confirm Pin'}
+								label_center={true}
+								error={ctaClicked && pins.pin !== pins.confirmPin}
+								errorMsg={'PINs do not match'}
+								msgPositionCenter={true}
+							>
+								<div className={formStyles.otp_input_four}>
+									<OtpInput
+										value={pins.confirmPin}
+										onChange={(e)=> handlePinsChange({ target: { name: 'confirmPin', value: e } })}
+										numInputs={4}
+										shouldAutoFocus={pins.pin.length ===4}
+										inputType="number"
+										inputMode={null}
+										renderSeparator={<span />}
+										renderInput={(props) => <input {...props} />}
+									/>
+								</div>
+							</Input>
+						</div> : <></>
 				}
 			</form>
 

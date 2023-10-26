@@ -5,6 +5,7 @@ import functions from '@/utils/functions'
 import BorderIconBtn from '../Btn/BorderIconBtn'
 import {useRouter,  useSearchParams } from 'next/navigation'
 import AddMoneyModal from './AddMoneyModal'
+import TransferModals from './TransferModals'
 import CopyValue from '../CopyValue'
 import { AlertIcon, AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
@@ -49,28 +50,29 @@ const BalanceCard = ({styles}) => {
 		replace(createUrl('/dashboard/wallet', newParams))
 	}
 
-	const handleWithdrawModal = (query, val) => {
+	const handleModals = (query, val) => {
+		console.log(query, val)
 		const newParams = new URLSearchParams(searchParams.toString());
-		if (query === 'createPinModal') {
-			if (val) {
-				newParams.set('createPinModal', val)
-			} else {
-				newParams.delete('createPinModal')
-			}
-		} else if (query === 'transferModal') {
-			if (val) {
-				newParams.set('transferModal', val)
-			} else {
-				newParams.delete('transferModal')
-			}
+		if (val) {
+			newParams.set(query, val)
+		} else {
+			newParams.delete(query)
 		}
 		replace(createUrl('/dashboard/wallet', newParams))
 	}
 
+	useEffect(()=>{
+		// console.log(searchParams)
+	},[searchParams])
+	useEffect(()=>{
+		console.log(searchParams.get('createPinModal'))
+	},[searchParams.get('createPinModal')])
+
 	return (
 		<>
-			{searchParams.get('createPinModal') ? <CreatePinModal /> : <></>}
+			{searchParams.get('createPinModal') ? <CreatePinModal handlePinCreation={()=>handleModals('transferModal', 'bank')} /> : <></>}
 			{searchParams.get('addMoneyModal') === 'true' ? <AddMoneyModal styles={styles} /> : <></>}
+			{searchParams.get('transferModal') ? <TransferModals styles={styles} /> : <></>}
 			<div className={styles.balance_card}>
 				<div className={styles.lhs}>
 					<h4>Available Balance</h4>
@@ -81,7 +83,7 @@ const BalanceCard = ({styles}) => {
 						<BorderIconBtn
 							bdColor='#fff'
 							classProps='border i sd'
-							onClick={()=>handleAddMoneyModal(true)}
+							onClick={()=>handleModals('addMoneyModal', true)}
 						>
 							<AddMoneyIcon />
             Add money
@@ -90,7 +92,7 @@ const BalanceCard = ({styles}) => {
 							bgColor='#fff'
 							classProps='no-border i sd'
 							styleProps={{color: '#009EC4'}}
-							onClick={()=>handleWithdrawModal('createPinModal', 'password')}
+							onClick={()=>handleModals('createPinModal', 'password')}
 						>
 							<WithdrawMoneyIcon /> Withdraw
 						</BorderIconBtn>
