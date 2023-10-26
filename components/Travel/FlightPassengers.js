@@ -12,7 +12,7 @@ import Input from "../Dashboard/Input"
 import PrimaryBtn from "../Btn/Primary"
 import CustomSelect from "../Custom/Select"
 
-const FlightPassengers = ({ passengersParent }) => {
+const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   const [passengers, setPassengers] = useState(passengersParent)
   const [passengerGenders, setPassengerGenders] = useState([])
   const [activePassenger, setActivePassenger] = useState(1)
@@ -30,15 +30,8 @@ const FlightPassengers = ({ passengersParent }) => {
       title: "",
       email: "",
       phone_number: "",
-      documents: {
-        number: "",
-        issuing_date: "",
-        expiry_date: "",
-        issuing_country: "",
-        nationality_country: "",
-        document_type: "",
-        holder: false,
-      },
+      passport_expiry: "",
+      passport_issue: "",
     }
     tempPassengers.push(newPassenger)
     setPassengers(tempPassengers)
@@ -68,6 +61,7 @@ const FlightPassengers = ({ passengersParent }) => {
   const saveAndContinue = (index) => {
     if (index + 1 === passengers.length) {
       setCollapsed(true)
+      sortPassengersData()
     } else {
       setActivePassenger(activePassenger + 1)
     }
@@ -139,11 +133,13 @@ const FlightPassengers = ({ passengersParent }) => {
                   ? { display: "block" }
                   : { display: "none" }
               }
+              onSubmit={(e) => e.preventDefault()}
             >
               <div className="form-row">
                 <Input
                   label="First Name"
                   placeholder="John"
+                  // value={passenger.first_name}
                   onChange={(e) =>
                     updateValue("first_name", e.target.value, passenger?.id)
                   }
@@ -152,7 +148,7 @@ const FlightPassengers = ({ passengersParent }) => {
                 <Input
                   label="Last Name"
                   placeholder="Smith"
-                  value={passenger.last_name}
+                  // value={passenger.last_name}
                   onChange={(e) =>
                     updateValue("last_name", e.target.value, passenger?.id)
                   }
@@ -163,37 +159,47 @@ const FlightPassengers = ({ passengersParent }) => {
                 label="Email Address"
                 placeholder="kelechi@travels.com"
                 name="email"
-                value={passenger.email}
+                // value={passenger.email}
                 onChange={(e) =>
                   updateValue("email", e.target.value, passenger?.id)
                 }
               />
-              <Input
-                label="Date of Birth"
-                placeholder="Leave a Message"
-                type="date"
-                name="message"
-                value={passenger.dob}
-                onChange={(e) =>
-                  updateValue("dob", e.target.value, passenger?.id)
-                }
-              />
               <div className="form-row">
+                <Input
+                  label="Date of Birth"
+                  placeholder="Leave a Message"
+                  type="date"
+                  name="message"
+                  // value={passenger.dob}
+                  onChange={(e) =>
+                    updateValue("dob", e.target.value, passenger?.id)
+                  }
+                />
                 <Input
                   label="Passport Number"
                   placeholder="A000123456"
                   name="passport"
-                  value={passenger.passport_no}
+                  // value={passenger.passport_no}
                   onChange={(e) =>
                     updateValue("passport_no", e.target.value, passenger?.id)
                   }
                 />
+              </div>
+              <div className="form-row">
                 <Input
-                  label="Expiry Date"
-                  placeholder="A000123456"
+                  label="Passport Issue Date"
+                  type="date"
+                  name="passport-issue"
+                  // value={passenger.last_name}
+                  onChange={(e) =>
+                    updateValue("passport_issue", e.target.value, passenger?.id)
+                  }
+                />
+                <Input
+                  label="Passport Expiry Date"
                   type="date"
                   name="passport-expiry"
-                  value={passenger.last_name}
+                  // value={passenger.last_name}
                   onChange={(e) =>
                     updateValue(
                       "passport_expiry",

@@ -1,6 +1,6 @@
 "use client"
 
-import { getSelectedFlight } from "@/services/localService"
+import { getSelectedFlight, getCredentials } from "@/services/localService"
 import { travel } from "@/services/restService"
 import { useEffect, useState } from "react"
 // import FlightPageHeader from "./FlightPageHeader"
@@ -12,10 +12,32 @@ const PayFlightPage = ({ styles }) => {
   const selectedFlight = getSelectedFlight()
   const [passengers, setPassengers] = useState([])
 
-  const makeFlightBooking = async () => {
+  const sortPassengersData = () => {
+    const credentials = getCredentials()
+    const tempPassengers = []
+    passengers.forEach((passenger) => {
+      const tempPassenger = { ...passenger }
+      tempPassenger.title = passenger.gender === "male" ? "mr" : "miss"
+      tempPassenger.phone_number = credentials.phoneNumber
+      tempPassenger.documents = {
+        number: passenger.passport_no,
+        issuing_date: passenger.passport_issue,
+        expiry_date: passenger.passport_expiry,
+        issuing_country: "NG",
+        nationality_country: "NG",
+        document_type: "passport",
+        holder: true,
+      }
+      tempPassengers.push(tempPassenger)
+    })
+    console.log(tempPassengers)
+    makeFlightBooking(tempPassengers)
+  }
+
+  const makeFlightBooking = async (tempPassengers) => {
     await travel.createFlightBooking({
       flightId: selectedFlight?.id,
-      passengers: passengers,
+      passengers: tempPassengers,
     })
   }
 
@@ -54,6 +76,7 @@ const PayFlightPage = ({ styles }) => {
       <FlightPassengers
         passengersParent={passengers}
         setPassengersParent={setPassengers}
+        sortPassengersData={sortPassengersData}
       />
       <FlightPaymentOptions />
     </div>
