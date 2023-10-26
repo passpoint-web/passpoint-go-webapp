@@ -61,4 +61,29 @@
   color: var(--grey-3);
 }
 .virtualDetail_general p {
+  font-size: 14px;
+  font-family: var(--graphikRegular);
+  color: var(--grey-2);
+}
+.virtualDetail_general p span {
+  color: var(--grey-3);
+}
+.virtualDetail_general .fundCss {
+  font-family: var(--graphikMedium);
+  color: var(--sky-blue);
+}
+.virtualDetail_general .statusCss {
+  background-color: #e9f9f4;
+  border-radius: 4px;
+  color: #23c38e;
+  padding: 4px 14px;
+}
+.virtualDetail_actions {
+  padding: var(--btn-padding);
+  gap: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+.virtualDetail_actions button {
+  width: fit-content;
 }

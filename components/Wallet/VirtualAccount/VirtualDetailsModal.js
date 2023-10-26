@@ -6,33 +6,31 @@ import React, { useState } from "react";
 const virtualDetailsData = [
   {
     title: "Allocated funds",
-    result: "2,000,000.00",
+    value: "₦ 200,000.00",
     cssType: "fund",
   },
   {
     title: "Account Name",
-    result: "2,000,000.00",
-    cssType: "fund",
+    value: "Temporary Account",
   },
   {
     title: "Account Number ",
-    result: "2,000,000.00",
-    cssType: "fund",
+    value: "0123456789",
   },
   {
     title: "Date Requested",
-    result: "2,000,000.00",
-    cssType: "fund",
+    value: "Oct 15, 2023,",
+    time: "8:45 PM",
   },
   {
     title: "Date Issued",
-    result: "2,000,000.00",
-    cssType: "fund",
+    value: "Oct 15, 2023,",
+    time: "8:45 PM",
   },
   {
     title: "Account Status",
-    result: "2,000,000.00",
-    cssType: "fund",
+    value: "Active",
+    cssType: "status",
   },
 ];
 
@@ -80,10 +78,12 @@ const VirtualDetailsModal = ({
         <main className={styles.virtualDetail}>
           <section>
             {virtualDetailsData.map((item, i) => (
-              <div className={`${styles.virtualDetail_general}`}>
+              <div className={styles.virtualDetail_general}>
                 <label>{item.title}</label>
                 <div>
-                  <p>{item.result}</p>
+                  <p className={`${styles[`${item.cssType}Css`]}`}>
+                    {item.value} <span>{item.time}</span>
+                  </p>
                 </div>
               </div>
             ))}
@@ -93,6 +93,11 @@ const VirtualDetailsModal = ({
       )}
 
       {activeTab == tabs[1] && <main>History</main>}
+
+      <div className={styles.virtualDetail_actions}>
+        <button className="primary_btn">Deactivate</button>
+        <button className="primary_btn">Fund Account</button>
+      </div>
     </ModalWrapper>
   );
 };
