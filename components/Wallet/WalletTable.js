@@ -1,6 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Search from "../Custom/Search";
@@ -11,23 +10,9 @@ import formStyles from "@/assets/styles/auth-screens.module.css";
 import { useEffect, useState } from "react";
 import ModalWrapper from "../Modal/ModalWrapper";
 import Input from "../Dashboard/Input";
+import Button from "../Btn/Button";
 import FileUpload from "../FileUpload";
 import ActionFeedbackCard from "../ActionFeedbackCard";
-=======
-import Link from "next/link"
-import { useRouter, useSearchParams } from 'next/navigation'
-import Search from "../Custom/Search"
-import CustomSelect from "@/components/Custom/Select"
-import tableStyles from "../../assets/styles/table.module.css"
-import functions from "@/utils/functions"
-import formStyles from '@/assets/styles/auth-screens.module.css'
-import { useEffect, useState } from "react"
-import ModalWrapper from "../Modal/ModalWrapper"
-import Input from "../Dashboard/Input"
-import Button from "../Btn/Button"
-import FileUpload from "../FileUpload"
-import ActionFeedbackCard from "../ActionFeedbackCard"
->>>>>>> d71ba410cfd3b9e75066bab8acc13845fbd910b8
 
 const WalletTable = ({ title, action = "/", styles }) => {
   const { formatMoney, createUrl } = functions;
@@ -192,7 +177,6 @@ const WalletTable = ({ title, action = "/", styles }) => {
     </div>
   );
 
-<<<<<<< HEAD
   const ReportTransactionContent = () => (
     <form className={formStyles.form}>
       <Input
@@ -226,46 +210,6 @@ const WalletTable = ({ title, action = "/", styles }) => {
       />
     </form>
   );
-=======
-	const ReportTransactionContent = () => (
-		<form className={formStyles.form}>
-			<Input
-				id='selectIssueType'
-				label='Issue Type'
-				placeholder="Select Issue Type"
-				error={ctaClicked}
-				errorMsg='Atleast one social media link is required'
-			>
-				<CustomSelect
-					fieldError={false}
-					selectOptions={transactionReportIssues}
-					emitSelect={(s) => handleIssueSelect(s)}
-				/>
-			</Input>
-			<Input
-				label="Description"
-				error={false}
-				errorMsg={''}
-				id="description"
-			>
-				<textarea
-					placeholder="Tell us about this transaction"
-					id="businessDesc"
-					name="businessDesc"
-					value={''}
-					onChange={''}
-				/>
-			</Input>
-			<FileUpload
-				subTitle='Add an Image that best describes your report (optional)'
-				base64={''}
-				handlefileUpload={(e)=>setBusinessLogo(e)}
-				error={ctaClicked}
-				errorMsg='Business Logo is required'
-			/>
-		</form>
-	)
->>>>>>> d71ba410cfd3b9e75066bab8acc13845fbd910b8
 
   const TransactionModals = () => (
     <ModalWrapper
@@ -407,33 +351,4 @@ const WalletTable = ({ title, action = "/", styles }) => {
   );
 };
 
-<<<<<<< HEAD
 export default WalletTable;
-=======
-										</td>
-										<td>
-											{/* <Link className="secondary_btn outline_btn"
-												href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}>
-                    			View Details
-											</Link> */}
-											<Button className='outline_btn secondary_btn'
-												text='View Details'
-												onClick={()=>handleModalFlow('transaction')}
-											/>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-					<div className={tableStyles.table__pagination}>
-          Showing 10 items out of 250 results found
-					</div>
-				</div>
-			</div>
-		</>
-	)
-}
-
-export default WalletTable
->>>>>>> d71ba410cfd3b9e75066bab8acc13845fbd910b8

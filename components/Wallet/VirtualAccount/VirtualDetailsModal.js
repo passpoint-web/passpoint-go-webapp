@@ -78,7 +78,7 @@ const VirtualDetailsModal = ({
         <main className={styles.virtualDetail}>
           <section>
             {virtualDetailsData.map((item, i) => (
-              <div className={styles.virtualDetail_general}>
+              <div key={i} className={styles.virtualDetail_general}>
                 <label>{item.title}</label>
                 <div>
                   <p className={`${styles[`${item.cssType}Css`]}`}>

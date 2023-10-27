@@ -80,14 +80,13 @@
   text-decoration: none;
 }
 
-
 /* transaction modal */
 
 .modal__wallet_details {
   /* padding: var(--inner-component-mg); */
   padding: 2rem 0;
   /* min-height: 560px; */
-  min-width: 500px
+  min-width: 500px;
 }
 .modal__wallet_details_section {
   display: flex;
@@ -119,7 +118,6 @@
   color: var(--grey-3);
 }
 
-
 /* Add money modal */
 
 .add_money_modal__content {
@@ -148,7 +146,7 @@
   font-size: 14px;
 }
 
-.modal__details >div {
+.modal__details > div {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -297,3 +295,44 @@
 }
 
 /* end  */
+
+/* transfer pin and details page  */
+.transferPin {
+  border-radius: 12px;
+  border: 1px solid var(--grey-5);
+  background: var(--input-focus-bg);
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.2);
+  padding: var(--btn-padding);
+  display: grid;
+  gap: var(--btn-padding);
+}
+.transferPin_details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.transferPin_details label {
+  font-size: 14px;
+  color: var(--grey-3);
+}
+.transferPin_details .skyBlueCss {
+  font-family: var(--graphikMedium);
+  color: var(--sky-blue);
+}
+.transferPin_details p {
+  font-size: 14px;
+  color: var(--grey-1);
+}
+.transferPin_details span {
+  font-size: 12px;
+  color: var(--grey-3);
+}
+.tranferPin_pin {
+  padding: 32px 0;
+  border-radius: 12px;
+  border: 1px solid var(--grey-5);
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.2);
+    margin-top: 24px;
+}
