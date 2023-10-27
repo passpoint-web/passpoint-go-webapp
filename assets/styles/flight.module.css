@@ -138,7 +138,6 @@
   gap: 0.5rem;
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  ;
   color: var(--grey-2);
 }
 
@@ -237,7 +236,6 @@
   right: auto;
   margin: auto;
   font-size: 0.9rem;
-  ;
   text-align: center;
   width: 60px;
   margin-left: -25px;
@@ -303,7 +301,6 @@
   margin-bottom: 0.5rem;
 }
 .filter__input_col_one > span {
-  ;
   color: var(--grey-2);
 }
 .filter__input_col_two {
@@ -312,9 +309,8 @@
   width: 100%;
   margin-top: 1.2rem;
 }
-.filter__input_col_two > div {
-  ;
-}
+/* .filter__input_col_two > div {
+} */
 .range__ctn {
   position: relative;
   width: 100%;
@@ -454,7 +450,6 @@
 .payment__successful p {
   font-size: 1.15rem;
   margin-top: 1rem;
-  ;
 }
 .payment__successful a {
   width: 250px;
@@ -508,6 +503,7 @@
 .modal__bottom_actions button:nth-child(2) {
   background: var(--negative);
 }
+
 .modal__flight_details {
   /* padding: var(--inner-component-mg); */
   padding: 2rem;
@@ -533,12 +529,10 @@
 }
 .modal__flight_details .label {
   width: 200px;
-  ;
   font-size: 1.15rem;
   color: var(--grey-3);
 }
 .modal__flight_details .value span {
-  ;
   font-size: 1.15rem;
 }
 .modal__flight_details .value > span > span {

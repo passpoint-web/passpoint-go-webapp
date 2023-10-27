@@ -14,6 +14,22 @@
   grid-template-columns: 2fr 2fr 1fr 1fr;
   gap: 1rem;
 }
+
+.table__main th {
+  font-family: var(--graphikRegular);
+  letter-spacing: 0.6px;
+}
+
+.table__main td > div.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.table__main td h4 {
+  color: var(--grey-1);
+  font-family: var(--graphikRegular);
+}
+
 .table__main th:nth-child(1),
 .table__main td:nth-child(1) {
   width: 15%;

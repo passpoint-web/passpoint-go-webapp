@@ -67,7 +67,8 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
 			</div>
 
 			{/* MAIN FLIGHT DETAILS CONTENT - GENERAL */}
-			{activeTab === tabs[0] && (<div className={styles.modal__flight_details}>
+			{activeTab === tabs[0] && (
+			<div className={styles.modal__flight_details}>
 				<div className={styles.modal__flight_details_section}>
 					<div className={styles.row}>
 						<div className={styles.label}>

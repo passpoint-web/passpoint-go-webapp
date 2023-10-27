@@ -1,37 +1,22 @@
 @font-face {
   font-family: "GraphikMedium";
   src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
-  /* src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf")
-      format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikMedium.otf") format("truetype"); */
-  /* font-weight: 500; */
+
 }
 
 @font-face {
   font-family: "GraphikBold";
   src: url("../fonts/Graphik-Font-Family/GraphikBold.otf");
-  /* src: url("../fonts/Graphik-Font-Family/GraphikBold.otf")
-      format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikBold.otf") format("truetype"); */
-  /* font-weight: 700; */
 }
 
 @font-face {
   font-family: "GraphikLight";
   src: url("../fonts/Graphik-Font-Family/GraphikLight.otf");
-  /* src: url("../fonts/Graphik-Font-Family/GraphikLight.otf")
-      format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikLight.otf") format("truetype"); */
-  /* font-weight: light; */
 }
 
 @font-face {
   font-family: "GraphikExtraLight";
   src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf");
-  /* src: url("../fonts/Graphik-Font-Family/GraphikExtralight.otf")
-      format("embedded-opentype"),
-    url("../fonts/Graphik-Font-Family/GraphikExtralight.otf") format("truetype"); */
-  /* font-weight: lighter; */
 }
 
 @font-face {
@@ -403,6 +388,29 @@ button.small {
   height: var(--btn-height-sm);
 }
 
+.border.i.sd,
+.no-border.i.sd {
+  height: var(--btn-height);
+  padding: 0 var(--btn-padding);
+  border-radius: var(--btn-br);
+  display: flex;
+  align-items: center; 
+  gap: 10px;
+}
+
+.border.i.sd {
+
+}
+
+.no-border.sd {
+  height: var(--btn-height);
+  padding: 0 var(--btn-padding);
+  border-radius: var(--btn-br);
+  display: flex;
+  align-items: center; 
+  gap: 10px;
+}
+
 .passpoint-logo {
   display: flex;
   align-items: center;
@@ -434,6 +442,11 @@ button.secondary,
   border: 1px solid var(--grey-5);
   background-color: unset;
   box-shadow: var(--btn-secondary-shadow);
+}
+
+button.negative {
+  border-color: var(--negative-box-shadow);
+  color: var(--negative);
 }
 
 .outline_btn {
@@ -756,6 +769,7 @@ form {
 
 .text-blue {
   color: var(--sky-blue);
+  font-family: var(--graphikMedium);
 }
 
 .capitalize {
@@ -770,7 +784,10 @@ form {
   text-transform: lowercase;
 }
 
-.success-circle {
+.pending-circle,
+.success-circle,
+.incoming-circle,
+.outgoing-circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -778,74 +795,61 @@ form {
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  background: #23c38e;
   display: inline-block;
 }
 
+.success-circle {
+  background: #23c38e;
+}
+
 .pending-circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
   background: #e9b500;
+}
+
+.incoming-circle {
+  background-color: var(--sky-blue);
+}
+
+.outgoing-circle {
+  background-color: var(--negative);
+}
+
+.primary-tag,
+.success-tag,
+.completed-tag,
+.confirmed-tag,
+.pending-tag,
+.failed-tag {
+  font-family: var(--graphikRegular);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
   display: inline-block;
 }
 
 .primary-tag {
   background: var(--sky-blue-light);
   color: var(--sky-blue);
-  font-family: var(--graphikRegular);
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  display: inline-block;
 }
 
-.success-tag {
+.success-tag,
+.confirmed-tag,
+.completed-tag {
   background: #e9f9f4;
   color: #23c38e;
-  font-family: var(--graphikRegular);
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  display: inline-block;
 }
 
 .pending-tag {
   background: #fffae7;
   color: #e9b500;
-  padding: 0.2rem 1rem;
-  font-family: var(--graphikRegular);
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  display: inline-block;
 }
 
 .failed-tag {
   background: #fee8e8;
   color: #f21818;
-  padding: 0.2rem 1rem;
-  font-family: var(--graphikRegular);
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  display: inline-block;
 }
 
 ol,

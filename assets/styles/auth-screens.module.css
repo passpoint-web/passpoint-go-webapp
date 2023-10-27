@@ -410,6 +410,7 @@
   color: var(--grey-1);
 }
 
+.form_group .otp_input_four > div,
 .form_group .otp_input > div {
   display: flex;
   justify-content: space-between;
@@ -425,6 +426,17 @@
   background-color: #fff;
 }
 
+.form_group .otp_input_four > div input {
+  height: 64px;
+  width: 22% !important;
+  max-width: 64px;
+  font-size: 24px;
+  font-family: "GraphikMedium";
+  font-weight: 500;
+  background-color: #fff;
+}
+
+.form .otp_input_four > div input:focus,
 .form .otp_input > div input:focus {
   background-color: var(--input-focus-bg);
 }

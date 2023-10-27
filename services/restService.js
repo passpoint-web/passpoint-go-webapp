@@ -4,10 +4,10 @@ import { getToken } from "./localService";
 // import { Redirect } from 'next';
 
 const restAgent = axios.create({
-  baseURL: "https://api.jessecoders.com/passpointGo/v1/",
-  headers: {
-    "Content-Type": "application/json",
-  },
+	baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+	headers: {
+		"Content-Type": "application/json",
+	},
 });
 
 const flightRestAgent = axios.create({
@@ -25,10 +25,10 @@ const notifyAndAccessRestAgent = axios.create({
 });
 
 const getRequestConfig = () => {
-  return {
-    headers: {},
-    params: {},
-  };
+	return {
+		headers: {},
+		params: {},
+	};
 };
 
 // restAgent.interceptors.response.use(undefined, (error) => {
@@ -42,13 +42,13 @@ const getRequestConfig = () => {
 // 	}
 // });
 
-const setConfig = () => {
-  const token = getToken();
-  // console.log(cookies.get('token'))
-  const config = getRequestConfig();
-  config.headers.Authorization = `Bearer ${token}`;
-  return config;
-};
+export const setConfig = () => {
+	const token = getToken()
+	// console.log(cookies.get('token'))
+	const config = getRequestConfig();
+	config.headers.Authorization = `Bearer ${token}`
+	return config
+}
 
 const setTravelConfig = () => {
 	// const token = getToken()
@@ -59,57 +59,57 @@ const setTravelConfig = () => {
 }
 
 export const registerUser = (path, data) => {
-  return restAgent.post(path, data);
+	return restAgent.post(path, data);
 };
 
 export const verifyEmailOtp = (data) => {
-  return restAgent.post("verifyUserOtp", data);
+	return restAgent.post("verifyUserOtp", data);
 };
 
 export const login = (data) => {
-  return restAgent.post("login", data);
+	return restAgent.post("login", data);
 };
 
 export const forgotPassword = (data) => {
-  return restAgent.post("forgotPassword", data);
+	return restAgent.post("forgotPassword", data);
 };
 
 export const resetPassword = (data) => {
-  return restAgent.post("resetPassword", data);
+	return restAgent.post("resetPassword", data);
 };
 
 export const resendOtp = (data) => {
-  return restAgent.post("resendOtp", data);
+	return restAgent.post("resendOtp", data);
 };
 
 export const authenticate = {
-  registerUser: (path, data) => {
-    return restAgent.post(path, data);
-  },
+	registerUser: (path, data) => {
+		return restAgent.post(path, data);
+	},
 
-  verifyEmailOtp: (data) => {
-    return restAgent.post("verifyUserOtp", data);
-  },
+	verifyEmailOtp: (data) => {
+		return restAgent.post("verifyUserOtp", data);
+	},
 
-  login: (data) => {
-    return restAgent.post("login", data);
-  },
+	login: (data) => {
+		return restAgent.post("login", data);
+	},
 
-  forgotPassword: (data) => {
-    return restAgent.post("forgotPassword", data);
-  },
+	forgotPassword: (data) => {
+		return restAgent.post("forgotPassword", data);
+	},
 
-  resetPassword: (data) => {
-    return restAgent.post("resetPassword", data);
-  },
+	resetPassword: (data) => {
+		return restAgent.post("resetPassword", data);
+	},
 
-  resendOtp: (data) => {
-    return restAgent.post("resendOtp", data);
-  },
+	resendOtp: (data) => {
+		return restAgent.post("resendOtp", data);
+	},
 };
 
 export const metrics = () => {
-  return restAgent.get("dashboardMetrics", setConfig());
+	return restAgent.get("dashboardMetrics", setConfig());
 };
 
 export const publicProfile = {
@@ -143,32 +143,32 @@ export const publicProfile = {
 }
 
 export const kyc = {
-  getKycDetails: () => {
-    return restAgent.get("getKycDetails", setConfig());
-  },
-  uploadKycIdentity: (data) => {
-    return restAgent.post("kycProofCooperateIdentity", data, setConfig());
-  },
-  uploadKycAddress: (data) => {
-    return restAgent.post("kycProofCooperateAddress", data, setConfig());
-  },
-  uploadKycBusiness: (data) => {
-    return restAgent.post("kycProofCooperateURL", data, setConfig());
-  },
-  uploadKycOwnership: (data) => {
-    return restAgent.post("kycProofCooperateOwnership", data, setConfig());
-  },
-  uploadIndIdentity: (data) => {
-    return restAgent.post("kycProofIndividualIdentity", data, setConfig());
-  },
-  uploadIndAddress: (data) => {
-    return restAgent.post("kycProofIndividualAddress", data, setConfig());
-  },
+	getKycDetails: () => {
+		return restAgent.get("getKycDetails", setConfig());
+	},
+	uploadKycIdentity: (data) => {
+		return restAgent.post("kycProofCooperateIdentity", data, setConfig());
+	},
+	uploadKycAddress: (data) => {
+		return restAgent.post("kycProofCooperateAddress", data, setConfig());
+	},
+	uploadKycBusiness: (data) => {
+		return restAgent.post("kycProofCooperateURL", data, setConfig());
+	},
+	uploadKycOwnership: (data) => {
+		return restAgent.post("kycProofCooperateOwnership", data, setConfig());
+	},
+	uploadIndIdentity: (data) => {
+		return restAgent.post("kycProofIndividualIdentity", data, setConfig());
+	},
+	uploadIndAddress: (data) => {
+		return restAgent.post("kycProofIndividualAddress", data, setConfig());
+	},
 };
 export const accountProfile = {
-  changePassword: (data) => {
-    return restAgent.post("changeAccountPassword", data, setConfig());
-  },
+	changePassword: (data) => {
+		return restAgent.post("changeAccountPassword", data, setConfig());
+	},
 };
 
 export const travel = {
