@@ -1,42 +1,40 @@
-"use client";
-import Link from "next/link";
-import Search from "../Custom/Search";
-import CustomSelect from "@/components/Custom/Select";
-import styles from "../../assets/styles/table.module.css";
-import { useEffect, useState } from "react";
-import { travel } from "@/services/restService";
-import { useNotify } from "@/utils/hooks";
-import functions from "@/utils/functions";
+"use client"
+import Link from "next/link"
+import Search from "../Custom/Search"
+import CustomSelect from "@/components/Custom/Select"
+import styles from "../../assets/styles/table.module.css"
+import { useEffect, useState } from "react"
+import { travel } from "@/services/restService"
+import { useNotify } from "@/utils/hooks"
+import functions from "@/utils/functions"
 
 const FlightTable = ({ title }) => {
-  const { formatMoney } = functions;
-  const notify = useNotify();
-  const [data, setData] = useState([]);
+  const { formatMoney } = functions
+  const notify = useNotify()
+  const [data, setData] = useState([])
   // eslint-disable-next-line no-unused-vars
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0)
   // eslint-disable-next-line no-unused-vars
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(100)
   const getFlightBookings = async () => {
     try {
-      const response = await travel.getFlightBookings({ page, pageSize });
-      console.log(response.data.data);
-      const { content } = response.data.data;
-      console.log(content);
+      const response = await travel.getFlightBookings({ page, pageSize })
+      const { content } = response.data.data
       if (content) {
-        setData(content);
+        setData(content)
       }
     } catch (_err) {
-      const { message } = _err.response?.data || _err;
-      notify("error", message);
+      const { message } = _err.response?.data || _err
+      notify("error", message)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
   useEffect(() => {
-    getFlightBookings();
-  }, []);
+    getFlightBookings()
+  }, [])
   return (
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
       <div className={styles.table__outer}>
@@ -76,7 +74,9 @@ const FlightTable = ({ title }) => {
             <tbody>
               {data.map((c, i) => (
                 <tr key={i}>
-                  <td className="text-bold text-blue">{c.reference}</td>
+                  <td className="text-bold text-blue">
+                    {c.reference || "No Reference"}
+                  </td>
                   <td>Flights</td>
                   <td>
                     {"--"}
@@ -94,15 +94,20 @@ const FlightTable = ({ title }) => {
                     {formatMoney(c.amount, c.currency)}
                   </td>
                   <td>
-                    {"--"}
-                    {/* <div className="pending-circle" /> Not yet paid */}
-
-                    {/* <div className="success-circle" /> Paid */}
+                    {c.amount ? (
+                      <>
+                        <div className="success-circle" /> Paid
+                      </>
+                    ) : (
+                      <>
+                        <div className="pending-circle" /> Not yet paid
+                      </>
+                    )}
                   </td>
                   <td>
                     <Link
                       className="secondary_btn outline_btn"
-                      href={`./flights?id=${c.id}`}
+                      href={`./flights?id=${c.reference}`}
                     >
                       View Details
                     </Link>
@@ -113,11 +118,11 @@ const FlightTable = ({ title }) => {
           </table>
         </div>
         <div className={styles.table__pagination}>
-          Showing 10 items out of 250 results found
+          Showing {data?.length} items out of {data?.length} results found
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default FlightTable;
