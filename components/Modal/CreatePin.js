@@ -8,6 +8,9 @@ import functions from "@/utils/functions"
 import OtpInput from 'react-otp-input'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 // import { useNotify } from "@/utils/hooks";
+import { authenticate } from '@/services/restService';
+import { saveCredentials, saveToken } from "@/services/localService";
+import { getCredentials } from '@/services/localService';
 
 const CreatePinModal = ({handlePinCreation}) => {
 	const currentModal = 'createPinModal'
@@ -16,6 +19,7 @@ const CreatePinModal = ({handlePinCreation}) => {
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
 	const [password, setPassword] = useState('')
+	const [isLoading, setIsLoading] = useState(false);
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [pinCreated, setPinCreated] = useState(false)
 	// const [allFieldsValid, setAllFieldsValid] = useState(false);
@@ -55,6 +59,25 @@ const CreatePinModal = ({handlePinCreation}) => {
 		replace(createUrl('/dashboard/wallet', newParams))
 	}
 
+	const confirmPassword = async () => {
+		try {
+			setIsLoading(true);
+			const response = await authenticate.login({
+				email: getCredentials().email,
+				password
+			});
+			const {data, token} = response.data;
+			saveToken(token)
+			saveCredentials(data);
+			handleModalFlow('pin')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err;
+			setFeedbackError(message)
+		} finally {
+			setIsLoading(false);
+		}
+	}
+
 	const defineModalContents = (level) => {
 		setPinCreationModal(level)
 		switch (level) {
@@ -63,7 +86,7 @@ const CreatePinModal = ({handlePinCreation}) => {
 				heading: 'Confirm Password',
 				subHeading: 'Kindly enter your account password',
 				handleModalCta: ()=>{
-					handleModalFlow('pin')
+					confirmPassword()
 				}
 			})
 			break;
@@ -99,6 +122,7 @@ const CreatePinModal = ({handlePinCreation}) => {
 			ctaBtnText={modalContent.ctaBtnText}
 			ctaDisabled={searchParams.get(currentModal) === 'password' ? !password : searchParams.get(currentModal) === 'pin' ? (pins.pin.length < 4 || pins.confirmPin.length < 4) : false}
 			heading={modalContent.heading}
+			loading={isLoading}
 			subHeading={modalContent.subHeading}
 			onClose={()=>handleModalFlow('')}
 			handleCta={modalContent.handleModalCta}

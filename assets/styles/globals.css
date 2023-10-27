@@ -123,7 +123,7 @@
   --btn-br-md: 8px;
   --btn-br-sm: 6px;
   --btn-padding: 24px;
-  --btn-disabled: var(--grey-5);
+  --btn-disabled: var(--grey-4);
   --btn-height-md: 40px;
   --btn-height-sm: 32px;
   --btn-secondary-shadow: 0px 1px 3px 0px rgba(47, 43, 67, 0.1),
@@ -202,7 +202,7 @@ button * {
 
 a:disabled,
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 .skeleton {

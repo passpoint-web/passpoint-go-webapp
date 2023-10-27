@@ -9,7 +9,7 @@ function number(num, precision) {
 
 function formatMoney(num, currency, precision) {
 	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
-	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0`
+	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0.00`
 }
 const createUrl = (pathname, params) => {
 	const paramsString = params.toString();

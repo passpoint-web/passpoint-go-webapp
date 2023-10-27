@@ -1,6 +1,6 @@
 import BalanceCard from "./BalanceCard";
-import CashChart from "./CashChart";
-import { InflowOutflowChart } from "./InflowOutflowChart";
+// import CashChart from "./CashChart";
+// import { InflowOutflowChart } from "./InflowOutflowChart";
 import VirtualAccountCard from "./VirtualAccountCard";
 import WalletTable from "./WalletTable";
 import styles from "./wallet.module.css";
@@ -11,14 +11,14 @@ const Wallet = () => {
 				<BalanceCard styles={styles} />
 				<VirtualAccountCard styles={styles} />
 			</div>
-			<div className={styles.wallet_chart}>
+			{/* <div className={styles.wallet_chart}>
 				<section className={styles.chart_1}>
 					<CashChart styles={styles} />
 				</section>
 				<section className={styles.chart_2}>
 					<InflowOutflowChart styles={styles} />
 				</section>
-			</div>
+			</div> */}
 			<div className={styles.bottom}>
 				<WalletTable styles={styles} />
 			</div>

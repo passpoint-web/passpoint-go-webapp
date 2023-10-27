@@ -22,6 +22,11 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.balance_card .lhs h1 {
+  animation: none;
+}
+
 .balance_card .btn_sec {
   display: flex;
   gap: 10px;
@@ -30,7 +35,13 @@
 .balance_card > .rhs {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 18px;
+}
+
+.balance_card > .rhs > .top {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .balance_card .account,
@@ -38,6 +49,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.balance_card .account > div * {
+  text-align: end;
 }
 
 .balance_card .account {
