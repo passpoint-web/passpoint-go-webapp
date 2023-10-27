@@ -13,10 +13,10 @@ import PrimaryBtn from "../Btn/Primary"
 import CustomSelect from "../Custom/Select"
 
 const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
-  const [passengers, setPassengers] = useState(passengersParent)
+  const [passengers, setPassengers] = useState([])
   const [passengerGenders, setPassengerGenders] = useState([])
   const [activePassenger, setActivePassenger] = useState(1)
-  const tempPassengers = [...passengers]
+  const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
 
   const addAnotherPassenger = () => {
@@ -38,7 +38,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   }
 
   const deletePassenger = (id) => {
-    setPassengers(passengers.filter((p) => p.id !== id))
+    setPassengers(passengersParent.filter((p) => p.id !== id))
   }
 
   const updateValue = (label, value, passengerId) => {
@@ -69,7 +69,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
 
   useEffect(() => {
     setPassengers(passengersParent)
-  }, [passengers, passengersParent])
+  }, [passengersParent])
 
   return (
     <div className={`select-flight-wrapper ${styles.row__wrapper}`}>

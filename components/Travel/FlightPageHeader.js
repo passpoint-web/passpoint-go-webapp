@@ -14,7 +14,13 @@ const FlightPageHeader = ({ styles }) => {
   const searchParams = useSearchParams()
 
   let airports = getAirportsState()
-  airports = airports?.filter((airport) => airport.country === "Nigeria")
+  airports = airports?.filter(
+    (airport) =>
+      airport.iataCode === "LOS" ||
+      airport.iataCode === "ABV" ||
+      airport.iataCode === "JFK" ||
+      airport.iataCode === "YYZ"
+  )
 
   const queryParams = {
     adults: searchParams.get("adults"),

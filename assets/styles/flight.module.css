@@ -587,3 +587,9 @@
 .modal__flight_details .value > span > span {
   color: var(--grey-3);
 }
+
+@media screen and (max-height: 800px) {
+  .modal__flight_details {
+    height: 50vh;
+  }
+}
