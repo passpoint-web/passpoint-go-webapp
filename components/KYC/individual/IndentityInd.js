@@ -1,5 +1,4 @@
 "use client";
-import BackBtn from "@/components/Btn/Back";
 import PrimaryBtn from "@/components/Btn/Primary";
 import CustomSelect from "@/components/Custom/Select";
 import Input from "@/components/Dashboard/Input";
@@ -69,7 +68,7 @@ const IdentityInd = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadIndIdentity({
+      await kyc.uploadIndIdentity({
         ...payload,
         submitType,
       });

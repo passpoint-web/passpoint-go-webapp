@@ -29,10 +29,9 @@ const Business = ({ styles }) => {
   const getKycDetails = async () => {
     try {
       const response = await kyc.getKycDetails();
-      console.log("helllo");
       const data = response.data.data;
       saveKycDetails(data);
-      console.log(data);
+      // console.log(data);
       const { websiteURL } = data.businessInfo;
       if (websiteURL) {
         setUrl(websiteURL);
@@ -56,7 +55,7 @@ const Business = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadKycBusiness({
+      await kyc.uploadKycBusiness({
         url,
         submitType,
       });
@@ -94,7 +93,10 @@ const Business = ({ styles }) => {
     <>
       {dataLoading ? <FullScreenLoader /> : <></>}
       <div className={styles.inner}>
-        <h1>Business Information</h1>
+        <h2>Business Information</h2>
+        <h4 className="sub-title media-max-1000">
+        Please provide essential details about your business.
+				</h4>
         <form onSubmit={handleSubmit}>
           <Input label="Business Name">
             <CustomSelect

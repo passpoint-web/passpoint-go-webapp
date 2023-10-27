@@ -79,7 +79,7 @@ const Identity = ({ styles }) => {
     setIsLoading(true);
     try {
       console.log(submitType)
-      const response = await kyc.uploadKycIdentity({
+      await kyc.uploadKycIdentity({
         documents: payload,
         submitType,
       });
@@ -114,7 +114,10 @@ const Identity = ({ styles }) => {
     <>
       {dataLoading ? <FullScreenLoader /> : <></>}
       <div className={styles.inner} onSubmit={handleSubmit}>
-        <h1>Proof of Identity</h1>
+        <h2>Proof of Identity</h2>
+        <h4 className="sub-title media-max-1000">
+        Verify your identity to ensure a secure and trusted experience.
+        </h4>
         <form className={formStyles.form}>
           <FileUpload
             smTitle="Act of Memorandum"

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use client'
 import ModalWrapper from '@/components/Modal/ModalWrapper'
 import Input from '@/components/Dashboard/Input'

@@ -65,7 +65,12 @@ const Login = () => {
 		} else if (!isActive && Number(userType) == 1) {
 			push(`/auth/signup/individual/${individualLevels[regStage]}`);
 		} else {
-			push("/dashboard");
+			if (Number(userType) == 2) {
+				push("/dashboard/kyc/corporate/business");
+			}
+			else {
+				push("/dashboard/kyc/individual");
+			}
 		}
 	};
 

@@ -105,7 +105,10 @@ const Address = ({ styles }) => {
     <>
       {dataLoading ? <FullScreenLoader /> : <></>}
       <div className={styles.inner} onSubmit={handleSubmit}>
-        <h1>Proof of Address</h1>
+        <h2>Proof of Address</h2>
+        <h4 className="sub-title media-max-1000">
+        Verify your current address for accurate communication.
+				</h4>
         <form>
           <Input
             id="documentType"
