@@ -20,7 +20,7 @@ const TransferModals = ({ onClose }) => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [accountNameRetrieved, setAccountNameRetrieved] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
-	const [currentLevel, setCurrentLevel] = useState('account')
+	const [currentLevel, setCurrentLevel] = useState('pin')
 	const [feedbackError, setFeedbackError] = useState('')
 	const [accountOrPin, setAccountOrPin] = useState(false)
 	const [getDataLoading, setGetDataLoading] = useState(false)
@@ -74,8 +74,19 @@ const TransferModals = ({ onClose }) => {
 				amount,
 				narration,
 			} = bankDetail
-			await wallet.accountTransfer({bankCode: displayCode, transactionCurrency: 'NGN', accountName, accountNumber: Number(accountNumber), amount: Number(amount),  channel: '3', narration, pin: tranferPin})
+			await wallet.accountTransfer(
+				{
+					bankCode: displayCode,
+					transactionCurrency: 'NGN',
+					accountName, accountNumber: Number(accountNumber),
+					amount: Number(amount),
+					channel: '3', narration,
+					pin: tranferPin
+				}
+			)
+			setCurrentLevel('success')
 		} catch (_err) {
+			setCurrentLevel('failure')
 			console.log(_err)
 		} finally {
 			//
