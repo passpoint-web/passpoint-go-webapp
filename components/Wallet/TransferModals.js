@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ModalWrapper from "../Modal/ModalWrapper";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { useRouter, useSearchParams } from "next/navigation";
 import Input from "@/components/Dashboard/Input";
 import functions from "@/utils/functions";
 import OtpInput from "react-otp-input";
@@ -8,17 +8,22 @@ import styles from "./wallet.module.css";
 import formStyles from "@/assets/styles/auth-screens.module.css";
 import CustomSelect from "../Custom/Select";
 import ActionFeedbackCard from "../ActionFeedbackCard";
+import { wallet } from '@/services/restService/wallet'
+import MoneyInput from "../Custom/MoneyInput";
 
-const TransferModals = ({ handlePinCreation, onClose }) => {
+const TransferModals = ({ onClose }) => {
 	// const notify = useNotify();
-	const { formatMoney } = functions;
+	const { formatMoney, sortAlphabetically } = functions;
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [tranferPin, setTransferPin] = useState("");
+	const [banks, setBanks] = useState([]);
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
+	const [accountNameRetrieved, setAccountNameRetrieved] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
-	const [currentLevel, setCurrentLevel] = useState('success')
-	const [feedbackError, setFeedbackError] = useState("");
+	const [currentLevel, setCurrentLevel] = useState('account')
+	const [feedbackError, setFeedbackError] = useState('')
 	const [accountOrPin, setAccountOrPin] = useState(false)
+	const [getDataLoading, setGetDataLoading] = useState(false)
 	const [bankDetail, setBankDetails] = useState({
 		bankName: "",
 		accountNumber: "",
@@ -34,6 +39,7 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 		}));
 	};
 
+	// eslint-disable-next-line no-unused-vars
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(bankDetail);
@@ -46,9 +52,11 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 	const handleModalCta = () => {
 		switch (currentLevel) {
 		case 'account':
-			return
+			setCurrentLevel('pin');
+			break;
 		case 'pin':
-			return;
+			handleFinalSubmit();
+			break;
 		case 'success':
 			onClose()
 			break;
@@ -57,13 +65,84 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 		}
 	}
 
+	const handleFinalSubmit = async () => {
+		try {
+			const {
+				bankName:{displayCode},
+				accountNumber,
+				accountName,
+				amount,
+				narration,
+			} = bankDetail
+			await wallet.accountTransfer({bankCode: displayCode, transactionCurrency: 'NGN', accountName, accountNumber: Number(accountNumber), amount: Number(amount),  channel: '3', narration, pin: tranferPin})
+		} catch (_err) {
+			console.log(_err)
+		} finally {
+			//
+		}
+	}
+
+	const getBanks = async() => {
+		try {
+			setGetDataLoading(true)
+			const response = await wallet.getBanks()
+			const {data} = response.data
+			if (data) {
+				const sortedBanks = sortAlphabetically(data, 'name')
+				setBanks(sortedBanks)
+			}
+		} catch (_err) {
+			console.log(_err.response.data)
+		} finally {
+			setGetDataLoading(false)
+			//
+		}
+	}
+
+	const accountEnquiry = async() => {
+		try {
+			setGetDataLoading(true)
+			const {accountNumber, bankName: {displayCode}} = bankDetail
+			const response = await wallet.acountEnquiry({
+				bankCode: displayCode,
+				accountNumber,
+				countryCode: 'NG'
+			})
+			setFeedbackError('')
+			const {accountName} = response.data.data
+			setBankDetails((prev)=>({
+				...prev,
+				accountName
+			}))
+			setAccountNameRetrieved(true)
+		} catch (_err) {
+			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
+			setFeedbackError(responseMessage || message)
+			if (responseMessage?.toLowerCase()?.includes('number')) {
+				setBankDetails((prev)=>({
+					...prev,
+					accountName: ''
+				}))
+			}
+		} finally {
+			setGetDataLoading(false)
+		}
+	}
+
 	useEffect(() => {
+		const {
+			bankName,
+			accountNumber,
+			accountName,
+			amount,
+			narration
+		} = bankDetail
 		const conditionsMet =
-      bankDetail.bankName &&
-      bankDetail.accountNumber &&
-      bankDetail.accountName &&
-      bankDetail.amount &&
-      bankDetail.narration;
+      bankName &&
+      accountNumber &&
+      accountName &&
+      amount &&
+      narration
 		if (conditionsMet) {
 			setAllFieldsValid(true);
 		} else {
@@ -79,13 +158,18 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 		}
 	},[currentLevel])
 
-	const handlePinsChange = (e) => {
-		const { name, value } = e.target;
-		setPins((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
+	useEffect(()=>{
+		getBanks()
+	},[])
+
+	useEffect(()=>{
+		const {accountNumber, bankName} = bankDetail
+		if (accountNumber.length === 10 && bankName)  {
+			accountEnquiry()
+		}
+	},[bankDetail.accountNumber, bankDetail.bankName])
+
+
 	const GetBanksFlow = () => (
 		<>
 			<Input
@@ -95,64 +179,75 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 				errorMsg="Bank name is required"
 			>
 				<CustomSelect
-					selectOptions={[
-						"Access Bank",
-						"First Bank",
-						"GT Bank",
-						"United Bank Africa",
-						"Zenith Bank",
-					]}
+					placeholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
+					selectOptions={banks}
+					disabled={banks.length === 0}
+					objKey={'name'}
 					selectedOption={bankDetail.bankName}
 					fieldError={ctaClicked && !bankDetail.bankName}
 					emitSelect={(option) => handleChange("bankName", option)}
 				/>
 			</Input>
+			{/* {feedbackError} */}
 			<Input
 				label="Account Number"
+				// className="uppercase"
 				id="accountNumber"
 				name="accountNumber"
 				placeholder="Enter Account Number here"
-				error={ctaClicked && !bankDetail.accountNumber}
+				error={(ctaClicked && !bankDetail.accountNumber) || feedbackError.toLowerCase().includes('number')}
 				value={bankDetail.accountNumber}
-				onChange={(e) => handleChange("accountNumber", e.target.value)}
-				errorMsg="Account number is required"
+				onChange={(e) => e.target.value.length <= 10 ? handleChange("accountNumber", e.target.value) : null}
+				errorMsg={feedbackError.toLowerCase().includes('number')? 'Account number is not valid' : 'Account number is required'}
 			/>
-			<>
-				{bankDetail.accountNumber.length === 10 ? (
-					<>
-						<Input
-							disabled
-							label="Account Name"
-							id="accountName"
-							name="accountName"
-							placeholder="John Doe"
-							// error={ctaClicked && !bankDetail.accountName}
-							value={bankDetail.accountName}
-							//   onChange={(e) => handleChange("accountName", e.target.value)}
-						/>
-						<Input
-							label="Amount"
-							id="amount"
-							name="amount"
-							placeholder="Enter amount here"
-							error={ctaClicked && !bankDetail.amount}
+			{accountNameRetrieved ?
+				<>
+					<Input
+						disabled
+						label="Account Name"
+						id="accountName"
+						name="accountName"
+						placeholder={getDataLoading ? 'Loading...' : 'Account Name'}
+						// error={ctaClicked && !bankDetail.accountName}
+						value={bankDetail.accountName}
+						//   onChange={(e) => handleChange("accountName", e.target.value)}
+					/>
+					{/* <Input
+						label="Amount"
+						id="amount"
+						name="amount"
+						placeholder="Enter amount here"
+						error={ctaClicked && !bankDetail.amount}
+						value={bankDetail.amount}
+						onChange={(e) => handleChange("amount", e.target.value)}
+						errorMsg="Account number is required"
+					/> */}
+					<Input
+						label="Amount"
+						id="amount"
+						name="amount"
+						error={ctaClicked && Number(bankDetail.amount) === 0}
+						errorMsg='Amount is required'
+					>
+						<MoneyInput
+							id='amount'
+							placeholder={'Enter amount'}
+							currency={'NGN'}
 							value={bankDetail.amount}
-							onChange={(e) => handleChange("amount", e.target.value)}
-							errorMsg="Account number is required"
+							onValueChange={(e)=> handleChange("amount", e)}
 						/>
-						<Input
-							label="Narration"
-							id="narration"
-							name="narration"
-							placeholder="Enter brief narration"
-							error={ctaClicked && !bankDetail.narration}
-							value={bankDetail.narration}
-							onChange={(e) => handleChange("narration", e.target.value)}
-							errorMsg="narration is required"
-						/>
-					</>
-				) : null}
-			</>
+					</Input>
+					<Input
+						label="Narration"
+						id="narration"
+						name="narration"
+						placeholder="Enter brief narration"
+						error={ctaClicked && !bankDetail.narration}
+						value={bankDetail.narration}
+						onChange={(e) => handleChange("narration", e.target.value)}
+						errorMsg="narration is required"
+					/>
+				</> : <></>}
 		</>
 	)
 
@@ -164,7 +259,7 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 					<label>Bank Name</label>
 					<div>
 						<p>
-							{bankDetail.bankName}
+							{bankDetail.bankName.name}
 						</p>
 					</div>
 				</div>
@@ -222,7 +317,7 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 						<div className={formStyles.otp_input_four}>
 							<OtpInput
 								value={tranferPin}
-								onChange={(e) => setTransferPin(e.target.value)}
+								onChange={(e) => setTransferPin(e)}
 								numInputs={4}
 								shouldAutoFocus={true}
 								inputType="number"
@@ -239,6 +334,7 @@ const TransferModals = ({ handlePinCreation, onClose }) => {
 
 	return (
 		<ModalWrapper
+			ctaDisabled={currentLevel === 'account' ? !allFieldsValid : tranferPin.length !== 4}
 			ctaBtnType={accountOrPin ? 'md' : 'sd'}
 			ctaBtnText={currentLevel === 'account' ? 'Continue' : currentLevel === 'pin' ? 'Confirm' : currentLevel === 'success' ? 'Go Back' : currentLevel === 'failure' ? 'Try Again' : ''}
 			heading={accountOrPin ? 'Transfer Money' : ''}

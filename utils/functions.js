@@ -27,6 +27,14 @@ function dateTimestamp(timestamp) {
 	return dateString.replace(' ', ', ')
 }
 
+function sortAlphabetically (array, key) {
+	array.sort((a, b) => {
+		const state = a[key]> b[key] ? 1 : b[key] > a[key] ? -1 : 0
+		return state
+	})
+	return array
+}
+
 // function encryptData(data, key) {
 //   data = JSON.stringify(data)
 //   const encrypted = CryptoJS.AES.encrypt(data, key)
@@ -163,7 +171,8 @@ const functions = {
 	returnBase64,
 	splitOnCapsLetter,
 	createUrl,
-	removeDuplicates
+	removeDuplicates,
+	sortAlphabetically
 	// encryptData,
 	// decryptData
 }

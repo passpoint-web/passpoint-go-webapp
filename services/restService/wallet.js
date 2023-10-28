@@ -42,5 +42,14 @@ export const wallet = {
 	},
 	setPin: (data) => {
 		return walletRestAgent.put(`wallet-app/reset-pin`, data, setConfig())
-	}
+	},
+	getBanks: (countryCode) => {
+		return walletRestAgent.get(`ft-app/bank-list/${countryCode || 'NG'}`, setConfig())
+	},
+	acountEnquiry: (data) => {
+		return walletRestAgent.post(`ft-app/account-enquiry`, data, setConfig())
+	},
+	accountTransfer: (data) => {
+		return walletRestAgent.post(`ft-app/account-transfer`, data, setConfig())
+	},
 }
