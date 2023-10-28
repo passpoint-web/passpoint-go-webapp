@@ -37,4 +37,10 @@ export const wallet = {
 	getWalletDetails: () => {
 		return walletRestAgent.get('wallet-app/get-wallet-details', setConfig())
 	},
+	initiatePin: (boo=false) => {
+		return walletRestAgent.get(`wallet-app/init-pin-reset?forgotpin=${boo}`, setConfig())
+	},
+	setPin: (data) => {
+		return walletRestAgent.put(`wallet-app/reset-pin`, data, setConfig())
+	}
 }

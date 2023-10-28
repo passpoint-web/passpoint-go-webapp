@@ -15,10 +15,15 @@ const BalanceCard = ({styles}) => {
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
+	const [reference, setReference] = useState('')
+	const [initiateTransfer, setInitiateTransfer] = useState(false)
+	const [transferModal, setTransferModal] = useState(false)
+	const [currentModal, setCurrentModal] = useState(null)
+	const [getDataLoading, setGetDataLoading] = useState(false)
 	const createWallet = async () => {
 		try {
 			const response = await wallet.createWallet({
-				"currency":"NGN"
+				currency: "NGN"
 			})
 		} catch (_err) {
 			console.log(_err)
@@ -37,17 +42,40 @@ const BalanceCard = ({styles}) => {
 
 		} finally {
 			setDataLoading(false)
-
 		}
+	}
+
+	const initiatePinForTransfer = async () => {
+
+		setCurrentModal('tranfer')
+		// setGetDataLoading(true)
+		// try {
+		// 	const response = await wallet.initiatePin()
+		// 	// console.log(response.data)
+		// 	const {reference} = response.data
+		// 	if (reference) {
+		// 		setReference(reference)
+		// 		setCurrentModal('create pin')
+		// 	} else {
+		// 		setCurrentModal('transfer')
+		// 	}
+		// } catch (_err) {
+		// 	handleModals('createPinModal')
+		// 	console.log(_err)
+		// } finally {
+		// 	setGetDataLoading(false)
+		// }
 	}
 	useEffect(()=>{
 		// createWallet()
 		getWallet()
 	},[])
+
 	const {formatMoney, createUrl} = functions
 	const {replace} = useRouter()
 
 	const searchParams = useSearchParams();
+
 	const handleAddMoneyModal = (val) => {
 		const newParams = new URLSearchParams(searchParams.toString());
 		if (val) {
@@ -78,10 +106,20 @@ const BalanceCard = ({styles}) => {
 
 	return (
 		<>
-			{searchParams.get('createPinModal') ? <CreatePinModal handlePinCreation={()=>handleModals('transferModal', 'bank')} /> : <></>}
-			{searchParams.get('addMoneyModal') === 'true' ? <AddMoneyModal walletAccount={walletAccount}
-				styles={styles} /> : <></>}
-			{searchParams.get('transferModal') ? <TransferModals styles={styles} /> : <></>}
+			{
+				currentModal === 'create pin' ?
+					<CreatePinModal handlePinCreation={()=>setCurrentModal('tranfer')}
+						reference={reference}
+						onClose={()=>setCurrentModal(null)} /> :
+					currentModal === 'add money' ?
+						<AddMoneyModal walletAccount={walletAccount}
+							styles={styles}
+							onClose={()=>setCurrentModal(null)}/> :
+						currentModal === 'tranfer' ?
+							<TransferModals styles={styles}
+								onClose={()=>setCurrentModal(null)} /> :
+							<></>
+			}
 			{
 				!dataLoading ? <div className={styles.balance_card}>
 					<div className={styles.lhs}>
@@ -93,19 +131,18 @@ const BalanceCard = ({styles}) => {
 							<BorderIconBtn
 								bdColor='#fff'
 								classProps='border i sd'
-								onClick={()=>handleModals('addMoneyModal', true)}
-							>
-								<AddMoneyIcon />
-            Add money
-							</BorderIconBtn>
+								onClick={()=>setCurrentModal('add money')}
+								icon={<AddMoneyIcon />}
+								text='Add money' />
 							<BorderIconBtn
 								bgColor='#fff'
 								classProps='no-border i sd'
 								styleProps={{color: '#009EC4'}}
-								onClick={()=>handleModals('createPinModal', 'password')}
-							>
-								<WithdrawMoneyIcon /> Withdraw
-							</BorderIconBtn>
+								loading={getDataLoading}
+								onClick={()=>initiatePinForTransfer()}
+								icon={<WithdrawMoneyIcon />}
+								text='Withdraw'
+							/>
 						</div>
 					</div>
 					<div className={styles.rhs}>
@@ -140,19 +177,17 @@ const BalanceCard = ({styles}) => {
 							<BorderIconBtn
 								bdColor='#fff'
 								classProps='border i sd'
-								onClick={()=>handleModals('addMoneyModal', true)}
-							>
-								<AddMoneyIcon />
-            Add money
-							</BorderIconBtn>
+								icon={<AddMoneyIcon />}
+								disabled={true}
+								text='Add money' />
 							<BorderIconBtn
 								bgColor='#fff'
+								disabled={true}
 								classProps='no-border i sd'
 								styleProps={{color: '#009EC4'}}
-								onClick={()=>handleModals('createPinModal', 'password')}
-							>
-								<WithdrawMoneyIcon /> Withdraw
-							</BorderIconBtn>
+								icon={<WithdrawMoneyIcon />}
+								text='Withdraw'
+							/>
 						</div>
 					</div>
 					<div className={styles.rhs}>

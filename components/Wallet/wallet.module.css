@@ -320,7 +320,7 @@
     0px 0px 1px 0px rgba(12, 26, 75, 0.2);
   padding: var(--btn-padding);
   display: grid;
-  gap: var(--btn-padding);
+  gap: var(--inner-component-mg);
 }
 .transferPin_details {
   display: flex;

@@ -1,26 +1,26 @@
 import CopyValue from "../CopyValue";
 import ModalWrapper from "../Modal/ModalWrapper";
-import functions from "@/utils/functions";
-import { useRouter, useSearchParams } from "next/navigation";
+// import functions from "@/utils/functions";
+// import { useRouter, useSearchParams } from "next/navigation";
 
 
-const AddMoneyModal = ({styles, walletAccount}) => {
-	const {createUrl} = functions
-	const {replace} = useRouter()
+const AddMoneyModal = ({styles, walletAccount, onClose}) => {
+	// const {createUrl} = functions
+	// const {replace} = useRouter()
 
-	const searchParams = useSearchParams()
-	const handleAddMoneyModal = (val) => {
-		const newParams = new URLSearchParams(searchParams.toString());
-		if (val) {
-			newParams.set('addMoneyModal', val)
-		} else {
-			newParams.delete('addMoneyModal')
-		}
-		replace(createUrl('/dashboard/wallet', newParams))
-	}
+	// const searchParams = useSearchParams()
+	// const handleAddMoneyModal = (val) => {
+	// 	const newParams = new URLSearchParams(searchParams.toString());
+	// 	if (val) {
+	// 		newParams.set('addMoneyModal', val)
+	// 	} else {
+	// 		newParams.delete('addMoneyModal')
+	// 	}
+	// 	replace(createUrl('/dashboard/wallet', newParams))
+	// }
 	return (
 		<ModalWrapper
-			onClose={()=>handleAddMoneyModal()}
+			onClose={()=>onClose()}
 			ctaBtnType='sd'
 			heading={'Add Money'}
 			subHeading={'Copy the credentials below to add money to your wallet.'}
