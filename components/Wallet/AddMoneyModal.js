@@ -1,8 +1,8 @@
+import CopyValue from "../CopyValue";
+import ModalWrapper from "../Modal/ModalWrapper";
+import functions from "@/utils/functions";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import CopyValue from '../CopyValue'
-import ModalWrapper from '../Modal/ModalWrapper'
-import functions from '@/utils/functions'
-import {useRouter,  useSearchParams } from 'next/navigation'
 
 const AddMoneyModal = ({styles, walletAccount}) => {
 	const {createUrl} = functions

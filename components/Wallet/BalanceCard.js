@@ -1,6 +1,5 @@
-
-'use client'
-import functions from '@/utils/functions'
+"use client";
+import functions from "@/utils/functions";
 // import Button from '../Btn/Button'
 import BorderIconBtn from '../Btn/BorderIconBtn'
 import {useRouter,  useSearchParams } from 'next/navigation'
@@ -48,39 +47,40 @@ const BalanceCard = ({styles}) => {
 	const {formatMoney, createUrl} = functions
 	const {replace} = useRouter()
 
-	const searchParams = useSearchParams()
+	const searchParams = useSearchParams();
 	const handleAddMoneyModal = (val) => {
 		const newParams = new URLSearchParams(searchParams.toString());
 		if (val) {
-			newParams.set('addMoneyModal', val)
+			newParams.set("addMoneyModal", val);
 		} else {
-			newParams.delete('addMoneyModal')
+			newParams.delete("addMoneyModal");
 		}
-		replace(createUrl('/dashboard/wallet', newParams))
-	}
+		replace(createUrl("/dashboard/wallet", newParams));
+	};
 
 	const handleModals = (query, val) => {
-		console.log(query, val)
+		console.log(query, val);
 		const newParams = new URLSearchParams(searchParams.toString());
 		if (val) {
-			newParams.set(query, val)
+			newParams.set(query, val);
 		} else {
-			newParams.delete(query)
+			newParams.delete(query);
 		}
-		replace(createUrl('/dashboard/wallet', newParams))
-	}
+		replace(createUrl("/dashboard/wallet", newParams));
+	};
 
-	useEffect(()=>{
+	useEffect(() => {
 		// console.log(searchParams)
-	},[searchParams])
-	useEffect(()=>{
-		console.log(searchParams.get('createPinModal'))
-	},[searchParams.get('createPinModal')])
+	}, [searchParams]);
+	useEffect(() => {
+		console.log(searchParams.get("createPinModal"));
+	}, [searchParams.get("createPinModal")]);
 
 	return (
 		<>
 			{searchParams.get('createPinModal') ? <CreatePinModal handlePinCreation={()=>handleModals('transferModal', 'bank')} /> : <></>}
-			{searchParams.get('addMoneyModal') === 'true' ? <AddMoneyModal walletAccount={walletAccount} styles={styles} /> : <></>}
+			{searchParams.get('addMoneyModal') === 'true' ? <AddMoneyModal walletAccount={walletAccount}
+				styles={styles} /> : <></>}
 			{searchParams.get('transferModal') ? <TransferModals styles={styles} /> : <></>}
 			{
 				!dataLoading ? <div className={styles.balance_card}>
@@ -182,4 +182,4 @@ const BalanceCard = ({styles}) => {
 	)
 }
 
-export default BalanceCard
+export default BalanceCard;

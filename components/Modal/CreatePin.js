@@ -12,7 +12,7 @@ import { authenticate } from '@/services/restService';
 import { saveCredentials, saveToken } from "@/services/localService";
 import { getCredentials } from '@/services/localService';
 
-const CreatePinModal = ({handlePinCreation}) => {
+const CreatePinModal = ({ handlePinCreation }) => {
 	const currentModal = 'createPinModal'
 	// const notify = useNotify();
 	const {createUrl} = functions
