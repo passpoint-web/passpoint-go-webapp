@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import CustomSelect from "@/components/Custom/Select";
 import functions from "@/utils/functions";
 import { useEffect, useState } from "react";
@@ -11,17 +10,12 @@ import FileUpload from "../FileUpload";
 import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 
-
-const WalletTransactionModal = ({styles, transaction}) => {
-	const { formatMoney, createUrl } = functions;
-	const searchParams = useSearchParams();
-	const { replace } = useRouter();
+const WalletTransactionModal = ({onClose, styles, transaction}) => {
+	const { formatMoney } = functions;
 	const [currentLevel, setCurrentLevel] = useState('transaction')
 	// const [errorMsg, setErrorMsg] = useState("");
 	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false);
-	// eslint-disable-next-line no-unused-vars
-	const [transactionModal, setTransactionModal] = useState("");
 	// eslint-disable-next-line no-unused-vars
 	const [isLoading, setIsLoading] = useState(false);
 	const transactionReportIssues = [
@@ -33,10 +27,13 @@ const WalletTransactionModal = ({styles, transaction}) => {
 		subHeading: "",
 	});
 
+	useEffect(()=>{
+		defineModalContents(currentLevel)
+	},[currentLevel])
+
 	const handleIssueSelect = () => {};
 
 	const defineModalContents = (level) => {
-		setTransactionModal(level);
 		switch (level) {
 		case "transaction":
 			setModalContent({
@@ -49,7 +46,7 @@ const WalletTransactionModal = ({styles, transaction}) => {
 				bottomCancelNeeded: true,
 				bottomSecAction: true,
 				handleBottomSecAction: () => {
-					handleModalFlow("report");
+					setCurrentLevel("report");
 				},
 				handleModalCta: () => {
 					console.log("shared");
@@ -65,10 +62,10 @@ const WalletTransactionModal = ({styles, transaction}) => {
 				bottomCancelNeeded: true,
 				bottomSecAction: true,
 				handleBottomSecAction: () => {
-					handleModalFlow("transaction");
+					setCurrentLevel("transaction");
 				},
 				handleModalCta: () => {
-					handleModalFlow("report-success");
+					setCurrentLevel("report-success");
 				},
 			});
 			break;
@@ -79,22 +76,11 @@ const WalletTransactionModal = ({styles, transaction}) => {
 				ctaText: "Return to Dashboard",
 				bottomCancelNeeded: false,
 				handleModalCta: () => {
-					handleModalFlow();
+					onClose();
 				},
 				// hasBottomActions: false
 			});
 		}
-	};
-
-	const handleModalFlow = (val) => {
-		const newParams = new URLSearchParams(searchParams.toString());
-		if (val) {
-			newParams.set("transactionModal", val);
-		} else {
-			newParams.delete("transactionModal");
-			newParams.delete("transactionId");
-		}
-		replace(createUrl("/dashboard/wallet", newParams));
 	};
 
 	const TransactionDetails = () => (
@@ -224,7 +210,7 @@ const WalletTransactionModal = ({styles, transaction}) => {
 	return (
 		<ModalWrapper
 			loading={isLoading}
-			onClose={() => handleModalFlow()}
+			onClose={() => onClose()}
 			ctaBtnType="sd"
 			handleCta={modalContent.handleModalCta}
 			heading={modalContent.heading}

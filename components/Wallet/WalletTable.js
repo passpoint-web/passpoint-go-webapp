@@ -52,7 +52,7 @@ const WalletTable = ({ styles }) => {
 	},[])
 	return (
 		<>
-			{showTransactionModal ? <WalletTransactionModal transaction={currentTransaction}
+			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)} transaction={currentTransaction}
 				styles={styles} /> : <></>}
 			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
 				<div className={tableStyles.table__outer}>
