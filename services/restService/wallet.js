@@ -46,8 +46,11 @@ export const wallet = {
 	getBanks: (countryCode) => {
 		return walletRestAgent.get(`ft-app/bank-list/${countryCode || 'NG'}`, setConfig())
 	},
-	acountEnquiry: (data) => {
+	accountEnquiry: (data) => {
 		return walletRestAgent.post(`ft-app/account-enquiry`, data, setConfig())
+	},
+	passpointWalletEnquiry: (data) => {
+		return walletRestAgent.post(`ft-app/passpoint-enquiry`, data, setConfig())
 	},
 	accountTransfer: (data) => {
 		return walletRestAgent.post(`ft-app/account-transfer`, data, setConfig())

@@ -4,16 +4,18 @@ import ModalWrapper from "../Modal/ModalWrapper";
 import Input from "@/components/Dashboard/Input";
 import functions from "@/utils/functions";
 import OtpInput from "react-otp-input";
-import styles from "./wallet.module.css";
+// import styles from "./wallet.module.css";
 import formStyles from "@/assets/styles/auth-screens.module.css";
 import CustomSelect from "../Custom/Select";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import { wallet } from '@/services/restService/wallet'
 import MoneyInput from "../Custom/MoneyInput";
+import AccountTypeDropDown from "./AccountTypeDropDown";
 
-const TransferModals = ({ onClose }) => {
+const TransferModals = ({ onClose, styles }) => {
 	// const notify = useNotify();
 	const { formatMoney, sortAlphabetically } = functions;
+	const [accountType, setAccountType] = useState({name: 'Account Number', description: 'NUBAN'})
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [tranferPin, setTransferPin] = useState("");
 	const [banks, setBanks] = useState([]);
@@ -27,6 +29,7 @@ const TransferModals = ({ onClose }) => {
 	const [bankDetail, setBankDetails] = useState({
 		bankName: "",
 		accountNumber: "",
+		walletID: "",
 		accountName: "",
 		amount: "",
 		narration: "",
@@ -66,30 +69,59 @@ const TransferModals = ({ onClose }) => {
 	}
 
 	const handleFinalSubmit = async () => {
-		try {
-			const {
-				bankName:{displayCode},
-				accountNumber,
-				accountName,
-				amount,
-				narration,
-			} = bankDetail
-			await wallet.accountTransfer(
-				{
-					bankCode: displayCode,
-					transactionCurrency: 'NGN',
-					accountName, accountNumber: Number(accountNumber),
-					amount: Number(amount),
-					channel: '3', narration,
-					pin: tranferPin
-				}
-			)
-			setCurrentLevel('success')
-		} catch (_err) {
-			setCurrentLevel('failure')
-			// console.log(_err)
-		} finally {
-			//
+		if (accountType.name === 'Account Number') {
+			try {
+				const {
+					bankName:{displayCode},
+					accountNumber,
+					accountName,
+					amount,
+					narration,
+				} = bankDetail
+				await wallet.accountTransfer(
+					{
+						bankCode: displayCode,
+						transactionCurrency: 'NGN',
+						accountName, accountNumber: Number(accountNumber),
+						amount: Number(amount),
+						channel: '3', narration,
+						pin: tranferPin
+					}
+				)
+				setCurrentLevel('success')
+			} catch (_err) {
+				setCurrentLevel('failure')
+				// console.log(_err)
+			} finally {
+				//
+			}
+		} else {
+			try {
+				const {
+					walletID,
+					accountName,
+					amount,
+					narration,
+				} = bankDetail
+				await wallet.accountTransfer(
+					{
+						bankCode: '000000',
+						transactionCurrency: 'NGN',
+						accountName,
+						amount: Number(amount),
+						accountId: walletID,
+						channel: '3',
+						narration,
+						pin: tranferPin
+					}
+				)
+				setCurrentLevel('success')
+			} catch (_err) {
+				setCurrentLevel('failure')
+				// console.log(_err)
+			} finally {
+				//
+			}
 		}
 	}
 
@@ -111,32 +143,62 @@ const TransferModals = ({ onClose }) => {
 	}
 
 	const accountEnquiry = async() => {
-		try {
-			setGetDataLoading(true)
-			const {accountNumber, bankName: {displayCode}} = bankDetail
-			const response = await wallet.acountEnquiry({
-				bankCode: displayCode,
-				accountNumber,
-				countryCode: 'NG'
-			})
-			setFeedbackError('')
-			const {accountName} = response.data.data
-			setBankDetails((prev)=>({
-				...prev,
-				accountName
-			}))
-			setAccountNameRetrieved(true)
-		} catch (_err) {
-			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
-			setFeedbackError(responseMessage || message)
-			if (responseMessage?.toLowerCase()?.includes('number')) {
+		if (accountType.name === 'Account Number') {
+			try {
+				setGetDataLoading(true)
+				const {accountNumber, bankName: {displayCode}} = bankDetail
+				const response = await wallet.accountEnquiry({
+					bankCode: displayCode,
+					accountNumber,
+					countryCode: 'NG'
+				})
+				setFeedbackError('')
+				const {accountName} = response.data.data
 				setBankDetails((prev)=>({
 					...prev,
-					accountName: ''
+					accountName
 				}))
+				setAccountNameRetrieved(true)
+			} catch (_err) {
+				const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
+				setFeedbackError(responseMessage || message)
+				if (responseMessage?.toLowerCase()?.includes('number')) {
+					setBankDetails((prev)=>({
+						...prev,
+						accountName: ''
+					}))
+				}
+			} finally {
+				setGetDataLoading(false)
 			}
-		} finally {
-			setGetDataLoading(false)
+		} else {
+			try {
+				setGetDataLoading(true)
+				const {walletID} = bankDetail
+				const response = await wallet.passpointWalletEnquiry({
+					walletId: walletID,
+					currency: 'NGN'
+				})
+				// console.log(response.data)
+				setFeedbackError('')
+				const {accountName} = response.data.data
+				setBankDetails((prev)=>({
+					...prev,
+					accountName
+				}))
+				setAccountNameRetrieved(true)
+			} catch (_err) {
+				const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
+				setFeedbackError(responseMessage || message)
+				if (responseMessage?.toLowerCase()?.includes('number')) {
+					setBankDetails((prev)=>({
+						...prev,
+						accountName: ''
+					}))
+				}
+			} finally {
+				setGetDataLoading(false)
+			}
 		}
 	}
 
@@ -144,13 +206,14 @@ const TransferModals = ({ onClose }) => {
 		const {
 			bankName,
 			accountNumber,
+			walletID,
 			accountName,
 			amount,
 			narration
 		} = bankDetail
 		const conditionsMet =
-      bankName &&
-      accountNumber &&
+      (accountType.name === 'Account Number' ? bankName : true) &&
+      (accountType.name === 'Account Number' ? accountNumber : walletID) &&
       accountName &&
       amount &&
       narration
@@ -173,45 +236,64 @@ const TransferModals = ({ onClose }) => {
 		getBanks()
 	},[])
 
-
 	useEffect(()=>{
-		const {accountNumber, bankName} = bankDetail
+		const {accountNumber, bankName, walletID} = bankDetail
 		if (accountNumber.length === 10 && bankName)  {
 			accountEnquiry()
 		}
-	},[bankDetail.accountNumber, bankDetail.bankName])
+		if (walletID)  {
+			accountEnquiry()
+		}
+	},[bankDetail.accountNumber, bankDetail.walletID, bankDetail.bankName])
 
 
 	const GetBanksFlow = () => (
 		<>
-			<Input
-				id="bank"
-				label="Select Bank"
-				error={ctaClicked && !bankDetail.bankName}
-				errorMsg="Bank name is required"
-			>
-				<CustomSelect
-					placeholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
-					selectOptions={banks}
-					disabled={banks.length === 0}
-					objKey={'name'}
-					selectedOption={bankDetail.bankName}
-					fieldError={ctaClicked && !bankDetail.bankName}
-					emitSelect={(option) => handleChange("bankName", option)}
-				/>
-			</Input>
-			{/* {feedbackError} */}
-			<Input
-				label="Account Number"
-				// className="uppercase"
-				id="accountNumber"
-				name="accountNumber"
-				placeholder="Enter Account Number here"
-				error={(ctaClicked && !bankDetail.accountNumber) || feedbackError.toLowerCase().includes('number')}
-				value={bankDetail.accountNumber}
-				onChange={(e) => e.target.value.length <= 10 ? handleChange("accountNumber", e.target.value) : null}
-				errorMsg={feedbackError.toLowerCase().includes('number')? 'Account number is not valid' : 'Account number is required'}
-			/>
+			<div style={{marginBottom: 10}}>
+				<AccountTypeDropDown selectedOption={accountType}
+					emitSelect={(e)=>setAccountType(e)} />
+			</div>
+			{/* wallet id || account number */}
+			{accountType.name === 'Account Number' ?
+				<>
+					<Input
+						id="bank"
+						label="Select Bank"
+						error={ctaClicked && !bankDetail.bankName}
+						errorMsg="Bank name is required"
+					>
+						<CustomSelect
+							placeholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
+							selectOptions={banks}
+							disabled={banks.length === 0}
+							objKey={'name'}
+							selectedOption={bankDetail.bankName}
+							fieldError={ctaClicked && !bankDetail.bankName}
+							emitSelect={(option) => handleChange("bankName", option)}
+						/>
+					</Input>
+					<Input
+						type="number"
+						label='Account Number'
+						id="accountNumber"
+						name="accountNumber"
+						placeholder="Enter Account Number here"
+						error={(ctaClicked && !bankDetail.accountNumber) || feedbackError.toLowerCase().includes('number')}
+						value={bankDetail.accountNumber}
+						onChange={(e) => e.target.value.length <= 10 ? handleChange("accountNumber", e.target.value) : null}
+						errorMsg={feedbackError.toLowerCase().includes('number')? 'Account number is not valid' : 'Account number is required'}
+					/></> :
+				<Input
+					type="email"
+					label='Wallet ID'
+					id="walletID"
+					name="walletID"
+					placeholder="Enter Passpoint's Wallet ID here"
+					error={(ctaClicked && !bankDetail.walletID) || feedbackError.toLowerCase().includes('number')}
+					value={bankDetail.walletID}
+					onChange={(e) => handleChange("walletID", e.target.value)}
+					errorMsg={feedbackError.toLowerCase().includes('number')? 'Wallet ID is not valid' : 'Wallet ID is required'}
+				/>}
 			{accountNameRetrieved ?
 				<>
 					<Input
@@ -266,15 +348,18 @@ const TransferModals = ({ onClose }) => {
 	const TransferPin = () => (
 		<>
 			<section className={styles.transferPin}>
-				<div
-					className={styles.transferPin_details}>
-					<label>Bank Name</label>
-					<div>
-						<p>
-							{bankDetail.bankName.name}
-						</p>
-					</div>
-				</div>
+				{
+					accountType.name === 'Account Number' ?
+						<div
+							className={styles.transferPin_details}>
+							<label>Bank Name</label>
+							<div>
+								<p>
+									{bankDetail.bankName.name}
+								</p>
+							</div>
+						</div> : <></>
+				}
 				<div
 					className={styles.transferPin_details}>
 					<label>Account Name</label>
@@ -284,15 +369,27 @@ const TransferModals = ({ onClose }) => {
 						</p>
 					</div>
 				</div>
-				<div
-					className={styles.transferPin_details}>
-					<label>Account Number</label>
-					<div>
-						<p>
-							{bankDetail.accountNumber}
-						</p>
-					</div>
-				</div>
+				{
+					accountType.name === 'Account Number' ?
+						<div
+							className={styles.transferPin_details}>
+							<label>Account Number</label>
+							<div>
+								<p>
+									{bankDetail.accountNumber}
+								</p>
+							</div>
+						</div> :
+						<div
+							className={styles.transferPin_details}>
+							<label>Wallet ID</label>
+							<div>
+								<p>
+									{bankDetail.walletID}
+								</p>
+							</div>
+						</div>
+				}
 				<div
 					className={styles.transferPin_details}>
 					<label>Amount</label>

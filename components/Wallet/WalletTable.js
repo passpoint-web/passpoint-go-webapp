@@ -29,12 +29,12 @@ const WalletTable = ({ styles }) => {
 			const response = await wallet.transactions(filters)
 			const {data} = response.data
 			const transactions = data.map((e)=>{
-				const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode).name
+				const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode)?.name || 'Passpoint Wallet'
 				e.beneficiaryBankName = bankName
 				return e
 			})
 			setTransactions(transactions)
-			console.log(transactions[0])
+			// console.log(transactions[0])
 		} catch (_err) {
 			console.log(_err)
 		} finally {
