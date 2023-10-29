@@ -9,7 +9,7 @@ import Link from "next/link"
 import styles from "../../assets/styles/flight.module.css"
 import FlightTimeline from "./FlightTimeline"
 
-const FlightCard = ({ selected, data }) => {
+const FlightCard = ({ selected, data, cheapest, quickest }) => {
   const outbound = data?.outbound
   const inbound = data?.inbound
 
@@ -34,8 +34,8 @@ const FlightCard = ({ selected, data }) => {
         <div className={styles.fc__price}>
           {!selected && (
             <div className={styles.fc__tags}>
-              <div className="primary-tag">Best</div>
-              <div className="success-tag">Cheapest</div>
+              {quickest && <div className="primary-tag">Quickest</div>}
+              {cheapest && <div className="success-tag">Cheapest</div>}
             </div>
           )}
           <h4>{functions.formatMoney(data?.amount, data?.currency)}</h4>

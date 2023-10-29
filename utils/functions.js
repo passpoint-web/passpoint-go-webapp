@@ -10,7 +10,9 @@ function number(num, precision) {
 }
 
 function formatMoney(num, currency, precision) {
-  const n = num ? Number(num).toFixed(precision || 2) : Number(num)
+  const n = num
+    ? Number(num).toFixed(precision === 0 ? 0 : precision || 2)
+    : Number(num)
   return n
     ? `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}${n
         .toString()

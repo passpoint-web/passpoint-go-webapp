@@ -22,7 +22,7 @@ const FlightTimeline = ({ data, isOutbound }) => {
         </div>
       </div>
       <div className={styles.fc__timeline_range}>
-        {/* TIMELINE STOP */}
+        {/* TIMELINE STOP - BEGINNING */}
         <div className={styles.fc__timeline_stop}>
           <div className={styles.circle} />
           <div className={styles.fc__line}></div>
@@ -44,7 +44,7 @@ const FlightTimeline = ({ data, isOutbound }) => {
               <div className={styles.fc__line}></div>
             </div>
           ))}
-        {/* TIMELINE STOP */}
+        {/* TIMELINE STOP - END */}
         <div className={styles.fc__timeline_stop}>
           <div className={styles.circle} />
         </div>

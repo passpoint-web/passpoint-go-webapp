@@ -6,11 +6,13 @@ import FlightCard from "./FlightCard"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { travel } from "@/services/restService"
+import functions from "@/utils/functions"
 // import Link from "next/link"
 // import { ProfileEditIcon } from "@/constants/icons"
 
 const SelectFlight = () => {
   const [flights, setFlights] = useState([])
+  const [sortedFlights, setSortedFlights] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const searchParams = useSearchParams()
   const queryParams = {
@@ -24,12 +26,114 @@ const SelectFlight = () => {
     returnDate: searchParams.get("returnDate"),
   }
 
+  // FILTER PRICE
+  const [sortCategory, setSortCategory] = useState("cheapest")
+
+  const [filterPrice, setFilterPrice] = useState(0)
+  const [lowestPrice, setLowestPrice] = useState(0)
+  const [highestPrice, setHighestPrice] = useState(0)
+
+  const [cheapestFlight, setCheapestFlight] = useState("")
+  const [quickestFlight, setQuickestFlight] = useState("")
+
+  const [filterAirlines, setFilterAirlines] = useState("")
+  const [flightAirlines, setFlightAirlines] = useState([])
+
   const getFlights = async () => {
     setIsLoading(true)
     const flightsPromise = await travel.searchFlights(queryParams)
-    setFlights(flightsPromise.data.data)
+    const tempFlights = flightsPromise.data.data
+    const tempAirlines = new Set()
+
+    // Get price filter
+    setLowestPrice(tempFlights?.at(0)?.amount)
+    setHighestPrice(tempFlights?.at(-1)?.amount)
+    setFilterPrice(tempFlights?.at(-1)?.amount)
+
+    // Get cheapest and quickest flights
+    const priceSortedFlights = sortFlights(tempFlights)
+    setCheapestFlight(priceSortedFlights?.at(0)?.id)
+
+    const durationSortedFlights = sortFlights(tempFlights, "quickest")
+    setQuickestFlight(durationSortedFlights?.at(0)?.id)
+
+    tempFlights.forEach((flight) => {
+      flight?.outbound?.forEach((flightStop) => {
+        tempAirlines.add(flightStop?.airline_details?.name)
+      })
+      flight?.inbound?.forEach((flightStop) => {
+        tempAirlines.add(flightStop?.airline_details?.name)
+      })
+    })
+    setFlightAirlines(Array.from(tempAirlines))
+
+    setFlights(tempFlights)
+    setSortedFlights(tempFlights)
     setIsLoading(false)
   }
+
+  const sortFlights = (flightsArr, category = "cheapest") => {
+    switch (category) {
+      case "cheapest":
+        return [...flightsArr]?.sort(
+          (flightA, flightB) => Number(flightA.amount) - Number(flightB.amount)
+        )
+
+      case "quickest":
+        return [...flightsArr]?.sort(
+          (flightA, flightB) =>
+            Number(flightA.total_duration) - Number(flightB.total_duration)
+        )
+    }
+  }
+
+  const isStopoverGreaterThan = (number = 0) => {
+    return flights?.find(
+      (flight) =>
+        Number(flight?.inbound_stops) + Number(flight?.outbound_stops) > number
+    )
+  }
+
+  const addAirportAirlineFilter = (airline) => {
+    let tempAirlines = [...filterAirlines]
+    if (tempAirlines.includes(airline)) {
+      tempAirlines = tempAirlines?.filter((a) => a !== airline)
+    } else {
+      tempAirlines.push(airline)
+    }
+    setFilterAirlines(tempAirlines)
+  }
+
+  // TRIGGER UPDATE WHEN FLIGHTS LIST IS SORTED / FILTERED
+  useEffect(() => {
+    let tempFlights = [...sortedFlights]
+    tempFlights = sortFlights(tempFlights, sortCategory)
+
+    setSortedFlights(tempFlights)
+  }, [sortCategory])
+  useEffect(() => {
+    let tempFlights = [...flights]
+
+    // FILTER BY PRICE
+    tempFlights = tempFlights?.filter(
+      (flight) => Number(flight.amount) < filterPrice
+    )
+
+    // FILTER BY AIRLINES
+    if (filterAirlines.length > 0) {
+      tempFlights = tempFlights?.filter((flight) => {
+        const outboundAirlineAvailable = flight?.outbound?.find((flightStop) =>
+          filterAirlines.includes(flightStop.airline_details.name)
+        )
+        const inboundAirlineAvailable = flight?.inbound?.find((flightStop) =>
+          filterAirlines.includes(flightStop.airline_details.name)
+        )
+        return outboundAirlineAvailable || inboundAirlineAvailable
+      })
+    }
+
+    setSortedFlights(tempFlights)
+  }, [filterAirlines, filterPrice])
 
   useEffect(() => {
     getFlights()
@@ -39,7 +143,10 @@ const SelectFlight = () => {
     <div className={`select-flight-wrapper ${styles.row__wrapper}`}>
       <button className={styles.row__header}>
         <div className="texts">
-          <h3 className="capitalize"> Select Flights (100)</h3>
+          <h3 className="capitalize">
+            {" "}
+            Select Flights ({sortedFlights?.length})
+          </h3>
           {/* <p>Manage your bookings here</p> */}
         </div>
         <FaChevronDown />
@@ -49,20 +156,32 @@ const SelectFlight = () => {
           {/* CATEGORY FILTER */}
           <div className={styles.filter__box}>
             <button className={styles.header}>
-              <h5 className="capitalize">Category</h5>
+              <h5 className="capitalize">Sort by Category</h5>
               <FaChevronDown />
             </button>
             <div className={styles.content}>
-              <label className={styles.filter__input}>
+              {/* <label className={styles.filter__input}>
                 <input type="checkbox" name="category" />
                 Best
-              </label>
+              </label> */}
               <label className={styles.filter__input}>
-                <input type="checkbox" name="category" />
+                <input
+                  type="radio"
+                  name="category"
+                  value="cheapest"
+                  checked={sortCategory === "cheapest"}
+                  onChange={(e) => setSortCategory(e.target.value)}
+                />
                 Cheapest
               </label>
               <label className={styles.filter__input}>
-                <input type="checkbox" name="category" />
+                <input
+                  type="radio"
+                  name="category"
+                  value="quickest"
+                  checked={sortCategory === "quickest"}
+                  onChange={(e) => setSortCategory(e.target.value)}
+                />
                 Quickest
               </label>
             </div>
@@ -70,7 +189,9 @@ const SelectFlight = () => {
           {/* PRICE FILTER */}
           <div className={styles.filter__box}>
             <button className={styles.header}>
-              <h5 className="capitalize">Price</h5>
+              <h5 className="capitalize">
+                Max Price ({functions.formatMoney(filterPrice, "NGN", 0)})
+              </h5>
               <FaChevronDown />
             </button>
             <div className={styles.content}>
@@ -78,35 +199,46 @@ const SelectFlight = () => {
                 className={`${styles.filter__input} ${styles.range__input}`}
               >
                 <div className={styles.range__ctn}>
-                  <input type="range" name="" id="" />
+                  <input
+                    type="range"
+                    name="filterPrice"
+                    min={Number(lowestPrice)}
+                    max={Number(highestPrice)}
+                    value={filterPrice}
+                    onChange={(e) => setFilterPrice(e.target.value)}
+                  />
                 </div>
                 <div className={styles.filter__input_col_two}>
-                  <div>₦ 400,000</div>
-                  <div>₦ 1,000,000</div>
+                  <div>{functions.formatMoney(lowestPrice, "NGN", 0)}</div>
+                  <div>{functions.formatMoney(highestPrice, "NGN", 0)}</div>
                 </div>
               </label>
             </div>
           </div>
           {/* STOPS FILTER */}
-          <div className={styles.filter__box}>
-            <button className={styles.header}>
-              <h5 className="capitalize">Stops</h5>
-              <FaChevronDown />
-            </button>
-            <div className={styles.content}>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="stops" />
-                Non-stop
-              </label>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="stops" />1 stop
-              </label>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="stops" />
-                2+ stops
-              </label>
+          {isStopoverGreaterThan() && (
+            <div className={styles.filter__box}>
+              <button className={styles.header}>
+                <h5 className="capitalize">Stops</h5>
+                <FaChevronDown />
+              </button>
+              <div className={styles.content}>
+                <label className={styles.filter__input}>
+                  <input type="checkbox" name="stops" />
+                  Non-stop
+                </label>
+                <label className={styles.filter__input}>
+                  <input type="checkbox" name="stops" />1 stop
+                </label>
+                {isStopoverGreaterThan(1) && (
+                  <label className={styles.filter__input}>
+                    <input type="checkbox" name="stops" />
+                    2+ stops
+                  </label>
+                )}
+              </div>
             </div>
-          </div>
+          )}
           {/* TIME FILTER */}
           <div className={styles.filter__box}>
             <button className={styles.header}>
@@ -179,51 +311,49 @@ const SelectFlight = () => {
               <FaChevronDown />
             </button>
             <div className={styles.content}>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="airline" />
-                Iberia
-              </label>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="airline" />
-                Air Canada
-              </label>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="airline" />
-                American Airlines
-              </label>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="airline" />
-                British Airways
-              </label>
+              {flightAirlines?.map((airline) => (
+                <label key={airline} className={styles.filter__input}>
+                  <input
+                    type="checkbox"
+                    name="filterAirlines"
+                    checked={filterAirlines?.includes(airline)}
+                    value={airline}
+                    onChange={(e) => addAirportAirlineFilter(e.target.value)}
+                  />
+                  {airline}
+                </label>
+              ))}
             </div>
           </div>
           {/* LAYOVER FILTER */}
-          <div className={styles.filter__box}>
-            <button className={styles.header}>
-              <h5 className="capitalize">Layover</h5>
-              <FaChevronDown />
-            </button>
-            <div className={styles.content}>
-              <div className={styles.filter__input_group}>
-                <h6>Canada</h6>
-                <label className={styles.filter__input}>
-                  <input type="checkbox" name="layover" />
-                  Iberia
-                </label>
-                <label className={styles.filter__input}>
-                  <input type="checkbox" name="layover" />
-                  Toronto
-                </label>
-              </div>
-              <div className={styles.filter__input_group}>
-                <h6>Egypt</h6>
-                <label className={styles.filter__input}>
-                  <input type="checkbox" name="layover" />
-                  Cairo
-                </label>
+          {isStopoverGreaterThan() && (
+            <div className={styles.filter__box}>
+              <button className={styles.header}>
+                <h5 className="capitalize">Layover</h5>
+                <FaChevronDown />
+              </button>
+              <div className={styles.content}>
+                <div className={styles.filter__input_group}>
+                  <h6>Canada</h6>
+                  <label className={styles.filter__input}>
+                    <input type="checkbox" name="layover" />
+                    Iberia
+                  </label>
+                  <label className={styles.filter__input}>
+                    <input type="checkbox" name="layover" />
+                    Toronto
+                  </label>
+                </div>
+                <div className={styles.filter__input_group}>
+                  <h6>Egypt</h6>
+                  <label className={styles.filter__input}>
+                    <input type="checkbox" name="layover" />
+                    Cairo
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div className={styles.rhs}>
           {isLoading &&
@@ -238,8 +368,13 @@ const SelectFlight = () => {
                 }}
               />
             ))}
-          {flights?.map((flight) => (
-            <FlightCard key={flight.id} data={flight} />
+          {sortedFlights?.map((flight) => (
+            <FlightCard
+              key={flight.id}
+              data={flight}
+              cheapest={flight.id === cheapestFlight}
+              quickest={flight.id === quickestFlight}
+            />
           ))}
         </div>
       </div>
