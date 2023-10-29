@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { wallet } from "@/services/restService/wallet";
 import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
+import CopyValue from "../CopyValue";
 
 const WalletTable = ({ styles }) => {
 	const { formatMoney } = functions;
@@ -52,7 +53,8 @@ const WalletTable = ({ styles }) => {
 	},[])
 	return (
 		<>
-			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)} transaction={currentTransaction}
+			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
+				transaction={currentTransaction}
 				styles={styles} /> : <></>}
 			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
 				<div className={tableStyles.table__outer}>
@@ -96,7 +98,12 @@ const WalletTable = ({ styles }) => {
 										<td className={tableStyles.td_5}>
 											<div className={tableStyles.col}>
 												<h4>{data.beneficiaryAccountName.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
-												<p>{data.beneficiaryAccountNumber}</p>
+												<div className={tableStyles.accountNum}
+													style={{display: 'flex', gap: 10}}>
+													<p>{data.beneficiaryAccountNumber}</p>
+													<CopyValue color="#009ec4"
+														value={data.beneficiaryAccountNumber} />
+												</div>
 											</div>
 										</td>
 										<td className={tableStyles.td_3}>{data.beneficiaryBankName}</td>

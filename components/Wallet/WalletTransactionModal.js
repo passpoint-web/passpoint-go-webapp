@@ -9,6 +9,7 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import FileUpload from "../FileUpload";
 import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import ActionFeedbackCard from "../ActionFeedbackCard";
+import CopyValue from "../CopyValue";
 
 const WalletTransactionModal = ({onClose, styles, transaction}) => {
 	const { formatMoney } = functions;
@@ -122,8 +123,11 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			</div>
 			<div className={styles.row}>
 				<div className={styles.label}>Beneficiary Account</div>
-				<div className={styles.value}>
+				<div className={styles.value}
+					style={{display: 'flex', gap: 10, alignItems: 'center'}}>
 					<span>{transaction.beneficiaryAccountNumber}</span>
+					<CopyValue color="#009ec4"
+						value={transaction.beneficiaryAccountNumber} />
 				</div>
 			</div>
 			<div className={styles.row}>
