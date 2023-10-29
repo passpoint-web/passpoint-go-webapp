@@ -203,6 +203,21 @@ function formatCustomTime(dateString) {
   return `${formattedHours}:${formattedMinutes}${amOrPm}`
 }
 
+function convertTo12HourFormat(hour) {
+  if (hour < 0 || hour > 23) {
+    return "Invalid input"
+  }
+
+  const isPM = hour >= 12
+  const hour12 = isPM ? (hour === 12 ? 12 : hour - 12) : hour === 0 ? 12 : hour
+  const period = isPM ? "PM" : "AM"
+
+  const hourStr = hour12.toString().padStart(2, "0") // Ensure two-digit format
+  const minuteStr = "00" // Initialize minutes as "00" for the format
+
+  return `${hourStr}:${minuteStr} ${period}`
+}
+
 function getFormattedAirportByIata(iata) {
   const airports = getAirportsState()
   if (airports) {
@@ -233,6 +248,7 @@ const functions = {
   convertMinutesToHHMM,
   getFormattedAirportByIata,
   formatCustomTime,
+  convertTo12HourFormat,
   // encryptData,
   // decryptData
 }

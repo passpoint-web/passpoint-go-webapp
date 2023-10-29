@@ -39,6 +39,9 @@ const SelectFlight = () => {
   const [filterAirlines, setFilterAirlines] = useState("")
   const [flightAirlines, setFlightAirlines] = useState([])
 
+  const [outboundTakeOffTime, setOutboundTakeOffTime] = useState(-1)
+  const [inboundTakeOffTime, setInboundTakeOffTime] = useState(-1)
+
   const getFlights = async () => {
     setIsLoading(true)
     const flightsPromise = await travel.searchFlights(queryParams)
@@ -132,8 +135,27 @@ const SelectFlight = () => {
       })
     }
 
+    // FILTER BY OUTBOUND TIME
+    if (outboundTakeOffTime >= 0) {
+      tempFlights = tempFlights?.filter((flight) => {
+        const hour = new Date(
+          flight?.outbound?.at(0)?.departure_time
+        ).getHours()
+        return outboundTakeOffTime > hour
+      })
+    }
+
+    // FILTER BY INBOUND TIME
+    if (inboundTakeOffTime >= 0) {
+      tempFlights = tempFlights?.filter((flight) => {
+        const hour = new Date(flight?.inbound?.at(0)?.departure_time).getHours()
+        console.log(hour)
+        return inboundTakeOffTime > hour
+      })
+    }
+
     setSortedFlights(tempFlights)
-  }, [filterAirlines, filterPrice])
+  }, [filterAirlines, filterPrice, outboundTakeOffTime, inboundTakeOffTime])
 
   useEffect(() => {
     getFlights()
@@ -242,7 +264,7 @@ const SelectFlight = () => {
           {/* TIME FILTER */}
           <div className={styles.filter__box}>
             <button className={styles.header}>
-              <h5 className="capitalize">Time</h5>
+              <h5 className="capitalize">Departure Time</h5>
               <FaChevronDown />
             </button>
             <div className={styles.content}>
@@ -250,58 +272,64 @@ const SelectFlight = () => {
                 className={`${styles.filter__input} ${styles.range__input}`}
               >
                 <div className={styles.filter__input_col_one}>
-                  Take-off <span>New York (JFK)</span>
+                  Outbound{" "}
+                  <span>
+                    Flights before{" "}
+                    {outboundTakeOffTime >= 0 &&
+                      functions.convertTo12HourFormat(outboundTakeOffTime)}
+                  </span>
                 </div>
                 <div className={styles.range__ctn}>
-                  <input type="range" name="" id="" />
+                  <input
+                    type="range"
+                    name="outboundTakeOffTime"
+                    id=""
+                    min={0}
+                    max={23}
+                    value={outboundTakeOffTime}
+                    onChange={(e) => setOutboundTakeOffTime(e.target.value)}
+                  />
                 </div>
                 <div className={styles.filter__input_col_two}>
-                  <div>Thu 12:00AM</div>
                   <div>12:00AM</div>
+                  <button onClick={() => setOutboundTakeOffTime(-1)}>
+                    Clear Filter
+                  </button>
+                  <div>11:59PM</div>
                 </div>
               </label>
-              <label
-                className={`${styles.filter__input} ${styles.range__input}`}
-              >
-                <div className={styles.filter__input_col_one}>
-                  Take-off <span>New York (JFK)</span>
-                </div>
-                <div className={styles.range__ctn}>
-                  <input type="range" name="" id="" />
-                </div>
-                <div className={styles.filter__input_col_two}>
-                  <div>Thu 12:00AM</div>
-                  <div>12:00AM</div>
-                </div>
-              </label>
-              <label
-                className={`${styles.filter__input} ${styles.range__input}`}
-              >
-                <div className={styles.filter__input_col_one}>
-                  Take-off <span>New York (JFK)</span>
-                </div>
-                <div className={styles.range__ctn}>
-                  <input type="range" name="" id="" />
-                </div>
-                <div className={styles.filter__input_col_two}>
-                  <div>Thu 12:00AM</div>
-                  <div>12:00AM</div>
-                </div>
-              </label>
-              <label
-                className={`${styles.filter__input} ${styles.range__input}`}
-              >
-                <div className={styles.filter__input_col_one}>
-                  Take-off <span>New York (JFK)</span>
-                </div>
-                <div className={styles.range__ctn}>
-                  <input type="range" name="" id="" />
-                </div>
-                <div className={styles.filter__input_col_two}>
-                  <div>Thu 12:00AM</div>
-                  <div>12:00AM</div>
-                </div>
-              </label>
+              {queryParams.returnDate && (
+                <label
+                  className={`${styles.filter__input} ${styles.range__input}`}
+                >
+                  <div className={styles.filter__input_col_one}>
+                    Return{" "}
+                    <span>
+                      Flights before{" "}
+                      {inboundTakeOffTime >= 0 &&
+                        functions.convertTo12HourFormat(inboundTakeOffTime)}
+                    </span>
+                  </div>
+                  <div className={styles.range__ctn}>
+                    <input
+                      type="range"
+                      name="inboundTakeOffTime"
+                      id=""
+                      min={0}
+                      max={23}
+                      value={inboundTakeOffTime}
+                      onChange={(e) => setInboundTakeOffTime(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.filter__input_col_two}>
+                    <div>12:00AM</div>
+                    <button onClick={() => setInboundTakeOffTime(-1)}>
+                      Clear Filter
+                    </button>
+                    <div>11:59PM</div>
+                  </div>
+                </label>
+              )}
             </div>
           </div>
           {/* AIRLINE FILTER */}

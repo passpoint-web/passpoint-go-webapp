@@ -368,6 +368,10 @@
 }
 .filter__input_col_two > div {
 }
+.filter__input_col_two > button {
+  font-size: 1rem;
+  color: var(--sky-blue);
+}
 .range__ctn {
   position: relative;
   width: 100%;
