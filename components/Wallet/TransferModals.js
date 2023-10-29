@@ -20,7 +20,7 @@ const TransferModals = ({ onClose }) => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [accountNameRetrieved, setAccountNameRetrieved] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
-	const [currentLevel, setCurrentLevel] = useState('pin')
+	const [currentLevel, setCurrentLevel] = useState('account') // account, pin, success, failure
 	const [feedbackError, setFeedbackError] = useState('')
 	const [accountOrPin, setAccountOrPin] = useState(false)
 	const [getDataLoading, setGetDataLoading] = useState(false)
@@ -87,7 +87,7 @@ const TransferModals = ({ onClose }) => {
 			setCurrentLevel('success')
 		} catch (_err) {
 			setCurrentLevel('failure')
-			console.log(_err)
+			// console.log(_err)
 		} finally {
 			//
 		}
@@ -172,6 +172,7 @@ const TransferModals = ({ onClose }) => {
 	useEffect(()=>{
 		getBanks()
 	},[])
+
 
 	useEffect(()=>{
 		const {accountNumber, bankName} = bankDetail

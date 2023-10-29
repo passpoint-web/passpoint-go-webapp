@@ -1,8 +1,8 @@
 import axios from 'axios';
 // import { setConfig } from '../restService';
-import functions from '@/utils/functions';
-import { enc } from 'crypto-js';
-const { returnBase64 } = functions
+// import functions from '@/utils/functions';
+// import { enc } from 'crypto-js';
+// const { returnBase64 } = functions
 const walletRestAgent = axios.create({
 	baseURL: "https://payment-sandbox.mypasspoint.com/passpoint-payserv/v1",
 	headers: {
@@ -51,5 +51,8 @@ export const wallet = {
 	},
 	accountTransfer: (data) => {
 		return walletRestAgent.post(`ft-app/account-transfer`, data, setConfig())
+	},
+	transactions: (data) => {
+		return walletRestAgent.post(`ft-app/transaction-history?type=payout`, data, setConfig())
 	},
 }

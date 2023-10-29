@@ -27,19 +27,18 @@ const BalanceCard = ({styles}) => {
 				currency: "NGN"
 			})
 		} catch (_err) {
-			console.log(_err)
+			// console.log(_err)
 		} finally {}
 	}
 	const getWallet = async () => {
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
-			console.log(data.walletAccount['NGN'])
+			// console.log(data.walletAccount['NGN'])
 			setWalletDetails(data)
 			setWalletAccount(data.walletAccount['NGN'])
 		} catch (_err) {
-			console.log(_err)
-
+			// console.log(_err)
 		} finally {
 			setDataLoading(false)
 		}

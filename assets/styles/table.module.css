@@ -32,34 +32,29 @@
 
 .table__main th:nth-child(1),
 .table__main td:nth-child(1) {
-  width: 15%;
   padding-left: 1.5rem;
 }
-.table__main th:nth-child(2),
-.table__main td:nth-child(2) {
-  width: 10%;
-}
-.table__main th:nth-child(3),
-.table__main td:nth-child(3) {
-  width: 10%;
-}
-.table__main th:nth-child(4),
-.table__main td:nth-child(4) {
-  width: 15%;
-}
-.table__main th:nth-child(5),
-.table__main td:nth-child(5) {
-  width: 10%;
-}
-.table__main th:nth-child(6),
-.table__main td:nth-child(6) {
-  width: 15%;
-}
-.table__main th:nth-child(7),
-.table__main td:nth-child(7) {
-  width: 15%;
+.table__main th:last-child,
+.table__main td:last-child {
   padding-right: 1.5rem;
 }
 .table__pagination {
   padding: 1.5rem;
 }
+
+.td_1 {
+  width: calc(100% / 20);
+}
+.td_2 {
+  width: calc(100% / 20 * 2);
+}
+.td_3 {
+  width: calc(100% / 20 * 3);
+}
+.td_4 {
+  width: calc(100% / 20 * 4);
+}
+.td_5 {
+  width: calc(100% / 20 * 5);
+}
+
