@@ -191,7 +191,7 @@
 .fc__row_two {
   display: flex;
   gap: 1.5rem;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
 }
 .fc__airline {
   text-align: center;
@@ -277,9 +277,11 @@
 }
 .circle__ctn > div:nth-child(1) {
   top: 1.3rem;
+  white-space: nowrap;
 }
 .circle__ctn > div:nth-last-child(1) {
   bottom: 1.3rem;
+  white-space: nowrap;
 }
 .fc__timeline .circle {
   min-width: 10px;
@@ -292,6 +294,12 @@
   -o-border-radius: 50%;
   border: 1px dashed var(--sky-blue);
   background: var(--white);
+}
+.fc__timeline .fc__durations {
+  position: absolute;
+  top: 1.3rem;
+  display: flex;
+  justify-content: space-around;
 }
 .fc__timeline .fc__timeline_stop:nth-child(1) .circle {
   border: none;
@@ -314,11 +322,25 @@
   width: 100%;
   border: 0.5px solid var(--sky-blue);
 }
-.fc__timeline.fc__timeline_with_stopover
-  .fc__timeline_stop:nth-child(1)
-  .fc__line {
+.fc__timeline.fc__timeline_with_stopover .fc__line {
   border: 0.5px dashed var(--sky-blue);
 }
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(2)
+  .fc__line {
+  border: 0.5px solid var(--sky-blue);
+}
+/* .fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-child(1)
+  .circle__ctn,
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(1)
+  .circle__ctn,
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(1)
+  .fc__line {
+  display: none;
+} */
 
 /* INPUT RANGE */
 .filter__input.range__input {

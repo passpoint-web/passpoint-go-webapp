@@ -11,6 +11,7 @@ import { travel } from "@/services/restService"
 
 const SelectFlight = () => {
   const [flights, setFlights] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const searchParams = useSearchParams()
   const queryParams = {
     adults: searchParams.get("adults"),
@@ -24,8 +25,10 @@ const SelectFlight = () => {
   }
 
   const getFlights = async () => {
+    setIsLoading(true)
     const flightsPromise = await travel.searchFlights(queryParams)
     setFlights(flightsPromise.data.data)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -61,10 +64,6 @@ const SelectFlight = () => {
               <label className={styles.filter__input}>
                 <input type="checkbox" name="category" />
                 Quickest
-              </label>
-              <label className={styles.filter__input}>
-                <input type="checkbox" name="category" />
-                Slowest
               </label>
             </div>
           </div>
@@ -227,6 +226,18 @@ const SelectFlight = () => {
           </div>
         </div>
         <div className={styles.rhs}>
+          {isLoading &&
+            [1, 2, 3, 4].map((key) => (
+              <div
+                key={key}
+                className={`${styles.dashMetric_content} skeleton`}
+                style={{
+                  borderRadius: "16px",
+                  height: "200px",
+                  boxShadow: "none",
+                }}
+              />
+            ))}
           {flights?.map((flight) => (
             <FlightCard key={flight.id} data={flight} />
           ))}

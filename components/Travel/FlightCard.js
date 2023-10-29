@@ -30,7 +30,7 @@ const FlightCard = ({ selected, data }) => {
           ></div>
           <h6>{outbound?.[0]?.airline_details?.name}</h6>
         </div>
-        <FlightTimeline data={outbound} />
+        <FlightTimeline data={data} isOutbound />
         <div className={styles.fc__price}>
           {!selected && (
             <div className={styles.fc__tags}>
@@ -56,7 +56,7 @@ const FlightCard = ({ selected, data }) => {
         ) : (
           <div />
         )}
-        {inbound?.length > 0 ? <FlightTimeline data={inbound} /> : <div />}
+        {inbound?.length > 0 ? <FlightTimeline data={data} /> : <div />}
         <Link
           href={`/dashboard/travel/flights/pay/${data?.id}`}
           className="primary_btn"
