@@ -122,12 +122,12 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				</div>
 			</div>
 			<div className={styles.row}>
-				<div className={styles.label}>Beneficiary Account</div>
+				<div className={styles.label}>{transaction.beneficiaryWalletId ? 'Beneficiary Wallet ID' : 'Beneficiary Account'}</div>
 				<div className={styles.value}
 					style={{display: 'flex', gap: 10, alignItems: 'center'}}>
-					<span>{transaction.beneficiaryAccountNumber}</span>
+					<span>{transaction.beneficiaryWalletId || transaction.beneficiaryAccountNumber}</span>
 					<CopyValue color="#009ec4"
-						value={transaction.beneficiaryAccountNumber} />
+						value={transaction.beneficiaryWalletId || transaction.beneficiaryAccountNumber} />
 				</div>
 			</div>
 			<div className={styles.row}>

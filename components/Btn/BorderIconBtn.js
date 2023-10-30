@@ -7,10 +7,10 @@ const BorderIconBtn = ({children, icon, text, loading, styleProps, bdColor, bgCo
 			className={`${classProps}`}
 			style={{border: bdColor ? `1px solid ${bdColor}` : '', color: bdColor || '', backgroundColor: bgColor || '', ...styleProps}}
 		>
-			{!loading ? icon : <></>}
+			{!loading ? icon : <Loader size={20} />}
 			{/* {children} */}
 			{text}
-			{loading ? <Loader /> : <></>}
+			{/* {loading ? <Loader /> : <></>} */}
 		</button>
 	)
 }

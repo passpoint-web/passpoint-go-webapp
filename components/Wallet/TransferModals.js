@@ -236,6 +236,14 @@ const TransferModals = ({ onClose, styles }) => {
 		getBanks()
 	},[])
 
+	// useEffect(()=>{
+	// 	setAccountNameRetrieved(false)
+	// 	setBankDetails((prev)=>({
+	// 		...prev,
+	// 		accountName: ''
+	// 	}))
+	// },[accountType])
+
 	useEffect(()=>{
 		const {accountNumber, bankName, walletID} = bankDetail
 		if (accountNumber.length === 10 && bankName)  {

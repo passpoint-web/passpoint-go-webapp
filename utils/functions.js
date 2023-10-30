@@ -154,6 +154,11 @@ const removeDuplicates =(arr, key)=> {
 	return newArray
 }
 
+function maskValue (num){
+	const str = num.toString().split('')
+	return str.map((_x)=> '*').join('') +' **'
+}
+
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
@@ -172,7 +177,8 @@ const functions = {
 	splitOnCapsLetter,
 	createUrl,
 	removeDuplicates,
-	sortAlphabetically
+	sortAlphabetically,
+	maskValue
 	// encryptData,
 	// decryptData
 }

@@ -12,16 +12,24 @@ import { wallet } from "@/services/restService/wallet";
 import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
 import CopyValue from "../CopyValue";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+// import Input from "../Dashboard/Input";
+import DateFilter from "../Tables/DateFilter";
+import Input from "../Dashboard/Input";
 
 const WalletTable = ({ styles }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(new Date());
 
 	const getTransactions = async () => {
 		try {
-			const filters = {"startDate":"2023-10-15",
+			const filters = {
+				"startDate":"2023-10-15",
 				"endDate":"2023-10-30",
 				"currency":"NGN",
 				"pageNumber":"1",
@@ -64,7 +72,7 @@ const WalletTable = ({ styles }) => {
 							<p>Manage your transaction here</p>
 						</div>
 
-						<Search id={"booking"}
+						{/* <Search id={"booking"}
 							placeholder={"Search bookings"} />
 						<CustomSelect
 							id="status-type"
@@ -72,12 +80,14 @@ const WalletTable = ({ styles }) => {
 							selectedOption={""}
 							placeholder="Filter by Status"
 						/>
+							<DatePicker selected={startDate}
+								onChange={(date) => setStartDate(date)} />
 						<CustomSelect
 							id="date-type"
 							selectOptions={[]}
 							selectedOption={""}
 							placeholder="Filter by Date"
-						/>
+						/> */}
 					</div>
 					<div className={tableStyles.table__main}>
 						<table>
@@ -95,14 +105,14 @@ const WalletTable = ({ styles }) => {
 							<tbody>
 								{transactions.map((data, id) => (
 									<tr key={id}>
-										<td className={tableStyles.td_5}>
+										<td className={tableStyles.td_4}>
 											<div className={tableStyles.col}>
 												<h4>{data.beneficiaryAccountName.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
 												<div className={tableStyles.accountNum}
 													style={{display: 'flex', gap: 10}}>
-													<p>{data.beneficiaryAccountNumber}</p>
+													<p>{data.beneficiaryWalletId || data.beneficiaryAccountNumber}</p>
 													<CopyValue color="#009ec4"
-														value={data.beneficiaryAccountNumber} />
+														value={data.beneficiaryWalletId || data.beneficiaryAccountNumber} />
 												</div>
 											</div>
 										</td>

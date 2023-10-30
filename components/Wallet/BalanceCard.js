@@ -1,5 +1,4 @@
 "use client";
-import functions from "@/utils/functions";
 // import Button from '../Btn/Button'
 import BorderIconBtn from '../Btn/BorderIconBtn'
 // import {useRouter,  useSearchParams } from 'next/navigation'
@@ -10,8 +9,12 @@ import { AlertIcon, AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
 import { useEffect, useState } from 'react'
 import { wallet } from '@/services/restService/wallet'
+import functions from "@/utils/functions";
+import { EyeClose, EyeOpen } from '@/constants/icons'
 
 const BalanceCard = ({styles}) => {
+	const {formatMoney, maskValue} = functions
+	const [showBalance, setShowBalance] = useState(false)
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
@@ -71,8 +74,6 @@ const BalanceCard = ({styles}) => {
 		getWallet()
 	},[])
 
-	const {formatMoney} = functions
-
 	return (
 		<>
 			{
@@ -90,12 +91,17 @@ const BalanceCard = ({styles}) => {
 							<></>
 			}
 			{
-				!dataLoading ? <div className={styles.balance_card}>
+				!dataLoading ? <div className={`${styles.balance_card} wallet_balance_card`}>
 					<div className={styles.lhs}>
 						<h4>Available Balance</h4>
-						<h1>
-							{formatMoney(walletAccount.availableBalance, 'NGN')}
-						</h1>
+						<div className={styles.balance}>
+							<h1 className={!showBalance ? styles.hide_balance : ''}>
+								{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
+							</h1>
+							<button onClick={()=>setShowBalance(!showBalance)}>
+								{!showBalance ? <EyeOpen /> : <EyeClose />}
+							</button>
+						</div>
 						<div className={styles.btn_sec}>
 							<BorderIconBtn
 								bdColor='#fff'
@@ -115,13 +121,13 @@ const BalanceCard = ({styles}) => {
 						</div>
 					</div>
 					<div className={styles.rhs}>
-						<div className={styles.top}>
+						{/* <div className={styles.top}>
 							<BorderIconBtn
 								classProps='no-border i sd'
 							>
 								<AlertIcon /> Set Alert
 							</BorderIconBtn>
-						</div>
+						</div> */}
 						<div className={styles.account}>
 							<div>
 								<h4>Account Name</h4>
@@ -160,13 +166,13 @@ const BalanceCard = ({styles}) => {
 						</div>
 					</div>
 					<div className={styles.rhs}>
-						<div className={styles.top}>
+						{/* <div className={styles.top}>
 							<BorderIconBtn
 								classProps='no-border i sd'
 							>
 								<AlertIcon /> Set Alert
 							</BorderIconBtn>
-						</div>
+						</div> */}
 						<div className={styles.account}>
 							<div>
 								<h4>Account Name</h4>
