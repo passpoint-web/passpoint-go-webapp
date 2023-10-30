@@ -11,8 +11,9 @@ import SelectedFlight from "./SelectedFlight"
 const PayFlightPage = ({ styles }) => {
   const selectedFlight = getSelectedFlight()
   const [passengers, setPassengers] = useState([])
+  const [priceConfirmed, setPriceConfirmed] = useState(false)
 
-  const sortPassengersData = () => {
+  const sortPassengersData = async () => {
     const credentials = getCredentials()
     const tempPassengers = []
     passengers.forEach((passenger) => {
@@ -30,8 +31,12 @@ const PayFlightPage = ({ styles }) => {
       }
       tempPassengers.push(tempPassenger)
     })
-    console.log(tempPassengers)
-    makeFlightBooking(tempPassengers)
+    await confirmFlightPrice()
+    setPriceConfirmed(true)
+  }
+
+  const confirmFlightPrice = async () => {
+    await travel.confirmFlightBooking({ flightId: selectedFlight?.id })
   }
 
   const makeFlightBooking = async (tempPassengers) => {
@@ -78,7 +83,12 @@ const PayFlightPage = ({ styles }) => {
         setPassengersParent={setPassengers}
         sortPassengersData={sortPassengersData}
       />
-      <FlightPaymentOptions />
+      {priceConfirmed && (
+        <FlightPaymentOptions
+          makeFlightBooking={makeFlightBooking}
+          selectedFlight={selectedFlight}
+        />
+      )}
     </div>
   )
 }

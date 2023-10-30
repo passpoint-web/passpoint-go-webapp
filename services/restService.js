@@ -155,7 +155,10 @@ export const travel = {
     return flightRestAgent.get("flight/bookings", config)
   },
   getFlightBooking: (bookingRef) => {
-    return flightRestAgent.post(`flight/bookingdetails?bookingReference=${bookingRef}`, setTravelConfig())
+    return flightRestAgent.post(
+      `flight/bookingdetails?bookingReference=${bookingRef}`,
+      setTravelConfig()
+    )
   },
   getAirports: (page = 0, pageSize = 10000, searchParam = "") => {
     return flightRestAgent.get(
@@ -181,7 +184,13 @@ export const travel = {
       requestBody,
       setTravelConfig()
     )
-  }
+  },
+  confirmFlightBooking: (queryParams) => {
+    return flightRestAgent.post(
+      `/flight/confirmprice?flightId=${queryParams.flightId}`,
+      setTravelConfig()
+    )
+  },
 }
 
 export const notifyAndAccess = {

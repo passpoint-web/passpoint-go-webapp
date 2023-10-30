@@ -11,6 +11,9 @@ import Input from "../Dashboard/Input"
 // import Textarea from "../Dashboard/Textarea"
 import PrimaryBtn from "../Btn/Primary"
 import CustomSelect from "../Custom/Select"
+import Link from "next/link"
+import { getMostRecentFlightSearchURL } from "@/services/localService"
+import { useNotify } from "@/utils/hooks"
 
 const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   const [passengers, setPassengers] = useState([])
@@ -18,6 +21,9 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   const [activePassenger, setActivePassenger] = useState(1)
   const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
+  const notify = useNotify()
 
   const addAnotherPassenger = () => {
     const newPassenger = {
@@ -58,10 +64,12 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
     }
   }
 
-  const saveAndContinue = (index) => {
+  const saveAndContinue = async (index) => {
     if (index + 1 === passengers.length) {
+      setIsLoading(true)
+      await sortPassengersData()
+      setIsLoading(false)
       setCollapsed(true)
-      sortPassengersData()
     } else {
       setActivePassenger(activePassenger + 1)
     }
@@ -80,7 +88,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
         <div className="texts">
           <h3 className="capitalize">
             {" "}
-            Passengers Information <GreenCheckIcon />
+            Passengers Information {collapsed && <GreenCheckIcon />}
           </h3>
           {/* <p>Manage your bookings here</p> */}
         </div>
@@ -114,13 +122,14 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
               </span>
             </button>
           ))}
-          <button
+          <Link
             className={`${styles.payment__option_btn} ${styles.active}`}
-            onClick={() => addAnotherPassenger()}
+            href={mostRecentFlightSearchURL}
+            onClick={() => notify("info", "Update Passenger details here")}
           >
             <PlusIcon />
             Add Another Passenger
-          </button>
+          </Link>
         </div>
         <div className={styles.rhs}>
           {/* PASSENGER FORM */}
@@ -232,7 +241,8 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
               {/* FORM ACTION */}
               {passengers.length === index + 1 ? (
                 <PrimaryBtn
-                  text="Complete Booking"
+                  loading={isLoading}
+                  text="Confirm Booking Cost"
                   onClick={() => saveAndContinue(index)}
                 />
               ) : (

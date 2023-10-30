@@ -191,7 +191,7 @@
 .fc__row_two {
   display: flex;
   gap: 1.5rem;
-  /* justify-content: flex-end; */
+  justify-content: flex-end;
 }
 .fc__airline {
   text-align: center;
