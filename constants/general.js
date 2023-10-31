@@ -70,13 +70,13 @@ export const menuItems = (handleLogout, setOpenNotify) => [
 		icon: <ProfileIcon />,
 		label: "Profile",
 	},
-	{
-		type: "button",
-		// href: "/dashboard/notifications",
-		onClick: () => setOpenNotify(true),
-		icon: <NewNotificationIcon />,
-		label: "Notifications",
-	},
+	// {
+	// 	type: "button",
+	// 	// href: "/dashboard/notifications",
+	// 	onClick: () => setOpenNotify(true),
+	// 	icon: <NewNotificationIcon />,
+	// 	label: "Notifications",
+	// },
 	{
 		type: "link",
 		href: "/dashboard/settings",
