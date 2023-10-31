@@ -50,6 +50,7 @@ const Login = () => {
 			notify("success", `You're logged in as ${payload.email}`);
 		} catch (_err) {
 			const { message } = _err.response?.data || _err;
+			console.log(message)
 			setFeedbackError(message)
 			notify("error", message);
 		} finally {
@@ -112,8 +113,8 @@ const Login = () => {
 								id="password"
 								name="password"
 								placeholder="Password"
-								error={ctaClicked && !payload.password || feedbackError.toLowerCase().includes('password')}
-								errorMsg={!payload.password ? 'Password is required' : feedbackError.toLowerCase().includes('password') ? feedbackError : 'Password is required'}
+								error={ctaClicked && !payload.password || feedbackError?.toLowerCase().includes('password')}
+								errorMsg={!payload.password ? 'Password is required' : feedbackError?.toLowerCase().includes('password') ? feedbackError : 'Password is required'}
 							>
 								<PasswordField
 									errorField={ctaClicked && !payload.password}
