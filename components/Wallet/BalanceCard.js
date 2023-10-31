@@ -7,45 +7,20 @@ import TransferModals from './TransferModals'
 import CopyValue from '../CopyValue'
 import { AlertIcon, AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
-import { useEffect, useState } from 'react'
-import { wallet } from '@/services/restService/wallet'
+import { useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
 
-const BalanceCard = ({styles}) => {
+const BalanceCard = ({walletDetails, dataLoading, walletAccount, wallet, styles}) => {
 	const {formatMoney, maskValue} = functions
 	const [showBalance, setShowBalance] = useState(false)
-	const [walletDetails, setWalletDetails] = useState({})
-	const [walletAccount, setWalletAccount] = useState({})
-	const [dataLoading, setDataLoading] = useState(true)
+	// const [dataLoading, setDataLoading] = useState(true)
 	const [reference, setReference] = useState('')
 	const [feedbackError, setFeedbackError] = useState('')
 	// const [initiateTransfer, setInitiateTransfer] = useState(false)
 	// const [transferModal, setTransferModal] = useState(false)
 	const [currentModal, setCurrentModal] = useState('tranfer')
 	const [getDataLoading, setGetDataLoading] = useState(false)
-	const createWallet = async () => {
-		try {
-			const response = await wallet.createWallet({
-				currency: "NGN"
-			})
-		} catch (_err) {
-			// console.log(_err)
-		} finally {}
-	}
-	const getWallet = async () => {
-		try {
-			const response = await wallet.getWalletDetails()
-			const {data} = response.data
-			// console.log(data.walletAccount['NGN'])
-			setWalletDetails(data)
-			setWalletAccount(data.walletAccount['NGN'])
-		} catch (_err) {
-			// console.log(_err)
-		} finally {
-			setDataLoading(false)
-		}
-	}
 
 	const initiatePinForTransfer = async () => {
 		// setCurrentModal('transfer')
@@ -69,10 +44,6 @@ const BalanceCard = ({styles}) => {
 			setGetDataLoading(false)
 		}
 	}
-	useEffect(()=>{
-		// createWallet()
-		getWallet()
-	},[])
 
 	return (
 		<>
@@ -93,14 +64,16 @@ const BalanceCard = ({styles}) => {
 			{
 				!dataLoading ? <div className={`${styles.balance_card} wallet_balance_card`}>
 					<div className={styles.lhs}>
-						<h4>Available Balance</h4>
-						<div className={styles.balance}>
-							<h1 className={!showBalance ? styles.hide_balance : ''}>
-								{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
-							</h1>
-							<button onClick={()=>setShowBalance(!showBalance)}>
-								{!showBalance ? <EyeOpen /> : <EyeClose />}
-							</button>
+						<div className={styles.available_balance}>
+							<h4>Available Balance</h4>
+							<div className={styles.balance}>
+								<h1 className={!showBalance ? styles.hide_balance : ''}>
+									{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
+								</h1>
+								<button onClick={()=>setShowBalance(!showBalance)}>
+									{!showBalance ? <EyeOpen /> : <EyeClose />}
+								</button>
+							</div>
 						</div>
 						<div className={styles.btn_sec}>
 							<BorderIconBtn

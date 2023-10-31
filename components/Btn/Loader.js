@@ -1,7 +1,7 @@
 
-const Loader = ({size}) => {
+const Loader = ({size, colorType}) => {
 	return (
-		<div className='loading'  style={{width: size, height: size}}/>
+		<div className={`loading ${colorType}`}  style={{width: size, height: size}}/>
 	)
 }
 

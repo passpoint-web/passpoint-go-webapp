@@ -156,7 +156,8 @@ const removeDuplicates =(arr, key)=> {
 
 function maskValue (num){
 	const str = num.toString().split('')
-	return str.map((_x)=> '*').join('') +' **'
+	// return str.map((_x)=> '*').join('') +' **'
+	return '**** **'
 }
 
 const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)

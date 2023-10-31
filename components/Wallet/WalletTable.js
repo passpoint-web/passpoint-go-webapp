@@ -8,7 +8,6 @@ import functions from "@/utils/functions";
 import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import WalletTransactionModal from "./WalletTransactionModal";
 import { useEffect, useState } from "react";
-import { wallet } from "@/services/restService/wallet";
 import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
 import CopyValue from "../CopyValue";
@@ -18,7 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DateFilter from "../Tables/DateFilter";
 import Input from "../Dashboard/Input";
 
-const WalletTable = ({ styles }) => {
+const WalletTable = ({wallet,  styles }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [showTransactionModal, setShowTransactionModal] = useState(false)

@@ -24,8 +24,10 @@ const TransferModals = ({ onClose, styles }) => {
 	// const [isLoading, setIsLoading] = useState(false);
 	const [currentLevel, setCurrentLevel] = useState('account') // account, pin, success, failure
 	const [feedbackError, setFeedbackError] = useState('')
+	const [statusMessage, setStatusMessage] = useState('')
 	const [accountOrPin, setAccountOrPin] = useState(false)
 	const [getDataLoading, setGetDataLoading] = useState(false)
+	const [accountTranferLoading, setAccountTranferLoading] = useState(false)
 	const [bankDetail, setBankDetails] = useState({
 		bankName: "",
 		accountNumber: "",
@@ -70,6 +72,7 @@ const TransferModals = ({ onClose, styles }) => {
 
 	const handleFinalSubmit = async () => {
 		if (accountType.name === 'Account Number') {
+			setAccountTranferLoading(true)
 			try {
 				const {
 					bankName:{displayCode},
@@ -78,7 +81,7 @@ const TransferModals = ({ onClose, styles }) => {
 					amount,
 					narration,
 				} = bankDetail
-				await wallet.accountTransfer(
+				const response = await wallet.accountTransfer(
 					{
 						bankCode: displayCode,
 						transactionCurrency: 'NGN',
@@ -88,14 +91,18 @@ const TransferModals = ({ onClose, styles }) => {
 						pin: tranferPin
 					}
 				)
+				// console.log(response.data.responseMessage)
+				setStatusMessage(response.data.responseMessage)
 				setCurrentLevel('success')
 			} catch (_err) {
 				setCurrentLevel('failure')
 				// console.log(_err)
 			} finally {
+				setAccountTranferLoading(false)
 				//
 			}
 		} else {
+			setAccountTranferLoading(true)
 			try {
 				const {
 					walletID,
@@ -103,7 +110,7 @@ const TransferModals = ({ onClose, styles }) => {
 					amount,
 					narration,
 				} = bankDetail
-				await wallet.accountTransfer(
+				const response = await wallet.accountTransfer(
 					{
 						bankCode: '000000',
 						transactionCurrency: 'NGN',
@@ -115,11 +122,14 @@ const TransferModals = ({ onClose, styles }) => {
 						pin: tranferPin
 					}
 				)
+				setStatusMessage(response.data.responseMessage)
+				// console.log(response)
 				setCurrentLevel('success')
 			} catch (_err) {
 				setCurrentLevel('failure')
 				// console.log(_err)
 			} finally {
+				setAccountTranferLoading(false)
 				//
 			}
 		}
@@ -412,7 +422,7 @@ const TransferModals = ({ onClose, styles }) => {
 					<label>Transfer Fee</label>
 					<div>
 						<p className={`${styles.skyBlueCss}`}>
-							{formatMoney('20', 'NGN')}
+							{formatMoney('0', 'NGN')}
 						</p>
 					</div>
 				</div>
@@ -456,6 +466,7 @@ const TransferModals = ({ onClose, styles }) => {
 			ctaBtnText={currentLevel === 'account' ? 'Continue' : currentLevel === 'pin' ? 'Confirm' : currentLevel === 'success' ? 'Go Back' : currentLevel === 'failure' ? 'Try Again' : ''}
 			heading={accountOrPin ? 'Transfer Money' : ''}
 			topClose={accountOrPin}
+			loading={accountTranferLoading}
 			subHeading={accountOrPin ? 'Kindly provide details below' : ''}
 			onClose={() => currentLevel === 'pin' ? setCurrentLevel('account') : onClose()}
 			bottomCancelNeeded={accountOrPin}
@@ -470,7 +481,8 @@ const TransferModals = ({ onClose, styles }) => {
 							<ActionFeedbackCard content={{
 								success: true,
 								title: 'Transfer Successful',
-								value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} was successful and they will receive it promptly`
+								// value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} was successful and they will receive it promptly`
+								value: statusMessage
 							}}/> : 	currentLevel === 'failure' ?
 								<ActionFeedbackCard
 									content={{

@@ -233,6 +233,21 @@ button .loading::before {
   animation: btn-loading 2s linear infinite;
 }
 
+button .loading.white::after,
+button .loading.white::before {
+  content: "";
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #fff !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: btn-loading 2s linear infinite;
+}
+
+
 button .loading::after {
   animation-delay: 1s;
 }

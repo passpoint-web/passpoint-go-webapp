@@ -3,6 +3,7 @@ import axios from 'axios';
 // import functions from '@/utils/functions';
 // import { enc } from 'crypto-js';
 // const { returnBase64 } = functions
+import { getCredentials } from '../localService';
 const walletRestAgent = axios.create({
 	baseURL: "https://payment-sandbox.mypasspoint.com/passpoint-payserv/v1",
 	headers: {
@@ -11,11 +12,12 @@ const walletRestAgent = axios.create({
 });
 
 const getRequestConfig = () => {
+	const {merchantId} = getCredentials()
 	return {
 		headers: {
 			'x-channel-id' : 2,
 			'x-channel-code' : 'passpoint-infra-user',
-			'x-merchant-id' : '749ed60a-535d-4c04-a2a9-16d00f9aaa3a'
+			'x-merchant-id' : merchantId || '749ed60a-535d-4c04-a2a9-16d00f9aaa3a'
 		},
 		params: {},
 	};
