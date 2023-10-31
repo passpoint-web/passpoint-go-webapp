@@ -19,7 +19,8 @@ const FlightPageHeader = ({ styles }) => {
       airport.iataCode === "LOS" ||
       airport.iataCode === "ABV" ||
       airport.iataCode === "JFK" ||
-      airport.iataCode === "YYZ"
+      airport.iataCode === "YYZ" ||
+      airport.iataCode === "NBO"
   )
 
   const queryParams = {
@@ -41,11 +42,11 @@ const FlightPageHeader = ({ styles }) => {
   const [toAirport, setToAirport] = useState(queryParams.destination)
   const [departureDate, setDepartureDate] = useState(queryParams.departureDate)
   const [returnDate, setReturnDate] = useState(queryParams.returnDate)
-  const [tripType, setTripType] = useState(queryParams.tripType)
+  const [tripType, setTripType] = useState(queryParams.tripType || "One Way")
   const [infants, setInfants] = useState(queryParams.infants)
   const [children, setChildren] = useState(queryParams.children)
-  const [adult, setAdult] = useState(queryParams.adults)
-  const [flightClass, setFlightClass] = useState(queryParams.cabin)
+  const [adult, setAdult] = useState(queryParams.adults || 1)
+  const [flightClass, setFlightClass] = useState(queryParams.cabin || "Economy")
 
   const getAirports = async () => {
     if (!airports) {
