@@ -475,8 +475,8 @@ const TransferModals = ({ onClose, styles }) => {
 			<form style={{ minHeight: 250 }}>
 				{currentLevel === 'account' ?
 					GetBanksFlow()
-				 : currentLevel === 'pin' ?
-				  TransferPin() :
+					: currentLevel === 'pin' ?
+					TransferPin() :
 						currentLevel === 'success' ?
 							<ActionFeedbackCard content={{
 								success: true,

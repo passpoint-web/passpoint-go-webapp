@@ -8,6 +8,7 @@ import { useNotify } from "@/utils/hooks"
 const CreateWallet = ({wallet, styles}) => {
 	const notify = useNotify()
 	const [createWalletLoading, setCreateWalletLoading] = useState(false)
+	// eslint-disable-next-line no-unused-vars
 	const [feedbackError, setFeedbackError] = useState('')
 	const createWallet = async () => {
 		setCreateWalletLoading(true)
@@ -26,8 +27,6 @@ const CreateWallet = ({wallet, styles}) => {
 			setCreateWalletLoading(false)
 		}
 	}
-
-
 
 	const CreateWalletCard = () => (
 		<div className={styles.create_wallet_card}>

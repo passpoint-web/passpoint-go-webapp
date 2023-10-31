@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from 'react'
 import ModalWrapper from './ModalWrapper'
-import { useRouter, useSearchParams } from 'next/navigation'
 import Input from "@/components/Dashboard/Input";
 // import PasswordField from "@/components/Auth/PasswordField"
 import functions from "@/utils/functions"
@@ -15,8 +14,7 @@ import { wallet } from '@/services/restService/wallet';
 
 const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 	const notify = useNotify();
-	const {createUrl, maskedEmail} = functions
-	const searchParams = useSearchParams()
+	const {maskedEmail} = functions
 	const {email} = getCredentials()
 	const [currentLevel, setCurrentLevel] = useState('otp')
 	const [isLoading, setIsLoading] = useState(false);

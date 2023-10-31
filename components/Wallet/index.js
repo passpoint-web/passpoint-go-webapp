@@ -13,7 +13,6 @@ import { useState, useEffect } from "react";
 const Wallet = () => {
 	const [walletCreated, setWalletCreated] = useState(false)
 	const [walletDetails, setWalletDetails] = useState({})
-	const [showBalance, setShowBalance] = useState(false)
 	const [walletAccount, setWalletAccount] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
 

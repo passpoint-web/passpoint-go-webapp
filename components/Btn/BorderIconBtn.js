@@ -1,6 +1,6 @@
 import Loader from './Loader'
 
-const BorderIconBtn = ({children, loaderColor, icon, text, loading, styleProps, bdColor, bgColor, classProps='', ...props}) => {
+const BorderIconBtn = ({loaderColor, icon, text, loading, styleProps, bdColor, bgColor, classProps='', ...props}) => {
 	return (
 		<button
 			{...props}

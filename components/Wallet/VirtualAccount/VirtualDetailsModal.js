@@ -1,6 +1,6 @@
 "use client";
 import ModalWrapper from "@/components/Modal/ModalWrapper";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const virtualDetailsData = [
@@ -39,8 +39,6 @@ const VirtualDetailsModal = ({
   tabStyle,
   styles,
 }) => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("vat");
   const router = useRouter();
   const path = usePathname();
   const tabs = ["General", "Transaction History"];

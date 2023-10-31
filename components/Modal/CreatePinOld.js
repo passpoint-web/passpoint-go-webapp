@@ -1,21 +1,18 @@
 
 import { useEffect, useState } from 'react'
 import ModalWrapper from './ModalWrapper'
-import { useRouter, useSearchParams } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import Input from "@/components/Dashboard/Input";
-import PasswordField from "@/components/Auth/PasswordField"
 import functions from "@/utils/functions"
 import OtpInput from 'react-otp-input'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 // import { useNotify } from "@/utils/hooks";
-import { authenticate } from '@/services/restService';
 import { getCredentials } from '@/services/localService';
-import { saveCredentials, saveToken } from "@/services/localService";
 
-const CreatePinModal = ({ handlePinCreation, onClose }) => {
+const CreatePinModal = ({onClose }) => {
 	// const notify = useNotify();
-	const {createUrl, maskedEmail} = functions
-	const searchParams = useSearchParams()
+	const {maskedEmail} = functions
+	// const searchParams = useSearchParams()
 	const {email} = getCredentials()
 	const defaultLevelContent = {
 		heading: 'Enter OTP',
@@ -24,15 +21,15 @@ const CreatePinModal = ({ handlePinCreation, onClose }) => {
 			// confirmPassword()
 		}
 	}
-	const {replace} = useRouter()
+	// eslint-disable-next-line no-unused-vars
 	const [currentLevel, setCurrentLevel] = useState('otp')
 	const [otp, setOtp] = useState('')
+	// eslint-disable-next-line no-unused-vars
 	const [isLoading, setIsLoading] = useState(false);
+	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false);
-	const [pinCreated, setPinCreated] = useState(false)
 	// const [allFieldsValid, setAllFieldsValid] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
-	const [feedbackError, setFeedbackError] = useState('')
 	const [modalContent, setModalContent] = useState(defaultLevelContent)
 	const [pins, setPins] = useState({
 		pin: '',
@@ -47,6 +44,7 @@ const CreatePinModal = ({ handlePinCreation, onClose }) => {
 		}))
 	}
 
+	// eslint-disable-next-line no-unused-vars
 	const [pinCreationModal, setPinCreationModal] = useState('password')
 
 	// const handleModalFlow = (val) => {
@@ -88,7 +86,6 @@ const CreatePinModal = ({ handlePinCreation, onClose }) => {
 				heading: 'Enter OTP',
 				subHeading: `Kindly enter OTP sent to ${maskedEmail(email)}`,
 				handleModalCta: ()=>{
-					con()
 				}
 			})
 			break;
@@ -97,17 +94,12 @@ const CreatePinModal = ({ handlePinCreation, onClose }) => {
 				heading: 'Create PIN',
 				subHeading: 'Kindly create a unique PIN for your account',
 				handleModalCta: ()=>{
-					handleModalFlow('da')
-					window.setTimeout(()=>{
-						handlePinCreation()
-					}, 2000)
 				}
 			})
 			break;
 		default:
 			setModalContent({
 				handleModalCta: ()=>{
-					handleModalFlow('')
 				}
 			})
 		}

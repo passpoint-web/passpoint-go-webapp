@@ -5,13 +5,13 @@ import BorderIconBtn from '../Btn/BorderIconBtn'
 import AddMoneyModal from './AddMoneyModal'
 import TransferModals from './TransferModals'
 import CopyValue from '../CopyValue'
-import { AlertIcon, AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
+import { AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
 
-const BalanceCard = ({walletDetails, dataLoading, walletAccount, wallet, styles}) => {
+const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 	const {formatMoney, maskValue} = functions
 	const [showBalance, setShowBalance] = useState(false)
 	// const [dataLoading, setDataLoading] = useState(true)
@@ -44,6 +44,10 @@ const BalanceCard = ({walletDetails, dataLoading, walletAccount, wallet, styles}
 			setGetDataLoading(false)
 		}
 	}
+
+	useEffect(()=>{
+		console.log(feedbackError)
+	},[feedbackError])
 
 	return (
 		<>

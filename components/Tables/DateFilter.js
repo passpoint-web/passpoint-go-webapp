@@ -8,9 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const DateFilter = ({
 	disabled,
-	emitSelect,
 	selectedOption,
-	selectOptions,
 	objKey,
 	id,
 	placeholder = "Please Select",
@@ -26,12 +24,12 @@ const DateFilter = ({
 		setShowSelect(!showSelect)
 	}
 
-	const handleSelect = (option) => {
-		emitSelect(option)
-		window.setTimeout(() => {
-			setShowSelect(false)
-		}, 200)
-	}
+	// const handleSelect = (option) => {
+	// 	emitSelect(option)
+	// 	window.setTimeout(() => {
+	// 		setShowSelect(false)
+	// 	}, 200)
+	// }
 
 	const hideSelect = () => {
 		window.setTimeout(() => {

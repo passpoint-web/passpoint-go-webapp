@@ -20,7 +20,6 @@ const ModalWrapper = ({
 	hasBottomActions = true,
 	handleBottomSecAction,
 	topClose = true,
-	secText = '',
 	ctaDisabled=false,
 	secNegative = false,
 	ctaBtnColor = ''

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import Search from "../Custom/Search";
-import CustomSelect from "@/components/Custom/Select";
+// import Link from "next/link";
+// import Search from "../Custom/Search";
+// import CustomSelect from "@/components/Custom/Select";
 import tableStyles from "../../assets/styles/table.module.css";
 import functions from "@/utils/functions";
 import { detailedDate, timeFromDate } from "@/utils/date-formats";
@@ -11,19 +11,19 @@ import { useEffect, useState } from "react";
 import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
 import CopyValue from "../CopyValue";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import Input from "../Dashboard/Input";
-import DateFilter from "../Tables/DateFilter";
-import Input from "../Dashboard/Input";
+// import DateFilter from "../Tables/DateFilter";
+// import Input from "../Dashboard/Input";
 
 const WalletTable = ({wallet,  styles }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
+	// const [startDate, setStartDate] = useState(new Date());
+	// const [endDate, setEndDate] = useState(new Date());
 
 	const getTransactions = async () => {
 		try {
