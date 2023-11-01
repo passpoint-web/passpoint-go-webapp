@@ -11,7 +11,9 @@ import SelectedFlight from "./SelectedFlight"
 const PayFlightPage = ({ styles }) => {
   const selectedFlight = getSelectedFlight()
   const [passengers, setPassengers] = useState([])
+  const [sortedPassengers, setSortedPassengers] = useState([])
   const [priceConfirmed, setPriceConfirmed] = useState(false)
+  const [totalAmount, setTotalAmount] = useState(0)
 
   const sortPassengersData = async () => {
     const credentials = getCredentials()
@@ -29,20 +31,28 @@ const PayFlightPage = ({ styles }) => {
         document_type: "passport",
         holder: true,
       }
+      delete tempPassenger.id
+      delete tempPassenger.passport_no
+      delete tempPassenger.passport_issue
+      delete tempPassenger.passport_expiry
       tempPassengers.push(tempPassenger)
     })
+    setSortedPassengers(tempPassengers)
     await confirmFlightPrice()
     setPriceConfirmed(true)
   }
 
   const confirmFlightPrice = async () => {
-    await travel.confirmFlightBooking({ flightId: selectedFlight?.id })
+    const promise = await travel.confirmFlightPrice({
+      flightId: selectedFlight?.id,
+    })
+    setTotalAmount(promise.data.data.amount)
   }
 
-  const makeFlightBooking = async (tempPassengers) => {
+  const makeFlightBooking = async () => {
     await travel.createFlightBooking({
       flightId: selectedFlight?.id,
-      passengers: tempPassengers,
+      passengers: sortedPassengers,
     })
   }
 
@@ -87,6 +97,7 @@ const PayFlightPage = ({ styles }) => {
         <FlightPaymentOptions
           makeFlightBooking={makeFlightBooking}
           selectedFlight={selectedFlight}
+          totalAmount={totalAmount}
         />
       )}
     </div>

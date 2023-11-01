@@ -185,7 +185,7 @@ export const travel = {
       setTravelConfig()
     )
   },
-  confirmFlightBooking: (queryParams) => {
+  confirmFlightPrice: (queryParams) => {
     return flightRestAgent.post(
       `/flight/confirmprice?flightId=${queryParams.flightId}`,
       setTravelConfig()

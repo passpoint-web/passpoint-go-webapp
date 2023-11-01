@@ -79,16 +79,20 @@ const FlightTable = ({ title }) => {
                   </td>
                   <td>Flights</td>
                   <td>
-                    {"--"}
                     <div className="date-time">
-                      {/* <div className="date">Feb 15, 2020</div> */}
+                      <div className="date">
+                        {functions.formatTimestamp(c.createdDate)}
+                      </div>
                       {/* <div className="time">8:45 PM</div> */}
                     </div>
                   </td>
                   <td>
-                    {"--"}
-                    {/* <div className="success-tag">Confirmed</div> */}
-                    {/* <div className="pending-tag">Pending</div> */}
+                    {c.status === "CONFIRMED" && (
+                      <div className="success-tag">Confirmed</div>
+                    )}
+                    {c.status === "PENDING" && (
+                      <div className="pending-tag">Pending</div>
+                    )}
                   </td>
                   <td className="text-bold">
                     {formatMoney(c.amount, c.currency)}

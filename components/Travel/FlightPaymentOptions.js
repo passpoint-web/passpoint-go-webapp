@@ -9,7 +9,11 @@ import PrimaryBtn from "../Btn/Primary"
 import PaymentSuccessful from "./PaymentSuccessful"
 import functions from "@/utils/functions"
 
-const FlightPaymentOptions = ({ makeFlightBooking, selectedFlight }) => {
+const FlightPaymentOptions = ({
+  makeFlightBooking,
+  selectedFlight,
+  totalAmount,
+}) => {
   const paymentOptions = ["My Passpoint Wallet", "Credit/Debit Card"]
   const [paymentOption, setPaymentOption] = useState(paymentOptions[0])
   const [paymentSuccessful, setPaymentSuccessful] = useState(false)
@@ -55,7 +59,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, selectedFlight }) => {
                 <PrimaryBtn
                   loading={isLoading}
                   text={`Charge Wallet - ${functions.formatMoney(
-                    selectedFlight.amount,
+                    totalAmount,
                     selectedFlight.currency
                   )}`}
                   onClick={() => makePayment()}
