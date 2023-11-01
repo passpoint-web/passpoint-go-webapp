@@ -17,16 +17,9 @@ const KycCard = () => {
   return (
     <div className={styles.dashKyc}>
       <div className={styles.dashKyc_content}>
-        <h3>Complete KYC</h3>
-        <p>We want to know more about you and your business</p>
-        <Link
-          href={
-            user?.userType === "1"
-              ? "/dashboard/kyc/individual/identity"
-              : "/dashboard/kyc/corporate/business"
-          }
-          className="primary_link medium"
-        >
+        <h3>Wallet & Virtual Accounts</h3>
+        <p>Manage your wallet and your virtual account here.</p>
+        <Link href="/dashboard/wallet" className="primary_link medium">
           Get Started
         </Link>
       </div>

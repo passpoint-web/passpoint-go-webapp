@@ -1,0 +1,89 @@
+.virtualHome {
+  width: 100%;
+  background-color: var(--white);
+  padding: var(--btn-padding);
+  margin-bottom: var(--btn-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px;
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+}
+.virtualHome_route h3 {
+  font-size: 20px;
+  font-family: var(--graphikMedium);
+  color: var(--grey-1);
+}
+.virtualHome_route a {
+  font-size: 13px;
+  color: var(--grey-3);
+  font-family: var(--graphikRegular);
+}
+.virtualHome_route p {
+  font-size: 13px;
+  font-family: var(--graphikMedium);
+  color: var(--sky-blue);
+}
+.virtualHome_button a {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-family: var(--graphikMedium);
+  text-decoration: none;
+  padding: 16px var(--btn-padding);
+  border-radius: 12px;
+  background-color: var(--grey-1);
+  color: var(--white);
+  gap: 8px;
+  transition: all 0.5s;
+}
+.virtualHome_button a:hover {
+  background-color: var(--sky-blue);
+}
+
+/* virtual account details  */
+.virtualDetail {
+  padding: var(--btn-padding);
+}
+.virtualDetail_general {
+  display: flex;
+  align-items: center;
+}
+.virtualDetail .virtualDetail_general:not(:last-child) {
+  margin-bottom: 24px;
+}
+.virtualDetail_general label {
+  font-size: 14px;
+  width: 200px;
+  max-width: 200px;
+  font-family: var(--graphikRegular);
+  color: var(--grey-3);
+}
+.virtualDetail_general p {
+  font-size: 14px;
+  font-family: var(--graphikRegular);
+  color: var(--grey-2);
+}
+.virtualDetail_general p span {
+  color: var(--grey-3);
+}
+.virtualDetail_general .fundCss {
+  font-family: var(--graphikMedium);
+  color: var(--sky-blue);
+}
+.virtualDetail_general .statusCss {
+  background-color: #e9f9f4;
+  border-radius: 4px;
+  color: #23c38e;
+  padding: 4px 14px;
+}
+.virtualDetail_actions {
+  padding: var(--btn-padding);
+  gap: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+.virtualDetail_actions button {
+  width: fit-content;
+}

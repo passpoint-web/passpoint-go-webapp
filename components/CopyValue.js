@@ -3,14 +3,6 @@ import Button from "./Btn/Button"
 import { useState } from "react"
 
 const CopyValue = ({value='', color='#fff'}) => {
-	const style={
-		cursor: 'pointer',
-		width: 20,
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		transition: 'none'
-	}
 
 	const [copied, setCopied] = useState(false)
 
@@ -56,10 +48,23 @@ const CopyValue = ({value='', color='#fff'}) => {
 		</svg>
 	)
 	return (
-		<Button style={style}
-			text={!copied ? <CopyIcon color='#fff'  /> : <CheckIcon />}
-			// disabled={copied}
-			onClick={()=>handleCopyValue()} />
+		<>
+			{value ?
+				<Button
+					style={{
+						cursor: 'pointer',
+						width: 20,
+						height: 22,
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						transition: 'none'
+					}}
+					text={!copied ? <CopyIcon color='#fff'  /> : <CheckIcon />}
+					// disabled={copied}
+					onClick={()=>handleCopyValue()} /> :
+				<></>}
+		</>
 	)
 }
 

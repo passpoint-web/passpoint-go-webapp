@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { AirplaneIcon, FlightExchangeIcon } from "@/constants/icons"
 import Link from "next/link"
@@ -69,6 +69,7 @@ const FlightPageHeader = ({ styles }) => {
             <Link href="/dashboard/travel">Travel Services</Link> {">>"} Flights{" "}
           </p>
         </div>
+<<<<<<< HEAD
         <div className={`${styles.quick__filter} quick__filter`}>
           <CustomSelect
             id="trip-type"
@@ -107,11 +108,32 @@ const FlightPageHeader = ({ styles }) => {
             selectedOption={flightClass}
             placeholder="Select Class"
             emitSelect={(e) => setFlightClass(e)}
+=======
+        <div className={styles.quick__filter}>
+          <CustomSelect
+            id="trip-type"
+            selectOptions={["Round Trip", "One way", "Multi-city"]}
+            selectedOption={"Round Trip"}
+            placeholder="Select Trip Type"
+          />
+          <CustomSelect
+            id="trip-type"
+            selectOptions={[""]}
+            selectedOption={""}
+            placeholder="Number of Passengers"
+          />
+          <CustomSelect
+            id="class"
+            selectOptions={["Business", "Economy", "Premium Economy", "First"]}
+            selectedOption={"Business"}
+            placeholder="Select Class"
+>>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
           />
         </div>
       </div>
       <div className={styles.row_two}>
         <div className={styles.to__fro_group}>
+<<<<<<< HEAD
           {/* <Input
 						label="Leaving From"
 						id="leaving-from"
@@ -138,6 +160,20 @@ const FlightPageHeader = ({ styles }) => {
             objKey="iataCode"
             placeholder="To Airport"
             emitSelect={(e) => setToAirport(e)}
+=======
+          <Input
+            label="Leaving From"
+            id="leaving-from"
+            name="leavingFrom"
+            placeholder="Airport or city"
+          />
+          <FlightExchangeIcon />
+          <Input
+            label="Going To"
+            id="going-to"
+            name="goingTo"
+            placeholder="Airport or city"
+>>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
           />
         </div>
         <div className={styles.to__fro_group}>
@@ -147,10 +183,13 @@ const FlightPageHeader = ({ styles }) => {
             name="departureDate"
             type="date"
             placeholder="Select Date"
+<<<<<<< HEAD
             min={today}
             max={returnDate}
             value={departureDate}
             onChange={(e) => setDepartureDate(e.target.value)}
+=======
+>>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
           />
           <Input
             label="Return Date"
@@ -158,6 +197,7 @@ const FlightPageHeader = ({ styles }) => {
             name="returnDate"
             type="date"
             placeholder="Select Date"
+<<<<<<< HEAD
             styleProps={
               !tripType?.includes("Round Trip")
                 ? { display: "none" }
@@ -188,12 +228,22 @@ const FlightPageHeader = ({ styles }) => {
             )
           }
         >
+=======
+          />
+        </div>
+        <Link className="primary_btn" href={"/dashboard/travel/flights/search"}>
+>>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
           <AirplaneIcon />
           Search Flights
         </Link>
       </div>
     </div>
+<<<<<<< HEAD
   )
 }
+=======
+  );
+};
+>>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
 
-export default FlightPageHeader
+export default FlightPageHeader;

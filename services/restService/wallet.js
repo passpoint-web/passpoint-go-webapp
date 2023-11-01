@@ -1,8 +1,9 @@
 import axios from 'axios';
 // import { setConfig } from '../restService';
-import functions from '@/utils/functions';
-import { enc } from 'crypto-js';
-const { returnBase64 } = functions
+// import functions from '@/utils/functions';
+// import { enc } from 'crypto-js';
+// const { returnBase64 } = functions
+import { getCredentials } from '../localService';
 const walletRestAgent = axios.create({
 	baseURL: "https://payment-sandbox.mypasspoint.com/passpoint-payserv/v1",
 	headers: {
@@ -11,11 +12,12 @@ const walletRestAgent = axios.create({
 });
 
 const getRequestConfig = () => {
+	const {merchantId} = getCredentials()
 	return {
 		headers: {
 			'x-channel-id' : 2,
 			'x-channel-code' : 'passpoint-infra-user',
-			'x-merchant-id' : '749ed60a-535d-4c04-a2a9-16d00f9aaa3a'
+			'x-merchant-id' : merchantId || '749ed60a-535d-4c04-a2a9-16d00f9aaa3a'
 		},
 		params: {},
 	};
@@ -36,5 +38,26 @@ export const wallet = {
 	},
 	getWalletDetails: () => {
 		return walletRestAgent.get('wallet-app/get-wallet-details', setConfig())
+	},
+	initiatePin: (boo=false) => {
+		return walletRestAgent.get(`wallet-app/init-pin-reset?forgotpin=${boo}`, setConfig())
+	},
+	setPin: (data) => {
+		return walletRestAgent.put(`wallet-app/reset-pin`, data, setConfig())
+	},
+	getBanks: (countryCode) => {
+		return walletRestAgent.get(`ft-app/bank-list/${countryCode || 'NG'}`, setConfig())
+	},
+	accountEnquiry: (data) => {
+		return walletRestAgent.post(`ft-app/account-enquiry`, data, setConfig())
+	},
+	passpointWalletEnquiry: (data) => {
+		return walletRestAgent.post(`ft-app/passpoint-enquiry`, data, setConfig())
+	},
+	accountTransfer: (data) => {
+		return walletRestAgent.post(`ft-app/account-transfer`, data, setConfig())
+	},
+	transactions: (data) => {
+		return walletRestAgent.post(`ft-app/transaction-history?type=payout`, data, setConfig())
 	},
 }

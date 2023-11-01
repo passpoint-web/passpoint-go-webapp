@@ -10,14 +10,8 @@ function number(num, precision) {
 }
 
 function formatMoney(num, currency, precision) {
-  const n = num
-    ? Number(num).toFixed(precision === 0 ? 0 : precision || 2)
-    : Number(num)
-  return n
-    ? `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}${n
-        .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`
-    : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0`
+	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
+	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0.00`
 }
 const createUrl = (pathname, params) => {
   const paramsString = params.toString()
@@ -33,6 +27,14 @@ function currencySymbol(currency) {
 function dateTimestamp(timestamp) {
   const dateString = new Date(timestamp).toDateString()
   return dateString.replace(" ", ", ")
+}
+
+function sortAlphabetically (array, key) {
+	array.sort((a, b) => {
+		const state = a[key]> b[key] ? 1 : b[key] > a[key] ? -1 : 0
+		return state
+	})
+	return array
 }
 
 // function encryptData(data, key) {
@@ -228,6 +230,7 @@ function getFormattedAirportByIata(iata) {
   return iata
 }
 
+<<<<<<< HEAD
 const functions = {
   lastFourDigits,
   formatNumber: number,
@@ -251,6 +254,36 @@ const functions = {
   convertTo12HourFormat,
   // encryptData,
   // decryptData
+=======
+function maskValue (num){
+	const str = num.toString().split('')
+	// return str.map((_x)=> '*').join('') +' **'
+	return '**** **'
+}
+
+const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
+const functions = {
+	lastFourDigits,
+	formatNumber: number,
+	daysDifference: getDaysDifference,
+	formatMoney,
+	currencySymbol,
+	formatTimestamp: dateTimestamp,
+	truncateString,
+	maskedEmail,
+	validEmail,
+	getMonth,
+	makeNumArr,
+	isValidUrl,
+	returnBase64,
+	splitOnCapsLetter,
+	createUrl,
+	removeDuplicates,
+	sortAlphabetically,
+	maskValue
+	// encryptData,
+	// decryptData
+>>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
 }
 
 export default functions

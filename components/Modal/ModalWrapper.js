@@ -19,9 +19,8 @@ const ModalWrapper = ({
 	cancelBtnText='Cancel',
 	containsTabLayout = false,
 	hasBottomActions = true,
-	bottomSecAction = false,
 	handleBottomSecAction,
-	secText = '',
+	topClose = true,
 	ctaDisabled=false,
 	secNegative = false,
 	ctaBtnColor = ''
@@ -52,10 +51,10 @@ const ModalWrapper = ({
 				className={styles.overlay_screen}
 				onClick={overlayClose ? onClose : null} />
 			<div className={`${styles.child_ctn} ${containsTabLayout ? styles.contains_tab : ''}`}>
-				<button className={`${styles.close_btn} button`}
+			{topClose ? 	<button className={`${styles.close_btn} button`}
 					onClick={onClose}>
 					<CancelIcon />
-				</button>
+				</button> : <></>}
 				<div
 					className={styles.child}
 					style={{...contentStyle}}>
@@ -71,7 +70,7 @@ const ModalWrapper = ({
 						<div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
 							{bottomCancelNeeded ?
 								<Button className={`secondary ${ctaBtnType} ${secNegative ? 'negative' : ''}`}
-									onClick={bottomSecAction ? handleBottomSecAction : onClose}
+									onClick={handleBottomSecAction || onClose}
 									text={cancelBtnText} /> : <></>}
 							<Button className={`primary ${ctaBtnType}`}
 								style={{backgroundColor: ctaBtnColor || ""}}
