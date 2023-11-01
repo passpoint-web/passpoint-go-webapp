@@ -260,7 +260,7 @@ const ForgotPasswordFlow = () => {
 									success ?
 										<ActionFeedbackCard
 											content={{
-												success: true,
+												status: 'success',
 												title: 'Password Changed!',
 												value: 'Your password has been changed successfully'
 											}}

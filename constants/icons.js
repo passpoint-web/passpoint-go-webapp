@@ -1937,6 +1937,13 @@ export const ActionFailedIcon = () => (
 			strokeLinejoin="round"/>
 	</svg>
 );
+export const ActionPendingIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg" width="101" height="100" viewBox="0 0 101 100" fill="none">
+<path d="M50.5026 91.6673C73.4193 91.6673 92.1693 72.9173 92.1693 50.0006C92.1693 27.084 73.4193 8.33398 50.5026 8.33398C27.5859 8.33398 8.83594 27.084 8.83594 50.0006C8.83594 72.9173 27.5859 91.6673 50.5026 91.6673Z" fill="#EAC70F" stroke="#FDF9E7" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M51 37.5L51 52.5" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M51 60.5H51.0174" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+);
 
 export const HintIcon = () => (
 	<svg

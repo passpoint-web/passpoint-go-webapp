@@ -16,6 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // import Input from "../Dashboard/Input";
 // import DateFilter from "../Tables/DateFilter";
 // import Input from "../Dashboard/Input";
+import { numericalDateDashReversed } from "@/utils/date-formats";
 
 const WalletTable = ({wallet,  styles }) => {
 	const { formatMoney } = functions;
@@ -28,20 +29,20 @@ const WalletTable = ({wallet,  styles }) => {
 	const getTransactions = async () => {
 		try {
 			const filters = {
-				"startDate":"2023-10-15",
-				"endDate":"2023-10-30",
+				"startDate": "2023-10-15",
+				"endDate": numericalDateDashReversed(new Date()),
 				"currency":"NGN",
-				"pageNumber":"1",
+				"pageNumber":"",
 				"pageSize":""
 			}
 			const response = await wallet.transactions(filters)
 			const {data} = response.data
-			const transactions = data.map((e)=>{
-				const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode)?.name || 'Passpoint Wallet'
-				e.beneficiaryBankName = bankName
-				return e
-			})
-			setTransactions(transactions)
+			// const transactions = data.map((e)=>{
+			// 	const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode)?.name || 'Passpoint Wallet'
+			// 	e.beneficiaryBankName = bankName
+			// 	return e
+			// })
+			setTransactions(data)
 			// console.log(transactions[0])
 		} catch (_err) {
 			console.log(_err)
@@ -140,13 +141,7 @@ const WalletTable = ({wallet,  styles }) => {
 											</div>
 										</td>
 										<td className={tableStyles.td_2}>
-											{ data.finalResponseMessage.toLowerCase().includes('pending') ?
-												<div className="pending-tag">Pending</div> :
-												data.finalResponseMessage.toLowerCase().includes('success') ?
-													<div className="completed-tag">Completed</div> :
-													data.finalResponseMessage.toLowerCase().includes('failed') ?
-														<div className="failed-tag">Failed</div> : <></>
-											}
+											{ <div className={`${data.transactionStatus?.toLowerCase()}-tag`}>{data.transactionStatus}</div>}
 										</td>
 										<td className={tableStyles.td_3}>
 											<Button

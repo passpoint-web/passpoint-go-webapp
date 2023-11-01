@@ -17,6 +17,8 @@ const CreateWallet = ({wallet, styles}) => {
 				currency: "NGN"
 			})
 			console.log(response)
+			notify("success", response.responseMessage || 'We have confirmed your wallet creation');
+			window.location.reload()
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
 			setFeedbackError(responseMessage || message)

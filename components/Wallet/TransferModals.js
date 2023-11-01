@@ -11,6 +11,8 @@ import ActionFeedbackCard from "../ActionFeedbackCard";
 import { wallet } from '@/services/restService/wallet'
 import MoneyInput from "../Custom/MoneyInput";
 import AccountTypeDropDown from "./AccountTypeDropDown";
+import TertiaryBtn from "../Btn/Tertiary";
+import CreatePinModal from "../Modal/CreatePin";
 
 const TransferModals = ({ onClose, styles }) => {
 	// const notify = useNotify();
@@ -28,6 +30,7 @@ const TransferModals = ({ onClose, styles }) => {
 	const [accountOrPin, setAccountOrPin] = useState(false)
 	const [getDataLoading, setGetDataLoading] = useState(false)
 	const [accountTranferLoading, setAccountTranferLoading] = useState(false)
+	const [reference, setReference] = useState('')
 	const [bankDetail, setBankDetails] = useState({
 		bankName: "",
 		accountNumber: "",
@@ -67,6 +70,30 @@ const TransferModals = ({ onClose, styles }) => {
 			break;
 		case 'failure':
 			setCurrentLevel('account');
+		}
+	}
+
+	const initiatePinReset = async () => {
+		// setCurrentModal('transfer')
+		setGetDataLoading(true)
+		try {
+			const response = await wallet.initiatePin()
+			const {reference} = response.data
+			if (reference) {
+				setReference(reference)
+				setCurrentLevel('reset pin')
+			} else {
+				// setCurrentModal('transfer')
+			}
+		} catch (_err) {
+			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
+			setFeedbackError(responseMessage || message)
+			console.log(responseMessage || message)
+			// if (responseMessage === 'Pin has already been set') {
+				// setCurrentModal('transfer')
+			// }
+		} finally {
+			setGetDataLoading(false)
 		}
 	}
 
@@ -438,7 +465,7 @@ const TransferModals = ({ onClose, styles }) => {
 
 			</section>
 			<section className={styles.tranferPin_pin}>
-				<div style={{ width: "75%", margin: "0 auto" }}>
+				<div style={{}}>
 					<Input label={"Enter Pin"}
 						label_center={true}>
 						<div className={formStyles.otp_input_four}>
@@ -454,12 +481,18 @@ const TransferModals = ({ onClose, styles }) => {
 							/>
 						</div>
 					</Input>
+					<p>Forgot your PIN? <TertiaryBtn text="Reset PIN" onClick={()=>initiatePinReset()}/></p>
 				</div>
 			</section>
 		</>
 	);
 
 	return (
+		<>
+		{currentLevel === 'reset pin' ?
+		<CreatePinModal handlePinCreation={()=>setCurrentLevel('pin')}
+		reference={reference}
+		onClose={()=>setCurrentLevel('pin')} /> : 
 		<ModalWrapper
 			ctaDisabled={currentLevel === 'account' ? !allFieldsValid : tranferPin.length !== 4}
 			ctaBtnType={accountOrPin ? 'md' : 'sd'}
@@ -479,20 +512,24 @@ const TransferModals = ({ onClose, styles }) => {
 					TransferPin() :
 						currentLevel === 'success' ?
 							<ActionFeedbackCard content={{
-								success: true,
+								status: 'success',
 								title: 'Transfer Successful',
 								// value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} was successful and they will receive it promptly`
 								value: statusMessage
 							}}/> : 	currentLevel === 'failure' ?
 								<ActionFeedbackCard
 									content={{
-										success: false,
+										status: 'failure',
 										title: 'Transfer Failed',
 										value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} failed, Please try again`
 									}} /> : <></>
 				}
 			</form>
 		</ModalWrapper>
+
+		}
+			
+		</>
 	);
 };
 

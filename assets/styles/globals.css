@@ -822,8 +822,10 @@ form {
 .success-tag,
 .completed-tag,
 .confirmed-tag,
+.successful-tag,
 .pending-tag,
-.failed-tag {
+.failed-tag,
+.failure-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
@@ -839,6 +841,7 @@ form {
   color: var(--sky-blue);
 }
 
+.successful-tag,
 .success-tag,
 .confirmed-tag,
 .completed-tag {
@@ -851,6 +854,7 @@ form {
   color: #e9b500;
 }
 
+.failure-tag,
 .failed-tag {
   background: #fee8e8;
   color: #f21818;

@@ -1,7 +1,7 @@
-import { ActionSuccessfulIcon, ActionFailedIcon } from "@/constants/icons";
+import { ActionSuccessfulIcon, ActionPendingIcon, ActionFailedIcon } from "@/constants/icons";
 const ActionFeedbackCard = ({
 	content = {
-		success: false,
+		status: '', // success, failure, pending
 		title: "",
 		value: "",
 	},
@@ -16,7 +16,7 @@ const ActionFeedbackCard = ({
 				maxWidth: 500,
 			}}
 		>
-			{content.success ? <ActionSuccessfulIcon /> : <ActionFailedIcon />}
+			{content.status === 'success' ? <ActionSuccessfulIcon /> : content.status === 'failure' ? <ActionFailedIcon /> : content.status === 'pending' ? <ActionPendingIcon /> : <></>}
 			<h2>{content.title}</h2>
 			<p style={{ fontSize: 16, textAlign: "center" }}>{content.value}</p>
 		</div>

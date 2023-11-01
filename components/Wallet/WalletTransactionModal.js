@@ -164,13 +164,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			<div className={styles.row}>
 				<div className={styles.label}>Booking Status</div>
 				<div className={styles.value}>
-					{ transaction.finalResponseMessage.toLowerCase().includes('pending') ?
-						<div className="pending-tag">Pending</div> :
-						transaction.finalResponseMessage.toLowerCase().includes('success') ?
-							<div className="completed-tag">Completed</div> :
-							transaction.finalResponseMessage.toLowerCase().includes('failed') ?
-								<div className="failed-tag">Failed</div> : <></>
-					}
+					{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
 				</div>
 			</div>
 		</div>
@@ -235,7 +229,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				) : currentLevel === "report-success" ? (
 					<ActionFeedbackCard
 						content={{
-							success: true,
+							status: 'success',
 							title: "Your Report has been received",
 							value:
                 "Your case ID is 1234567890 , We have received your report and investigation will commence immediately, We are deeply sorry for any inconveniences.",

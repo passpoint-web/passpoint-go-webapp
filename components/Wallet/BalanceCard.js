@@ -20,11 +20,12 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 	// const [initiateTransfer, setInitiateTransfer] = useState(false)
 	// const [transferModal, setTransferModal] = useState(false)
 	const [currentModal, setCurrentModal] = useState('tranfer')
-	const [getDataLoading, setGetDataLoading] = useState(false)
+	// const [getDataLoading, setGetDataLoading] = useState(false)
+	const [pinCheckLoading, setPinCheckLoading] = useState(false)
 
 	const initiatePinForTransfer = async () => {
 		// setCurrentModal('transfer')
-		setGetDataLoading(true)
+		setPinCheckLoading(true)
 		try {
 			const response = await wallet.initiatePin()
 			const {reference} = response.data
@@ -41,7 +42,7 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 				setCurrentModal('transfer')
 			}
 		} finally {
-			setGetDataLoading(false)
+			setPinCheckLoading(false)
 		}
 	}
 
@@ -53,7 +54,7 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 		<>
 			{
 				currentModal === 'create pin' ?
-					<CreatePinModal handlePinCreation={()=>setCurrentModal('tranfer')}
+					<CreatePinModal handlePinCreation={()=>setCurrentModal('transfer')}
 						reference={reference}
 						onClose={()=>setCurrentModal(null)} /> :
 					currentModal === 'add money' ?
@@ -90,7 +91,7 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 								bgColor='#fff'
 								classProps='no-border i sd'
 								styleProps={{color: '#009EC4'}}
-								loading={getDataLoading}
+								loading={pinCheckLoading}
 								onClick={()=>initiatePinForTransfer()}
 								icon={<WithdrawMoneyIcon />}
 								text='Withdraw'

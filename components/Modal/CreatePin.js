@@ -35,7 +35,6 @@ const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 	}
 
 	const handleModalCta = async () => {
-		// handlePinCreation()
 		setCtaClicked(true)
 		if (pins.pin !== pins.confirmPin) {
 			return
@@ -47,7 +46,7 @@ const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 				otp: pins.otp,
 				reference
 			})
-			// console.log(response)
+			console.log('PIN Setup successful')
 			handlePinCreation()
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
