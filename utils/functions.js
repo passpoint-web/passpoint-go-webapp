@@ -110,10 +110,7 @@ function getMonth(index) {
 }
 function isValidUrl(url) {
   // eslint-disable-next-line no-useless-escape
-  if (
-    url.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    )
+  if (url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
   ) {
     return true
   }
@@ -230,38 +227,12 @@ function getFormattedAirportByIata(iata) {
   return iata
 }
 
-<<<<<<< HEAD
-const functions = {
-  lastFourDigits,
-  formatNumber: number,
-  daysDifference: getDaysDifference,
-  formatMoney,
-  currencySymbol,
-  formatTimestamp: dateTimestamp,
-  truncateString,
-  maskedEmail,
-  validEmail,
-  getMonth,
-  makeNumArr,
-  isValidUrl,
-  returnBase64,
-  splitOnCapsLetter,
-  createUrl,
-  removeDuplicates,
-  convertMinutesToHHMM,
-  getFormattedAirportByIata,
-  formatCustomTime,
-  convertTo12HourFormat,
-  // encryptData,
-  // decryptData
-=======
 function maskValue (num){
 	const str = num.toString().split('')
 	// return str.map((_x)=> '*').join('') +' **'
 	return '**** **'
 }
 
-const makeNumArr = num => new Array(num).fill("").map((_, i) => i + 1)
 const functions = {
 	lastFourDigits,
 	formatNumber: number,
@@ -280,10 +251,13 @@ const functions = {
 	createUrl,
 	removeDuplicates,
 	sortAlphabetically,
-	maskValue
+	maskValue,
+  getFormattedAirportByIata,
+  convertTo12HourFormat,
+  formatCustomTime,
+  convertMinutesToHHMM
 	// encryptData,
 	// decryptData
->>>>>>> 7ff9c7294be916be57c03f4c09b2f14847001e9b
 }
 
 export default functions

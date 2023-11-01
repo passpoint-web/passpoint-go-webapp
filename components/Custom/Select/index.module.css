@@ -75,7 +75,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.1rem;
-  font-family: "Graphik";
+  font-family: "GraphikLight";
 }
 
 .custom_select button .content p.option > span,
