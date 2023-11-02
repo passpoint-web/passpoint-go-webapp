@@ -1,5 +1,5 @@
 "use client";
-import { DropDownIconDark, PlusIcon } from "@/constants/icons";
+import { DropDownIconDark } from "@/constants/icons";
 import ProfileImage from "@/assets/images/dashboard/avatar.svg";
 import Link from "next/link";
 import Image from "next/image";

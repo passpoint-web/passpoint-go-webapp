@@ -25,6 +25,11 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
   const notify = useNotify()
 
+  const [searchURL, setSearchURL] = useState('')
+useEffect(()=>{
+  setSearchURL(mostRecentFlightSearchURL)
+},[])
+
   // eslint-disable-next-line no-unused-vars
   const addAnotherPassenger = () => {
     const newPassenger = {
@@ -125,7 +130,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
           ))}
           <Link
             className={`${styles.payment__option_btn} ${styles.active}`}
-            href={mostRecentFlightSearchURL}
+            href={searchURL}
             onClick={() => notify("info", "Update Passenger details here")}
           >
             <PlusIcon />

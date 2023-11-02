@@ -12,9 +12,12 @@ const PayFlightPage = ({ styles }) => {
   const selectedFlight = getSelectedFlight()
   const [passengers, setPassengers] = useState([])
   const [sortedPassengers, setSortedPassengers] = useState([])
+  // eslint-disable-next-line no-unused-vars
   const [priceConfirmed, setPriceConfirmed] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [totalAmount, setTotalAmount] = useState(0)
 
+  // eslint-disable-next-line no-unused-vars
   const sortPassengersData = async () => {
     const credentials = getCredentials()
     const tempPassengers = []
@@ -49,6 +52,7 @@ const PayFlightPage = ({ styles }) => {
     setTotalAmount(promise.data.data.amount)
   }
 
+  // eslint-disable-next-line no-unused-vars
   const makeFlightBooking = async () => {
     await travel.createFlightBooking({
       flightId: selectedFlight?.id,
