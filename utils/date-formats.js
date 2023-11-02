@@ -13,6 +13,8 @@ export const numericalDate = (value) =>
 	value ? moment(String(value)).format('DD/MM/YYYY') : '-'
 export const numericalDateDash = (value) =>
 	value ? moment(String(value)).format('DD-MM-YYYY') : '-'
+export const numericalDateDashReversed = (value) =>
+	value ? moment(String(value)).format('YYYY-MM-DD') : '-'
 export const stringToDate = (value) =>
 	value ? moment(value, 'LL').toDate() : null
 export const fromNow = (value) => (value ? moment(value).fromNow() : '-')

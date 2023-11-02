@@ -1,5 +1,5 @@
 import PayFlightPage from "@/components/Travel/PayFlightPage"
-import styles from "../../../../../assets/styles/flight.module.css"
+import styles from "@/assets/styles/flight.module.css"
 // import { publicProfile } from '@/services/restService'
 export const metadata = () => {
 	return {

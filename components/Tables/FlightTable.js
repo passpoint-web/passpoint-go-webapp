@@ -129,4 +129,4 @@ const FlightTable = ({ title }) => {
   )
 }
 
-export default FlightTable
+export default FlightTable;

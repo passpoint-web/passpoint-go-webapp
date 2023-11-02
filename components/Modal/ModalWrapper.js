@@ -1,8 +1,9 @@
-import styles from './modal.module.css'
-import { CancelIcon } from '@/constants/icons'
+"use client";
+import styles from "./modal.module.css";
+import { CancelIcon } from "@/constants/icons";
 // import PrimaryBtn from '../Btn/Primary'
-import { useRef } from 'react'
-import Button from '../Btn/Button'
+import { useRef } from "react";
+import Button from "../Btn/Button";
 const ModalWrapper = ({
 	children,
 	ctaBtnType = 'md',
@@ -17,10 +18,15 @@ const ModalWrapper = ({
 	ctaBtnText = 'Proceed',
 	cancelBtnText='Cancel',
 	containsTabLayout = false,
-	hasBottomActions = true
+	hasBottomActions = true,
+	handleBottomSecAction,
+	topClose = true,
+	ctaDisabled=false,
+	secNegative = false,
+	ctaBtnColor = ''
 }) => {
-	const modalCtnRef = useRef(null)
-	const modalBgRef = useRef(null)
+	const modalCtnRef = useRef(null);
+	const modalBgRef = useRef(null);
 	// const modalChildRef = useRef(null)
 	// const closeModal = () => {
 	// 	// Take modals away with transition
@@ -45,10 +51,10 @@ const ModalWrapper = ({
 				className={styles.overlay_screen}
 				onClick={overlayClose ? onClose : null} />
 			<div className={`${styles.child_ctn} ${containsTabLayout ? styles.contains_tab : ''}`}>
-				<button className={`${styles.close_btn} button`}
+			{topClose ? 	<button className={`${styles.close_btn} button`}
 					onClick={onClose}>
 					<CancelIcon />
-				</button>
+				</button> : <></>}
 				<div
 					className={styles.child}
 					style={{...contentStyle}}>
@@ -60,19 +66,23 @@ const ModalWrapper = ({
 						<p>{subHeading}</p>
 					</div>
 					{children}
-					{hasBottomActions && <div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
-						{bottomCancelNeeded && <Button className="secondary md"
-							onClick={onClose}
-							text={cancelBtnText} />}
-						<Button className={`primary ${ctaBtnType}`}
-							onClick={handleCta}
-							loading={loading}
-							text={ctaBtnText} />
-					</div>}
+					{hasBottomActions ?
+						<div className={`${styles.bottom} ${bottomCancelNeeded  ? styles.end : ''}`}>
+							{bottomCancelNeeded ?
+								<Button className={`secondary ${ctaBtnType} ${secNegative ? 'negative' : ''}`}
+									onClick={handleBottomSecAction || onClose}
+									text={cancelBtnText} /> : <></>}
+							<Button className={`primary ${ctaBtnType}`}
+								style={{backgroundColor: ctaBtnColor || ""}}
+								onClick={handleCta}
+								disabled={ctaDisabled}
+								loading={loading}
+								text={ctaBtnText} />
+						</div> : <></>}
 				</div>
 			</div>
 		</div>
 	)
 }
 
-export default ModalWrapper
+export default ModalWrapper;

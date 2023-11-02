@@ -12,10 +12,13 @@ const PayFlightPage = ({ styles }) => {
   const selectedFlight = getSelectedFlight()
   const [passengers, setPassengers] = useState([])
   const [sortedPassengers, setSortedPassengers] = useState([])
+  // eslint-disable-next-line no-unused-vars
   const [priceConfirmed, setPriceConfirmed] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [totalAmount, setTotalAmount] = useState(0)
   const [documentsRequired, setDocumentsRequired] = useState(null)
 
+  // eslint-disable-next-line no-unused-vars
   const sortPassengersData = async () => {
     const credentials = getCredentials()
     const tempPassengers = []

@@ -2,8 +2,8 @@
 // const cookies = cookiesFunc()
 // setters
 export const saveCredentials = (credentials) => {
-  localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials))
-}
+  localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials));
+};
 
 export const getCredentials = () => {
   if (typeof window !== "undefined") {
@@ -75,6 +75,37 @@ export const getToken = () => {
 // 	}
 // };
 
+export const setLogout = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token");
+    // cookies.remove("token", "");
+    removePublicProfile();
+    removeKycDetails();
+  }
+};
+
+export const savePublicProfile = (val) => {
+  localStorage.setItem("public_profile", JSON.stringify(val));
+};
+
+export const saveKycDetails = (val) => {
+  localStorage.setItem("kyc_details", JSON.stringify(val));
+};
+
+export const getKycDetails = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("kyc_details");
+    if (val !== "undefined") {
+      return JSON.parse(val);
+    }
+  }
+};
+
+export const removeKycDetails = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("kyc_details");
+  }
+};
 export const removeToken = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("token")
@@ -82,11 +113,6 @@ export const removeToken = () => {
     removePublicProfile()
   }
 }
-
-export const savePublicProfile = (val) => {
-  localStorage.setItem("public_profile", JSON.stringify(val))
-}
-
 export const getPublicProfile = () => {
   if (typeof window !== "undefined") {
     const val = localStorage.getItem("public_profile")

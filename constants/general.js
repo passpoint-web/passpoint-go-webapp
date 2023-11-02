@@ -63,19 +63,20 @@ export const sidebarData = [
 	},
 ];
 
-export const menuItems = (handleLogout) => [
+export const menuItems = (handleLogout, setOpenNotify) => [
 	{
 		type: "link",
 		href: "/dashboard/profile",
 		icon: <ProfileIcon />,
 		label: "Profile",
 	},
-	{
-		type: "link",
-		href: "/dashboard/notification",
-		icon: <NewNotificationIcon />,
-		label: "Notifications",
-	},
+	// {
+	// 	type: "button",
+	// 	// href: "/dashboard/notifications",
+	// 	onClick: () => setOpenNotify(true),
+	// 	icon: <NewNotificationIcon />,
+	// 	label: "Notifications",
+	// },
 	{
 		type: "link",
 		href: "/dashboard/settings",

@@ -37,6 +37,11 @@
   box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
 }
 
+.custom_select button:disabled {
+  background-color: var(--grey-5);
+  border: 1px solid var(--input-border-disabled) !important;
+}
+
 .custom_select button svg {
   transition: 0.2s;
 }
@@ -70,7 +75,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.1rem;
-  font-family: "Graphik";
+  font-family: "GraphikLight";
 }
 
 .custom_select button .content p.option > span,
@@ -162,3 +167,5 @@
 }
 
 /* end */
+/* account type dropdown styles */
+

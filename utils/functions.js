@@ -10,14 +10,8 @@ function number(num, precision) {
 }
 
 function formatMoney(num, currency, precision) {
-  const n = num
-    ? Number(num).toFixed(precision === 0 ? 0 : precision || 2)
-    : Number(num)
-  return n
-    ? `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}${n
-        .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`
-    : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0`
+	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
+	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0.00`
 }
 const createUrl = (pathname, params) => {
   const paramsString = params.toString()
@@ -33,6 +27,14 @@ function currencySymbol(currency) {
 function dateTimestamp(timestamp) {
   const dateString = new Date(timestamp).toDateString()
   return dateString.replace(" ", ", ")
+}
+
+function sortAlphabetically (array, key) {
+	array.sort((a, b) => {
+		const state = a[key]> b[key] ? 1 : b[key] > a[key] ? -1 : 0
+		return state
+	})
+	return array
 }
 
 // function encryptData(data, key) {
@@ -108,10 +110,7 @@ function getMonth(index) {
 }
 function isValidUrl(url) {
   // eslint-disable-next-line no-useless-escape
-  if (
-    url.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    )
+  if (url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
   ) {
     return true
   }
@@ -228,29 +227,37 @@ function getFormattedAirportByIata(iata) {
   return iata
 }
 
+function maskValue (num){
+	const str = num.toString().split('')
+	// return str.map((_x)=> '*').join('') +' **'
+	return '**** **'
+}
+
 const functions = {
-  lastFourDigits,
-  formatNumber: number,
-  daysDifference: getDaysDifference,
-  formatMoney,
-  currencySymbol,
-  formatTimestamp: dateTimestamp,
-  truncateString,
-  maskedEmail,
-  validEmail,
-  getMonth,
-  makeNumArr,
-  isValidUrl,
-  returnBase64,
-  splitOnCapsLetter,
-  createUrl,
-  removeDuplicates,
-  convertMinutesToHHMM,
+	lastFourDigits,
+	formatNumber: number,
+	daysDifference: getDaysDifference,
+	formatMoney,
+	currencySymbol,
+	formatTimestamp: dateTimestamp,
+	truncateString,
+	maskedEmail,
+	validEmail,
+	getMonth,
+	makeNumArr,
+	isValidUrl,
+	returnBase64,
+	splitOnCapsLetter,
+	createUrl,
+	removeDuplicates,
+	sortAlphabetically,
+	maskValue,
   getFormattedAirportByIata,
-  formatCustomTime,
   convertTo12HourFormat,
-  // encryptData,
-  // decryptData
+  formatCustomTime,
+  convertMinutesToHHMM
+	// encryptData,
+	// decryptData
 }
 
 export default functions

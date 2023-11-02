@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { AirplaneIcon, FlightExchangeIcon } from "@/constants/icons"
 import Link from "next/link"
@@ -34,19 +34,19 @@ const FlightPageHeader = ({ styles }) => {
     returnDate: searchParams.get("returnDate"),
     tripType: searchParams.get("tripType"),
   }
-  console.log(queryParams.tripType)
+  console.log(queryParams?.tripType)
 
   const today = new Date().toISOString().split("T")[0]
 
-  const [fromAirport, setFromAirport] = useState(queryParams.origin)
-  const [toAirport, setToAirport] = useState(queryParams.destination)
-  const [departureDate, setDepartureDate] = useState(queryParams.departureDate)
-  const [returnDate, setReturnDate] = useState(queryParams.returnDate)
+  const [fromAirport, setFromAirport] = useState(queryParams.origin || '')
+  const [toAirport, setToAirport] = useState(queryParams.destination || '')
+  const [departureDate, setDepartureDate] = useState(queryParams.departureDate || '')
+  const [returnDate, setReturnDate] = useState(queryParams.returnDate || '')
   const [tripType, setTripType] = useState(queryParams.tripType || "One Way")
-  const [infants, setInfants] = useState(queryParams.infants)
-  const [children, setChildren] = useState(queryParams.children)
+  const [infants, setInfants] = useState(queryParams.infants || '')
+  const [children, setChildren] = useState(queryParams.children || '')
   const [adult, setAdult] = useState(queryParams.adults || 1)
-  const [flightClass, setFlightClass] = useState(queryParams.cabin || "Economy")
+  const [flightClass, setFlightClass] = useState(queryParams?.cabin || "Economy")
 
   const getAirports = async () => {
     if (!airports) {
@@ -118,8 +118,8 @@ const FlightPageHeader = ({ styles }) => {
 						name="leavingFrom"
 						placeholder="Airport or city"
 					/> */}
+          <Input  label="Leaving From">
           <CustomObjectSelect
-            label="Leaving From"
             id="leaving-from"
             selectOptions={airports}
             selectedOption={fromAirport}
@@ -127,11 +127,14 @@ const FlightPageHeader = ({ styles }) => {
             placeholder="From Airport"
             emitSelect={(e) => setFromAirport(e)}
           />
+          </Input>
           <span className={styles.svg__wrapper}>
             <FlightExchangeIcon />
           </span>
-          <CustomObjectSelect
+          <Input 
             label="Going to"
+            >
+          <CustomObjectSelect
             id="going-to"
             selectOptions={airports}
             selectedOption={toAirport}
@@ -139,6 +142,7 @@ const FlightPageHeader = ({ styles }) => {
             placeholder="To Airport"
             emitSelect={(e) => setToAirport(e)}
           />
+          </Input>
         </div>
         <div className={styles.to__fro_group}>
           <Input
@@ -196,4 +200,4 @@ const FlightPageHeader = ({ styles }) => {
   )
 }
 
-export default FlightPageHeader
+export default FlightPageHeader;

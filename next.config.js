@@ -14,8 +14,13 @@ const nextConfig = {
 			// 	permanent: true,
 			// },
 			{
-				source: '/kyc',
-				destination: '/kyc/business-type',
+				source: '/dashboard/kyc/individual',
+				destination: '/dashboard/kyc/individual/identity',
+				permanent: true,
+			},
+			{
+				source: '/dashboard/kyc/corporate',
+				destination: '/dashboard/kyc/corporate/business',
 				permanent: true,
 			},
 			{

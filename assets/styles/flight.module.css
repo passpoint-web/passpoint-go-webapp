@@ -575,6 +575,7 @@
 .modal__bottom_actions button:nth-child(2) {
   background: var(--negative);
 }
+
 .modal__flight_details {
   /* padding: var(--inner-component-mg); */
   padding: 2rem;

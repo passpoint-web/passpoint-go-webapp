@@ -4,6 +4,7 @@ import functions from "@/utils/functions"
 import styles from "../../assets/styles/flight.module.css"
 
 const FlightTimeline = ({ data, isOutbound }) => {
+  // eslint-disable-next-line no-unused-vars
   const totalDuration = isOutbound
     ? data?.total_outbound_duration
     : data?.total_inbound_duration

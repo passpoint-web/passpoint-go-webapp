@@ -61,9 +61,6 @@
 /* .main a:hover {
   text-decoration: none;
 } */
-.main * {
-  ;
-}
 .main .section {
   padding: 5% 2%;
   text-align: center;
@@ -108,7 +105,6 @@
   font-size: 1.3rem;
   line-height: 2rem;
   margin: 1.5rem 0;
-  ;
   font-weight: 300;
 }
 .hero__schedule {

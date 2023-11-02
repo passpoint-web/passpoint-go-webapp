@@ -31,8 +31,18 @@
   position: relative;
 }
 
+.upload_ctn .sm_title {
+  font-size: 14px;
+  font-family: var(--graphikRegular);
+}
+
 .upload_ctn .file_upload {
   cursor: pointer;
+}
+
+.upload_ctn .sm_title {
+  font-size: 14px;
+  font-family: var(--graphikRegular);
 }
 
 .upload_ctn .file_upload.disabled {
