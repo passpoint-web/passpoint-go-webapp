@@ -1,0 +1,108 @@
+.main {
+  width: 493px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  padding-bottom: 30px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid var(--grey-5);
+  background: var(--white);
+  transform: translateX(100%);
+  transition: 0.5s;
+}
+.showNotify {
+  transform: none;
+}
+.closeBtn {
+  background: transparent !important;
+  position: absolute;
+  top: 40px;
+  right: 24px;
+}
+.notifyHeader {
+  background-color: var(--white);
+  position: sticky;
+  top: 0px;
+  padding: var(--header-height) 24px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notifyHeader h2,
+.notifyHeader span {
+  font-size: 24px;
+  font-family: var(--graphikSemibold);
+  color: var(--grey-1);
+}
+.notifyHeader button {
+  width: fit-content;
+  font-family: var(--graphikSemibold);
+  font-size: 16px;
+  color: var(--sky-blue);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--sky-blue-hover);
+  border-radius: 6px;
+}
+.main .line {
+  width: 100%;
+  height: 1px;
+  background: var(--grey-5);
+}
+.notifyContent {
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+.notifyCard {
+  padding: 20px;
+  background-color: var(--grey-6);
+  border-radius: 8px;
+}
+.readCard {
+  opacity: 0.6;
+}
+.notifyAlert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notifyAlert small {
+  padding: 8px;
+  font-size: 12px;
+  font-family: var(--graphikMedium);
+  border-radius: 8px;
+}
+.notifyAlert span {
+  font-size: 12px;
+  color: var(--dark);
+}
+.notifyMessage {
+  margin-top: 16px;
+}
+.notifyMessage p {
+  font-size: 16px;
+  color: var(--grey-3);
+}
+.notifyMessage a {
+  display: block;
+  margin-top: 5px;
+  text-decoration: underline;
+}
+.bookingAlert {
+  background-color: var(--sky-blue-hover);
+  color: var(--sky-blue);
+}
+.paymentAlert {
+  background-color: var(--green-alert-bg);
+  color: var(--green-alert);
+}
+.inventAlert,
+.reviewAlert {
+  background-color: var(--grey-5);
+  color: var(--grey-3);
+}

@@ -722,7 +722,7 @@ export const CancelIcon_border = () => (
 			strokeLinejoin="round"
 		/>
 	</svg>
-)
+);
 
 export const SideIcon1 = () => (
 	<svg

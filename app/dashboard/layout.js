@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }) {
         <DashboardSidebar />
       </aside>
       <div className={styles.dash_children}>
-        <DashboardHeader />
+        <DashboardHeader styles={styles} />
         <main className={styles.dash_outlet}>{children}</main>
       </div>
     </div>

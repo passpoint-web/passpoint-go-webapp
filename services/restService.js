@@ -169,6 +169,9 @@ export const accountProfile = {
   changePassword: (data) => {
     return restAgent.post("changeAccountPassword", data, setConfig())
   },
+  getAccountActivity: () => {
+    return restAgent.get("getActivities", setConfig())
+  },
 }
 
 export const travel = {

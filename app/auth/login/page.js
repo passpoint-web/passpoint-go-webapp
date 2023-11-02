@@ -12,27 +12,27 @@ import { saveCredentials, saveToken } from "@/services/localService";
 import { useNotify } from "@/utils/hooks";
 
 const Login = () => {
-	const { validEmail } = functions;
-	// eslint-disable-next-line no-unused-vars
-	const { push } = useRouter();
-	const [ctaClicked, setCtaClicked] = useState(false);
-	const [allFieldsValid, setAllFieldsValid] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [feedbackError, setFeedbackError] = useState('')
-	const [payload, setPayload] = useState({
-		email: "",
-		password: "",
-	});
+  const { validEmail } = functions;
+  // eslint-disable-next-line no-unused-vars
+  const { push } = useRouter();
+  const [ctaClicked, setCtaClicked] = useState(false);
+  const [allFieldsValid, setAllFieldsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [feedbackError, setFeedbackError] = useState("");
+  const [payload, setPayload] = useState({
+    email: "",
+    password: "",
+  });
 
-	const notify = useNotify();
+  const notify = useNotify();
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setPayload((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPayload((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -75,16 +75,16 @@ const Login = () => {
 		}
 	};
 
-	useEffect(() => {
-		setFeedbackError('')
-		const { email, password } = payload;
-		const conditionsMet = validEmail(email) && password;
-		if (conditionsMet) {
-			setAllFieldsValid(true);
-		} else {
-			setAllFieldsValid(false);
-		}
-	}, [payload]);
+  useEffect(() => {
+    setFeedbackError("");
+    const { email, password } = payload;
+    const conditionsMet = validEmail(email) && password;
+    if (conditionsMet) {
+      setAllFieldsValid(true);
+    } else {
+      setAllFieldsValid(false);
+    }
+  }, [payload]);
 
 	return (
 		<div className={styles.auth}>
@@ -137,17 +137,16 @@ const Login = () => {
 								loading={isLoading} />
 							<p>
                 Forgot password?{" "}
-								<Link href="/auth/forgot-password"
-									text="Reset it">
+                <Link href="/auth/forgot-password" text="Reset it">
                   Reset it
-								</Link>
-							</p>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	);
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Login;
