@@ -1,6 +1,6 @@
 import Link from "next/link";
 import style from "./notification.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { notifyAndAccess } from "@/services/restService";
 
 const notificationData = [

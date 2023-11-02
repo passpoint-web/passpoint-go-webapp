@@ -32,11 +32,10 @@ const DashboardHeader = ({ setOpenNotify, styles }) => {
 	const items = menuItems(handleLogout, setOpenNotify);
 	return (
 		<div className={styles.dashHeader_main}>
-			<button className={styles.generate}>
+			{/* <button className={styles.generate}>
 				<PlusIcon />
         Generate Storefront
-      </button>
-
+      </button> */}
 			<div
 				className={styles.dashHeader_profile}
 				onClick={() => setShowDropDown(!showDropDown)}

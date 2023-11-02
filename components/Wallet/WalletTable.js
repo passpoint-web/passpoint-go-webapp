@@ -8,7 +8,7 @@ import functions from "@/utils/functions";
 import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import WalletTransactionModal from "./WalletTransactionModal";
 import { useEffect, useState } from "react";
-import ngBanks from "@/utils/ng-banks";
+// import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
 import CopyValue from "../CopyValue";
 // import DatePicker from "react-datepicker";

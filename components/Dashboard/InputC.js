@@ -17,7 +17,7 @@ const Input = ({
 		<>
 			<div className={`${styles.form_group} input__ctn ${error ? "error" : ""}`} style={styleProps}>
 				{label ? <div className={styles.label_ctn} style={{display: 'flex'}}>
-					<label htmlFor={props.id} style={{margin: label_center ? '0 auto 8px' : ''}}>>
+					<label htmlFor={props.id} style={{margin: label_center ? '0 auto 8px' : ''}}>
 						{label}
 					</label>
 					{toolTipMessage ? <ToolTip message={toolTipMessage} /> : <></>}

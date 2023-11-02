@@ -26,6 +26,7 @@ const Wallet = () => {
 			// console.log(data.walletAccount['NGN'])
 			setWalletDetails(data)
 			setWalletAccount(data.walletAccount['NGN'])
+			// eslint-disable-next-line no-unused-vars
 			const {vaCreated} = data
 			const {accountNumber} = data.walletAccount['NGN']
 			if (accountNumber) {

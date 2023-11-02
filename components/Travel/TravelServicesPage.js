@@ -8,9 +8,6 @@ import { FaArrowRight } from "react-icons/fa";
 import MetricCard from "./MetricCard";
 // import CustomSelect from '@/components/Custom/Select'
 import CustomTable from "../Custom/Table";
-// import { travel } from '@/services/restService'
-// import { useEffect } from "react"
-
 const TravelServicesPage = ({ styles }) => {
   const travelServices = [
     {

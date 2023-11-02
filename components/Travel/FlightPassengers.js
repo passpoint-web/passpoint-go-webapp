@@ -25,6 +25,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
   const notify = useNotify()
 
+  // eslint-disable-next-line no-unused-vars
   const addAnotherPassenger = () => {
     const newPassenger = {
       id: tempPassengers.length + 1,
