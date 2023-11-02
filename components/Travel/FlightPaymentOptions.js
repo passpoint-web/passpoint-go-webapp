@@ -21,7 +21,7 @@ const FlightPaymentOptions = ({
 
   const makePayment = async () => {
     setIsLoading(true)
-    await makeFlightBooking()
+    await makeFlightBooking({amount: totalAmount, ref: '1234'})
     setPaymentSuccessful(true)
     setIsLoading(false)
   }

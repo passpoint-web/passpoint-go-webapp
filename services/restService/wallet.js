@@ -60,4 +60,7 @@ export const wallet = {
 	transactions: (data) => {
 		return walletRestAgent.post(`ft-app/transaction-history?type=payout`, data, setConfig())
 	},
+	payBills: (data) => {
+		return walletRestAgent.post(`ft-app/pay-bills`, data, setConfig())
+	},
 }

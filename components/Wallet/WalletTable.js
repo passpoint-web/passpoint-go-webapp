@@ -157,7 +157,7 @@ const WalletTable = ({wallet,  styles }) => {
 						</table>
 					</div>
 					<div className={tableStyles.table__pagination}>
-            Showing 10 items out of 250 results found
+            Showing {transactions.length} items out of {transactions.length} results found
 					</div>
 				</div>
 			</div>

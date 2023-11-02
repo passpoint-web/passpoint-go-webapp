@@ -31,12 +31,12 @@ const Wallet = () => {
 			const {accountNumber} = data.walletAccount['NGN']
 			if (accountNumber) {
 				setWalletState('created')
-			}else if (!accountNumber) {
+			}else if (vaCreated && !accountNumber) {
 				setWalletState('pending')
 				setShowPendingModal(true)
 			}
 		} catch (_err) {
-			// console.log(_err)
+			console.log(_err)
 		} finally {
 			setDataLoading(false)
 		}

@@ -53,10 +53,11 @@ const PayFlightPage = ({ styles }) => {
   }
 
   // eslint-disable-next-line no-unused-vars
-  const makeFlightBooking = async () => {
-    await travel.createFlightBooking({
-      flightId: selectedFlight?.id,
-      passengers: sortedPassengers,
+  const makeFlightBooking = async ({amount}) => {
+    await travel.bookFlight({
+      pin: '1234',
+      ref: selectedFlight?.id,
+      amount
     })
   }
 
