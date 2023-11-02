@@ -206,12 +206,13 @@
 /* end  */
 
 /* business profile  */
+
 .dashPublic {
   width: 68%;
   background-image: url(../images/dashboard/business-profile.svg);
 }
 .dashPublic_content p {
-  width: 30%;
+  width: 40%;
 }
 .dashPublic_content a {
   background-color: var(--cta-bg);

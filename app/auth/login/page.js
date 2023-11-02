@@ -12,27 +12,27 @@ import { saveCredentials, saveToken } from "@/services/localService";
 import { useNotify } from "@/utils/hooks";
 
 const Login = () => {
-	const { validEmail } = functions;
-	// eslint-disable-next-line no-unused-vars
-	const { push } = useRouter();
-	const [ctaClicked, setCtaClicked] = useState(false);
-	const [allFieldsValid, setAllFieldsValid] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [feedbackError, setFeedbackError] = useState('')
-	const [payload, setPayload] = useState({
-		email: "",
-		password: "",
-	});
+  const { validEmail } = functions;
+  // eslint-disable-next-line no-unused-vars
+  const { push } = useRouter();
+  const [ctaClicked, setCtaClicked] = useState(false);
+  const [allFieldsValid, setAllFieldsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [feedbackError, setFeedbackError] = useState("");
+  const [payload, setPayload] = useState({
+    email: "",
+    password: "",
+  });
 
-	const notify = useNotify();
+  const notify = useNotify();
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setPayload((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPayload((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -50,6 +50,7 @@ const Login = () => {
 			notify("success", `You're logged in as ${payload.email}`);
 		} catch (_err) {
 			const { message } = _err.response?.data || _err;
+			console.log(message)
 			setFeedbackError(message)
 			notify("error", message);
 		} finally {
@@ -65,20 +66,25 @@ const Login = () => {
 		} else if (!isActive && Number(userType) == 1) {
 			push(`/auth/signup/individual/${individualLevels[regStage]}`);
 		} else {
-			push("/dashboard");
+			if (Number(userType) == 2) {
+				push("/dashboard/kyc/corporate/business");
+			}
+			else {
+				push("/dashboard/kyc/individual");
+			}
 		}
 	};
 
-	useEffect(() => {
-		setFeedbackError('')
-		const { email, password } = payload;
-		const conditionsMet = validEmail(email) && password;
-		if (conditionsMet) {
-			setAllFieldsValid(true);
-		} else {
-			setAllFieldsValid(false);
-		}
-	}, [payload]);
+  useEffect(() => {
+    setFeedbackError("");
+    const { email, password } = payload;
+    const conditionsMet = validEmail(email) && password;
+    if (conditionsMet) {
+      setAllFieldsValid(true);
+    } else {
+      setAllFieldsValid(false);
+    }
+  }, [payload]);
 
 	return (
 		<div className={styles.auth}>
@@ -112,8 +118,8 @@ const Login = () => {
 								id="password"
 								name="password"
 								placeholder="Password"
-								error={ctaClicked && !payload.password || feedbackError.toLowerCase().includes('password')}
-								errorMsg={!payload.password ? 'Password is required' : feedbackError.toLowerCase().includes('password') ? feedbackError : 'Password is required'}
+								error={ctaClicked && !payload.password || feedbackError?.toLowerCase().includes('password')}
+								errorMsg={!payload.password ? 'Password is required' : feedbackError?.toLowerCase().includes('password') ? feedbackError : 'Password is required'}
 							>
 								<PasswordField
 									errorField={ctaClicked && !payload.password}
@@ -131,17 +137,16 @@ const Login = () => {
 								loading={isLoading} />
 							<p>
                 Forgot password?{" "}
-								<Link href="/auth/forgot-password"
-									text="Reset it">
+                <Link href="/auth/forgot-password" text="Reset it">
                   Reset it
-								</Link>
-							</p>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	);
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

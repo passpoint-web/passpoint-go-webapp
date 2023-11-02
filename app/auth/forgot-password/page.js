@@ -39,7 +39,6 @@ export default function ForgotPassword () {
 		} catch (_err) {
 			const { message } = _err.response?.data || _err;
 			notify("error", message);
-			console.log(message);
 		} finally {
 			setIsLoading(false);
 		}

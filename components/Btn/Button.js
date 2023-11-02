@@ -1,6 +1,6 @@
 import Loader from "./Loader"
 
-const Button = ({text,loading, ...props}) => {
+const Button = ({text,loading=false, ...props}) => {
 	return (
 		<button
 			{...props}

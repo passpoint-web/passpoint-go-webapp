@@ -51,7 +51,7 @@
 
 .child_ctn {
   min-width: 500px;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
 }
 
@@ -91,10 +91,6 @@
   margin-bottom: 0;
 }
 
-.top p {
-  ;
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -105,7 +101,7 @@
   margin-top: var(--outer-component-mg);
   display: flex;
   align-self: flex-end;
-  gap: var(--sm-inner-component-mg);
+  gap: var(--inner-component-gap);
 }
 
 .bottom.end {

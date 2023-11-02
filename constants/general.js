@@ -26,31 +26,31 @@ export const sidebarData = [
 		icon: SideIcon2,
 		path: "/dashboard/travel",
 	},
-	{
-		title: "Marketplace",
-		icon: SideIcon3,
-		path: "/dashboard/marketplace",
-	},
-	{
-		title: "Invoices and Paylinks",
-		icon: SideIcon4,
-		path: "/dashboard/invoice",
-	},
-	{
-		title: "Customer Management",
-		icon: SideIcon5,
-		path: "/dashboard/customer",
-	},
+	// {
+	// 	title: "Marketplace",
+	// 	icon: SideIcon3,
+	// 	path: "/dashboard/marketplace",
+	// },
+	// {
+	// 	title: "Invoices and Paylinks",
+	// 	icon: SideIcon4,
+	// 	path: "/dashboard/invoice",
+	// },
+	// {
+	// 	title: "Customer Management",
+	// 	icon: SideIcon5,
+	// 	path: "/dashboard/customer",
+	// },
 	{
 		title: "Wallet",
 		icon: SideIcon6,
 		path: "/dashboard/wallet",
 	},
-	{
-		title: "Team Setup",
-		icon: SideIcon7,
-		path: "/dashboard/team",
-	},
+	// {
+	// 	title: "Team Setup",
+	// 	icon: SideIcon7,
+	// 	path: "/dashboard/team",
+	// },
 	{
 		title: "Settings",
 		icon: SideIcon8,
@@ -63,19 +63,20 @@ export const sidebarData = [
 	},
 ];
 
-export const menuItems = (handleLogout) => [
+export const menuItems = (handleLogout, setOpenNotify) => [
 	{
 		type: "link",
 		href: "/dashboard/profile",
 		icon: <ProfileIcon />,
 		label: "Profile",
 	},
-	{
-		type: "link",
-		href: "/dashboard/notification",
-		icon: <NewNotificationIcon />,
-		label: "Notifications",
-	},
+	// {
+	// 	type: "button",
+	// 	// href: "/dashboard/notifications",
+	// 	onClick: () => setOpenNotify(true),
+	// 	icon: <NewNotificationIcon />,
+	// 	label: "Notifications",
+	// },
 	{
 		type: "link",
 		href: "/dashboard/settings",
