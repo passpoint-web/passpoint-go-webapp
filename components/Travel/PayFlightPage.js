@@ -14,6 +14,7 @@ const PayFlightPage = ({ styles }) => {
   const [sortedPassengers, setSortedPassengers] = useState([])
   const [priceConfirmed, setPriceConfirmed] = useState(false)
   const [totalAmount, setTotalAmount] = useState(0)
+  const [documentsRequired, setDocumentsRequired] = useState(null)
 
   const sortPassengersData = async () => {
     const credentials = getCredentials()
@@ -22,14 +23,16 @@ const PayFlightPage = ({ styles }) => {
       const tempPassenger = { ...passenger }
       tempPassenger.title = passenger.gender === "male" ? "mr" : "miss"
       tempPassenger.phone_number = credentials.phoneNumber
-      tempPassenger.documents = {
-        number: passenger.passport_no,
-        issuing_date: passenger.passport_issue,
-        expiry_date: passenger.passport_expiry,
-        issuing_country: "NG",
-        nationality_country: "NG",
-        document_type: "passport",
-        holder: true,
+      if (documentsRequired) {
+        tempPassenger.documents = {
+          number: passenger.passport_no,
+          issuing_date: passenger.passport_issue,
+          expiry_date: passenger.passport_expiry,
+          issuing_country: "NG",
+          nationality_country: "NG",
+          document_type: "passport",
+          holder: true,
+        }
       }
       delete tempPassenger.id
       delete tempPassenger.passport_no
@@ -38,8 +41,10 @@ const PayFlightPage = ({ styles }) => {
       tempPassengers.push(tempPassenger)
     })
     setSortedPassengers(tempPassengers)
-    await confirmFlightPrice()
-    setPriceConfirmed(true)
+    if (totalAmount === 0) {
+      await confirmFlightPrice()
+      setPriceConfirmed(true)
+    }
   }
 
   const confirmFlightPrice = async () => {
@@ -47,9 +52,11 @@ const PayFlightPage = ({ styles }) => {
       flightId: selectedFlight?.id,
     })
     setTotalAmount(promise.data.data.amount)
+    setDocumentsRequired(promise.data.data.document_required)
   }
 
   const makeFlightBooking = async () => {
+    await sortPassengersData()
     await travel.createFlightBooking({
       flightId: selectedFlight?.id,
       passengers: sortedPassengers,
