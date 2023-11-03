@@ -17,26 +17,45 @@ import "react-datepicker/dist/react-datepicker.css";
 // import DateFilter from "../Tables/DateFilter";
 // import Input from "../Dashboard/Input";
 import { numericalDateDashReversed } from "@/utils/date-formats";
+import Pagination from "../Tables/Pagination";
 
 const WalletTable = ({wallet,  styles }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
+	const [pagination, setPagination] = useState({
+		currentPage: 1,
+		pageCount: 0,
+		pageSize: 2,
+		totalCount: 0
+	})
 	// const [startDate, setStartDate] = useState(new Date());
 	// const [endDate, setEndDate] = useState(new Date());
 
 	const getTransactions = async () => {
 		try {
 			const filters = {
-				"startDate": "2023-10-15",
-				"endDate": numericalDateDashReversed(new Date()),
-				"currency":"NGN",
-				"pageNumber":"",
-				"pageSize":""
+				startDate: "2023-10-15",
+				endDate: numericalDateDashReversed(new Date()),
+				currency:"NGN",
+				pageNumber: pagination.currentPage,
+				pageSize: pagination.pageSize
 			}
 			const response = await wallet.transactions(filters)
 			const {data} = response.data
+			const {
+				currentPage,
+				pageCount,
+				pageSize,
+				totalCount
+			} = response.data
+			setPagination({
+				currentPage,
+				pageCount,
+				pageSize,
+				totalCount
+			})
 			// const transactions = data.map((e)=>{
 			// 	const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode)?.name || 'Passpoint Wallet'
 			// 	e.beneficiaryBankName = bankName
@@ -156,9 +175,7 @@ const WalletTable = ({wallet,  styles }) => {
 							</tbody>
 						</table>
 					</div>
-					<div className={tableStyles.table__pagination}>
-            Showing {transactions.length} items out of {transactions.length} results found
-					</div>
+					<Pagination tableStyles={tableStyles} pagination={pagination} />
 				</div>
 			</div>
 		</>
