@@ -27,7 +27,7 @@ const WalletTable = ({wallet,  styles }) => {
 	const [pagination, setPagination] = useState({
 		currentPage: 1,
 		pageCount: 0,
-		pageSize: 2,
+		pageSize: 21,
 		totalCount: 0
 	})
 	// const [startDate, setStartDate] = useState(new Date());
@@ -42,7 +42,7 @@ const WalletTable = ({wallet,  styles }) => {
 				pageNumber: pagination.currentPage,
 				pageSize: pagination.pageSize
 			}
-			const response = await wallet.transactions(filters)
+			const response = await wallet.transactions({data: filters, type: 'all'})
 			const {data} = response.data
 			const {
 				currentPage,

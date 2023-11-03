@@ -24,13 +24,14 @@ const TransferModals = ({ onClose, styles }) => {
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [accountNameRetrieved, setAccountNameRetrieved] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
-	const [currentLevel, setCurrentLevel] = useState('account') // account, pin, success, failure
+	const [currentLevel, setCurrentLevel] = useState('account') // account, pin, success, failure, reset pin
 	const [feedbackError, setFeedbackError] = useState('')
 	const [statusMessage, setStatusMessage] = useState('')
 	const [accountOrPin, setAccountOrPin] = useState(false)
 	const [getDataLoading, setGetDataLoading] = useState(false)
 	const [accountTranferLoading, setAccountTranferLoading] = useState(false)
 	const [reference, setReference] = useState('')
+	const [pinResetLoading, setPinResetLoading] = useState(false)
 	const [bankDetail, setBankDetails] = useState({
 		bankName: "",
 		accountNumber: "",
@@ -73,11 +74,12 @@ const TransferModals = ({ onClose, styles }) => {
 		}
 	}
 
-	const initiatePinReset = async () => {
+	const initiatePinReset = async (e) => {
+		e.preventDefault()
 		// setCurrentModal('transfer')
-		setGetDataLoading(true)
+		setPinResetLoading(true)
 		try {
-			const response = await wallet.initiatePin()
+			const response = await wallet.initiatePin(true)
 			const {reference} = response.data
 			if (reference) {
 				setReference(reference)
@@ -88,12 +90,12 @@ const TransferModals = ({ onClose, styles }) => {
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
 			setFeedbackError(responseMessage || message)
-			console.log(responseMessage || message)
+			// console.log(responseMessage || message)
 			// if (responseMessage === 'Pin has already been set') {
 				// setCurrentModal('transfer')
 			// }
 		} finally {
-			setGetDataLoading(false)
+			setPinResetLoading(false)
 		}
 	}
 
@@ -112,7 +114,7 @@ const TransferModals = ({ onClose, styles }) => {
 					{
 						bankCode: displayCode,
 						transactionCurrency: 'NGN',
-						accountName, accountNumber: Number(accountNumber),
+						accountName, accountNumber,
 						amount: Number(amount),
 						channel: '3', narration,
 						pin: tranferPin
@@ -122,6 +124,8 @@ const TransferModals = ({ onClose, styles }) => {
 				setStatusMessage(response.data.responseMessage)
 				setCurrentLevel('success')
 			} catch (_err) {
+				console.log(_err.response.data.responseMessage)
+				setStatusMessage(_err.response.data.responseMessage)
 				setCurrentLevel('failure')
 				// console.log(_err)
 			} finally {
@@ -481,7 +485,7 @@ const TransferModals = ({ onClose, styles }) => {
 							/>
 						</div>
 					</Input>
-					<p>Forgot your PIN? <TertiaryBtn text="Reset PIN" onClick={()=>initiatePinReset()}/></p>
+					<p>Forgot your PIN? <TertiaryBtn text={!pinResetLoading ? 'Reset PIN' : 'Loading...'} disabled={pinResetLoading} onClick={(e)=>initiatePinReset(e)}/></p>
 				</div>
 			</section>
 		</>
@@ -521,7 +525,7 @@ const TransferModals = ({ onClose, styles }) => {
 									content={{
 										status: 'failure',
 										title: 'Transfer Failed',
-										value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} failed, Please try again`
+										value: statusMessage
 									}} /> : <></>
 				}
 			</form>
