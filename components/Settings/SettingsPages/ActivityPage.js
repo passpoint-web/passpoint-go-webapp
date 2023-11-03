@@ -30,6 +30,19 @@ const Activity = () => {
       <div className={styles.border_box}>
         {loading ? (
           <>
+          <table className={styles.table}>
+            <thead>
+              <tr className={styles.table_header}>
+                <td className={styles.td_3}>
+                  <div className={styles.th_content}>Date & time</div>
+                </td>
+                <td className={styles.td_3}>
+                  <div className={styles.th_content}>Activity</div>
+                </td>
+              </tr>
+            </thead>
+            </table>
+
             {Array(4)
               .fill(undefined)
               .map((item, i) => (

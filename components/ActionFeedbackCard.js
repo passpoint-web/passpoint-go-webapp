@@ -18,7 +18,7 @@ const ActionFeedbackCard = ({
 		>
 			{content.status === 'success' ? <ActionSuccessfulIcon /> : content.status === 'failure' ? <ActionFailedIcon /> : content.status === 'pending' ? <ActionPendingIcon /> : <></>}
 			<h2>{content.title}</h2>
-			<p style={{ fontSize: 16, textAlign: "center" }}>{content.value}</p>
+			<p style={{ fontSize: 16, textAlign: "center", textTransform: 'capitalize' }}>{content.value}</p>
 		</div>
 	);
 };

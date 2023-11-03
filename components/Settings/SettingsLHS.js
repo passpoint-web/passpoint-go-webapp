@@ -1,6 +1,7 @@
 
 import styles from './settings.module.css'
 import Link from 'next/link'
+// eslint-disable-next-line no-unused-vars
 import { NotificationIcon, AccountProfileIcon, AccountSecurityIcon } from '@/constants/icons'
 const SettingsLHS = () => {
 	return (
@@ -15,7 +16,7 @@ const SettingsLHS = () => {
 					<p>Monitor your account activity</p>
 				</div>
 			</Link>
-			<Link href='/dashboard/settings/notification'
+			{/* <Link href='/dashboard/settings/notification'
 				className={styles.nav_sec}>
 				<div className={styles.icon}>
 					<NotificationIcon color="#009EC4" />
@@ -25,7 +26,7 @@ const SettingsLHS = () => {
 					<h4>Notification Settings</h4>
 					<p>Manage your notifications</p>
 				</div>
-			</Link>
+			</Link> */}
 			<Link href='/dashboard/settings/security'
 				className={styles.nav_sec}>
 				<div className={styles.icon}>

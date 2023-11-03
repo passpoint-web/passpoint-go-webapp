@@ -25,7 +25,6 @@ const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 		pin: '',
 		confirmPin: ''
 	})
-
 	const handlePinsChange = (e) => {
 		const { name, value } = e.target
 		setPins((prevState) => ({

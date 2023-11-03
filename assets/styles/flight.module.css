@@ -512,6 +512,13 @@
   margin: 0 auto;
   margin-bottom: 5%;
 }
+.wallet__flex {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.wallet__flex > div {
+  flex-basis: 50%;
+}
 
 /* PAYMENT SUCCESSFUL */
 .payment__successful {

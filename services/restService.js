@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./localService";
 // import cookies from '@/plugins/cookies';
 // import { Redirect } from 'next';
-
+import { wallet } from '@/services/restService/wallet';
 const restAgent = axios.create({
   baseURL: "https://api.jessecoders.com/passpointGo/v1/",
   headers: {
@@ -217,6 +217,20 @@ export const travel = {
       setTravelConfig()
     )
   },
+  bookFlight: (data) => {
+    const { pin, amount, ref } = data
+		return wallet.payBills({
+      amount,
+      "narration": "Flight Booking",
+      pin,
+      "transactionCurrency": "NGN",
+      "paymentDetails": {
+          "billerReference": ref,
+          "bankCode": "flight"
+      }
+  }
+  )
+	},
 }
 
 export const notifyAndAccess = {
