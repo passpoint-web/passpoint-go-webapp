@@ -87,10 +87,10 @@ const FlightTable = ({ title }) => {
                     </div>
                   </td>
                   <td>
-                    {c.status === "CONFIRMED" && (
-                      <div className="success-tag">Confirmed</div>
+                    {c.status.toLowerCase() === "success" && (
+                      <div className="success-tag">Success</div>
                     )}
-                    {c.status === "PENDING" && (
+                    {c.status.toLowerCase() === "pending" && (
                       <div className="pending-tag">Pending</div>
                     )}
                   </td>
