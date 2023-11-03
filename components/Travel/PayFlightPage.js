@@ -2,6 +2,7 @@
 
 import { getSelectedFlight, getCredentials } from "@/services/localService"
 import { travel } from "@/services/restService"
+import { wallet } from "@/services/restService/wallet"
 import { useEffect, useState } from "react"
 // import FlightPageHeader from "./FlightPageHeader"
 import FlightPassengers from "./FlightPassengers"
@@ -17,6 +18,7 @@ const PayFlightPage = ({ styles }) => {
   // eslint-disable-next-line no-unused-vars
   const [totalAmount, setTotalAmount] = useState(0)
   const [documentsRequired, setDocumentsRequired] = useState(null)
+  const [bookingRef, setBookingRef] = useState(null)
 
   // eslint-disable-next-line no-unused-vars
   const sortPassengersData = async () => {
@@ -58,17 +60,46 @@ const PayFlightPage = ({ styles }) => {
     setDocumentsRequired(promise.data.data.document_required)
   }
 
-  const makeFlightBooking = async () => {
+  const makeFlightBooking = async (pin) => {
+    // Sort Passengers data again to remove documents if necessary
     await sortPassengersData()
-    await travel.createFlightBooking({
+
+    // Create Booking
+    const bookingPromise = await travel.createFlightBooking({
       flightId: selectedFlight?.id,
       passengers: sortedPassengers,
     })
+    setBookingRef(bookingPromise.data.data.reference)
+
+    // Charge Wallet for Booking just created
+    try {
+      const walletPromise = await wallet.payBills({
+        amount: totalAmount.toString(),
+        narration: `Wallet Payment for Booking ${
+          bookingRef || bookingPromise.data.data.reference
+        }`,
+        pin,
+        transactionCurrency: "NGN",
+        paymentDetails: {
+          billerReference: bookingRef || bookingPromise.data.data.reference,
+          serviceType: "flight",
+        },
+      })
+
+      if (
+        walletPromise.data.responseDescription?.toLowerCase() === "successful"
+      ) {
+        return "success"
+      }
+    } catch (err) {
+      console.log(err)
+      return "failure"
+    }
+
+    return "failure"
   }
 
   useEffect(() => {
-    // makeFlightBooking()
-
     // populate [passengers] array with flight booking info
     const tempPassengers = []
     selectedFlight?.travelers_price?.forEach((traveler) => {
