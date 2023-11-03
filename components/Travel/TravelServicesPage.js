@@ -1,13 +1,7 @@
 "use client";
-
-import { BriefcaseIcon } from "@/constants/icons";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-// import Search from "../Custom/Search"
-// import PrimaryLink from "../Link/Primary"
 import MetricCard from "./MetricCard";
-// import CustomSelect from '@/components/Custom/Select'
-import CustomTable from "../Custom/Table";
 const TravelServicesPage = ({ styles }) => {
   const travelServices = [
     {
