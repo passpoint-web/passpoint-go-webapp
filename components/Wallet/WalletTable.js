@@ -33,6 +33,7 @@ const WalletTable = ({wallet,  styles }) => {
 	// const [startDate, setStartDate] = useState(new Date());
 	// const [endDate, setEndDate] = useState(new Date());
 
+	
 	const getTransactions = async () => {
 		try {
 			const filters = {
