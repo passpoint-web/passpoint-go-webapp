@@ -133,6 +133,9 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+.rhs .form__action {
+  margin-top: var(--inner-component-mg);
+}
 .filter__box {
   border-bottom: 1px solid var(--grey-grey-5, #e5e7ef);
 }

@@ -14,8 +14,13 @@ import CustomSelect from "../Custom/Select"
 import Link from "next/link"
 import { getMostRecentFlightSearchURL } from "@/services/localService"
 import { useNotify } from "@/utils/hooks"
+import functions from "@/utils/functions"
 
-const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
+const FlightPassengers = ({
+  passengersParent,
+  sortPassengersData,
+  documentsRequired,
+}) => {
   const [passengers, setPassengers] = useState([])
   const [passengerGenders, setPassengerGenders] = useState([])
   const [activePassenger, setActivePassenger] = useState(1)
@@ -25,29 +30,10 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
   const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
   const notify = useNotify()
 
-  const [searchURL, setSearchURL] = useState('')
-useEffect(()=>{
-  setSearchURL(mostRecentFlightSearchURL)
-},[])
-
-  // eslint-disable-next-line no-unused-vars
-  const addAnotherPassenger = () => {
-    const newPassenger = {
-      id: tempPassengers.length + 1,
-      passenger_type: "",
-      first_name: "",
-      last_name: "",
-      dob: "",
-      gender: "",
-      title: "",
-      email: "",
-      phone_number: "",
-      passport_expiry: "",
-      passport_issue: "",
-    }
-    tempPassengers.push(newPassenger)
-    setPassengers(tempPassengers)
-  }
+  const [searchURL, setSearchURL] = useState("")
+  useEffect(() => {
+    setSearchURL(mostRecentFlightSearchURL)
+  }, [])
 
   const deletePassenger = (id) => {
     setPassengers(passengersParent.filter((p) => p.id !== id))
@@ -68,6 +54,43 @@ useEffect(()=>{
       tempGenders[passengerIndex] = temp[label] = value
       setPassengerGenders(tempGenders)
     }
+  }
+
+  function isDate18YearsAgo(givenDate) {
+    // Get the current date
+    const currentDate = new Date()
+    givenDate = new Date(givenDate)
+
+    // Calculate the date that is 18 years ago from the current date
+    const eighteenYearsAgo = new Date(currentDate)
+    eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18)
+
+    // Compare the given date with the calculated date
+    return givenDate.getTime() <= eighteenYearsAgo.getTime()
+  }
+
+  const isActivePassengersFieldsValid = () => {
+    const ap = passengers?.at(activePassenger - 1)
+    console.log(ap)
+    if (documentsRequired) {
+      return !(ap?.first_name?.length > 1 &&
+      ap?.last_name?.length > 1 &&
+      ap?.email?.length > 2 &&
+      ap?.gender &&
+      ap?.passenger_type === "adult"
+        ? isDate18YearsAgo(ap?.dob)
+        : ap?.dob &&
+          ap?.passport_no &&
+          ap?.passport_issue &&
+          ap?.passport_expiry)
+    }
+    return !(
+      ap?.first_name?.length > 1 &&
+      ap?.last_name?.length > 1 &&
+      ap?.email?.length > 2 &&
+      ap?.gender &&
+      ap?.dob
+    )
   }
 
   const saveAndContinue = async (index) => {
@@ -179,51 +202,6 @@ useEffect(()=>{
                   updateValue("email", e.target.value, passenger?.id)
                 }
               />
-              <div className="form-row">
-                <Input
-                  label="Date of Birth"
-                  placeholder="Leave a Message"
-                  type="date"
-                  name="message"
-                  // value={passenger.dob}
-                  onChange={(e) =>
-                    updateValue("dob", e.target.value, passenger?.id)
-                  }
-                />
-                <Input
-                  label="Passport Number"
-                  placeholder="A000123456"
-                  name="passport"
-                  // value={passenger.passport_no}
-                  onChange={(e) =>
-                    updateValue("passport_no", e.target.value, passenger?.id)
-                  }
-                />
-              </div>
-              <div className="form-row">
-                <Input
-                  label="Passport Issue Date"
-                  type="date"
-                  name="passport-issue"
-                  // value={passenger.last_name}
-                  onChange={(e) =>
-                    updateValue("passport_issue", e.target.value, passenger?.id)
-                  }
-                />
-                <Input
-                  label="Passport Expiry Date"
-                  type="date"
-                  name="passport-expiry"
-                  // value={passenger.last_name}
-                  onChange={(e) =>
-                    updateValue(
-                      "passport_expiry",
-                      e.target.value,
-                      passenger?.id
-                    )
-                  }
-                />
-              </div>
               <div className="form-row bottom">
                 <CustomSelect
                   id="class"
@@ -243,20 +221,80 @@ useEffect(()=>{
                   placeholder="Select Passenger Type"
                 />
               </div>
+              <div className="form-row">
+                <Input
+                  label="Date of Birth"
+                  type="date"
+                  name="message"
+                  max={
+                    passenger?.passenger_type === "adult"
+                      ? functions.eighteenYearsAgo()
+                      : null
+                  }
+                  // value={passenger.dob}
+                  onChange={(e) =>
+                    updateValue("dob", e.target.value, passenger?.id)
+                  }
+                />
+                {documentsRequired && (
+                  <Input
+                    label="Passport Number"
+                    placeholder="A000123456"
+                    name="passport"
+                    // value={passenger.passport_no}
+                    onChange={(e) =>
+                      updateValue("passport_no", e.target.value, passenger?.id)
+                    }
+                  />
+                )}
+              </div>
+              {documentsRequired && (
+                <div className="form-row">
+                  <Input
+                    label="Passport Issue Date"
+                    type="date"
+                    name="passport-issue"
+                    // value={passenger.last_name}
+                    onChange={(e) =>
+                      updateValue(
+                        "passport_issue",
+                        e.target.value,
+                        passenger?.id
+                      )
+                    }
+                  />
+                  <Input
+                    label="Passport Expiry Date"
+                    type="date"
+                    name="passport-expiry"
+                    // value={passenger.last_name}
+                    onChange={(e) =>
+                      updateValue(
+                        "passport_expiry",
+                        e.target.value,
+                        passenger?.id
+                      )
+                    }
+                  />
+                </div>
+              )}
 
               {/* FORM ACTION */}
-              {passengers.length === index + 1 ? (
-                <PrimaryBtn
-                  loading={isLoading}
-                  text="Confirm Booking Cost"
-                  onClick={() => saveAndContinue(index)}
-                />
-              ) : (
-                <PrimaryBtn
-                  text="Continue"
-                  onClick={() => saveAndContinue(index)}
-                />
-              )}
+              <div className={styles.form__action}>
+                {passengers.length === index + 1 ? (
+                  <PrimaryBtn
+                    loading={isLoading}
+                    text="Confirm Booking Cost"
+                    disabled={isActivePassengersFieldsValid()}
+                    onClick={() => saveAndContinue(index)}
+                  />
+                ) : (
+                  <PrimaryBtn
+                    text="Continue"
+                    onClick={() => saveAndContinue(index)}
+                  />
+                )}
+              </div>
             </form>
           ))}
         </div>

@@ -124,6 +124,9 @@ const PayFlightPage = ({ styles }) => {
       }
     })
     setPassengers(tempPassengers)
+
+    // Confirm Price as soon as Flight is selected
+    confirmFlightPrice()
   }, [])
 
   return (
@@ -133,6 +136,7 @@ const PayFlightPage = ({ styles }) => {
         passengersParent={passengers}
         setPassengersParent={setPassengers}
         sortPassengersData={sortPassengersData}
+        documentsRequired={documentsRequired}
       />
       {priceConfirmed && (
         <FlightPaymentOptions
