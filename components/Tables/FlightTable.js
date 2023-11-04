@@ -8,7 +8,7 @@ import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 
-const FlightTable = ({ title }) => {
+const FlightTable = ({ title, setFlightDetails }) => {
   const { formatMoney } = functions
   const notify = useNotify()
   const [data, setData] = useState([])
@@ -81,7 +81,8 @@ const FlightTable = ({ title }) => {
                   <td>
                     <div className="date-time">
                       <div className="date">
-                        {functions.formatTimestamp(c.createdDate)}
+                        {functions.formatTimestamp(c.createdDate).substring(4)},{" "}
+                        {functions.formatCustomTime(c.createdDate)}
                       </div>
                       {/* <div className="time">8:45 PM</div> */}
                     </div>
@@ -112,6 +113,7 @@ const FlightTable = ({ title }) => {
                     <Link
                       className="secondary_btn outline_btn"
                       href={`./flights?id=${c.reference}`}
+                      onClick={() => setFlightDetails(c)}
                     >
                       View Details
                     </Link>
@@ -129,4 +131,4 @@ const FlightTable = ({ title }) => {
   )
 }
 
-export default FlightTable;
+export default FlightTable

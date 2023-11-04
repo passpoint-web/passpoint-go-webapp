@@ -230,6 +230,12 @@ export const travel = {
       },
     })
   },
+  cancelBooking: (queryParams) => {
+    return flightRestAgent.post(
+      `/flight/cancelbooking?bookingReference=${queryParams.bookingReference}`,
+      setTravelConfig()
+    )
+  },
 }
 
 export const notifyAndAccess = {
