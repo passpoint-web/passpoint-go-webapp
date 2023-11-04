@@ -21,7 +21,7 @@ const PayFlightPage = ({ styles }) => {
   const [bookingRef, setBookingRef] = useState(null)
 
   // eslint-disable-next-line no-unused-vars
-  const sortPassengersData = async () => {
+  const sortPassengersData = async (command) => {
     const credentials = getCredentials()
     const tempPassengers = []
     passengers.forEach((passenger) => {
@@ -48,6 +48,8 @@ const PayFlightPage = ({ styles }) => {
     setSortedPassengers(tempPassengers)
     if (totalAmount === 0) {
       await confirmFlightPrice()
+    }
+    if (command === "OPEN-PAYMENT-OPTIONS") {
       setPriceConfirmed(true)
     }
   }

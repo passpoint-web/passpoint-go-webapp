@@ -27,13 +27,19 @@ const FlightPassengers = ({
   const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [activePassengersFieldsValid, setActivePassengersFieldsValid] =
+    useState(false)
   const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
   const notify = useNotify()
-
   const [searchURL, setSearchURL] = useState("")
+
   useEffect(() => {
     setSearchURL(mostRecentFlightSearchURL)
   }, [])
+
+  useEffect(() => {
+    setActivePassengersFieldsValid(isActivePassengersFieldsValid())
+  }, [activePassenger])
 
   const deletePassenger = (id) => {
     setPassengers(passengersParent.filter((p) => p.id !== id))
@@ -54,6 +60,7 @@ const FlightPassengers = ({
       tempGenders[passengerIndex] = temp[label] = value
       setPassengerGenders(tempGenders)
     }
+    setActivePassengersFieldsValid(isActivePassengersFieldsValid())
   }
 
   function isDate18YearsAgo(givenDate) {
@@ -71,23 +78,23 @@ const FlightPassengers = ({
 
   const isActivePassengersFieldsValid = () => {
     const ap = passengers?.at(activePassenger - 1)
-    console.log(ap)
+    console.log(functions.validEmail(ap?.email))
     if (documentsRequired) {
-      return !(ap?.first_name?.length > 1 &&
-      ap?.last_name?.length > 1 &&
-      ap?.email?.length > 2 &&
-      ap?.gender &&
-      ap?.passenger_type === "adult"
+      return ap?.first_name?.length > 1 &&
+        ap?.last_name?.length > 1 &&
+        functions.validEmail(ap?.email) &&
+        ap?.gender &&
+        ap?.passenger_type === "adult"
         ? isDate18YearsAgo(ap?.dob)
         : ap?.dob &&
-          ap?.passport_no &&
-          ap?.passport_issue &&
-          ap?.passport_expiry)
+            ap?.passport_no &&
+            ap?.passport_issue &&
+            ap?.passport_expiry
     }
-    return !(
+    return (
       ap?.first_name?.length > 1 &&
       ap?.last_name?.length > 1 &&
-      ap?.email?.length > 2 &&
+      functions.validEmail(ap?.email) &&
       ap?.gender &&
       ap?.dob
     )
@@ -96,7 +103,7 @@ const FlightPassengers = ({
   const saveAndContinue = async (index) => {
     if (index + 1 === passengers.length) {
       setIsLoading(true)
-      await sortPassengersData()
+      await sortPassengersData("OPEN-PAYMENT-OPTIONS")
       setIsLoading(false)
       setCollapsed(true)
     } else {
@@ -139,7 +146,7 @@ const FlightPassengers = ({
               <div className="check"></div>
               <span className={styles.option__btn_text}>
                 Passenger {pIndex + 1}
-                <div
+                {/* <div
                   style={{ display: "grid", placeItems: "center" }}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -147,7 +154,7 @@ const FlightPassengers = ({
                   }}
                 >
                   <FaTrashAlt />
-                </div>
+                </div> */}
               </span>
             </button>
           ))}
@@ -285,12 +292,13 @@ const FlightPassengers = ({
                   <PrimaryBtn
                     loading={isLoading}
                     text="Confirm Booking Cost"
-                    disabled={isActivePassengersFieldsValid()}
+                    disabled={!activePassengersFieldsValid}
                     onClick={() => saveAndContinue(index)}
                   />
                 ) : (
                   <PrimaryBtn
                     text="Continue"
+                    disabled={!activePassengersFieldsValid}
                     onClick={() => saveAndContinue(index)}
                   />
                 )}

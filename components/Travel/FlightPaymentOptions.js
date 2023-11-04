@@ -64,6 +64,7 @@ const FlightPaymentOptions = ({
     setIsLoading(false)
     setPaymentFailure(false)
     setPaymentSuccessful(false)
+    setPins({ pin: "" })
   }
 
   useEffect(() => {
