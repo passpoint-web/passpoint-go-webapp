@@ -12,6 +12,7 @@ import { wallet } from "@/services/restService/wallet"
 import OtpInput from "react-otp-input"
 import formStyles from "@/assets/styles/auth-screens.module.css"
 import PaymentFail from "./PaymentFail"
+import Link from "next/link"
 
 const FlightPaymentOptions = ({
   makeFlightBooking,
@@ -146,6 +147,14 @@ const FlightPaymentOptions = ({
                     }
                     onClick={() => makePayment(pins.pin)}
                   />
+                  {walletAccount?.availableBalance < totalAmount && (
+                    <Link
+                      href="/dashboard/wallet?add-money=true"
+                      className={styles.wallet__link}
+                    >
+                      Top-up Wallet
+                    </Link>
+                  )}
                 </div>
               )}
               {paymentSuccessful && !isLoading && <PaymentSuccessful />}
