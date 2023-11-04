@@ -16,7 +16,6 @@ import Link from "next/link"
 
 const FlightPaymentOptions = ({
   makeFlightBooking,
-  selectedFlight,
   totalAmount,
 }) => {
   const paymentOptions = ["My Passpoint Wallet", "Credit/Debit Card"]
@@ -24,7 +23,6 @@ const FlightPaymentOptions = ({
   const [paymentSuccessful, setPaymentSuccessful] = useState(false)
   const [paymentFailure, setPaymentFailure] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [dataLoading, setDataLoading] = useState(false)
   const [walletAccount, setWalletAccount] = useState({})
   const [pins, setPins] = useState({
     pin: "",
@@ -47,7 +45,7 @@ const FlightPaymentOptions = ({
       setPaymentFailure(true)
     }
     setIsLoading(false)
-    setDataLoading(false)
+    // setDataLoading(false)
   }
 
   const getWallet = async () => {
@@ -57,7 +55,7 @@ const FlightPaymentOptions = ({
     } catch (_err) {
       console.log(_err)
     } finally {
-      setDataLoading(false)
+      // setDataLoading(false)
     }
   }
 

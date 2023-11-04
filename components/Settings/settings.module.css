@@ -77,6 +77,7 @@
 
 .border_box {
   max-width: 650px;
+  min-width: 500px;
   border: 1px solid var(--grey-5);
   border-radius: 16px;
   padding: var(--inner-component-mg);
@@ -170,7 +171,7 @@
 }
 
 .line {
-  height: 20px;
+  height: 50px;
   background: linear-gradient(90deg, #ccc 25%, #ddd 60%, #ccc 75%);
   background-size: 200% 100%;
   margin-bottom: 10px;

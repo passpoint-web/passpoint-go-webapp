@@ -39,8 +39,8 @@ export const wallet = {
 	getWalletDetails: () => {
 		return walletRestAgent.get('wallet-app/get-wallet-details', setConfig())
 	},
-	initiatePin: (boo=false) => {
-		return walletRestAgent.get(`wallet-app/init-pin-reset?forgotpin=${boo}`, setConfig())
+	initiatePin: (val=false) => {
+		return walletRestAgent.get(`wallet-app/init-pin-reset?forgotpin=${val}`, setConfig())
 	},
 	setPin: (data) => {
 		return walletRestAgent.put(`wallet-app/reset-pin`, data, setConfig())
@@ -57,8 +57,8 @@ export const wallet = {
 	accountTransfer: (data) => {
 		return walletRestAgent.post(`ft-app/account-transfer`, data, setConfig())
 	},
-	transactions: (data) => {
-		return walletRestAgent.post(`ft-app/transaction-history?type=payout`, data, setConfig())
+	transactions: ({data, type}) => {
+		return walletRestAgent.post(`ft-app/transaction-history?type=${type}`, data, setConfig())
 	},
 	payBills: (data) => {
 		return walletRestAgent.post(`ft-app/pay-bills`, data, setConfig())

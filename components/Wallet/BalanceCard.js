@@ -1,7 +1,7 @@
 "use client";
 // import Button from '../Btn/Button'
 import BorderIconBtn from '../Btn/BorderIconBtn'
-// import {useRouter,  useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AddMoneyModal from './AddMoneyModal'
 import TransferModals from './TransferModals'
 import CopyValue from '../CopyValue'
@@ -12,19 +12,16 @@ import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
 
 const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
+	const searchParams = useSearchParams()
+	const {replace} = useRouter()
 	const {formatMoney, maskValue} = functions
 	const [showBalance, setShowBalance] = useState(false)
-	// const [dataLoading, setDataLoading] = useState(true)
 	const [reference, setReference] = useState('')
-	const [feedbackError, setFeedbackError] = useState('')
-	// const [initiateTransfer, setInitiateTransfer] = useState(false)
-	// const [transferModal, setTransferModal] = useState(false)
+	// const [feedbackError, setFeedbackError] = useState('')
 	const [currentModal, setCurrentModal] = useState('tranfer')
-	// const [getDataLoading, setGetDataLoading] = useState(false)
 	const [pinCheckLoading, setPinCheckLoading] = useState(false)
 
 	const initiatePinForTransfer = async () => {
-		// setCurrentModal('transfer')
 		setPinCheckLoading(true)
 		try {
 			const response = await wallet.initiatePin()
@@ -36,8 +33,8 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 				setCurrentModal('transfer')
 			}
 		} catch (_err) {
-			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
-			setFeedbackError(responseMessage || message)
+			const {responseMessage = undefined } = _err.response?.data || _err;
+			// setFeedbackError(responseMessage || message)
 			if (responseMessage === 'Pin has already been set') {
 				setCurrentModal('transfer')
 			}
@@ -47,9 +44,11 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 	}
 
 	useEffect(()=>{
-		console.log(feedbackError)
-	},[feedbackError])
-
+		if (searchParams.get('add-money')==='true') {
+			setCurrentModal('add money')
+		}
+	},[searchParams.get('add-money')])
+	
 	return (
 		<>
 			{
@@ -60,7 +59,7 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 					currentModal === 'add money' ?
 						<AddMoneyModal walletAccount={walletAccount}
 							styles={styles}
-							onClose={()=>setCurrentModal(null)}/> :
+							onClose={()=>{setCurrentModal(null); replace('/dashboard/wallet')}}/> :
 						currentModal === 'transfer' ?
 							<TransferModals styles={styles}
 								onClose={()=>setCurrentModal(null)} /> :
