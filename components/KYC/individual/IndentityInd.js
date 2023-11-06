@@ -124,7 +124,6 @@ const IdentityInd = ({ styles }) => {
             label="Document Number"
             id="documentNumber"
             name="documentNumber"
-            type="number"
             placeholder="Enter your Document Number"
             error={ctaClicked && !payload.documentNumber}
             value={payload.documentNumber}
