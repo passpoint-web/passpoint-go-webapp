@@ -15,6 +15,7 @@ const CustomObjectSelect = ({
   styleProps,
 }) => {
   const [showSelect, setShowSelect] = useState(false)
+  const [optionFilter, setOptionFilter] = useState(selectedOption)
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -22,7 +23,9 @@ const CustomObjectSelect = ({
   }
 
   const handleSelect = (option) => {
+    console.log(option)
     emitSelect(option)
+    setOptionFilter(option)
     window.setTimeout(() => {
       setShowSelect(false)
     }, 200)
@@ -32,6 +35,20 @@ const CustomObjectSelect = ({
     window.setTimeout(() => {
       setShowSelect(false)
     }, 200)
+  }
+
+  const filteredSelectOptions = () => {
+    if (optionFilter === "") {
+      return selectOptions
+    } else {
+      const tempOptionFilter = optionFilter.toLowerCase()
+      return selectOptions?.filter(
+        (o) =>
+          o.name?.toLowerCase().includes(tempOptionFilter) ||
+          o.iataCode?.toLowerCase().includes(tempOptionFilter) ||
+          o.city?.toLowerCase().includes(tempOptionFilter)
+      )
+    }
   }
 
   return (
@@ -48,11 +65,16 @@ const CustomObjectSelect = ({
           onClick={handleClick}
         >
           <div className={styles.content}>
-            {selectedOption ? (
+            {/* {selectedOption ? (
               <p className={styles.option}>{selectedOption}</p>
             ) : (
               <p>{placeholder}</p>
-            )}
+            )} */}
+            <input
+              type="text"
+              value={optionFilter}
+              onChange={(e) => setOptionFilter(e.target.value)}
+            />
           </div>
           <DropDownIcon className="icon" />
         </button>
@@ -62,7 +84,7 @@ const CustomObjectSelect = ({
             className={`${styles.select} ${styles.object__select} dropdown`}
             style={{ ...styleProps?.dropdown }}
           >
-            {selectOptions.map((option) => (
+            {filteredSelectOptions().map((option) => (
               <div
                 key={option.id}
                 className={`${styles.content} ${

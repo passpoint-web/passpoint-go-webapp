@@ -44,7 +44,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
             <p>Manage your {title} bookings here</p>
           </div>
 
-          <Search id={"booking"} placeholder={"Search bookings"} />
+          <Search id={"booking"} placeholder={"Search Booking ID"} />
           <CustomSelect
             id="status-type"
             selectOptions={["Confirmed", "Pending", "Failed"]}
