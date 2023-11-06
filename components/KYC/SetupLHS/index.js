@@ -82,6 +82,7 @@ const KycSetupLHS = () => {
     });
   }, [pathname, user?.userType]);
 
+  
   useEffect(() => {
     if (user?.userType === "1") {
       setLevelsToDisplay(individualKycLevel);
