@@ -133,6 +133,7 @@ const Address = ({ styles }) => {
               error={ctaClicked && !payload.documentFile}
               errorMsg="Address is required"
             />
+
           </div>
           <div className={styles.action_ctn}>
             <BackBtn
