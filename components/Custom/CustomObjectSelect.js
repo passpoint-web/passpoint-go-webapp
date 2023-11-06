@@ -73,6 +73,7 @@ const CustomObjectSelect = ({
             <input
               type="text"
               value={optionFilter}
+              placeholder={placeholder}
               onChange={(e) => setOptionFilter(e.target.value)}
             />
           </div>
