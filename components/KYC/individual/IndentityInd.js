@@ -75,7 +75,7 @@ const IdentityInd = ({ styles }) => {
       saveKycDetails({
         ...savedKycDetails,
         KycStage:
-          savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
+          savedKycDetails?.KycStage > 1 ? savedKycDetails?.KycStage : 1,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/individual/address");

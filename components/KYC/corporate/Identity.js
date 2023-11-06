@@ -86,7 +86,7 @@ const Identity = ({ styles }) => {
       saveKycDetails({
         ...savedKycDetails,
         KycStage:
-          savedKycDetails.KycStage > 2 ? savedKycDetails.KycStage : 2,
+          savedKycDetails?.KycStage > 2 ? savedKycDetails?.KycStage : 2,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/corporate/address");
