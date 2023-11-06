@@ -7,7 +7,7 @@ const VerifyEmailPage = () => {
 	const savedCredentials = getCredentials()
 	const [email, setEmail] = useState({})
 	useEffect(()=>{
-		setEmail(savedCredentials.email)
+		setEmail(savedCredentials?.email)
 	},[])
 	return (
 		<VerifyEmail email={email}

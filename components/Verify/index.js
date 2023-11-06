@@ -18,6 +18,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [renderInput, setRenderInput] = useState(false)
 
 	const notify = useNotify()
 
@@ -49,6 +50,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 	}
 
 	useEffect(() => {
+		setRenderInput(true)
 		setErrorMsg('')
 	}, [])
 
@@ -71,7 +73,9 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 								msgPositionCenter={true}
 							>
 								<div className={styles.otp_input}>
-									<OtpInput
+									{
+										renderInput ? 
+										<OtpInput
 										value={otp}
 										onChange={setOtp}
 										numInputs={6}
@@ -81,6 +85,8 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 										renderSeparator={<span />}
 										renderInput={(props) => <input {...props} />}
 									/>
+									: <></>
+									}
 								</div>
 							</Input>
 						</div>
