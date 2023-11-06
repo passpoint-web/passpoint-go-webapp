@@ -40,6 +40,18 @@
 }
 .table__pagination {
   padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.table__pagination button {
+  height: 40px;
+  padding: 0 16px;
+  box-shadow: none;
+}
+.table__pagination > div:nth-child(3) {
+  display: flex;
+  gap: 0.6rem;
 }
 
 .td_1 {
@@ -57,4 +69,3 @@
 .td_5 {
   width: calc(100% / 20 * 5);
 }
-

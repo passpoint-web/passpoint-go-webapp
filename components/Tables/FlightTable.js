@@ -7,17 +7,19 @@ import { useEffect, useState } from "react"
 import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
+import Pagination from "./Pagination"
 
 const FlightTable = ({ title, setFlightDetails }) => {
   const { formatMoney } = functions
   const notify = useNotify()
   const [data, setData] = useState([])
+  const [paginationData, setPaginationData] = useState({})
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0)
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [pageSize, setPageSize] = useState(100)
+  const [pageSize, setPageSize] = useState(10)
   const getFlightBookings = async () => {
     try {
       const response = await travel.getFlightBookings({ page, pageSize })
@@ -25,6 +27,15 @@ const FlightTable = ({ title, setFlightDetails }) => {
       if (content) {
         setData(content)
       }
+
+      // Compile Pagination Data
+      const tempPaginationData = {
+        ...response.data.data,
+        pageSize,
+        currentPage: page + 1,
+      }
+      delete tempPaginationData.content
+      setPaginationData(tempPaginationData)
     } catch (_err) {
       const { message } = _err.response?.data || _err
       notify("error", message)
@@ -32,6 +43,12 @@ const FlightTable = ({ title, setFlightDetails }) => {
       setIsLoading(false)
     }
   }
+
+  const handlePaginationEvent = (symbol) => {
+    setPage(symbol === "+" ? page + 1 : page - 1)
+    getFlightBookings()
+  }
+
   useEffect(() => {
     getFlightBookings()
   }, [])
@@ -45,7 +62,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
           </div>
 
           <Search id={"booking"} placeholder={"Search Booking ID"} />
-          <CustomSelect
+          {/* <CustomSelect
             id="status-type"
             selectOptions={["Confirmed", "Pending", "Failed"]}
             selectedOption={""}
@@ -56,7 +73,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
             selectOptions={[]}
             selectedOption={""}
             placeholder="Filter by Date"
-          />
+          /> */}
         </div>
         <div className={styles.table__main}>
           <table>
@@ -123,9 +140,14 @@ const FlightTable = ({ title, setFlightDetails }) => {
             </tbody>
           </table>
         </div>
-        <div className={styles.table__pagination}>
+        <Pagination
+          tableStyles={styles}
+          pagination={paginationData}
+          handlePaginationEvent={handlePaginationEvent}
+        />
+        {/* <div className={styles.table__pagination}>
           Showing {data?.length} items out of {data?.length} results found
-        </div>
+        </div> */}
       </div>
     </div>
   )
