@@ -127,7 +127,7 @@ const Address = ({ styles }) => {
           </Input>
           <div className={styles.innerUpload}>
             <FileUpload
-              subTitle="Upload the document selected"
+              smTitle="Upload the document selected"
               base64={payload.documentFile}
               handlefileUpload={(file) => handleChange("documentFile", file)}
               error={ctaClicked && !payload.documentFile}
