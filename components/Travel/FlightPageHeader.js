@@ -14,14 +14,18 @@ const FlightPageHeader = ({ styles }) => {
   const searchParams = useSearchParams()
 
   let airports = getAirportsState()
-  // airports = airports?.filter(
-  //   (airport) =>
-  //     airport.iataCode === "LOS" ||
-  //     airport.iataCode === "ABV" ||
-  //     airport.iataCode === "JFK" ||
-  //     airport.iataCode === "YYZ" ||
-  //     airport.iataCode === "NBO"
-  // )
+  airports = airports?.filter(
+    (airport) =>
+      airport.country === "Nigeria" ||
+      airport.country === "Ghana" ||
+      airport.country === "Canada" ||
+      airport.country === "United Arab Emirates" ||
+      airport.country === "United States" ||
+      airport.country === "United Kingdom" ||
+      airport.country === "Kenya" ||
+      airport.country === "Tanzania" ||
+      airport.country === "Ethiopia"
+  )
 
   const queryParams = {
     adults: searchParams.get("adults"),
