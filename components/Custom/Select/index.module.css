@@ -107,6 +107,12 @@
   background-color: #fff;
 }
 
+.custom_select .select.top {
+  bottom: var(--input-height);
+  top: unset;
+  margin-bottom: calc(var(--sm-inner-component-mg));
+}
+
 /* hide countries container scroll bar */
 .custom_select .select::-webkit-scrollbar {
   width: 0 !important;

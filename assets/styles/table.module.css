@@ -38,9 +38,6 @@
 .table__main td:last-child {
   padding-right: 1.5rem;
 }
-.table__pagination {
-  padding: 1.5rem;
-}
 
 .td_1 {
   width: calc(100% / 20);
@@ -58,3 +55,49 @@
   width: calc(100% / 20 * 5);
 }
 
+
+
+/* pagination */
+
+.table__pagination {
+  padding: 1.5rem;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.table__pagination .rhs {
+  display: flex;
+  gap: 10px;
+}
+
+.table__pagination .rhs button {
+  border: 1px solid var(--grey-5);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table__pagination .rhs button:not(:disabled):hover {
+  color: var(--sky-blue);
+  border: 1px solid var(--sky-blue);
+}
+
+.table__pagination .rhs button.nav:not(:disabled):focus {
+  color: var(--sky-blue);
+  border: 1px solid var(--sky-blue);
+}
+
+.table__pagination .page_btns {
+  display: flex;
+  gap: 8px;
+}
+
+.page_btns button.current_page {
+  color: var(--sky-blue);
+  border: 1px solid var(--sky-blue);
+}

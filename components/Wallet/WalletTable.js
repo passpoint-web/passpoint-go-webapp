@@ -25,24 +25,30 @@ const WalletTable = ({wallet,  styles }) => {
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
 	const [pagination, setPagination] = useState({
-		currentPage: 1,
-		pageCount: 0,
-		pageSize: 21,
-		totalCount: 0
+		currentPage: 2,
+		totalPages: 0,
+		limit: 10,
+		totalData: 0,
+		pageDataLength: 0,
+		startDate: '2023-10-15',
+		endDate: numericalDateDashReversed(new Date())
 	})
-	// const [startDate, setStartDate] = useState(new Date());
-	// const [endDate, setEndDate] = useState(new Date());
+	const getTransactions = async (
 
-	
-	const getTransactions = async () => {
+		pageNumber,
+		currency = 'NGN' ,
+		startDate,
+		endDate,
+		pageSize
+	) => {
+		const filters = {
+			pageNumber,
+			currency,
+			startDate,
+			endDate,
+			pageSize
+		}
 		try {
-			const filters = {
-				startDate: "2023-10-15",
-				endDate: numericalDateDashReversed(new Date()),
-				currency:"NGN",
-				pageNumber: pagination.currentPage,
-				pageSize: pagination.pageSize
-			}
 			const response = await wallet.transactions({data: filters, type: 'all'})
 			const {data} = response.data
 			const {
@@ -51,21 +57,17 @@ const WalletTable = ({wallet,  styles }) => {
 				pageSize,
 				totalCount
 			} = response.data
-			setPagination({
+			setPagination((prev)=>({
+				...prev,
 				currentPage,
-				pageCount,
-				pageSize,
-				totalCount
-			})
-			// const transactions = data.map((e)=>{
-			// 	const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode)?.name || 'Passpoint Wallet'
-			// 	e.beneficiaryBankName = bankName
-			// 	return e
-			// })
+				totalPages: pageCount,
+				limit: pageSize,
+				pageDataLength: data.length || 0,
+				totalData: totalCount
+			}))
 			setTransactions(data)
-			// console.log(transactions[0])
 		} catch (_err) {
-			console.log(_err)
+			// console.log(_err)
 		} finally {
 			//
 		}
@@ -76,9 +78,18 @@ const WalletTable = ({wallet,  styles }) => {
 		setShowTransactionModal(true)
 	}
 
+	const handleEntry = (val) => {
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val)
+	}
+
+
+	const setPage = (val) => {
+		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit)
+	}
 	useEffect(()=>{
-		getTransactions()
+		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit)
 	},[])
+
 	return (
 		<>
 			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
@@ -176,7 +187,10 @@ const WalletTable = ({wallet,  styles }) => {
 							</tbody>
 						</table>
 					</div>
-					<Pagination tableStyles={tableStyles} pagination={pagination} />
+					<Pagination tableStyles={tableStyles}
+						handleEntry={(val)=>handleEntry(val)}
+						setPage={(val)=>setPage(val)}
+						pagination={pagination} />
 				</div>
 			</div>
 		</>
