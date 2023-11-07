@@ -18,12 +18,20 @@ import "react-datepicker/dist/react-datepicker.css";
 // import Input from "../Dashboard/Input";
 import { numericalDateDashReversed } from "@/utils/date-formats";
 import Pagination from "../Tables/Pagination";
+import Select from "../Dashboard/Select";
 
 const WalletTable = ({wallet,  styles }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
+	const transactionTypes = [
+		'Incoming',
+		'Outgoing'
+	]
+
+	const [transactionType, setTransactionType] = useState(null)
+
 	const [pagination, setPagination] = useState({
 		currentPage: 2,
 		totalPages: 0,
@@ -39,7 +47,8 @@ const WalletTable = ({wallet,  styles }) => {
 		currency = 'NGN' ,
 		startDate,
 		endDate,
-		pageSize
+		pageSize,
+		type
 	) => {
 		const filters = {
 			pageNumber,
@@ -49,7 +58,7 @@ const WalletTable = ({wallet,  styles }) => {
 			pageSize
 		}
 		try {
-			const response = await wallet.transactions({data: filters, type: 'all'})
+			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
 			const {data} = response.data
 			const {
 				currentPage,
@@ -79,31 +88,24 @@ const WalletTable = ({wallet,  styles }) => {
 	}
 
 	const handleEntry = (val) => {
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val)
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType)
 	}
-
+	const handleTransactionType = (val)=> {
+		setTransactionType(val)
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val)
+	}
 
 	const setPage = (val) => {
-		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit)
+		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
 	}
 	useEffect(()=>{
-		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit)
+		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
 	},[])
 
-	return (
-		<>
-			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
-				transaction={currentTransaction}
-				styles={styles} /> : <></>}
-			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
-				<div className={tableStyles.table__outer}>
-					<div className={tableStyles.table__header}>
-						<div className="texts">
-							<h3 className="capitalize"> Transaction History</h3>
-							<p>Manage your transaction here</p>
-						</div>
+	const Filters = () => (
+		<div className={tableStyles.filters}>
 
-						{/* <Search id={"booking"}
+			{/* <Search id={"booking"}
 							placeholder={"Search bookings"} />
 						<CustomSelect
 							id="status-type"
@@ -119,6 +121,39 @@ const WalletTable = ({wallet,  styles }) => {
 							selectedOption={""}
 							placeholder="Filter by Date"
 						/> */}
+			<div style={{width: 200, maxWidth: 250}}>
+				<Select
+					placeholder='Transaction Type'
+					selectPlaceHolder='Transaction Type'
+					styleProps={{
+						option: {
+							height: 40
+						},
+						dropdown: {
+							height: 100
+						}
+					}}
+					selectOptions={transactionTypes}
+					selectedOption={transactionType}
+					emitSelect={(val)=>handleTransactionType(val)}
+				/>
+				</div>
+		</div>
+	)
+
+	return (
+		<>
+			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
+				transaction={currentTransaction}
+				styles={styles} /> : <></>}
+			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
+				<div className={tableStyles.table__outer}>
+					<div className={tableStyles.table__header}>
+						<div className="texts">
+							<h3 className="capitalize"> Transaction History</h3>
+							<p>Manage your transaction here</p>
+						</div>
+						{Filters()}
 					</div>
 					<div className={tableStyles.table__main}>
 						<table>

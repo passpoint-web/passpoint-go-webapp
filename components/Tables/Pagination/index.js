@@ -104,7 +104,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 
 	const Analytics = () => (
 		<div className={tableStyles.mhs}>
-	  Showing { pagination.pageDataLength ? currentPageStart() : 0 } to { pagination.pageDataLength ? currentPageStop() : 0 } {pagination.pageSize} items out of {pagination.totalData} results found
+	  Showing { pagination.pageDataLength ? currentPageStart() : 0 } to { pagination.pageDataLength ? currentPageStop() : 0 } {pagination.pageSize} items of {pagination.totalData} results found
 		</div>
 	)
 

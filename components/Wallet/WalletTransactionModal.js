@@ -217,6 +217,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			ctaBtnColor={modalContent.ctaBtnColor}
 			bottomCancelNeeded={modalContent.bottomCancelNeeded}
 			secNegative={modalContent.secNegative}
+			hasBottomActions={false}
 			cancelBtnText={modalContent.secText}
 			bottomSecAction={modalContent.bottomSecAction}
 			handleBottomSecAction={modalContent.handleBottomSecAction}

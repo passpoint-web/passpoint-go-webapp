@@ -10,10 +10,16 @@
 }
 .table__header {
   padding: 1.5rem;
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr;
+  /* display: grid; */
+  display: flex;
+  justify-content: space-between;
+  /* grid-template-columns: 2fr 2fr 1fr 1fr; */
   gap: 1rem;
 }
+
+/* .table__header .filters { */
+  /* width: 50%; */
+/* } */
 
 .table__main th {
   font-family: var(--graphikRegular);
