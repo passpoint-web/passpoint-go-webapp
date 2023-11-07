@@ -175,3 +175,26 @@ export const getSelectedFlight = () => {
     return null
   }
 }
+
+
+
+
+// wallets
+
+
+export const  saveWalletState = (val) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("wallet_state", JSON.stringify(val))
+  }
+}
+
+export const getWalletState = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("wallet_state")
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+    return null
+  }
+}
+
