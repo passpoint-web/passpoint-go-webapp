@@ -8,6 +8,7 @@ import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Pagination from "./Pagination"
+import Loader from "../Btn/Loader"
 
 const FlightTable = ({ title, setFlightDetails }) => {
   const { formatMoney } = functions
@@ -17,12 +18,18 @@ const FlightTable = ({ title, setFlightDetails }) => {
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0)
   // eslint-disable-next-line no-unused-vars
+  const [searchParam, setSearchParam] = useState("")
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10)
   const getFlightBookings = async () => {
     try {
-      const response = await travel.getFlightBookings({ page, pageSize })
+      const response = await travel.getFlightBookings({
+        page,
+        pageSize,
+        searchParam,
+      })
       const { content } = response.data.data
       if (content) {
         setData(content)
@@ -51,7 +58,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
 
   useEffect(() => {
     getFlightBookings()
-  }, [])
+  }, [searchParam])
   return (
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
       <div className={styles.table__outer}>
@@ -60,8 +67,14 @@ const FlightTable = ({ title, setFlightDetails }) => {
             <h3 className="capitalize"> {title} Booking History</h3>
             <p>Manage your {title} bookings here</p>
           </div>
+          <Loader size={60} />
 
-          <Search id={"booking"} placeholder={"Search Booking ID"} />
+          <Search
+            id={"booking"}
+            placeholder={"Search Booking ID"}
+            search={searchParam}
+            searchCountry={setSearchParam}
+          />
           {/* <CustomSelect
             id="status-type"
             selectOptions={["Confirmed", "Pending", "Failed"]}
