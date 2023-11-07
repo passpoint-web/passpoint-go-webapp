@@ -11,16 +11,17 @@
 }
 .table__header {
   padding: 1.5rem;
-  /* display: grid; */
-  display: flex;
-  justify-content: space-between;
-  /* grid-template-columns: 2fr 2fr 1fr 1fr; */
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
   gap: 1rem;
 }
 
-/* .table__header .filters { */
-  /* width: 50%; */
-/* } */
+.wallet .table__header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
 
 .table__main th {
   font-family: var(--graphikRegular);
@@ -117,6 +118,10 @@
 .table__pagination.wallet .page_btns {
   display: flex;
   gap: 8px;
+}
+
+.table__pagination.wallet .page_btns button {
+  width: 40px;
 }
 
 .table__pagination.wallet .page_btns button.current_page {
