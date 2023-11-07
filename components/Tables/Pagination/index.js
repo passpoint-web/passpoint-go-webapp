@@ -143,9 +143,9 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 	    Next
 			</button>
 
-			<button className={tableStyles.nav}>
+			{/* <button className={tableStyles.nav}>
 				{'>>'}
-			</button>
+			</button> */}
 		</div>
 	)
 	return (
