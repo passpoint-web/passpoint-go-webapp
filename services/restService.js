@@ -31,16 +31,20 @@ const getRequestConfig = () => {
   }
 }
 
-// restAgent.interceptors.response.use(undefined, (error) => {
-// 	const statusCode = error.response ? error.response.status : null;
-// 	console.log('Inte', statusCode);
-// 	if (
-// 		(statusCode && statusCode === 401) ||
-//     (statusCode && statusCode === 403)
-// 	) {
-// 		// Redirect('/auth/login');
-// 	}
-// });
+restAgent.interceptors.response.use(undefined, (error) => {
+	const statusCode = error.response ? error.response.status : null;
+	console.log('Inte', statusCode);
+	if (
+		(statusCode && statusCode === 401) 
+    // ||
+    // (statusCode && statusCode === 403)
+	) {
+    if (!window.location.pathname.includes('/auth/login')) {
+      window.location.href= `/auth/login?fallBackUrl=${window.location.pathname}`
+    }
+	}
+  return Promise.reject(error)
+});
 
 export const setConfig = () => {
 	const token = getToken()

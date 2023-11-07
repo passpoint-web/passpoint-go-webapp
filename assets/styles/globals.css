@@ -484,6 +484,12 @@ table .outline_btn {
   max-width: 130px;
 }
 
+table .outline_btn:hover,
+table .outline_btn:focus {
+  border: 1px solid var(--sky-blue);
+  color: var(--sky-blue);
+}
+
 .table-ctn .custom-select button,
 .table-ctn .custom-search input {
   box-shadow: none;

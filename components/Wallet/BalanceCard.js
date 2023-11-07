@@ -43,6 +43,11 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 		}
 	}
 
+	const closeAddMoneyModal = () => {
+		setCurrentModal(null)
+		replace('/dashboard/wallet')
+	}
+
 	useEffect(()=>{
 		if (searchParams.get('add-money')==='true') {
 			setCurrentModal('add money')
@@ -59,7 +64,8 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 					currentModal === 'add money' ?
 						<AddMoneyModal walletAccount={walletAccount}
 							styles={styles}
-							onClose={()=>{setCurrentModal(null); replace('/dashboard/wallet')}}/> :
+							onClose={()=>closeAddMoneyModal()}
+							 /> :
 						currentModal === 'transfer' ?
 							<TransferModals styles={styles}
 								onClose={()=>setCurrentModal(null)} /> :

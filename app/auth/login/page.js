@@ -3,7 +3,7 @@ import styles from "@/assets/styles/auth-screens.module.css";
 import PrimaryBtn from "@/components/Btn/Primary";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PasswordField from "@/components/Auth/PasswordField";
 import functions from "@/utils/functions";
 import { login } from "@/services/restService";
@@ -12,27 +12,28 @@ import { saveCredentials, saveToken } from "@/services/localService";
 import { useNotify } from "@/utils/hooks";
 
 const Login = () => {
-  const { validEmail } = functions;
-  // eslint-disable-next-line no-unused-vars
-  const { push } = useRouter();
-  const [ctaClicked, setCtaClicked] = useState(false);
-  const [allFieldsValid, setAllFieldsValid] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [feedbackError, setFeedbackError] = useState("");
-  const [payload, setPayload] = useState({
-    email: "",
-    password: "",
-  });
+	const { validEmail } = functions;
+	// eslint-disable-next-line no-unused-vars
+	const { push } = useRouter();
+	const searchParams = useSearchParams()
+	const [ctaClicked, setCtaClicked] = useState(false);
+	const [allFieldsValid, setAllFieldsValid] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [feedbackError, setFeedbackError] = useState("");
+	const [payload, setPayload] = useState({
+		email: "",
+		password: "",
+	});
 
-  const notify = useNotify();
+	const notify = useNotify();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPayload((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setPayload((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -58,33 +59,39 @@ const Login = () => {
 		}
 	};
 
-	const directUser = ({ userType, isActive, regStage }) => {
+	const directUser = ({ userType, isActive, regStage, kycStatus }) => {
 		const businessLevels = ["", "address", "personal", "verify"];
 		const individualLevels = ["", "business", "address", "verify"];
 		if (!isActive && Number(userType) == 2) {
 			push(`/auth/signup/business/${businessLevels[regStage]}`);
 		} else if (!isActive && Number(userType) == 1) {
 			push(`/auth/signup/individual/${individualLevels[regStage]}`);
-		} else {
+		} else if (kycStatus === 'pending') {
 			if (Number(userType) == 2) {
 				push("/dashboard/kyc/corporate/business");
 			}
 			else {
 				push("/dashboard/kyc/individual");
 			}
+		} else if (kycStatus === 'in-progress') {
+			push('/dashboard?kycStatus=in-progress')
+		} else if (!searchParams.get('fallBackUrl')){
+			push('/dashboard')
+		} else {
+			push(searchParams.get('fallBackUrl'))
 		}
 	};
 
-  useEffect(() => {
-    setFeedbackError("");
-    const { email, password } = payload;
-    const conditionsMet = validEmail(email) && password;
-    if (conditionsMet) {
-      setAllFieldsValid(true);
-    } else {
-      setAllFieldsValid(false);
-    }
-  }, [payload]);
+	useEffect(() => {
+		setFeedbackError("");
+		const { email, password } = payload;
+		const conditionsMet = validEmail(email) && password;
+		if (conditionsMet) {
+			setAllFieldsValid(true);
+		} else {
+			setAllFieldsValid(false);
+		}
+	}, [payload]);
 
 	return (
 		<div className={styles.auth}>
@@ -137,16 +144,17 @@ const Login = () => {
 								loading={isLoading} />
 							<p>
                 Forgot password?{" "}
-                <Link href="/auth/forgot-password" text="Reset it">
+								<Link href="/auth/forgot-password"
+									text="Reset it">
                   Reset it
-                </Link>
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+								</Link>
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Login;
