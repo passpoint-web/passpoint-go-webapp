@@ -5,8 +5,13 @@ import ModalWrapper from "../Modal/ModalWrapper"
 import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
+import Loader from "../Btn/Loader"
 
-const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
+const FlightDetailsModal = ({
+  setFlightDetailVisible,
+  styles,
+  flightDetails,
+}) => {
   const { formatMoney } = functions
   const notify = useNotify()
   const searchParams = useSearchParams()
@@ -17,9 +22,10 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
   const tabs = ["General", "Itinerary", "Cost & Payment", "Traveler's Info"]
   const [activeTab, setActiveTab] = useState(tabs[0])
   // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState({})
+  const [data, setData] = useState(flightDetails)
   const [baseFare, setBaseFare] = useState(0)
   const [fees, setFees] = useState(0)
+  const [isUploading, setIsUploading] = useState(false)
 
   const closeModal = () => {
     setFlightDetailVisible(null)
@@ -28,8 +34,9 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
 
   const getFlightBooking = async () => {
     try {
+      console.log(data)
       const response = await travel.getFlightBooking(id)
-      setData(response.data.data)
+      setData({ ...response.data.data, ...flightDetails })
       calculateBaseFare(response.data.data)
     } catch (_err) {
       // console.log(_err.response.data.description)
@@ -49,6 +56,13 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
     setBaseFare(total)
     setFees(Number(dataParam.amount) - total)
     return total
+  }
+
+  const cancelBooking = async () => {
+    setIsUploading(true)
+    const promise = await travel.cancelBooking({ bookingReference: id })
+    setIsUploading(false)
+    if (promise.data.code === "200") closeModal()
   }
 
   useEffect(() => {
@@ -101,8 +115,8 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
               <div className={styles.label}>Booking Date & Time</div>
               <div className={styles.value}>
                 <span>
-                  {new Date(data?.created_at)?.toDateString()},{" "}
-                  <span>{functions.formatCustomTime(data?.created_at)}</span>
+                  {functions.formatTimestamp(data?.createdDate).substring(4)},{" "}
+                  <span>{functions.formatCustomTime(data?.createdDate)}</span>
                 </span>
               </div>
             </div>
@@ -126,10 +140,12 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
             <div className={styles.row}>
               <div className={styles.label}>Booking Status</div>
               <div className={styles.value}>
-                {/* <div className="success-tag">Confirmed</div>
-							<div className="pending-tag">Pending</div>
-							<div className="failed-tag">Failed</div> */}
-                - - -
+                {data.status.toLowerCase() === "success" && (
+                  <div className="success-tag">Success</div>
+                )}
+                {data.status.toLowerCase() === "pending" && (
+                  <div className="pending-tag">Pending</div>
+                )}
               </div>
             </div>
             <div className={styles.row}>
@@ -360,7 +376,7 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
       {/* MAIN FLIGHT DETAILS CONTENT - TRAVELER INFO */}
       {activeTab === tabs[3] && (
         <div className={styles.modal__flight_details}>
-          {!data?.passengers && <h4>No passengers Data</h4>}
+          {/* {!data?.passengers && <h4>No passengers Data</h4>}
           {data?.passengers?.map((passenger) => (
             <div
               key={passenger?.documents?.number}
@@ -388,13 +404,54 @@ const FlightDetailsModal = ({ setFlightDetailVisible, styles }) => {
                 </div>
               </div>
             </div>
-          ))}
+          ))} */}
+
+          <div className={styles.modal__flight_details_section}>
+            <div className={styles.row}>
+              <div className={styles.label}>Name</div>
+              <div className={styles.value}>
+                <span>
+                  {data?.firstName} {data?.lastName}
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Contact Email</div>
+              <div className={styles.value}>
+                <span>{data?.email}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Contact Number</div>
+              <div className={styles.value}>
+                <span>+{data?.phoneNumber}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Date of Birth</div>
+              <div className={styles.value}>
+                <span>
+                  {functions.formatTimestamp(data?.dob)?.substring(4)}
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Passport Number</div>
+              <div className={styles.value}>
+                <span>{data?.idCardNumber || "Not Applicable"}</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
       <div className={styles.modal__bottom_actions}>
-        <button className="primary_btn">Modify</button>
-        <button className="primary_btn">Cancel Bookings</button>
+        <button className="primary_btn" onClick={() => closeModal()}>
+          Close
+        </button>
+        <button className="primary_btn" onClick={() => cancelBooking()}>
+          {isUploading ? <Loader /> : "Cancel Bookings"}
+        </button>
       </div>
     </ModalWrapper>
   )

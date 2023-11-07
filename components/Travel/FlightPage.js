@@ -1,20 +1,21 @@
-"use client";
+"use client"
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import FlightDetailsModal from "./FlightDetailsModal";
-import FlightPageHeader from "./FlightPageHeader";
-import FlightTable from "../Tables/FlightTable";
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import FlightDetailsModal from "./FlightDetailsModal"
+import FlightPageHeader from "./FlightPageHeader"
+import FlightTable from "../Tables/FlightTable"
 
 const FlightPage = ({ styles }) => {
-  const searchParams = useSearchParams();
-  const [flightDetailVisible, setFlightDetailVisible] = useState(null);
+  const searchParams = useSearchParams()
+  const [flightDetails, setFlightDetails] = useState(null)
+  const [flightDetailVisible, setFlightDetailVisible] = useState(null)
 
   useEffect(() => {
     if (searchParams.get("id")) {
-      setFlightDetailVisible(searchParams.get("id"));
+      setFlightDetailVisible(searchParams.get("id"))
     }
-  }, [searchParams]);
+  }, [searchParams])
 
   return (
     <div className={`${styles.inner} flight-services`}>
@@ -22,15 +23,17 @@ const FlightPage = ({ styles }) => {
       <FlightTable
         title="flight"
         action="/dashboard/travel/flights?id=AH12345678"
+        setFlightDetails={setFlightDetails}
       />
       {flightDetailVisible && (
         <FlightDetailsModal
           styles={styles}
+          flightDetails={flightDetails}
           setFlightDetailVisible={setFlightDetailVisible}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default FlightPage;
+export default FlightPage

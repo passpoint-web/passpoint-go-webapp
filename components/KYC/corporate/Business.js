@@ -62,7 +62,7 @@ const Business = ({ styles }) => {
 			saveKycDetails({
 				...savedKycDetails,
 				KycStage:
-          savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
+          savedKycDetails?.KycStage > 1 ? savedKycDetails?.KycStage : 1,
 			});
 			notify("success", "Your information has been saved");
 			push("/dashboard/kyc/corporate/identity");
