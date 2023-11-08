@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Input from "@/components/Dashboard/Input";
 import PasswordField from "@/components/Auth/PasswordField";
 import Button from "@/components/Btn/Button";
-import Switch from "@/components/Custom/Switch";
+// import Switch from "@/components/Custom/Switch";
 // import ModalWrapper from '@/components/Modal/ModalWrapper'
 // import { getCredentials } from '@/services/localService'
 import { useNotify } from "@/utils/hooks";
@@ -216,13 +216,13 @@ const Security = () => {
 				<h3>Change Password</h3>
 				{ChangePassword()}
 			</div>
-			<div className={`${styles.border_box} ${styles.privacy}`}>
+			{/* <div className={`${styles.border_box} ${styles.privacy}`}>
 				<h3>Privacy Settings</h3>
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Bookings updates</h4>
 					<Switch />
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

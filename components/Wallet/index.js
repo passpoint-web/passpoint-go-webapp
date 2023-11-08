@@ -11,9 +11,10 @@ import WalletTable from "./WalletTable";
 import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
+import { saveWalletState, getWalletState } from "@/services/localService";
 
 const Wallet = () => {
-	const [walletState, setWalletState] = useState('') // no-wallet, pending, created
+	const [walletState, setWalletState] = useState('created') // no-wallet, pending, created
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
@@ -29,8 +30,10 @@ const Wallet = () => {
 			const {accountNumber} = data.walletAccount['NGN']
 			if (accountNumber) {
 				setWalletState('created')
+				saveWalletState('created')
 			}else if (!accountNumber) {
 				setWalletState('pending')
+				saveWalletState('pending')
 				setShowPendingModal(true)
 			}
 		} catch (_err) {
@@ -40,6 +43,7 @@ const Wallet = () => {
 		}
 	}
 	useEffect(()=>{
+		setWalletState(getWalletState())
 		getWallet()
 	},[])
 

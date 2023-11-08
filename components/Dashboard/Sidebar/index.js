@@ -1,18 +1,14 @@
 'use client'
 import { usePathname } from "next/navigation";
 import styles from "./sidebar.module.css";
-import Logo from "@/components/PasspointLogo";
 import { sidebarData } from "@/constants/general";
 import Link from "next/link";
 
 const DashboardSidebar = () => {
-	const pathname = usePathname();
+  const pathname = usePathname()
 
 	return (
 		<div className={styles.dashSide_main}>
-			<div className={styles.logo}>
-				<Logo href='/dashboard' />
-			</div>
 			<nav>
 				{sidebarData.map((item, index) => (
 					<Link
@@ -31,4 +27,4 @@ const DashboardSidebar = () => {
 	);
 };
 
-export default DashboardSidebar;
+export default DashboardSidebar

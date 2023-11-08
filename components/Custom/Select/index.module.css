@@ -17,6 +17,10 @@
   align-items: center;
   justify-content: space-between;
   height: var(--input-height);
+  -webkit-border-radius: var(--input-br);
+  -moz-border-radius: var(--input-br);
+  -ms-border-radius: var(--input-br);
+  -o-border-radius: var(--input-br);
 }
 
 .custom_select button:not(:disabled):hover {
@@ -59,6 +63,18 @@
   display: flex;
   justify-content: flex-start;
   gap: 10px;
+}
+.custom_select .content input {
+  background: transparent;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+}
+.custom_select .content input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
 }
 
 .custom_select .content_selected {
@@ -105,6 +121,12 @@
   width: 100%;
   z-index: var(--z-index-select-dropdown);
   background-color: #fff;
+}
+
+.custom_select .select.top {
+  bottom: var(--input-height);
+  top: unset;
+  margin-bottom: calc(var(--sm-inner-component-mg));
 }
 
 /* hide countries container scroll bar */
@@ -168,4 +190,3 @@
 
 /* end */
 /* account type dropdown styles */
-
