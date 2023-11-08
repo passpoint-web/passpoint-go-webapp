@@ -17,33 +17,48 @@ import "react-datepicker/dist/react-datepicker.css";
 // import DateFilter from "../Tables/DateFilter";
 // import Input from "../Dashboard/Input";
 import { numericalDateDashReversed } from "@/utils/date-formats";
-import Pagination from "../Tables/Pagination";
+import Pagination from "../Tables/Pagination/WalletPagination";
+import Select from "../Dashboard/Select";
 
 const WalletTable = ({wallet,  styles }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
-	const [pagination, setPagination] = useState({
-		currentPage: 1,
-		pageCount: 0,
-		pageSize: 21,
-		totalCount: 0
-	})
-	// const [startDate, setStartDate] = useState(new Date());
-	// const [endDate, setEndDate] = useState(new Date());
+	const transactionTypes = [
+		'Incoming',
+		'Outgoing'
+	]
 
-	
-	const getTransactions = async () => {
+	const [transactionType, setTransactionType] = useState(null)
+
+	const [pagination, setPagination] = useState({
+		currentPage: 2,
+		totalPages: 0,
+		limit: 10,
+		totalData: 0,
+		pageDataLength: 0,
+		startDate: '2023-10-15',
+		endDate: numericalDateDashReversed(new Date())
+	})
+	const getTransactions = async (
+
+		pageNumber,
+		currency = 'NGN' ,
+		startDate,
+		endDate,
+		pageSize,
+		type
+	) => {
+		const filters = {
+			pageNumber,
+			currency,
+			startDate,
+			endDate,
+			pageSize
+		}
 		try {
-			const filters = {
-				startDate: "2023-10-15",
-				endDate: numericalDateDashReversed(new Date()),
-				currency:"NGN",
-				pageNumber: pagination.currentPage,
-				pageSize: pagination.pageSize
-			}
-			const response = await wallet.transactions({data: filters, type: 'all'})
+			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
 			const {data} = response.data
 			const {
 				currentPage,
@@ -51,21 +66,17 @@ const WalletTable = ({wallet,  styles }) => {
 				pageSize,
 				totalCount
 			} = response.data
-			setPagination({
+			setPagination((prev)=>({
+				...prev,
 				currentPage,
-				pageCount,
-				pageSize,
-				totalCount
-			})
-			// const transactions = data.map((e)=>{
-			// 	const bankName = ngBanks().find(f=>f.displayCode == e.beneficiaryBankCode)?.name || 'Passpoint Wallet'
-			// 	e.beneficiaryBankName = bankName
-			// 	return e
-			// })
+				totalPages: pageCount,
+				limit: pageSize,
+				pageDataLength: data.length || 0,
+				totalData: totalCount
+			}))
 			setTransactions(data)
-			// console.log(transactions[0])
 		} catch (_err) {
-			console.log(_err)
+			// console.log(_err)
 		} finally {
 			//
 		}
@@ -76,23 +87,25 @@ const WalletTable = ({wallet,  styles }) => {
 		setShowTransactionModal(true)
 	}
 
-	useEffect(()=>{
-		getTransactions()
-	},[])
-	return (
-		<>
-			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
-				transaction={currentTransaction}
-				styles={styles} /> : <></>}
-			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
-				<div className={tableStyles.table__outer}>
-					<div className={tableStyles.table__header}>
-						<div className="texts">
-							<h3 className="capitalize"> Transaction History</h3>
-							<p>Manage your transaction here</p>
-						</div>
+	const handleEntry = (val) => {
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType)
+	}
+	const handleTransactionType = (val)=> {
+		setTransactionType(val)
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val)
+	}
 
-						{/* <Search id={"booking"}
+	const setPage = (val) => {
+		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
+	}
+	useEffect(()=>{
+		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
+	},[])
+
+	const Filters = () => (
+		<div className={tableStyles.filters}>
+
+			{/* <Search id={"booking"}
 							placeholder={"Search bookings"} />
 						<CustomSelect
 							id="status-type"
@@ -108,6 +121,39 @@ const WalletTable = ({wallet,  styles }) => {
 							selectedOption={""}
 							placeholder="Filter by Date"
 						/> */}
+			<div style={{width: 200, maxWidth: 250}}>
+				<Select
+					placeholder='Transaction Type'
+					selectPlaceHolder='Transaction Type'
+					styleProps={{
+						option: {
+							height: 40
+						},
+						dropdown: {
+							height: 100
+						}
+					}}
+					selectOptions={transactionTypes}
+					selectedOption={transactionType}
+					emitSelect={(val)=>handleTransactionType(val)}
+				/>
+				</div>
+		</div>
+	)
+
+	return (
+		<>
+			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
+				transaction={currentTransaction}
+				styles={styles} /> : <></>}
+			<div className={`table-ctn ${tableStyles.travel__dashboard_table} ${tableStyles.wallet}`}>
+				<div className={tableStyles.table__outer}>
+					<div className={tableStyles.table__header}>
+						<div className="texts">
+							<h3 className="capitalize"> Transaction History</h3>
+							<p>Manage your transaction here</p>
+						</div>
+						{Filters()}
 					</div>
 					<div className={tableStyles.table__main}>
 						<table>
@@ -176,7 +222,10 @@ const WalletTable = ({wallet,  styles }) => {
 							</tbody>
 						</table>
 					</div>
-					<Pagination tableStyles={tableStyles} pagination={pagination} />
+					<Pagination tableStyles={tableStyles}
+						handleEntry={(val)=>handleEntry(val)}
+						setPage={(val)=>setPage(val)}
+						pagination={pagination} />
 				</div>
 			</div>
 		</>

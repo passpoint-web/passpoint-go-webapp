@@ -6,7 +6,7 @@
 }
 
 .dashSide_main {
-  width: clamp(250px, 15%, 320px);
+  width: var(--sidebar-width);
   min-height: 100vh;
   position: fixed;
   left: 0;

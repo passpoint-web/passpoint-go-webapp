@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link"
 import Search from "../Custom/Search"
-import CustomSelect from "@/components/Custom/Select"
 import styles from "../../assets/styles/table.module.css"
 import { useEffect, useState } from "react"
 import { travel } from "@/services/restService"
@@ -118,12 +117,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
                     </div>
                   </td>
                   <td>
-                    {c.status.toLowerCase() === "success" && (
-                      <div className="success-tag">Success</div>
-                    )}
-                    {c.status.toLowerCase() === "pending" && (
-                      <div className="pending-tag">Pending</div>
-                    )}
+                    <div className={`${c.status.toLowerCase()}-tag`}>{c.status.toLowerCase()}</div>
                   </td>
                   <td className="text-bold">
                     {formatMoney(c.amount, c.currency)}

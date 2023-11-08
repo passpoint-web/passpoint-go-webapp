@@ -2,6 +2,7 @@
 .travel__dashboard_table {
   margin-top: 2rem;
 }
+
 .table__outer {
   border-radius: 16px;
   background: var(--white);
@@ -12,6 +13,13 @@
   padding: 1.5rem;
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.wallet .table__header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -68,4 +76,55 @@
 }
 .td_5 {
   width: calc(100% / 20 * 5);
+}
+
+
+
+/* pagination */
+
+.table__pagination.wallet {
+  padding: 1.5rem;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.table__pagination.wallet .rhs {
+  display: flex;
+  gap: 10px;
+}
+
+.table__pagination.wallet .rhs button {
+  border: 1px solid var(--grey-5);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table__pagination.wallet .rhs button:not(:disabled):hover {
+  color: var(--sky-blue);
+  border: 1px solid var(--sky-blue);
+}
+
+.table__pagination.wallet .rhs button.nav:not(:disabled):focus {
+  color: var(--sky-blue);
+  border: 1px solid var(--sky-blue);
+}
+
+.table__pagination.wallet .page_btns {
+  display: flex;
+  gap: 8px;
+}
+
+.table__pagination.wallet .page_btns button {
+  width: 40px;
+}
+
+.table__pagination.wallet .page_btns button.current_page {
+  color: var(--sky-blue);
+  border: 1px solid var(--sky-blue);
 }

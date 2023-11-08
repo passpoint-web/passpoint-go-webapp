@@ -82,6 +82,14 @@ const FlightPageHeader = ({ styles }) => {
             id="trip-type"
             selectOptions={["Round Trip", "One way"]}
             selectedOption={tripType}
+            styleProps={{
+              dropdown: {
+                height: 100
+              },
+              option: {
+                height: 40
+              }
+            }}
             placeholder="Select Trip Type"
             emitSelect={(e) => setTripType(e)}
           />
@@ -113,6 +121,14 @@ const FlightPageHeader = ({ styles }) => {
             id="class"
             selectOptions={["Economy", "Premium Economy", "Business", "First"]}
             selectedOption={flightClass}
+            styleProps={{
+              dropdown: {
+                height: 150
+              },
+              option: {
+                height: 40
+              }
+            }}
             placeholder="Select Class"
             emitSelect={(e) => setFlightClass(e)}
           />

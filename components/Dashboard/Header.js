@@ -1,17 +1,17 @@
 "use client";
+import Logo from "@/components/PasspointLogo";
 import { DropDownIconDark } from "@/constants/icons";
 import ProfileImage from "@/assets/images/dashboard/avatar.svg";
 import Link from "next/link";
 import Image from "next/image";
-import { getCredentials, setLogout } from "@/services/localService";
-import { useEffect, useState } from "react";
+import { setLogout } from "@/services/localService";
+import { useState } from "react";
 import OverlayScreen from "../OverlayScreen";
 import { menuItems } from "@/constants/general";
 import { useRouter } from "next/navigation";
 
-const DashboardHeader = ({ setOpenNotify, styles }) => {
+const DashboardHeader = ({ setOpenNotify, styles, user }) => {
 	const [showDropDown, setShowDropDown] = useState(false);
-	const [savedCredentials, setSavedCredentials] = useState();
 	const { push } = useRouter();
 
   const handleLogout = () => {
@@ -25,13 +25,12 @@ const DashboardHeader = ({ setOpenNotify, styles }) => {
     }, 200);
   };
 
-  useEffect(() => {
-    setSavedCredentials(getCredentials());
-  }, []);
-
 	const items = menuItems(handleLogout, setOpenNotify);
 	return (
 		<div className={styles.dashHeader_main}>
+			<div className={styles.logo}>
+				<Logo href='/dashboard' />
+			</div>
 			{/* <button className={styles.generate}>
 				<PlusIcon />
         Generate Storefront
@@ -41,7 +40,7 @@ const DashboardHeader = ({ setOpenNotify, styles }) => {
 				onClick={() => setShowDropDown(!showDropDown)}
 			>
 				<Image src={ProfileImage} alt="avatar" />
-				<h3>{savedCredentials?.businessName}</h3>
+				<h3>{user?.businessName}</h3>
 				<i className={showDropDown ? styles.dropIcon : styles.openIcon}>
 					<DropDownIconDark />
 				</i>
