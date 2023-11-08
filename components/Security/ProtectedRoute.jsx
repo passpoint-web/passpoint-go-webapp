@@ -1,4 +1,4 @@
-import React from 'react'
+
 import ModalWrapper from '../Modal/ModalWrapper'
 
 const ProtectedRoute = () => {

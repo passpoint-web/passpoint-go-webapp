@@ -1,5 +1,5 @@
 'use client'
-import { getToken, saveToken, setLogout } from "@/services/localService";
+import { getToken, saveCredentials, saveToken, setLogout } from "@/services/localService";
 import React, { createContext, useState, useEffect } from "react";
 const AuthContext = createContext(); // create context here
 
@@ -13,8 +13,9 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const loginUser = (token) => {
-    saveToken( token)
+  const loginUser = ({token, user}) => {
+    saveToken(token)
+    saveCredentials(user)
     setIsAuthenticated(true);
   };
 

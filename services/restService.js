@@ -39,8 +39,8 @@ restAgent.interceptors.response.use(undefined, (error) => {
 	// ||
 	// (statusCode && statusCode === 403)
 	) {
+		setLogout()
 		if (!window.location.pathname.includes('/auth/login')) {
-			setLogout()
 			window.location.href= `/auth/login?fallBackUrl=${window.location.pathname}`
 		}
 	}

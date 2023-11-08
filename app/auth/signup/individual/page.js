@@ -177,7 +177,6 @@ const IndividualInformation = () => {
 								<PrimaryBtn text="Open account"
 									loading={isLoading} />
 							</div>
-
 						</div>
 					</form>
 				</div>
