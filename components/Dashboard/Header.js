@@ -63,7 +63,7 @@ const DashboardHeader = ({ setOpenNotify, styles, user }) => {
 						))}
 					</div>
 				):<></>}
-				{showDropDown ? <OverlayScreen onClick={hideSelect} /> : <></>}
+				{showDropDown ? <OverlayScreen zIndex={true} onClick={hideSelect} /> : <></>}
 			</div>
 		</div>
 	);

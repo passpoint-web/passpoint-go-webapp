@@ -791,8 +791,11 @@ form {
   position: fixed;
   inset: 0;
   /* background: rgb(0, 0, 0, 0); */
-  /* z-index: var(--z-index-overlay); */
   cursor: default;
+}
+
+.overlay_screen.z_index_overlay {
+  z-index: var(--z-index-overlay);
 }
 
 .capsule {
