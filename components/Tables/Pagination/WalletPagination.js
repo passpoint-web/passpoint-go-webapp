@@ -146,7 +146,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 		</div>
 	)
 	return (
-		<div className={tableStyles.table__pagination}>
+		<div className={`${tableStyles.table__pagination} ${tableStyles.wallet}`}>
 			{Entries()}
 			{Analytics()}
 			{Pagination()}

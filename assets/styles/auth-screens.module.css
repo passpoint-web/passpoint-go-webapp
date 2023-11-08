@@ -416,7 +416,8 @@
   justify-content: space-between;
 }
 
-.form_group .otp_input > div input {
+.form_group .otp_input > div input,
+.form_group .otp_input_four > div input {
   height: 64px;
   width: 14% !important;
   max-width: 64px;
@@ -426,14 +427,12 @@
   background-color: #fff;
 }
 
+.form_group .otp_input > div input {
+  width: 14% !important;
+}
+
 .form_group .otp_input_four > div input {
-  height: 64px;
   width: 22% !important;
-  max-width: 64px;
-  font-size: 24px;
-  font-family: "GraphikMedium";
-  font-weight: 500;
-  background-color: #fff;
 }
 
 .form .otp_input_four > div input:focus,
@@ -441,8 +440,7 @@
   background-color: var(--input-focus-bg);
 }
 
-.form_group .otp_input_four_wallet > div,
-.form_group .otp_input > div {
+.form_group .otp_input_four_wallet > div {
   display: flex;
   justify-content: space-between;
   max-width: 300px;

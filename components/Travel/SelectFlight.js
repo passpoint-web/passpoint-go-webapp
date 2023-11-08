@@ -354,7 +354,7 @@ const SelectFlight = () => {
             </div>
           </div>
           {/* LAYOVER FILTER */}
-          {isStopoverGreaterThan() && (
+          {/* {isStopoverGreaterThan() && (
             <div className={styles.filter__box}>
               <button className={styles.header}>
                 <h5 className="capitalize">Layover</h5>
@@ -381,7 +381,7 @@ const SelectFlight = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
         <div className={styles.rhs}>
           {isLoading &&

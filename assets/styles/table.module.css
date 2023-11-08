@@ -2,6 +2,7 @@
 .travel__dashboard_table {
   margin-top: 2rem;
 }
+
 .table__outer {
   border-radius: 16px;
   background: var(--white);
@@ -10,16 +11,17 @@
 }
 .table__header {
   padding: 1.5rem;
-  /* display: grid; */
-  display: flex;
-  justify-content: space-between;
-  /* grid-template-columns: 2fr 2fr 1fr 1fr; */
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
   gap: 1rem;
 }
 
-/* .table__header .filters { */
-  /* width: 50%; */
-/* } */
+.wallet .table__header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
 
 .table__main th {
   font-family: var(--graphikRegular);
@@ -44,6 +46,21 @@
 .table__main td:last-child {
   padding-right: 1.5rem;
 }
+.table__pagination {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.table__pagination button {
+  height: 40px;
+  padding: 0 16px;
+  box-shadow: none;
+}
+.table__pagination > div:nth-child(3) {
+  display: flex;
+  gap: 0.6rem;
+}
 
 .td_1 {
   width: calc(100% / 20);
@@ -65,7 +82,7 @@
 
 /* pagination */
 
-.table__pagination {
+.table__pagination.wallet {
   padding: 1.5rem;
   min-height: 60px;
   display: flex;
@@ -74,12 +91,12 @@
 }
 
 
-.table__pagination .rhs {
+.table__pagination.wallet .rhs {
   display: flex;
   gap: 10px;
 }
 
-.table__pagination .rhs button {
+.table__pagination.wallet .rhs button {
   border: 1px solid var(--grey-5);
   padding: 8px;
   border-radius: 8px;
@@ -88,22 +105,26 @@
   align-items: center;
 }
 
-.table__pagination .rhs button:not(:disabled):hover {
+.table__pagination.wallet .rhs button:not(:disabled):hover {
   color: var(--sky-blue);
   border: 1px solid var(--sky-blue);
 }
 
-.table__pagination .rhs button.nav:not(:disabled):focus {
+.table__pagination.wallet .rhs button.nav:not(:disabled):focus {
   color: var(--sky-blue);
   border: 1px solid var(--sky-blue);
 }
 
-.table__pagination .page_btns {
+.table__pagination.wallet .page_btns {
   display: flex;
   gap: 8px;
 }
 
-.page_btns button.current_page {
+.table__pagination.wallet .page_btns button {
+  width: 40px;
+}
+
+.table__pagination.wallet .page_btns button.current_page {
   color: var(--sky-blue);
   border: 1px solid var(--sky-blue);
 }

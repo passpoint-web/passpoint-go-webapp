@@ -75,7 +75,7 @@ const IdentityInd = ({ styles }) => {
       saveKycDetails({
         ...savedKycDetails,
         KycStage:
-          savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
+          savedKycDetails?.KycStage > 1 ? savedKycDetails?.KycStage : 1,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/individual/address");
@@ -124,7 +124,6 @@ const IdentityInd = ({ styles }) => {
             label="Document Number"
             id="documentNumber"
             name="documentNumber"
-            type="number"
             placeholder="Enter your Document Number"
             error={ctaClicked && !payload.documentNumber}
             value={payload.documentNumber}

@@ -17,7 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // import DateFilter from "../Tables/DateFilter";
 // import Input from "../Dashboard/Input";
 import { numericalDateDashReversed } from "@/utils/date-formats";
-import Pagination from "../Tables/Pagination";
+import Pagination from "../Tables/Pagination/WalletPagination";
 import Select from "../Dashboard/Select";
 
 const WalletTable = ({wallet,  styles }) => {
@@ -146,7 +146,7 @@ const WalletTable = ({wallet,  styles }) => {
 			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
 				transaction={currentTransaction}
 				styles={styles} /> : <></>}
-			<div className={`table-ctn ${tableStyles.travel__dashboard_table}`}>
+			<div className={`table-ctn ${tableStyles.travel__dashboard_table} ${tableStyles.wallet}`}>
 				<div className={tableStyles.table__outer}>
 					<div className={tableStyles.table__header}>
 						<div className="texts">

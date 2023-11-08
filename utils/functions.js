@@ -10,8 +10,12 @@ function number(num, precision) {
 }
 
 function formatMoney(num, currency, precision) {
-	const n = num ? Number(num).toFixed(precision || 2) : Number(num)
-	return n ? `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}${n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}` : `${currency === 'USD' ? '$' : currency === 'NGN' ? '₦' : '#'}0.00`
+  const n = num ? Number(num).toFixed(precision || 2) : Number(num)
+  return n
+    ? `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}${n
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`
+    : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0.00`
 }
 const createUrl = (pathname, params) => {
   const paramsString = params.toString()
@@ -29,12 +33,12 @@ function dateTimestamp(timestamp) {
   return dateString.replace(" ", ", ")
 }
 
-function sortAlphabetically (array, key) {
-	array.sort((a, b) => {
-		const state = a[key]> b[key] ? 1 : b[key] > a[key] ? -1 : 0
-		return state
-	})
-	return array
+function sortAlphabetically(array, key) {
+  array.sort((a, b) => {
+    const state = a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0
+    return state
+  })
+  return array
 }
 
 // function encryptData(data, key) {
@@ -110,7 +114,10 @@ function getMonth(index) {
 }
 function isValidUrl(url) {
   // eslint-disable-next-line no-useless-escape
-  if (url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
+  if (
+    url.match(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    )
   ) {
     return true
   }
@@ -227,37 +234,49 @@ function getFormattedAirportByIata(iata) {
   return iata
 }
 
-function maskValue (num){
-	const str = num.toString().split('')
-	// return str.map((_x)=> '*').join('') +' **'
-	return '**** **'
+function maskValue(num) {
+  const str = num.toString().split("")
+  // return str.map((_x)=> '*').join('') +' **'
+  return "**** **"
+}
+
+function eighteenYearsAgo() {
+  // Calculate the date that is 18 years ago from the current date
+  const currentDate = new Date()
+  const eighteenYearsAgo = new Date(currentDate)
+  eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18)
+  const formatted18YearsAgo = eighteenYearsAgo.toLocaleDateString()?.split("/")
+  const maxDate = `${formatted18YearsAgo[2]}-${formatted18YearsAgo[0]}-0${formatted18YearsAgo[1]}`
+  console.log(maxDate)
+  return maxDate
 }
 
 const functions = {
-	lastFourDigits,
-	formatNumber: number,
-	daysDifference: getDaysDifference,
-	formatMoney,
-	currencySymbol,
-	formatTimestamp: dateTimestamp,
-	truncateString,
-	maskedEmail,
-	validEmail,
-	getMonth,
-	makeNumArr,
-	isValidUrl,
-	returnBase64,
-	splitOnCapsLetter,
-	createUrl,
-	removeDuplicates,
-	sortAlphabetically,
-	maskValue,
+  lastFourDigits,
+  formatNumber: number,
+  daysDifference: getDaysDifference,
+  formatMoney,
+  currencySymbol,
+  formatTimestamp: dateTimestamp,
+  truncateString,
+  maskedEmail,
+  validEmail,
+  getMonth,
+  makeNumArr,
+  isValidUrl,
+  returnBase64,
+  splitOnCapsLetter,
+  createUrl,
+  removeDuplicates,
+  sortAlphabetically,
+  maskValue,
   getFormattedAirportByIata,
   convertTo12HourFormat,
   formatCustomTime,
-  convertMinutesToHHMM
-	// encryptData,
-	// decryptData
+  convertMinutesToHHMM,
+  eighteenYearsAgo,
+  // encryptData,
+  // decryptData
 }
 
 export default functions

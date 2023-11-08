@@ -78,8 +78,8 @@
   --negative-bg: #ffe6e4;
 
   --positive: #66cb9f;
-  --green-alert-bg: #E6F8EF;
-  --green-alert: #07B463;
+  --green-alert-bg: #e6f8ef;
+  --green-alert: #07b463;
 
   --warning-light: #ffd8bd;
   --warning-200: #df752b;
@@ -250,7 +250,6 @@ button .loading.white::before {
   animation: btn-loading 2s linear infinite;
 }
 
-
 button .loading::after {
   animation-delay: 1s;
 }
@@ -412,12 +411,11 @@ button.small {
   padding: 0 var(--btn-padding);
   border-radius: var(--btn-br);
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
 }
 
 .border.i.sd {
-
 }
 
 .no-border.sd {
@@ -425,7 +423,7 @@ button.small {
   padding: 0 var(--btn-padding);
   border-radius: var(--btn-br);
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
 }
 
@@ -505,7 +503,7 @@ table .outline_btn:focus {
 }
 
 .wallet_balance_card {
-  background-image: url('../images/dashboard/balance_card_svg.svg');
+  background-image: url("../images/dashboard/balance_card_svg.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -759,6 +757,8 @@ input[type="range"]:focus::-moz-range-thumb {
   outline: none;
   border: none;
   box-shadow: none;
+  padding-right: var(--input-padding);
+  padding-left: 0;
 }
 
 .flight-services .custom-select button {

@@ -2,12 +2,16 @@ import axios from "axios";
 import { getToken, setLogout } from "./localService";
 // import cookies from '@/plugins/cookies';
 // import { Redirect } from 'next';
-import { wallet } from '@/services/restService/wallet';
+import { wallet } from "@/services/restService/wallet"
 const restAgent = axios.create({
 	baseURL: "https://api.jessecoders.com/passpointGo/v1/",
 	headers: {
 		"Content-Type": "application/json",
 	},
+  // baseURL: "https://webapi-dev.mypasspoint.com/v1/",
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 })
 
 const flightRestAgent = axios.create({
@@ -48,11 +52,11 @@ restAgent.interceptors.response.use(undefined, (error) => {
 });
 
 export const setConfig = () => {
-	const token = getToken()
-	// console.log(cookies.get('token'))
-	const config = getRequestConfig();
-	config.headers.Authorization = `Bearer ${token}`
-	return config
+  const token = getToken()
+  // console.log(cookies.get('token'))
+  const config = getRequestConfig()
+  config.headers.Authorization = `Bearer ${token}`
+  return config
 }
 
 const setTravelConfig = () => {
@@ -68,8 +72,8 @@ export const registerUser = (path, data) => {
 }
 
 export const verifyEmailOtp = (data) => {
-	return restAgent.post("verifyUserOtp", data);
-};
+  return restAgent.post("verifyUserOtp", data)
+}
 
 export const login = (data) => {
 	return restAgent.post("login", data)
@@ -148,28 +152,28 @@ export const publicProfile = {
 }
 
 export const kyc = {
-	getKycDetails: () => {
-		return restAgent.get("getKycDetails", setConfig());
-	},
-	uploadKycIdentity: (data) => {
-		return restAgent.post("kycProofCooperateIdentity", data, setConfig());
-	},
-	uploadKycAddress: (data) => {
-		return restAgent.post("kycProofCooperateAddress", data, setConfig());
-	},
-	uploadKycBusiness: (data) => {
-		return restAgent.post("kycProofCooperateURL", data, setConfig());
-	},
-	uploadKycOwnership: (data) => {
-		return restAgent.post("kycProofCooperateOwnership", data, setConfig());
-	},
-	uploadIndIdentity: (data) => {
-		return restAgent.post("kycProofIndividualIdentity", data, setConfig());
-	},
-	uploadIndAddress: (data) => {
-		return restAgent.post("kycProofIndividualAddress", data, setConfig());
-	},
-};
+  getKycDetails: () => {
+    return restAgent.get("getKycDetails", setConfig())
+  },
+  uploadKycIdentity: (data) => {
+    return restAgent.post("kycProofCooperateIdentity", data, setConfig())
+  },
+  uploadKycAddress: (data) => {
+    return restAgent.post("kycProofCooperateAddress", data, setConfig())
+  },
+  uploadKycBusiness: (data) => {
+    return restAgent.post("kycProofCooperateURL", data, setConfig())
+  },
+  uploadKycOwnership: (data) => {
+    return restAgent.post("kycProofCooperateOwnership", data, setConfig())
+  },
+  uploadIndIdentity: (data) => {
+    return restAgent.post("kycProofIndividualIdentity", data, setConfig())
+  },
+  uploadIndAddress: (data) => {
+    return restAgent.post("kycProofIndividualAddress", data, setConfig())
+  },
+}
 export const accountProfile = {
 	changePassword: (data) => {
 		return restAgent.post("changeAccountPassword", data, setConfig())
@@ -236,6 +240,12 @@ export const travel = {
 		}
 		)
 	},
+  cancelBooking: (queryParams) => {
+    return flightRestAgent.post(
+      `/flight/cancelbooking?bookingReference=${queryParams.bookingReference}`,
+      setTravelConfig()
+    )
+  },
 }
 
 export const notifyAndAccess = {
