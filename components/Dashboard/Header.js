@@ -46,7 +46,8 @@ const DashboardHeader = ({ setOpenNotify, styles }) => {
 					<DropDownIconDark />
 				</i>
 
-				{showDropDown && (
+				{showDropDown ? <OverlayScreen zIndex={true} onClick={hideSelect} /> : <></>}
+				{showDropDown ? (
 					<div className={`${styles.headerDropdown} dropdown`}>
 						{items.map((item, index) => (
 							<div key={index}>
@@ -63,8 +64,7 @@ const DashboardHeader = ({ setOpenNotify, styles }) => {
 							</div>
 						))}
 					</div>
-				)}
-				{showDropDown ? <OverlayScreen onClick={hideSelect} /> : <></>}
+				):<></>}
 			</div>
 		</div>
 	);
