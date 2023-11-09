@@ -3,9 +3,8 @@ import DashboardHeader from "@/components/Dashboard/Header"
 import DashboardSidebar from "@/components/Dashboard/Sidebar"
 import styles from "@/assets/styles/dashboard-layout.module.css"
 import { useEffect, useState } from "react"
-import { getToken } from "@/services/localService"
 import { useRouter } from "next/navigation"
-import { getCredentials } from "@/services/localService";
+import { getToken , getCredentials } from "@/services/localService";
 import FullScreenLoader from "@/components/Modal/FullScreenLoader"
 
 // eslint-disable-next-line no-unused-vars
@@ -24,9 +23,6 @@ export default function DashboardLayout({ children }) {
   const {push} = useRouter()
   const [loading, setLoading] = useState(true)
   const [savedCredentials, setSavedCredentials] = useState({});
-  useEffect(()=>{
-    tawk()
-  },[])
 
   const checkAuth = async () => {
     const auth = await getToken()
@@ -38,6 +34,7 @@ export default function DashboardLayout({ children }) {
   }
 
   useEffect(()=>{
+    tawk()
     checkAuth()
     setSavedCredentials(getCredentials());
   },[])

@@ -38,8 +38,8 @@ const WalletTable = ({wallet,  styles }) => {
 		limit: 10,
 		totalData: 0,
 		pageDataLength: 0,
-		startDate: '2023-10-15',
-		endDate: numericalDateDashReversed(new Date())
+		startDate: '',
+		endDate: ''
 	})
 	const getTransactions = async (
 
@@ -50,12 +50,19 @@ const WalletTable = ({wallet,  styles }) => {
 		pageSize,
 		type
 	) => {
-		const filters = {
+		let filters = {
 			pageNumber,
 			currency,
 			startDate,
 			endDate,
 			pageSize
+		}
+
+		if (filters.startDate === '') {
+			delete filters.startDate
+		}
+		if (filters.endDate === '') {
+			delete filters.endDate
 		}
 		try {
 			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
