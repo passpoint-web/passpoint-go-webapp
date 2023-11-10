@@ -8,11 +8,11 @@ const nextConfig = {
 				destination: '/auth/login',
 				permanent: true,
 			},
-			// {
-			// 	source: '/',
-			// 	destination: '/auth/login',
-			// 	permanent: true,
-			// },
+			{
+				source: '/',
+				destination: '/dashboard',
+				permanent: true,
+			},
 			{
 				source: '/dashboard/kyc/individual',
 				destination: '/dashboard/kyc/individual/identity',
