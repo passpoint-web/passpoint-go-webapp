@@ -41,7 +41,6 @@ const AddressInd = ({ styles }) => {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
       saveKycDetails(data);
-      console.log(data);
       const documents = data.proofAddress;
       if (documents) {
         setPayload({
@@ -54,7 +53,6 @@ const AddressInd = ({ styles }) => {
         setSubmitType("NEW");
       }
     } catch (_err) {
-      console.log(_err);
     } finally {
       setDataLoading(false);
     }
@@ -65,7 +63,6 @@ const AddressInd = ({ styles }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(payload);
     setCtaClicked(true);
     if (!allFieldsValid) {
       return;

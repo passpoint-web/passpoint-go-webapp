@@ -47,7 +47,7 @@ const CustomSelect = ({
 				>
 					<div className={styles.content}>
 						{(objKey ? selectedOption?.[objKey] : selectedOption) ? (
-							<p className={styles.option}>{objKey ? selectedOption?.[objKey] : selectedOption}</p>
+							<p className={`${styles.option} capitalize`}>{objKey ? selectedOption?.[objKey] : selectedOption}</p>
 						) : (
 							<p>{placeholder}</p>
 						)}
@@ -65,7 +65,7 @@ const CustomSelect = ({
 								}`}
 								onClick={() => handleSelect(option)}
 							>
-								<p className={styles.option}>{objKey ? option?.[objKey] : option}</p>
+								<p className={`${styles.option} capitalize`}>{objKey ? option?.[objKey] : option}</p>
 							</div>
 						))}
 					</div>

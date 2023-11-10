@@ -1,0 +1,36 @@
+const handleOtpSubmit = async (e) => {
+  e.preventDefault();
+  setCtaClicked(true);
+
+  if (otp.length !== 6) {
+    setErrorMsg('Please enter a 6 digit OTP');
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    // Perform OTP verification here
+    const otpVerifyResponse = await kyc.verifyOtp({ otp });
+    
+    if (otpVerifyResponse.status === 200) {
+      // OTP verification is successful; proceed to upload KYC details
+      const uploadResponse = await kyc.uploadIndIdentity({
+        // Include the necessary data for KYC upload
+        ...payload,
+        bvn: payload.documentNumber, // For example, using documentNumber as BVN
+      });
+
+      if (uploadResponse.status === 200) {
+        notify("success", "Your BVN and identity have been successfully verified and saved.");
+        setShowVerifyBVNModal(false); // Close the modal
+        // You can now redirect or perform any other actions you need
+      }
+    }
+  } catch (otpError) {
+    // Handle any errors, such as invalid OTP
+    setErrorMsg(otpError.response?.data?.message || 'Invalid OTP, please try again');
+  } finally {
+    setIsLoading(false);
+  }
+};

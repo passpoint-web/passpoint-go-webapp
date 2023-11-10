@@ -14,13 +14,13 @@ const Input = ({
 }) => {
 	return (
 		<>
-			<div className={`${styles.form_group} ${error ? "error" : ""}`} style={styleProps}>
-				<div className={styles.label_ctn} style={{display: 'flex'}}>
+			<div className={`${styles.form_group} input__ctn ${error ? "error" : ""}`} style={styleProps}>
+				{label &&<div className={styles.label_ctn} style={{display: 'flex'}}>
 					<label htmlFor={props.id}>
 						{label}
 					</label>
 					{toolTipMessage ? <ToolTip message={toolTipMessage} /> : <></>}
-				</div>
+				</div>}
 				{children || <input {...props} />}
 				{error && errorMsg ? (
 					<FeedbackInfo center={msgPositionCenter}

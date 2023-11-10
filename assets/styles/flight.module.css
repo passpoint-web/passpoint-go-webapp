@@ -26,6 +26,31 @@
   gap: 1rem;
   margin: 2rem 0;
 }
+.travel__dashboard_header .row_one .quick__filter input {
+  background: var(--grey-6);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  color: #000;
+}
+.travel__dashboard_header .row_one .quick__filter input::placeholder {
+  color: var(--grey-1);
+}
+.travel__dashboard_header
+  .row_one
+  .quick__filter
+  input::-webkit-outer-spin-button,
+.travel__dashboard_header
+  .row_one
+  .quick__filter
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: textfield;
+}
+
+.travel__dashboard_header .row_one .quick__filter input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
 
 .travel__dashboard_header .row_two {
   display: flex;
@@ -37,8 +62,13 @@
   gap: 1rem;
   flex-basis: 40%;
   position: relative;
+  margin-top: 0;
 }
-.to__fro_group svg {
+.to__fro_group:nth-child(1) > div {
+  width: 50%;
+  margin-bottom: var(--inner-component-mg);
+}
+.to__fro_group .svg__wrapper svg {
   position: absolute;
   left: 0;
   right: 0;
@@ -138,7 +168,6 @@
   gap: 0.5rem;
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  ;
   color: var(--grey-2);
 }
 
@@ -162,11 +191,14 @@
 .fc__row_two {
   display: flex;
   gap: 1.5rem;
+  /* justify-content: flex-end; */
 }
 .fc__airline {
   text-align: center;
   display: flex;
   flex-direction: column;
+  width: 100px;
+  align-items: center;
   gap: 0.5rem;
 }
 .fc__airline h6 {
@@ -180,6 +212,8 @@
   width: 65px;
   min-width: 65px;
   height: 65px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .fc__tags {
   display: flex;
@@ -237,16 +271,17 @@
   right: auto;
   margin: auto;
   font-size: 0.9rem;
-  ;
   text-align: center;
   width: 60px;
   margin-left: -25px;
 }
 .circle__ctn > div:nth-child(1) {
   top: 1.3rem;
+  white-space: nowrap;
 }
 .circle__ctn > div:nth-last-child(1) {
   bottom: 1.3rem;
+  white-space: nowrap;
 }
 .fc__timeline .circle {
   min-width: 10px;
@@ -259,6 +294,12 @@
   -o-border-radius: 50%;
   border: 1px dashed var(--sky-blue);
   background: var(--white);
+}
+.fc__timeline .fc__durations {
+  position: absolute;
+  top: 1.3rem;
+  display: flex;
+  justify-content: space-around;
 }
 .fc__timeline .fc__timeline_stop:nth-child(1) .circle {
   border: none;
@@ -281,11 +322,25 @@
   width: 100%;
   border: 0.5px solid var(--sky-blue);
 }
-.fc__timeline.fc__timeline_with_stopover
-  .fc__timeline_stop:nth-child(1)
-  .fc__line {
+.fc__timeline.fc__timeline_with_stopover .fc__line {
   border: 0.5px dashed var(--sky-blue);
 }
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(2)
+  .fc__line {
+  border: 0.5px solid var(--sky-blue);
+}
+/* .fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-child(1)
+  .circle__ctn,
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(1)
+  .circle__ctn,
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(1)
+  .fc__line {
+  display: none;
+} */
 
 /* INPUT RANGE */
 .filter__input.range__input {
@@ -303,7 +358,6 @@
   margin-bottom: 0.5rem;
 }
 .filter__input_col_one > span {
-  ;
   color: var(--grey-2);
 }
 .filter__input_col_two {
@@ -313,7 +367,10 @@
   margin-top: 1.2rem;
 }
 .filter__input_col_two > div {
-  ;
+}
+.filter__input_col_two > button {
+  font-size: 1rem;
+  color: var(--sky-blue);
 }
 .range__ctn {
   position: relative;
@@ -411,6 +468,17 @@
   display: grid;
   place-items: center;
 }
+.payment__option_btn .option__btn_text {
+  font-family: "GraphikMedium";
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.2rem;
+}
 .payment__option_btn > div::after {
   content: ".";
   width: 0px;
@@ -454,7 +522,6 @@
 .payment__successful p {
   font-size: 1.15rem;
   margin-top: 1rem;
-  ;
 }
 .payment__successful a {
   width: 250px;
@@ -511,7 +578,10 @@
 .modal__flight_details {
   /* padding: var(--inner-component-mg); */
   padding: 2rem;
-  min-height: 560px;
+  /* min-height: 400px;
+  max-height: 57vh; */
+  height: 57vh;
+  overflow-y: auto;
 }
 .modal__flight_details_section {
   display: flex;
@@ -533,14 +603,19 @@
 }
 .modal__flight_details .label {
   width: 200px;
-  ;
   font-size: 1.15rem;
   color: var(--grey-3);
 }
 .modal__flight_details .value span {
-  ;
   font-size: 1.15rem;
+  line-height: 1.8rem;
 }
 .modal__flight_details .value > span > span {
   color: var(--grey-3);
+}
+
+@media screen and (max-height: 800px) {
+  .modal__flight_details {
+    height: 50vh;
+  }
 }

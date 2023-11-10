@@ -1,58 +1,57 @@
-
 // import cookiesFunc from "@/plugins/cookies"
 // const cookies = cookiesFunc()
 // setters
 export const saveCredentials = (credentials) => {
-  localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials));
-};
+  localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials))
+}
 
 export const getCredentials = () => {
   if (typeof window !== "undefined") {
-    const credentials = localStorage.getItem("registration_cr3dentials");
+    const credentials = localStorage.getItem("registration_cr3dentials")
     if (credentials !== "undefined") {
-      return JSON.parse(credentials);
+      return JSON.parse(credentials)
     }
   }
-};
+}
 
 export const saveUserType = (val) => {
-  localStorage.removeItem("registration_cr3dentials");
-  localStorage.setItem("user_type", JSON.stringify(val));
-};
+  localStorage.removeItem("registration_cr3dentials")
+  localStorage.setItem("user_type", JSON.stringify(val))
+}
 
 export const getUserType = () => {
   if (typeof window !== "undefined") {
-    const user_type = localStorage.getItem("user_type");
+    const user_type = localStorage.getItem("user_type")
     if (user_type !== "undefined") {
-      return JSON.parse(user_type);
+      return JSON.parse(user_type)
     }
   }
-};
+}
 
 export const saveForgotPasswordEmail = (val) => {
   if (val) {
-    localStorage.setItem("forgot_password_email", JSON.stringify(val));
+    localStorage.setItem("forgot_password_email", JSON.stringify(val))
   } else {
-    localStorage.removeItem("forgot_password_email");
+    localStorage.removeItem("forgot_password_email")
   }
-};
+}
 
 export const getForgotPasswordEmail = () => {
   if (typeof window !== "undefined") {
-    const forgot_password_email = localStorage.getItem("forgot_password_email");
+    const forgot_password_email = localStorage.getItem("forgot_password_email")
     if (forgot_password_email !== "undefined") {
-      return JSON.parse(forgot_password_email);
+      return JSON.parse(forgot_password_email)
     }
   }
-};
+}
 
 export const saveToken = (val) => {
-	if (val) {
-		localStorage.setItem("token", JSON.stringify(val));
-	} else {
-		localStorage.removeItem("token");
-	}
-};
+  if (val) {
+    localStorage.setItem("token", JSON.stringify(val))
+  } else {
+    localStorage.removeItem("token")
+  }
+}
 // export const saveToken = (val) => {
 // 	if (val) {
 // 		cookies.set('token', val)
@@ -60,13 +59,13 @@ export const saveToken = (val) => {
 // };
 
 export const getToken = () => {
-	if (typeof window !== "undefined") {
-		const token = localStorage.getItem("token");
-		if (token !== "undefined") {
-			return JSON.parse(token);
-		}
-	}
-};
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token")
+    if (token !== "undefined") {
+      return JSON.parse(token)
+    }
+  }
+}
 // export const getToken = () => {
 // 	const token = cookies.get("token");
 // 	if (typeof window !== "undefined") {
@@ -85,9 +84,6 @@ export const setLogout = () => {
   }
 };
 
-export const savePublicProfile = (val) => {
-  localStorage.setItem("public_profile", JSON.stringify(val));
-};
 
 export const saveKycDetails = (val) => {
   localStorage.setItem("kyc_details", JSON.stringify(val));
@@ -121,3 +117,55 @@ export const removeKycDetails = () => {
     localStorage.removeItem("kyc_details");
   }
 };
+
+export const savePublicProfile = (val) => {
+  localStorage.setItem("public_profile", JSON.stringify(val))
+}
+
+export const setAirportsState = (val) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("airports", JSON.stringify(val))
+  }
+}
+
+export const getAirportsState = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("airports")
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+    return null
+  }
+}
+
+export const setMostRecentFlightSearchURL = (val) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("flightSearchURL", JSON.stringify(val))
+  }
+}
+
+export const getMostRecentFlightSearchURL = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("flightSearchURL")
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+    return null
+  }
+}
+
+export const setSelectedFlight = (val) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("selectedFlight", JSON.stringify(val))
+  }
+}
+
+export const getSelectedFlight = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("selectedFlight")
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+    return null
+  }
+}

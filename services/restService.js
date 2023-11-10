@@ -11,17 +11,17 @@ const restAgent = axios.create({
 });
 
 const flightRestAgent = axios.create({
-	baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
-	headers: {
-		'Content-Type': 'application/json'
-	}
+  baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const notifyAndAccessRestAgent = axios.create({
-	baseURL: "https://passpoint-go-app-qa-5na2.onrender.com/v1/",
-	headers: {
-		'Content-Type': 'application/json'
-	}
+  baseURL: "https://passpoint-go-app-qa-5na2.onrender.com/v1/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const getRequestConfig = () => {
@@ -51,12 +51,12 @@ const setConfig = () => {
 };
 
 const setTravelConfig = () => {
-	// const token = getToken()
-	// console.log(cookies.get('token'))
-	const config = getRequestConfig();
-	config.headers.Authorization = `Bearer 123`
-	return config
-}
+  // const token = getToken()
+  // console.log(cookies.get('token'))
+  const config = getRequestConfig();
+  config.headers.Authorization = `Bearer 123`;
+  return config;
+};
 
 export const registerUser = (path, data) => {
   return restAgent.post(path, data);
@@ -113,38 +113,41 @@ export const metrics = () => {
 };
 
 export const publicProfile = {
-	getPublicProfile: () => {
-		return restAgent.get('getPublicProfile', setConfig());
-	},
-	getPrimaryServices: () => {
-		return restAgent.get('getPrimaryServices', setConfig());
-	},
-	uploadBusinessLogo: (data) => {
-		return restAgent.post('publicProfileBusinessLogo', data, setConfig());
-	},
-	businessDescription: (data) => {
-		return restAgent.post('publicProfileBusinessDesc', data, setConfig());
-	},
-	deleteBusinessDescription: (data) => {
-		return restAgent.post('deleteBusinessDesc', data, setConfig());
-	},
-	addServices: (data) => {
-		return restAgent.post('publicProfileAddServices', data, setConfig());
-	},
-	deleteService: (data) => {
-		return restAgent.post('deleteService', data, setConfig());
-	},
-	contact: (data) => {
-		return restAgent.post('publicProfileContactDetails', data, setConfig());
-	},
-	deleteSocial: (data) => {
-		return restAgent.post('deleteSocials', data, setConfig());
-	}
-}
+  getPublicProfile: () => {
+    return restAgent.get("getPublicProfile", setConfig());
+  },
+  getPrimaryServices: () => {
+    return restAgent.get("getPrimaryServices", setConfig());
+  },
+  uploadBusinessLogo: (data) => {
+    return restAgent.post("publicProfileBusinessLogo", data, setConfig());
+  },
+  businessDescription: (data) => {
+    return restAgent.post("publicProfileBusinessDesc", data, setConfig());
+  },
+  deleteBusinessDescription: (data) => {
+    return restAgent.post("deleteBusinessDesc", data, setConfig());
+  },
+  addServices: (data) => {
+    return restAgent.post("publicProfileAddServices", data, setConfig());
+  },
+  deleteService: (data) => {
+    return restAgent.post("deleteService", data, setConfig());
+  },
+  contact: (data) => {
+    return restAgent.post("publicProfileContactDetails", data, setConfig());
+  },
+  deleteSocial: (data) => {
+    return restAgent.post("deleteSocials", data, setConfig());
+  },
+};
 
 export const kyc = {
   getKycDetails: () => {
     return restAgent.get("getKycDetails", setConfig());
+  },
+  verifyBvn: (data) => {
+    return restAgent.post("verifyBvn", data, setConfig());
   },
   uploadKycIdentity: (data) => {
     return restAgent.post("kycProofCooperateIdentity", data, setConfig());
@@ -172,18 +175,46 @@ export const accountProfile = {
 };
 
 export const travel = {
-	getFlightBookings: (params) => {
-		const config = setTravelConfig()
-		config.params = params
-		return flightRestAgent.get('flight/bookings', config)
-	},
-	getFlightBooking: (id) => {
-		return flightRestAgent.get(`flight/${id}`, setTravelConfig())
-	}
-}
+  getFlightBookings: (params) => {
+    const config = setTravelConfig();
+    config.params = params;
+    return flightRestAgent.get("flight/bookings", config);
+  },
+  getFlightBooking: (bookingRef) => {
+    return flightRestAgent.post(
+      `flight/bookingdetails?bookingReference=${bookingRef}`,
+      setTravelConfig()
+    );
+  },
+  getAirports: (page = 0, pageSize = 10000, searchParam = "") => {
+    return flightRestAgent.get(
+      `airports/airports?page=${page}&pageSize=${pageSize}&searchParam=${searchParam}`,
+      setTravelConfig()
+    );
+  },
+  getAirlines: (page = 0, pageSize = 10000, searchParam = "") => {
+    return flightRestAgent.get(
+      `airports/airlines?page=${page}&pageSize=${pageSize}&searchParam=${searchParam}`,
+      setTravelConfig()
+    );
+  },
+  searchFlights: (queryParams) => {
+    return flightRestAgent.post(
+      `flight/searchflight?adults=${queryParams.adults}&cabin=${queryParams.cabin}&children=${queryParams.children}&departureDate=${queryParams.departureDate}&destination=${queryParams.destination}&infants=${queryParams.infants}&origin=${queryParams.origin}&returnDate=${queryParams.returnDate}`,
+      setTravelConfig()
+    );
+  },
+  createFlightBooking: (requestBody) => {
+    return flightRestAgent.post(
+      "/flight/flightbooking",
+      requestBody,
+      setTravelConfig()
+    );
+  },
+};
 
 export const notifyAndAccess = {
-	getNotifications: () => {
-		return notifyAndAccessRestAgent.get('notify/page', setConfig())
-	}
-}
+  getNotifications: () => {
+    return notifyAndAccessRestAgent.get("notify/page", setConfig());
+  },
+};

@@ -31,7 +31,6 @@ const Business = ({ styles }) => {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
       saveKycDetails(data);
-      console.log(data);
       const { websiteURL } = data.businessInfo;
       if (websiteURL) {
         setUrl(websiteURL);
@@ -53,8 +52,6 @@ const Business = ({ styles }) => {
     if (!allFieldsValid) {
       return;
     }
-    console.log(url);
-    console.log(submitType);
     setIsLoading(true);
     try {
       const response = await kyc.uploadKycBusiness({

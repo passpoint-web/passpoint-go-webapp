@@ -47,7 +47,6 @@ const Identity = ({ styles }) => {
     try {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
-      console.log(data);
       saveKycDetails(data);
       const documents = data.proofIdentity;
       if (documents && documents.length > 0) {
@@ -73,20 +72,16 @@ const Identity = ({ styles }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(payload);
     setCtaClicked(true);
     if (!allFieldsValid) {
       return;
     }
-    console.log(submitType);
-    console.log(payload);
     setIsLoading(true);
     try {
       const response = await kyc.uploadKycIdentity({
         documents: payload,
         submitType,
       });
-      console.log(response);
       saveKycDetails({
         ...savedKycDetails,
         KycStage: savedKycDetails.KycStage > 2 ? savedKycDetails.KycStage : 2,

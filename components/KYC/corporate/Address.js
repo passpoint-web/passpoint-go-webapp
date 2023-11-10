@@ -42,7 +42,6 @@ const Address = ({ styles }) => {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
       saveKycDetails(data);
-      console.log(data);
       const documents = data.proofAddress;
       if (documents) {
         setPayload({
@@ -70,8 +69,6 @@ const Address = ({ styles }) => {
     if (!allFieldsValid) {
       return;
     }
-    console.log(payload);
-    console.log(submitType);
     setIsLoading(true);
     try {
       const response = await kyc.uploadKycAddress({

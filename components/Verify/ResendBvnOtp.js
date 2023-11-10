@@ -1,9 +1,9 @@
 import styles from "@/assets/styles/auth-screens.module.css";
 import TertiaryBtn from "@/components/Btn/Tertiary";
 import { useEffect, useState } from "react";
-import { resendOtp } from "@/services/restService";
+import { kyc, resendOtp } from "@/services/restService";
 import { useNotify } from "@/utils/hooks";
-const ResendOTP = ({ email, clearOtp }) => {
+const ResendBvnOtp = ({ bvnNo, clearOtp }) => {
   const [resendOTPStatus, setResendOTPStatus] = useState("Resend OTP");
   const [countDown, setCountDown] = useState(0);
   const countDownTimer = () => {
@@ -25,16 +25,12 @@ const ResendOTP = ({ email, clearOtp }) => {
   const resendOTP = async (e) => {
     e.preventDefault();
     setResendOTPStatus("Resending...");
+    console.log(bvnNo);
     try {
-      const payload = {
-        email,
-      };
-      const response = await resendOtp(payload);
-      // console.log(response)
-      const { message } =
-        response.data ||
-        "OTP Resent Successfully to Email Address. Please Retry New OTP.";
-      notify("success", message);
+      const response = await kyc.verifyBvn({ bvn: bvnNo });
+      console.log(response);
+
+      notify("success", "OTP Resent Successfully. Please Retry New OTP.");
       clearOtp();
       setCountDown(59);
       countDownTimer();
@@ -62,4 +58,4 @@ const ResendOTP = ({ email, clearOtp }) => {
   );
 };
 
-export default ResendOTP;
+export default ResendBvnOtp;
