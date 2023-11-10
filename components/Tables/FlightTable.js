@@ -8,6 +8,7 @@ import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Pagination from "./Pagination"
 import Loader from "../Btn/Loader"
+import TableLoader from "./Loader"
 
 const FlightTable = ({ title, setFlightDetails }) => {
   const { formatMoney } = functions
@@ -20,9 +21,11 @@ const FlightTable = ({ title, setFlightDetails }) => {
   const [searchParam, setSearchParam] = useState("")
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
+  const [getDataLoading, setGetDataLoading] = useState(true)
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10)
-  const getFlightBookings = async () => {
+  const getFlightBookings = async (loading = false) => {
+    setGetDataLoading(loading)
     try {
       const response = await travel.getFlightBookings({
         page,
@@ -47,6 +50,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
       notify("error", message)
     } finally {
       setIsLoading(false)
+      setGetDataLoading(false)
     }
   }
 
@@ -56,7 +60,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
   }
 
   useEffect(() => {
-    getFlightBookings()
+    getFlightBookings(true)
   }, [searchParam])
   return (
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
@@ -88,64 +92,68 @@ const FlightTable = ({ title, setFlightDetails }) => {
           /> */}
         </div>
         <div className={styles.table__main}>
+         {
+          !getDataLoading ? 
           <table>
-            <thead>
-              <tr className="table__header">
-                <th>BOOKING ID</th>
-                <th>SERVICE</th>
-                <th>DATE &amp; TIME</th>
-                <th>BOOKING STATUS</th>
-                <th>AMOUNT</th>
-                <th>PAYMENT STATUS</th>
-                <th>ACTION</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((c, i) => (
-                <tr key={i}>
-                  <td className="text-bold text-blue">
-                    {c.reference || "No Reference"}
-                  </td>
-                  <td>Flights</td>
-                  <td>
-                    <div className="date-time">
-                      <div className="date">
-                        {functions.formatTimestamp(c.createdDate).substring(4)},{" "}
-                        {functions.formatCustomTime(c.createdDate)}
-                      </div>
-                      {/* <div className="time">8:45 PM</div> */}
+          <thead>
+            <tr className="table__header">
+              <th>BOOKING ID</th>
+              <th>SERVICE</th>
+              <th>DATE &amp; TIME</th>
+              <th>BOOKING STATUS</th>
+              <th>AMOUNT</th>
+              <th>PAYMENT STATUS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((c, i) => (
+              <tr key={i}>
+                <td className="text-bold text-blue">
+                  {c.reference || "No Reference"}
+                </td>
+                <td>Flights</td>
+                <td>
+                  <div className="date-time">
+                    <div className="date">
+                      {functions.formatTimestamp(c.createdDate).substring(4)},{" "}
+                      {functions.formatCustomTime(c.createdDate)}
                     </div>
-                  </td>
-                  <td>
-                    <div className={`${c.status.toLowerCase()}-tag`}>{c.status.toLowerCase()}</div>
-                  </td>
-                  <td className="text-bold">
-                    {formatMoney(c.amount, c.currency)}
-                  </td>
-                  <td>
-                    {c.amount ? (
-                      <>
-                        <div className="success-circle" /> Paid
-                      </>
-                    ) : (
-                      <>
-                        <div className="pending-circle" /> Not yet paid
-                      </>
-                    )}
-                  </td>
-                  <td>
-                    <Link
-                      className="secondary_btn outline_btn"
-                      href={`./flights?id=${c.reference}`}
-                      onClick={() => setFlightDetails(c)}
-                    >
-                      View Details
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    {/* <div className="time">8:45 PM</div> */}
+                  </div>
+                </td>
+                <td>
+                  <div className={`${c.status.toLowerCase()}-tag`}>{c.status.toLowerCase()}</div>
+                </td>
+                <td className="text-bold">
+                  {formatMoney(c.amount, c.currency)}
+                </td>
+                <td>
+                  {c.amount ? (
+                    <>
+                      <div className="success-circle" /> Paid
+                    </>
+                  ) : (
+                    <>
+                      <div className="pending-circle" /> Not yet paid
+                    </>
+                  )}
+                </td>
+                <td>
+                  <Link
+                    className="secondary_btn outline_btn"
+                    href={`./flights?id=${c.reference}`}
+                    onClick={() => setFlightDetails(c)}
+                  >
+                    View Details
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table> : 
+				<TableLoader rowLength={7} />
+         }
         </div>
         <Pagination
           tableStyles={styles}
