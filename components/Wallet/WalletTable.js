@@ -28,9 +28,10 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
 	const transactionTypes = [
-		'No Type',
+		'All',
 		'Incoming',
-		'Outgoing'
+		'Outgoing',
+		'Payment'
 	]
 
 	// const [activeTab, setActiveTab] = useState('Wallet')
@@ -42,7 +43,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	const [pagination, setPagination] = useState({
 		currentPage: 1,
 		totalPages: 0,
-		limit: 10,
+		limit: 20,
 		totalData: 0,
 		pageDataLength: 0,
 		startDate: '2023-09-01',
@@ -73,7 +74,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		}
 		setGetDataLoading(loading)
 		try {
-			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
+			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
 			const {data} = response.data
 			const {
 				currentPage,
@@ -96,54 +97,53 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 			setGetDataLoading(false)
 		}
 	}
-	// const getServicesTransactions = async (
+	const getAllTransactions = async (
+		pageNumber,
+		currency = 'NGN' ,
+		startDate,
+		endDate,
+		pageSize,
+		type
+	) => {
+		let filters = {
+			pageNumber,
+			currency,
+			startDate,
+			endDate,
+			pageSize
+		}
 
-	// 	pageNumber,
-	// 	currency = 'NGN' ,
-	// 	startDate,
-	// 	endDate,
-	// 	pageSize,
-	// 	type
-	// ) => {
-	// 	let filters = {
-	// 		pageNumber,
-	// 		currency,
-	// 		startDate,
-	// 		endDate,
-	// 		pageSize
-	// 	}
-
-	// 	if (filters.startDate === '') {
-	// 		delete filters.startDate
-	// 	}
-	// 	if (filters.endDate === '') {
-	// 		delete filters.endDate
-	// 	}
-	// 	try {
-	// 		const response = await wallet.servicesTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
-	// 		const {data} = response.data
-	// 		console.log(data)
-	// 		// const {
-	// 		// 	currentPage,
-	// 		// 	pageCount,
-	// 		// 	pageSize,
-	// 		// 	totalCount
-	// 		// } = response.data
-	// 		// setPagination((prev)=>({
-	// 		// 	...prev,
-	// 		// 	currentPage,
-	// 		// 	totalPages: pageCount,
-	// 		// 	limit: pageSize,
-	// 		// 	pageDataLength: data.length || 0,
-	// 		// 	totalData: totalCount
-	// 		// }))
-	// 		// setTransactions(data)
-	// 	} catch (_err) {
-	// 		// console.log(_err)
-	// 	} finally {
-	// 		//
-	// 	}
-	// }
+		if (filters.startDate === '') {
+			delete filters.startDate
+		}
+		if (filters.endDate === '') {
+			delete filters.endDate
+		}
+		try {
+			const response = await wallet.allTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
+			const {data} = response.data
+			const {
+				currentPage,
+				pageCount,
+				pageSize,
+				totalCount
+			} = response.data
+			setPagination((prev)=>({
+				...prev,
+				currentPage,
+				totalPages: pageCount,
+				limit: pageSize,
+				pageDataLength: data.length || 0,
+				totalData: totalCount
+			}))
+			setTransactions(data)
+		} catch (_err) {
+			// console.log(_err)
+		} finally {
+			setGetDataLoading(false)
+			//
+		}
+	}
 
 	const handleCurrentTransaction = (val) => {
 		setCurrentTransaction(val)
@@ -167,7 +167,8 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	// },[])
 
 	useEffect(()=>{
-		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		// getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
 	},[updateKey])
 
 	// useEffect(()=>{
@@ -262,7 +263,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 									<tr key={id}>
 										<td className={tableStyles.td_4}>
 											<div className={tableStyles.col}>
-												<h4>{data.beneficiaryAccountName.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
+												<h4>{data.beneficiaryAccountName?.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
 												<div className={tableStyles.accountNum}
 													style={{display: 'flex', gap: 10}}>
 													<p>{data.beneficiaryWalletId || data.beneficiaryAccountNumber}</p>
@@ -279,10 +280,14 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 											{data.transactionCategory ==='PAYOUT' ?
 												<>
 													<span className="outgoing-circle" /> Outgoing
-												</> :
+												</> : data.transactionCategory ==='COLLECTION' ?
 												<>
 													<span className="incoming-circle" /> Incoming
-												</>
+												</> 
+												: data.transactionCategory ==='BILLPAYMENT' ?
+												<>
+												<span className="payment-circle" /> Payment
+												</> : <></>
 											}
 										</td>
 										<td className={tableStyles.td_3}>

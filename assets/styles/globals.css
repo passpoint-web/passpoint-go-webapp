@@ -840,7 +840,8 @@ form {
 .pending-circle,
 .success-circle,
 .incoming-circle,
-.outgoing-circle {
+.outgoing-circle,
+.payment-circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -857,6 +858,10 @@ form {
 
 .pending-circle {
   background: #e9b500;
+}
+
+.payment-circle {
+  background-color: var(--grey-1);;
 }
 
 .incoming-circle {
