@@ -8,7 +8,6 @@ import { DropDownIcon } from '@/constants/icons'
 
 const CountrySelect = ({ emitCountry, countriesSelectProps, disabled }) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
-
 	const [countries, setCountries] = useState([])
 	const [filteredCountries, setFilteredCountries] = useState([])
 	const [country, setCountry] = useState({})

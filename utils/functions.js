@@ -246,7 +246,7 @@ function getFormattedAirportByIata(iata) {
 }
 
 function maskValue(num) {
-  const str = num.toString().split("");
+  const str = num?.toString()?.split("")
   // return str.map((_x)=> '*').join('') +' **'
   return "**** **";
 }
