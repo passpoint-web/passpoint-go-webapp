@@ -106,7 +106,10 @@ const Address = ({ styles }) => {
     <>
       {dataLoading ? <FullScreenLoader /> : <></>}
       <div className={styles.inner} onSubmit={handleSubmit}>
-        <h1>Proof of Address</h1>
+        <h2>Proof of Address</h2>
+        <h4 className="sub-title media-max-1000">
+        Verify your current address for accurate communication.
+				</h4>
         <form>
           <Input
             id="documentType"
@@ -125,7 +128,7 @@ const Address = ({ styles }) => {
           </Input>
           <div className={styles.innerUpload}>
             <FileUpload
-              subTitle="Upload the document selected"
+              smTitle="Upload the document selected"
               base64={payload.documentFile}
               handlefileUpload={(file) => handleChange("documentFile", file)}
               error={ctaClicked && !payload.documentFile}

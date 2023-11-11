@@ -133,6 +133,9 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+.rhs .form__action {
+  margin-top: var(--inner-component-mg);
+}
 .filter__box {
   border-bottom: 1px solid var(--grey-grey-5, #e5e7ef);
 }
@@ -191,7 +194,7 @@
 .fc__row_two {
   display: flex;
   gap: 1.5rem;
-  /* justify-content: flex-end; */
+  justify-content: flex-end;
 }
 .fc__airline {
   text-align: center;
@@ -512,6 +515,13 @@
   margin: 0 auto;
   margin-bottom: 5%;
 }
+.wallet__flex {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.wallet__flex > div {
+  flex-basis: 50%;
+}
 
 /* PAYMENT SUCCESSFUL */
 .payment__successful {
@@ -575,6 +585,7 @@
 .modal__bottom_actions button:nth-child(2) {
   background: var(--negative);
 }
+
 .modal__flight_details {
   /* padding: var(--inner-component-mg); */
   padding: 2rem;
@@ -612,6 +623,12 @@
 }
 .modal__flight_details .value > span > span {
   color: var(--grey-3);
+}
+.wallet__link {
+  width: "100%";
+  height: 50px;
+  display: grid;
+  place-items: center;
 }
 
 @media screen and (max-height: 800px) {

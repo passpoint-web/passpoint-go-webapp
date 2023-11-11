@@ -31,13 +31,14 @@ const Business = ({ styles }) => {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
       saveKycDetails(data);
+      // console.log(data);
       const { websiteURL } = data.businessInfo;
       if (websiteURL) {
         setUrl(websiteURL);
         setSubmitType("EDIT");
       }
     } catch (_err) {
-      console.log(_err);
+      // console.log(_err);
     } finally {
       setDataLoading(false);
     }
@@ -54,13 +55,13 @@ const Business = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadKycBusiness({
+      await kyc.uploadKycBusiness({
         url,
         submitType,
       });
       saveKycDetails({
         ...savedKycDetails,
-        KycStage: savedKycDetails.KycStage > 1 ? savedKycDetails.KycStage : 1,
+        KycStage: savedKycDetails?.KycStage > 1 ? savedKycDetails?.KycStage : 1,
       });
       notify("success", "Your information has been saved");
       push("/dashboard/kyc/corporate/identity");
@@ -91,7 +92,10 @@ const Business = ({ styles }) => {
     <>
       {dataLoading ? <FullScreenLoader /> : <></>}
       <div className={styles.inner}>
-        <h1>Business Information</h1>
+        <h2>Business Information</h2>
+        <h4 className="sub-title media-max-1000">
+          Please provide essential details about your business.
+        </h4>
         <form onSubmit={handleSubmit}>
           <Input label="Business Name">
             <CustomSelect

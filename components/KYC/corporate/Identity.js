@@ -78,13 +78,15 @@ const Identity = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadKycIdentity({
+      console.log(submitType)
+      await kyc.uploadKycIdentity({
         documents: payload,
         submitType,
       });
       saveKycDetails({
         ...savedKycDetails,
-        KycStage: savedKycDetails.KycStage > 2 ? savedKycDetails.KycStage : 2,
+        KycStage:
+          savedKycDetails?.KycStage > 2 ? savedKycDetails?.KycStage : 2,
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/corporate/address");
@@ -112,7 +114,10 @@ const Identity = ({ styles }) => {
     <>
       {dataLoading ? <FullScreenLoader /> : <></>}
       <div className={styles.inner} onSubmit={handleSubmit}>
-        <h1>Proof of Identity</h1>
+        <h2>Proof of Identity</h2>
+        <h4 className="sub-title media-max-1000">
+        Verify your identity to ensure a secure and trusted experience.
+        </h4>
         <form className={formStyles.form}>
           <FileUpload
             smTitle="Act of Memorandum"

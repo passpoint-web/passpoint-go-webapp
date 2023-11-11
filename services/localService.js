@@ -2,8 +2,8 @@
 // const cookies = cookiesFunc()
 // setters
 export const saveCredentials = (credentials) => {
-  localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials))
-}
+  localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials));
+};
 
 export const getCredentials = () => {
   if (typeof window !== "undefined") {
@@ -79,6 +79,7 @@ export const setLogout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("token");
     // cookies.remove("token", "");
+    localStorage.removeItem("registration_cr3dentials")
     removePublicProfile();
     removeKycDetails();
   }
@@ -98,28 +99,31 @@ export const getKycDetails = () => {
   }
 };
 
-export const getPublicProfile = () => {
-  if (typeof window !== "undefined") {
-    const val = localStorage.getItem("public_profile");
-    if (val !== "undefined") {
-      return JSON.parse(val);
-    }
-  }
-};
-
-export const removePublicProfile = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("public_profile");
-  }
-};
 export const removeKycDetails = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("kyc_details");
   }
 };
+export const removeToken = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token")
+    // cookies.remove('token', '')
+    removePublicProfile()
+  }
+}
+export const getPublicProfile = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("public_profile")
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+  }
+}
 
-export const savePublicProfile = (val) => {
-  localStorage.setItem("public_profile", JSON.stringify(val))
+export const removePublicProfile = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("public_profile")
+  }
 }
 
 export const setAirportsState = (val) => {
@@ -169,3 +173,26 @@ export const getSelectedFlight = () => {
     return null
   }
 }
+
+
+
+
+// wallets
+
+
+export const  saveWalletState = (val) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("wallet_state", JSON.stringify(val))
+  }
+}
+
+export const getWalletState = () => {
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem("wallet_state")
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+    return null
+  }
+}
+

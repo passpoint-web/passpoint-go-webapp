@@ -18,6 +18,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [renderInput, setRenderInput] = useState(false)
 
 	const notify = useNotify()
 
@@ -49,6 +50,7 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 	}
 
 	useEffect(() => {
+		setRenderInput(true)
 		setErrorMsg('')
 	}, [])
 
@@ -59,7 +61,6 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 					{backBtnNeeded ? <BackBtn onClick={() => back()} /> : <></> }
 					<h1 className="title">Verify Email Address</h1>
 					<h4 className="sub-title">
-						{email}
               We sent a 6 digit code to {email ? maskedEmail(email) : 'your email'}, please enter the
               code below.
 					</h4>
@@ -72,7 +73,9 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 								msgPositionCenter={true}
 							>
 								<div className={styles.otp_input}>
-									<OtpInput
+									{
+										renderInput ? 
+										<OtpInput
 										value={otp}
 										onChange={setOtp}
 										numInputs={6}
@@ -82,6 +85,8 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 										renderSeparator={<span />}
 										renderInput={(props) => <input {...props} />}
 									/>
+									: <></>
+									}
 								</div>
 							</Input>
 						</div>

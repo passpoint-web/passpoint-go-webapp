@@ -1,6 +1,7 @@
 "use client"
 
 import styles from "../../assets/styles/flight.module.css"
+// eslint-disable-next-line no-unused-vars
 import { FaChevronDown, FaTrashAlt } from "react-icons/fa"
 // import FlightCard from "./FlightCard"
 // import Link from "next/link"
@@ -11,32 +12,37 @@ import Input from "../Dashboard/Input"
 // import Textarea from "../Dashboard/Textarea"
 import PrimaryBtn from "../Btn/Primary"
 import CustomSelect from "../Custom/Select"
+import Link from "next/link"
+import { getMostRecentFlightSearchURL } from "@/services/localService"
+import { useNotify } from "@/utils/hooks"
+import functions from "@/utils/functions"
 
-const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
+const FlightPassengers = ({
+  passengersParent,
+  sortPassengersData,
+  documentsRequired,
+}) => {
   const [passengers, setPassengers] = useState([])
   const [passengerGenders, setPassengerGenders] = useState([])
   const [activePassenger, setActivePassenger] = useState(1)
   const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [activePassengersFieldsValid, setActivePassengersFieldsValid] =
+    useState(false)
+  const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
+  const notify = useNotify()
+  const [searchURL, setSearchURL] = useState("")
 
-  const addAnotherPassenger = () => {
-    const newPassenger = {
-      id: tempPassengers.length + 1,
-      passenger_type: "",
-      first_name: "",
-      last_name: "",
-      dob: "",
-      gender: "",
-      title: "",
-      email: "",
-      phone_number: "",
-      passport_expiry: "",
-      passport_issue: "",
-    }
-    tempPassengers.push(newPassenger)
-    setPassengers(tempPassengers)
-  }
+  useEffect(() => {
+    setSearchURL(mostRecentFlightSearchURL)
+  }, [])
 
+  useEffect(() => {
+    setActivePassengersFieldsValid(isActivePassengersFieldsValid())
+  }, [activePassenger])
+
+  // eslint-disable-next-line no-unused-vars
   const deletePassenger = (id) => {
     setPassengers(passengersParent.filter((p) => p.id !== id))
   }
@@ -56,12 +62,52 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
       tempGenders[passengerIndex] = temp[label] = value
       setPassengerGenders(tempGenders)
     }
+    setActivePassengersFieldsValid(isActivePassengersFieldsValid())
   }
 
-  const saveAndContinue = (index) => {
+  function isDate18YearsAgo(givenDate) {
+    // Get the current date
+    const currentDate = new Date()
+    givenDate = new Date(givenDate)
+
+    // Calculate the date that is 18 years ago from the current date
+    const eighteenYearsAgo = new Date(currentDate)
+    eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18)
+
+    // Compare the given date with the calculated date
+    return givenDate.getTime() <= eighteenYearsAgo.getTime()
+  }
+
+  const isActivePassengersFieldsValid = () => {
+    const ap = passengers?.at(activePassenger - 1)
+    console.log(functions.validEmail(ap?.email))
+    if (documentsRequired) {
+      return ap?.first_name?.length > 1 &&
+        ap?.last_name?.length > 1 &&
+        functions.validEmail(ap?.email) &&
+        ap?.gender &&
+        ap?.passenger_type === "adult"
+        ? isDate18YearsAgo(ap?.dob)
+        : ap?.dob &&
+            ap?.passport_no &&
+            ap?.passport_issue &&
+            ap?.passport_expiry
+    }
+    return (
+      ap?.first_name?.length > 1 &&
+      ap?.last_name?.length > 1 &&
+      functions.validEmail(ap?.email) &&
+      ap?.gender &&
+      ap?.dob
+    )
+  }
+
+  const saveAndContinue = async (index) => {
     if (index + 1 === passengers.length) {
+      setIsLoading(true)
+      await sortPassengersData("OPEN-PAYMENT-OPTIONS")
+      setIsLoading(false)
       setCollapsed(true)
-      sortPassengersData()
     } else {
       setActivePassenger(activePassenger + 1)
     }
@@ -80,7 +126,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
         <div className="texts">
           <h3 className="capitalize">
             {" "}
-            Passengers Information <GreenCheckIcon />
+            Passengers Information {collapsed && <GreenCheckIcon />}
           </h3>
           {/* <p>Manage your bookings here</p> */}
         </div>
@@ -102,7 +148,7 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
               <div className="check"></div>
               <span className={styles.option__btn_text}>
                 Passenger {pIndex + 1}
-                <div
+                {/* <div
                   style={{ display: "grid", placeItems: "center" }}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -110,17 +156,18 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
                   }}
                 >
                   <FaTrashAlt />
-                </div>
+                </div> */}
               </span>
             </button>
           ))}
-          <button
+          <Link
             className={`${styles.payment__option_btn} ${styles.active}`}
-            onClick={() => addAnotherPassenger()}
+            href={searchURL}
+            onClick={() => notify("info", "Update Passenger details here")}
           >
             <PlusIcon />
             Add Another Passenger
-          </button>
+          </Link>
         </div>
         <div className={styles.rhs}>
           {/* PASSENGER FORM */}
@@ -164,51 +211,6 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
                   updateValue("email", e.target.value, passenger?.id)
                 }
               />
-              <div className="form-row">
-                <Input
-                  label="Date of Birth"
-                  placeholder="Leave a Message"
-                  type="date"
-                  name="message"
-                  // value={passenger.dob}
-                  onChange={(e) =>
-                    updateValue("dob", e.target.value, passenger?.id)
-                  }
-                />
-                <Input
-                  label="Passport Number"
-                  placeholder="A000123456"
-                  name="passport"
-                  // value={passenger.passport_no}
-                  onChange={(e) =>
-                    updateValue("passport_no", e.target.value, passenger?.id)
-                  }
-                />
-              </div>
-              <div className="form-row">
-                <Input
-                  label="Passport Issue Date"
-                  type="date"
-                  name="passport-issue"
-                  // value={passenger.last_name}
-                  onChange={(e) =>
-                    updateValue("passport_issue", e.target.value, passenger?.id)
-                  }
-                />
-                <Input
-                  label="Passport Expiry Date"
-                  type="date"
-                  name="passport-expiry"
-                  // value={passenger.last_name}
-                  onChange={(e) =>
-                    updateValue(
-                      "passport_expiry",
-                      e.target.value,
-                      passenger?.id
-                    )
-                  }
-                />
-              </div>
               <div className="form-row bottom">
                 <CustomSelect
                   id="class"
@@ -228,19 +230,81 @@ const FlightPassengers = ({ passengersParent, sortPassengersData }) => {
                   placeholder="Select Passenger Type"
                 />
               </div>
+              <div className="form-row">
+                <Input
+                  label="Date of Birth"
+                  type="date"
+                  name="message"
+                  max={
+                    passenger?.passenger_type === "adult"
+                      ? functions.eighteenYearsAgo()
+                      : null
+                  }
+                  // value={passenger.dob}
+                  onChange={(e) =>
+                    updateValue("dob", e.target.value, passenger?.id)
+                  }
+                />
+                {documentsRequired && (
+                  <Input
+                    label="Passport Number"
+                    placeholder="A000123456"
+                    name="passport"
+                    // value={passenger.passport_no}
+                    onChange={(e) =>
+                      updateValue("passport_no", e.target.value, passenger?.id)
+                    }
+                  />
+                )}
+              </div>
+              {documentsRequired && (
+                <div className="form-row">
+                  <Input
+                    label="Passport Issue Date"
+                    type="date"
+                    name="passport-issue"
+                    // value={passenger.last_name}
+                    onChange={(e) =>
+                      updateValue(
+                        "passport_issue",
+                        e.target.value,
+                        passenger?.id
+                      )
+                    }
+                  />
+                  <Input
+                    label="Passport Expiry Date"
+                    type="date"
+                    name="passport-expiry"
+                    // value={passenger.last_name}
+                    onChange={(e) =>
+                      updateValue(
+                        "passport_expiry",
+                        e.target.value,
+                        passenger?.id
+                      )
+                    }
+                  />
+                </div>
+              )}
 
               {/* FORM ACTION */}
-              {passengers.length === index + 1 ? (
-                <PrimaryBtn
-                  text="Complete Booking"
-                  onClick={() => saveAndContinue(index)}
-                />
-              ) : (
-                <PrimaryBtn
-                  text="Continue"
-                  onClick={() => saveAndContinue(index)}
-                />
-              )}
+              <div className={styles.form__action}>
+                {passengers.length === index + 1 ? (
+                  <PrimaryBtn
+                    loading={isLoading}
+                    text="Confirm Booking Cost"
+                    disabled={!activePassengersFieldsValid}
+                    onClick={() => saveAndContinue(index)}
+                  />
+                ) : (
+                  <PrimaryBtn
+                    text="Continue"
+                    disabled={!activePassengersFieldsValid}
+                    onClick={() => saveAndContinue(index)}
+                  />
+                )}
+              </div>
             </form>
           ))}
         </div>

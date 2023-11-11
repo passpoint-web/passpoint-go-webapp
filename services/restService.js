@@ -1,15 +1,25 @@
 import axios from "axios";
-import { getToken } from "./localService";
+import { getToken, setLogout } from "./localService";
 // import cookies from '@/plugins/cookies';
 // import { Redirect } from 'next';
-
+import { wallet } from "@/services/restService/wallet";
 const restAgent = axios.create({
   baseURL: "https://api.jessecoders.com/passpointGo/v1/",
   headers: {
     "Content-Type": "application/json",
   },
+  // baseURL: "https://webapi-dev.mypasspoint.com/v1/",
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
+const kycBvnRestAgent = axios.create({
+  baseURL: "https://client-sandbox.mypasspoint.com/passpoint-usr/v1/kyc-app/",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 const flightRestAgent = axios.create({
   baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
   headers: {
@@ -31,18 +41,24 @@ const getRequestConfig = () => {
   };
 };
 
-// restAgent.interceptors.response.use(undefined, (error) => {
-// 	const statusCode = error.response ? error.response.status : null;
-// 	console.log('Inte', statusCode);
-// 	if (
-// 		(statusCode && statusCode === 401) ||
-//     (statusCode && statusCode === 403)
-// 	) {
-// 		// Redirect('/auth/login');
-// 	}
-// });
+restAgent.interceptors.response.use(undefined, (error) => {
+  const statusCode = error.response ? error.response.status : null;
+  console.log("Inte", statusCode);
+  if (
+    statusCode &&
+    statusCode === 401
+    // ||
+    // (statusCode && statusCode === 403)
+  ) {
+    setLogout();
+    if (!window.location.pathname.includes("/auth/login")) {
+      window.location.href = `/auth/login?fallBackUrl=${window.location.pathname}`;
+    }
+  }
+  return Promise.reject(error);
+});
 
-const setConfig = () => {
+export const setConfig = () => {
   const token = getToken();
   // console.log(cookies.get('token'))
   const config = getRequestConfig();
@@ -55,6 +71,20 @@ const setTravelConfig = () => {
   // console.log(cookies.get('token'))
   const config = getRequestConfig();
   config.headers.Authorization = `Bearer 123`;
+  return config;
+};
+
+const setKycBvnConfig = () => {
+  const username = "PVTL3CYSKG";
+  const password = "-Zi-pIyZX9Udr0ms-13mS4Z6PcGuzLdvYC9VRgq6";
+  const token = `${username}:${password}`;
+  const encodedToken = btoa(token);
+  const config = getRequestConfig();
+  config.headers.Authorization = `Basic ${encodedToken}`;
+  config.headers["x-channel-id"] = "2";
+  config.headers["x-channel-code"] = "passpoint-infra-user";
+  config.headers["x-merchant-id"] = "e0b157a2-9245-40b9-8117-d25cadfdcfaa";
+
   return config;
 };
 
@@ -142,6 +172,19 @@ export const publicProfile = {
   },
 };
 
+export const kycBvn = {
+  verifyBvn: (data) => {
+    return kycBvnRestAgent.post("verify-id", data, setKycBvnConfig());
+  },
+  confirmBvn: (data) => {
+    return kycBvnRestAgent.post(
+      "confirm-bvn-verification",
+      data,
+      setKycBvnConfig()
+    );
+  },
+};
+
 export const kyc = {
   getKycDetails: () => {
     return restAgent.get("getKycDetails", setConfig());
@@ -171,6 +214,9 @@ export const kyc = {
 export const accountProfile = {
   changePassword: (data) => {
     return restAgent.post("changeAccountPassword", data, setConfig());
+  },
+  getAccountActivity: () => {
+    return restAgent.get("getActivities", setConfig());
   },
 };
 
@@ -208,6 +254,31 @@ export const travel = {
     return flightRestAgent.post(
       "/flight/flightbooking",
       requestBody,
+      setTravelConfig()
+    );
+  },
+  confirmFlightPrice: (queryParams) => {
+    return flightRestAgent.post(
+      `/flight/confirmprice?flightId=${queryParams.flightId}`,
+      setTravelConfig()
+    );
+  },
+  bookFlight: (data) => {
+    const { pin, amount, ref } = data;
+    return wallet.payBills({
+      amount,
+      narration: "Flight Booking",
+      pin,
+      transactionCurrency: "NGN",
+      paymentDetails: {
+        billerReference: ref,
+        bankCode: "flight",
+      },
+    });
+  },
+  cancelBooking: (queryParams) => {
+    return flightRestAgent.post(
+      `/flight/cancelbooking?bookingReference=${queryParams.bookingReference}`,
       setTravelConfig()
     );
   },

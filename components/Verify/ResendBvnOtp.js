@@ -1,7 +1,7 @@
 import styles from "@/assets/styles/auth-screens.module.css";
 import TertiaryBtn from "@/components/Btn/Tertiary";
 import { useEffect, useState } from "react";
-import { kyc, resendOtp } from "@/services/restService";
+import { kyc, kycBvn, resendOtp } from "@/services/restService";
 import { useNotify } from "@/utils/hooks";
 const ResendBvnOtp = ({ bvnNo, clearOtp }) => {
   const [resendOTPStatus, setResendOTPStatus] = useState("Resend OTP");
@@ -27,7 +27,15 @@ const ResendBvnOtp = ({ bvnNo, clearOtp }) => {
     setResendOTPStatus("Resending...");
     console.log(bvnNo);
     try {
-      const response = await kyc.verifyBvn({ bvn: bvnNo });
+      const data = {
+        id: bvnNo,
+        kycType: "1",
+        otherInfo: {
+          dob: "1997-05-16",
+          verificationType: "1",
+        },
+      };
+      const response = await kycBvn.verifyBvn(data);
       console.log(response);
 
       notify("success", "OTP Resent Successfully. Please Retry New OTP.");
@@ -35,8 +43,8 @@ const ResendBvnOtp = ({ bvnNo, clearOtp }) => {
       setCountDown(59);
       countDownTimer();
     } catch (_err) {
-      const { message } = _err.response?.data || _err;
-      notify("error", message);
+      const { responseMessage } = _err.response?.data || _err;
+      notify("error", responseMessage);
     } finally {
       setResendOTPStatus("Resend OTP");
     }

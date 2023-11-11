@@ -1,5 +1,5 @@
 import FlightPage from '@/components/Travel/FlightPage'
-import styles from '../../../../assets/styles/flight.module.css'
+import styles from '@/assets/styles/flight.module.css'
 export const metadata = () => {
 	return {
 		title: 'Flight Services | Passpoint Go',

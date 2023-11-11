@@ -7,22 +7,33 @@ import FlightPageHeader from "./FlightPageHeader"
 import FlightTable from "../Tables/FlightTable"
 
 const FlightPage = ({ styles }) => {
-	const searchParams = useSearchParams()
-	const [flightDetailVisible, setFlightDetailVisible] = useState(null)
+  const searchParams = useSearchParams()
+  const [flightDetails, setFlightDetails] = useState(null)
+  const [flightDetailVisible, setFlightDetailVisible] = useState(null)
 
-	useEffect(() => {
-		if (searchParams.get('id')) {
-			setFlightDetailVisible(searchParams.get('id'))
-		}
-	}, [searchParams])
+  useEffect(() => {
+    if (searchParams.get("id")) {
+      setFlightDetailVisible(searchParams.get("id"))
+    }
+  }, [searchParams])
 
-	return (
-		<div className={`${styles.inner} flight-services`}>
-			<FlightPageHeader styles={styles} />
-			<FlightTable title="flight" action="/dashboard/travel/flights?id=AH12345678" />
-			{flightDetailVisible && <FlightDetailsModal styles={styles} setFlightDetailVisible={setFlightDetailVisible} />}
-		</div>
-	)
+  return (
+    <div className={`${styles.inner} flight-services`}>
+      <FlightPageHeader styles={styles} />
+      <FlightTable
+        title="flight"
+        action="/dashboard/travel/flights?id=AH12345678"
+        setFlightDetails={setFlightDetails}
+      />
+      {flightDetailVisible && (
+        <FlightDetailsModal
+          styles={styles}
+          flightDetails={flightDetails}
+          setFlightDetailVisible={setFlightDetailVisible}
+        />
+      )}
+    </div>
+  )
 }
 
 export default FlightPage

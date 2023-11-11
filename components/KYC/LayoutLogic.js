@@ -9,7 +9,8 @@ const LayoutLogic = ({children}) => {
 	const [pathnamees, setPathnames] = useState([])
 	useEffect(()=>{
 		setPathnames([
-			'/dashboard/kyc/corporate/verify-bvn'
+			'/dashboard/kyc/corporate/verify-bvn',
+			'/dashboard/kyc/success'
 		])
 	},[pathname])
 	return (

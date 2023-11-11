@@ -8,7 +8,9 @@ const PasspointBusinessModal = ({onClose}) => {
 			ctaBtnText='Proceed'
 			heading='Passpoint Business Warning'
 			onClose={onClose}
+			bottomCancelNeeded={false}
 			handleCta={onClose}
+			ctaBtnType='sd'
 		>
 			<div className={styles.content}>
 				<p>

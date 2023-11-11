@@ -69,7 +69,7 @@ const AddressInd = ({ styles }) => {
     }
     setIsLoading(true);
     try {
-      const response = await kyc.uploadIndAddress({
+      await kyc.uploadIndAddress({
         ...payload,
         submitType,
       });

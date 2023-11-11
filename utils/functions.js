@@ -10,14 +10,12 @@ function number(num, precision) {
 }
 
 function formatMoney(num, currency, precision) {
-  const n = num
-    ? Number(num).toFixed(precision === 0 ? 0 : precision || 2)
-    : Number(num);
+  const n = num ? Number(num).toFixed(precision || 2) : Number(num);
   return n
     ? `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}${n
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`
-    : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0`;
+    : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0.00`;
 }
 const createUrl = (pathname, params) => {
   const paramsString = params.toString();
@@ -33,6 +31,14 @@ function currencySymbol(currency) {
 function dateTimestamp(timestamp) {
   const dateString = new Date(timestamp).toDateString();
   return dateString.replace(" ", ", ");
+}
+
+function sortAlphabetically(array, key) {
+  array.sort((a, b) => {
+    const state = a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0;
+    return state;
+  });
+  return array;
 }
 
 // function encryptData(data, key) {
@@ -239,6 +245,23 @@ function getFormattedAirportByIata(iata) {
   return iata;
 }
 
+function maskValue(num) {
+  const str = num.toString().split("");
+  // return str.map((_x)=> '*').join('') +' **'
+  return "**** **";
+}
+
+function eighteenYearsAgo() {
+  // Calculate the date that is 18 years ago from the current date
+  const currentDate = new Date();
+  const eighteenYearsAgo = new Date(currentDate);
+  eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+  const formatted18YearsAgo = eighteenYearsAgo.toLocaleDateString()?.split("/");
+  const maxDate = `${formatted18YearsAgo[2]}-${formatted18YearsAgo[0]}-0${formatted18YearsAgo[1]}`;
+  console.log(maxDate);
+  return maxDate;
+}
+
 const functions = {
   lastFourDigits,
   formatNumber: number,
@@ -256,10 +279,13 @@ const functions = {
   splitOnCapsLetter,
   createUrl,
   removeDuplicates,
-  convertMinutesToHHMM,
+  sortAlphabetically,
+  maskValue,
   getFormattedAirportByIata,
-  formatCustomTime,
   convertTo12HourFormat,
+  formatCustomTime,
+  convertMinutesToHHMM,
+  eighteenYearsAgo,
   maskedPhoneNo,
   // encryptData,
   // decryptData

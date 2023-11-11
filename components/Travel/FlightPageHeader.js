@@ -16,11 +16,15 @@ const FlightPageHeader = ({ styles }) => {
   let airports = getAirportsState()
   airports = airports?.filter(
     (airport) =>
-      airport.iataCode === "LOS" ||
-      airport.iataCode === "ABV" ||
-      airport.iataCode === "JFK" ||
-      airport.iataCode === "YYZ" ||
-      airport.iataCode === "NBO"
+      airport.country === "Nigeria" ||
+      airport.country === "Ghana" ||
+      airport.country === "Canada" ||
+      airport.country === "United Arab Emirates" ||
+      airport.country === "United States" ||
+      airport.country === "United Kingdom" ||
+      airport.country === "Kenya" ||
+      airport.country === "Tanzania" ||
+      airport.country === "Ethiopia"
   )
 
   const queryParams = {
@@ -34,19 +38,23 @@ const FlightPageHeader = ({ styles }) => {
     returnDate: searchParams.get("returnDate"),
     tripType: searchParams.get("tripType"),
   }
-  console.log(queryParams.tripType)
+  console.log(queryParams?.tripType)
 
   const today = new Date().toISOString().split("T")[0]
 
-  const [fromAirport, setFromAirport] = useState(queryParams.origin)
-  const [toAirport, setToAirport] = useState(queryParams.destination)
-  const [departureDate, setDepartureDate] = useState(queryParams.departureDate)
-  const [returnDate, setReturnDate] = useState(queryParams.returnDate)
+  const [fromAirport, setFromAirport] = useState(queryParams.origin || "")
+  const [toAirport, setToAirport] = useState(queryParams.destination || "")
+  const [departureDate, setDepartureDate] = useState(
+    queryParams.departureDate || ""
+  )
+  const [returnDate, setReturnDate] = useState(queryParams.returnDate || "")
   const [tripType, setTripType] = useState(queryParams.tripType || "One Way")
-  const [infants, setInfants] = useState(queryParams.infants)
-  const [children, setChildren] = useState(queryParams.children)
+  const [infants, setInfants] = useState(queryParams.infants || "")
+  const [children, setChildren] = useState(queryParams.children || "")
   const [adult, setAdult] = useState(queryParams.adults || 1)
-  const [flightClass, setFlightClass] = useState(queryParams.cabin || "Economy")
+  const [flightClass, setFlightClass] = useState(
+    queryParams?.cabin || "Economy"
+  )
 
   const getAirports = async () => {
     if (!airports) {
@@ -74,6 +82,14 @@ const FlightPageHeader = ({ styles }) => {
             id="trip-type"
             selectOptions={["Round Trip", "One way"]}
             selectedOption={tripType}
+            styleProps={{
+              dropdown: {
+                height: 100
+              },
+              option: {
+                height: 40
+              }
+            }}
             placeholder="Select Trip Type"
             emitSelect={(e) => setTripType(e)}
           />
@@ -105,6 +121,14 @@ const FlightPageHeader = ({ styles }) => {
             id="class"
             selectOptions={["Economy", "Premium Economy", "Business", "First"]}
             selectedOption={flightClass}
+            styleProps={{
+              dropdown: {
+                height: 150
+              },
+              option: {
+                height: 40
+              }
+            }}
             placeholder="Select Class"
             emitSelect={(e) => setFlightClass(e)}
           />
@@ -118,27 +142,29 @@ const FlightPageHeader = ({ styles }) => {
 						name="leavingFrom"
 						placeholder="Airport or city"
 					/> */}
-          <CustomObjectSelect
-            label="Leaving From"
-            id="leaving-from"
-            selectOptions={airports}
-            selectedOption={fromAirport}
-            objKey="iataCode"
-            placeholder="From Airport"
-            emitSelect={(e) => setFromAirport(e)}
-          />
+          <Input label="Leaving From">
+            <CustomObjectSelect
+              id="leaving-from"
+              selectOptions={airports}
+              selectedOption={fromAirport}
+              objKey="iataCode"
+              placeholder="From Airport"
+              emitSelect={(e) => setFromAirport(e)}
+            />
+          </Input>
           <span className={styles.svg__wrapper}>
             <FlightExchangeIcon />
           </span>
-          <CustomObjectSelect
-            label="Going to"
-            id="going-to"
-            selectOptions={airports}
-            selectedOption={toAirport}
-            objKey="iataCode"
-            placeholder="To Airport"
-            emitSelect={(e) => setToAirport(e)}
-          />
+          <Input label="Going to">
+            <CustomObjectSelect
+              id="going-to"
+              selectOptions={airports}
+              selectedOption={toAirport}
+              objKey="iataCode"
+              placeholder="To Airport"
+              emitSelect={(e) => setToAirport(e)}
+            />
+          </Input>
         </div>
         <div className={styles.to__fro_group}>
           <Input

@@ -15,12 +15,12 @@ const nextConfig = {
 			// },
 			{
 				source: '/dashboard/kyc/individual',
-				destination: '/kyc/individual/identity',
+				destination: '/dashboard/kyc/individual/identity',
 				permanent: true,
 			},
 			{
 				source: '/dashboard/kyc/corporate',
-				destination: '/kyc/corporate/identity',
+				destination: '/dashboard/kyc/corporate/business',
 				permanent: true,
 			},
 			{

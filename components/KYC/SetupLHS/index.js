@@ -91,19 +91,21 @@ const KycSetupLHS = () => {
   }, [pathname, user?.userType]);
   return (
     <>
-      {/* <BackBtn text="Back" onClick={() => push("/dashboard")} /> */}
       <div className={styles.lhs_levels_ctn}>
         <section className={styles.lhs_kyc}>
+          <div className={styles.top}>
           <h1>Complete KYC</h1>
           <p>We want to know more about you and your business</p>
+          </div>
+          <div className={styles.levels}>
+          {levelsToDisplay.map((e, index) => (
+              <FormLevel
+                key={index}
+                auth={{ ...e, level: index + 1 }}
+              />
+            ))}
+          </div>
         </section>
-        {levelsToDisplay.map((e, index) => (
-          <FormLevel
-            mobileWidth="1000"
-            key={index}
-            auth={{ ...e, level: index + 1 }}
-          />
-        ))}
       </div>
     </>
   );
