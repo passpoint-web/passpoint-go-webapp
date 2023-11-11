@@ -1,7 +1,7 @@
 
-const OverlayScreen = ({onClick}) => {
+const OverlayScreen = ({onClick, zIndex=false}) => {
 	return (
-		<div className="overlay_screen"
+		<div className={`overlay_screen ${zIndex ? 'z_index_overlay' : ''}`}
 			onClick={onClick} />
 	)
 }

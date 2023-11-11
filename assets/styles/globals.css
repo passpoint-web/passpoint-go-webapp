@@ -43,6 +43,7 @@
 :root {
   --header-padding: 80px;
   --header-height: 100px;
+  --sidebar-width: 250px;
 
   --graphikMedium: "GraphikMedium", sans-serif;
   --graphikRegular: "GraphikRegular", sans-serif;
@@ -782,6 +783,19 @@ form {
   /* z-index: var(--z-index-overlay); */
   cursor: default;
 }
+.overlay_screen {
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  /* background: rgb(0, 0, 0, 0); */
+  cursor: default;
+}
+
+.overlay_screen.z_index_overlay {
+  z-index: var(--z-index-overlay);
+}
 
 .capsule {
   /* text-transform: uppercase; */
@@ -868,6 +882,7 @@ form {
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+  text-transform: capitalize;
   display: inline-block;
 }
 

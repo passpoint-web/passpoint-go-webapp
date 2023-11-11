@@ -79,6 +79,7 @@ export const setLogout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("token");
     // cookies.remove("token", "");
+    localStorage.removeItem("registration_cr3dentials")
     removePublicProfile();
     removeKycDetails();
   }

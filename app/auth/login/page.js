@@ -8,11 +8,13 @@ import PasswordField from "@/components/Auth/PasswordField";
 import functions from "@/utils/functions";
 import { login } from "@/services/restService";
 import Input from "@/components/Dashboard/Input";
-import { saveCredentials, saveToken } from "@/services/localService";
+import { saveToken, saveCredentials } from "@/services/localService";
 import { useNotify } from "@/utils/hooks";
+// import loginUser
 
 const Login = () => {
 	const { validEmail } = functions;
+	// const {loginUser} = useAuth()
 	// eslint-disable-next-line no-unused-vars
 	const { push } = useRouter();
 	const searchParams = useSearchParams()
@@ -36,6 +38,7 @@ const Login = () => {
 	};
 
 	const handleSubmit = async (e) => {
+		// setLogout()
 		e.preventDefault();
 		setCtaClicked(true);
 		if (!allFieldsValid) {

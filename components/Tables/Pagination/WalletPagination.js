@@ -34,7 +34,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 	useEffect(()=>{
 		// console.log('current', pagination.currentPage)
 		// console.log('total', pagination.totalPages)
-	  // console.log('---------')
+    // console.log('---------')
 	}, [prevPage, nextPage, pagination.currentPage, pagination.totalPages])
 	const Break = ({breakPage}) => (
 		breakPage ? <p>..</p> : <></>
@@ -103,8 +103,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 	)
 
 	const Analytics = () => (
-		<div className={tableStyles.mhs}>
-	  Showing { pagination.pageDataLength ? currentPageStart() : 0 } to { pagination.pageDataLength ? currentPageStop() : 0 } {pagination.pageSize} items of {pagination.totalData} results found
+		<div className={tableStyles.mhs}>Showing { pagination.pageDataLength ? currentPageStart() : 0 } to { pagination.pageDataLength ? currentPageStop() : 0 } {pagination.pageSize} items of {pagination.totalData} results found
 		</div>
 	)
 
@@ -116,8 +115,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 			</button> */}
 			<button disabled={pagination.currentPage === 1}
 				className={tableStyles.nav}
-				onClick={()=>setPage(pagination.currentPage - 1)}>
-	      Prev
+				onClick={()=>setPage(pagination.currentPage - 1)}>Prev
 			</button>
 			{pagination.totalPages <= 5 ?
 				<div className={tableStyles.page_btns}>
@@ -139,8 +137,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 			}
 			<button className={tableStyles.nav}
 				disabled={pagination.currentPage === pagination.totalPages}
-				onClick={()=>setPage(pagination.currentPage + 1)}>
-	    Next
+				onClick={()=>setPage(pagination.currentPage + 1)}>Next
 			</button>
 
 			{/* <button className={tableStyles.nav}>

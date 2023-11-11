@@ -1,6 +1,7 @@
 "use client"
 
 import styles from "../../assets/styles/flight.module.css"
+// eslint-disable-next-line no-unused-vars
 import { FaChevronDown, FaTrashAlt } from "react-icons/fa"
 // import FlightCard from "./FlightCard"
 // import Link from "next/link"
@@ -41,6 +42,7 @@ const FlightPassengers = ({
     setActivePassengersFieldsValid(isActivePassengersFieldsValid())
   }, [activePassenger])
 
+  // eslint-disable-next-line no-unused-vars
   const deletePassenger = (id) => {
     setPassengers(passengersParent.filter((p) => p.id !== id))
   }

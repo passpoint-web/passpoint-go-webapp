@@ -112,7 +112,7 @@ export function CustomerChart() {
   }, []);
 
   return (
-    <main className={styles.dashCustomerCahrt}>
+    <main className={styles.dashCustomerChart}>
       <div className={styles.content}>
         <h3>Customer Growth</h3>
         {chartData.totalCustomer !== undefined && (

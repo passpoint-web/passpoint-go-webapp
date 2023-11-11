@@ -135,6 +135,7 @@ const IndividualInformation = () => {
 							>
 								<PhoneInput
 									country={'ng'}
+                  onlyCountries={['ng']}
 									value={payload.phone}
 									onChange={(phone) => handleChange({ target: { name: 'phone', value: phone } })}
 								/>
@@ -177,7 +178,6 @@ const IndividualInformation = () => {
 								<PrimaryBtn text="Open account"
 									loading={isLoading} />
 							</div>
-
 						</div>
 					</form>
 				</div>
