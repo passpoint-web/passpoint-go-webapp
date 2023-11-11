@@ -92,7 +92,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 			}))
 			setTransactions(data)
 		} catch (_err) {
-			// console.log(_err)
+			// 
 		} finally {
 			setGetDataLoading(false)
 		}
