@@ -137,6 +137,18 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				</div>
 			</div>
 			<div className={styles.row}>
+				<div className={styles.label}>Sender Details</div>
+				<div className={styles.value}>
+					<span>{transaction.senderAccountName} / {transaction.senderAccountNumber} / {transaction.senderBankName}</span>
+				</div>
+			</div>
+			<div className={styles.row}>
+				<div className={styles.label}>Sender Account Name</div>
+				<div className={styles.value}>
+					<span>{transaction.senderAccountName}</span>
+				</div>
+			</div>
+			<div className={styles.row}>
 				<div className={styles.label}>Transaction Type</div>
 				<div className={styles.value}>
 					{transaction.transactionCategory ==='PAYOUT' ?

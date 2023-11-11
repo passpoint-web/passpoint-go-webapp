@@ -33,7 +33,7 @@ const WalletTable = ({wallet,  styles }) => {
 	const [transactionType, setTransactionType] = useState(null)
 
 	const [pagination, setPagination] = useState({
-		currentPage: 2,
+		currentPage: 1,
 		totalPages: 0,
 		limit: 10,
 		totalData: 0,
