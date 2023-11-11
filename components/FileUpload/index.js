@@ -63,6 +63,7 @@ const FileUpload = ({styleProps, disabled, error, errorMsg, id="file", accept="i
 						accept={accept}
 						onChange={(e)=>onFileUpload(e)}
 					/>
+
 					{
 						!base64 ? (<div className={`${styles.file_upload} ${disabled ? styles.disabled : ''}`}
 							onClick={(e)=>onUploadClick(e)}>
