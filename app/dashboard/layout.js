@@ -49,14 +49,14 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-      <div className={styles.dashLayout}>
+    <div className={styles.dashLayout}>
       <DashboardHeader styles={styles} user={savedCredentials} />
-       <div className={styles.dashContent}>
+      <div className={styles.dashContent}>
         <DashboardSidebar />
-        <div className={styles.dash_children}> 
+        <div className={styles.dash_children}>
           <main className={styles.dash_outlet}>{children}</main>
         </div>
-       </div>
       </div>
+    </div>
   )
 }

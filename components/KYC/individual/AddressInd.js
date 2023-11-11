@@ -78,12 +78,12 @@ const AddressInd = ({ styles }) => {
         KycStage: 2,
       });
       notify("success", "Your address has been saved");
-      push("/dashboard/kyc/success");
+      push("/dashboard/kyc/status");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message.toLowerCase().includes("already uploaded")) {
-        push("/dashboard/kyc/success");
+        push("/dashboard/kyc/status");
       }
     } finally {
       setIsLoading(false);

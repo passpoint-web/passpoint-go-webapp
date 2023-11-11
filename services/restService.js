@@ -4,15 +4,15 @@ import { getToken, setLogout } from "./localService";
 // import { Redirect } from 'next';
 import { wallet } from "@/services/restService/wallet";
 const restAgent = axios.create({
-  baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+	// baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+	// headers: {
+	// 	"Content-Type": "application/json",
+	// },
+  baseURL: "https://webapi-dev.mypasspoint.com/v1/",
   headers: {
     "Content-Type": "application/json",
   },
-  // baseURL: "https://webapi-dev.mypasspoint.com/v1/",
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
-});
+})
 
 const kycBvnRestAgent = axios.create({
   baseURL: "https://client-sandbox.mypasspoint.com/passpoint-usr/v1/kyc-app/",
