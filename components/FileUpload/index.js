@@ -23,8 +23,8 @@ const FileUpload = ({styleProps, disabled, error, errorMsg, id="file", accept="i
 		if (!fileObj) {
 			return
 		}
-		if ((fileObj.size / 1024) > 5000) {
-			notify('error', 'File is larger than 5MB')
+		if ((fileObj.size / 1024) > 1500) {
+			notify('error', 'File is larger than 1.5MB')
 			return
 		}
 		const result = await returnBase64(fileObj)
@@ -68,7 +68,7 @@ const FileUpload = ({styleProps, disabled, error, errorMsg, id="file", accept="i
 							onClick={(e)=>onUploadClick(e)}>
 							<UploadIcon />
 							<h3>Click here to upload</h3>
-							<p>PNG, PDF, JPG, SVG up to 5MB</p>
+							<p>PNG, PDF, JPG, SVG up to 1.5MB</p>
 						</div>) :
 							<div className={styles.file_uploaded}
 							>
