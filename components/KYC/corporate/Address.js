@@ -81,12 +81,12 @@ const Address = ({ styles }) => {
       });
       console.log(response);
       notify("success", "Your Address has been saved");
-      push("/dashboard/kyc/status");
+      push("/dashboard/kyc/success");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already uploaded")) {
-        push("/dashboard/kyc/status");
+        push("/dashboard/kyc/success");
       }
     } finally {
       setIsLoading(false);
@@ -108,8 +108,8 @@ const Address = ({ styles }) => {
       <div className={styles.inner} onSubmit={handleSubmit}>
         <h2>Proof of Address</h2>
         <h4 className="sub-title media-max-1000">
-          Verify your current address for accurate communication.
-        </h4>
+        Verify your current address for accurate communication.
+				</h4>
         <form>
           <Input
             id="documentType"
