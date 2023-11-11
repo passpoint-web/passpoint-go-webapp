@@ -76,9 +76,9 @@ const Login = () => {
         push("/dashboard/kyc/individual/identity");
       }
     } else if (kycStatus === "inReview") {
-      push("/dashboard/kyc/success");
+      push("/dashboard/kyc/status");
     } else if (kycStatus.toLowerCase() === "rejected") {
-      push("/dashboard/kyc/success");
+      push("/dashboard/kyc/status");
     } else if (!searchParams.get("fallBackUrl")) {
       push("/dashboard");
     } else {
