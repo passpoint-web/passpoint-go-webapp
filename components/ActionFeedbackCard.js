@@ -9,6 +9,7 @@ const ActionFeedbackCard = ({
     title: "",
     value: "",
   },
+  textTransform = "capitalize",
 }) => {
   return (
     <div
@@ -29,12 +30,12 @@ const ActionFeedbackCard = ({
       ) : (
         <></>
       )}
-      <h2>{content.title}</h2>
+      <h2 style={{ marginTop: "20px" }}>{content.title}</h2>
       <p
         style={{
           fontSize: 16,
           textAlign: "center",
-          textTransform: "capitalize",
+          textTransform: textTransform,
         }}
       >
         {content.value}
