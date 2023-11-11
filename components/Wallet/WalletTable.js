@@ -43,7 +43,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	const [pagination, setPagination] = useState({
 		currentPage: 1,
 		totalPages: 0,
-		limit: 20,
+		limit: 10,
 		totalData: 0,
 		pageDataLength: 0,
 		startDate: '2023-09-01',
@@ -97,6 +97,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 			setGetDataLoading(false)
 		}
 	}
+	// eslint-disable-next-line no-unused-vars
 	const getAllTransactions = async (
 		pageNumber,
 		currency = 'NGN' ,
@@ -167,8 +168,8 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	// },[])
 
 	useEffect(()=>{
-		// getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
-		getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		// getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
 	},[updateKey])
 
 	// useEffect(()=>{

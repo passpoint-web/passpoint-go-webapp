@@ -10,12 +10,13 @@ import CreatePinModal from '../Modal/CreatePin'
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
+import RefreshBtn from '../Btn/RefreshBtn';
 
-const BalanceCard = ({ dataLoading, walletAccount, wallet, styles, updateWalletState}) => {
+const BalanceCard = ({ dataLoading, balanceLoading, walletAccount, wallet, styles, updateWalletState, updateBalanceState}) => {
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
 	const {formatMoney, maskValue} = functions
-	const [showBalance, setShowBalance] = useState(false)
+	const [showBalance, setShowBalance] = useState(true)
 	const [reference, setReference] = useState('')
 	// const [feedbackError, setFeedbackError] = useState('')
 	const [currentModal, setCurrentModal] = useState('tranfer')
@@ -81,9 +82,12 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles, updateWalletS
 								<h1 className={!showBalance ? styles.hide_balance : ''}>
 									{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
 								</h1>
+								<div className={styles.card_action}>
 								<button onClick={()=>setShowBalance(!showBalance)}>
 									{!showBalance ? <EyeOpen /> : <EyeClose />}
 								</button>
+								<RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} />
+								</div>
 							</div>
 						</div>
 						<div className={styles.btn_sec}>

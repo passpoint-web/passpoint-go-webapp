@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }) {
     if (!auth) {
       push(`/auth/login?fallBackUrl=${window.location.pathname}`)
     } else {
-        setLoading(false)
+      setLoading(false)
     }
   }
 
