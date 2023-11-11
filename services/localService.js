@@ -85,9 +85,6 @@ export const setLogout = () => {
   }
 };
 
-export const savePublicProfile = (val) => {
-  localStorage.setItem("public_profile", JSON.stringify(val));
-};
 
 export const saveKycDetails = (val) => {
   localStorage.setItem("kyc_details", JSON.stringify(val));

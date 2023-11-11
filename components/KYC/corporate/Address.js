@@ -13,6 +13,7 @@ import { kyc } from "@/services/restService";
 import { documentType } from "@/utils/CONSTANTS";
 import { useNotify } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 
 const Address = ({ styles }) => {
@@ -41,7 +42,6 @@ const Address = ({ styles }) => {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
       saveKycDetails(data);
-      console.log(data);
       const documents = data.proofAddress;
       if (documents) {
         setPayload({
@@ -50,6 +50,8 @@ const Address = ({ styles }) => {
           documentFile: documents.addressDocumentFile,
         });
         setSubmitType("EDIT");
+      } else {
+        setSubmitType("NEW");
       }
     } catch (_err) {
       console.log(_err);
@@ -63,7 +65,6 @@ const Address = ({ styles }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(payload);
     setCtaClicked(true);
     if (!allFieldsValid) {
       return;
@@ -80,12 +81,12 @@ const Address = ({ styles }) => {
       });
       console.log(response);
       notify("success", "Your Address has been saved");
-      push("/dashboard/kyc/success");
+      push("/dashboard/kyc/status");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already uploaded")) {
-        push("/dashboard/kyc/success");
+        push("/dashboard/kyc/status");
       }
     } finally {
       setIsLoading(false);
