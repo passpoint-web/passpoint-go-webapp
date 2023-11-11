@@ -21,7 +21,7 @@ import Select from "../Dashboard/Select";
 import TableLoader from "../Tables/Loader";
 // import Tab from "../Tab";
 
-const WalletTable = ({wallet,  styles }) => {
+const WalletTable = ({wallet,  styles, updateKey }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [getDataLoading, setGetDataLoading] = useState(true)
@@ -162,9 +162,13 @@ const WalletTable = ({wallet,  styles }) => {
 		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
 	}
 
+	// useEffect(()=>{
+	// 	getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+	// },[])
+
 	useEffect(()=>{
 		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
-	},[])
+	},[updateKey])
 
 	// useEffect(()=>{
 	// 	if (activeTab === 'Wallet') {

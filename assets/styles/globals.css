@@ -874,7 +874,8 @@ form {
 .successful-tag,
 .pending-tag,
 .failed-tag,
-.failure-tag {
+.failure-tag,
+.processing-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
@@ -899,7 +900,8 @@ form {
   color: #23c38e;
 }
 
-.pending-tag {
+.pending-tag,
+.processing-tag {
   background: #fffae7;
   color: #e9b500;
 }

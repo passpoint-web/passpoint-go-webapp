@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
 
-const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
+const BalanceCard = ({ dataLoading, walletAccount, wallet, styles, updateWalletState}) => {
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
 	const {formatMoney, maskValue} = functions
@@ -68,7 +68,8 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 						/> :
 						currentModal === 'transfer' ?
 							<TransferModals styles={styles}
-								onClose={()=>setCurrentModal(null)} /> :
+								onClose={()=>setCurrentModal(null)}
+								updateWalletState={()=>updateWalletState()} /> :
 							<></>
 			}
 			{

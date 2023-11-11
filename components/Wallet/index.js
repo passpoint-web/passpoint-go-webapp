@@ -11,6 +11,7 @@ import WalletTable from "./WalletTable";
 import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
 import { saveWalletState, getWalletState } from "@/services/localService";
 
 const Wallet = () => {
@@ -18,9 +19,11 @@ const Wallet = () => {
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
+	const [updateKey, setUpdateKey] = useState(new Date().getTime())
 	const [showPendingModal, setShowPendingModal] = useState(true)
 
-	const getWallet = async () => {
+	const getWallet = async (loading) => {
+		setDataLoading(loading)
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
@@ -30,10 +33,10 @@ const Wallet = () => {
 			const {accountNumber} = data.walletAccount['NGN']
 			if (accountNumber) {
 				setWalletState('created')
-				saveWalletState('created')
+				// saveWalletState('created')
 			}else if (!accountNumber) {
 				setWalletState('pending')
-				saveWalletState('pending')
+				// saveWalletState('pending')
 				setShowPendingModal(true)
 			}
 		} catch (_err) {
@@ -42,9 +45,21 @@ const Wallet = () => {
 			setDataLoading(false)
 		}
 	}
+
+	const updateWalletState = () => {
+		console.log('updated')
+		setUpdateKey(new Date().getTime())
+		getWallet(false)
+	}
+	
 	useEffect(()=>{
-		setWalletState(getWalletState())
-		getWallet()
+		console.log(updateKey)
+		getWallet(false)
+	},[updateKey])
+
+	useEffect(()=>{
+		// setWalletState(getWalletState())
+		getWallet(true)
 	},[])
 
 	const WalletProcessingModal = () => (
@@ -69,6 +84,7 @@ const Wallet = () => {
 							dataLoading={dataLoading}
 							walletDetails={walletDetails}
 							walletAccount={walletAccount}
+							updateWalletState={()=>updateWalletState(true)}
 							styles={styles} />
 						{/* <VirtualAccountCard styles={styles} /> */}
 					</div>
@@ -82,6 +98,7 @@ const Wallet = () => {
 			</div> */}
 					<div className={styles.bottom}>
 						<WalletTable wallet={wallet}
+							updateKey={updateKey}
 							styles={styles} />
 					</div>
 				</> :
