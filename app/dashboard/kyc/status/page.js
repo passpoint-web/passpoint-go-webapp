@@ -38,10 +38,14 @@ const Success = () => {
   };
 
   const redirectKyc = () => {
-    if (kycDetails.userType === "1") {
-      push("/dashboard/kyc/individual/identity");
+    if (kycDetails.kycStatus === "Rejected") {
+      if (kycDetails.userType === "1") {
+        push("/dashboard/kyc/individual/identity");
+      } else {
+        push("/dashboard/kyc/corporate/business");
+      }
     } else {
-      push("/dashboard/kyc/corporate/business");
+      push('/dashboard')
     }
   };
 
@@ -52,9 +56,8 @@ const Success = () => {
       handleCta={redirectKyc}
       heading=""
       subHeading=""
-      ctaBtnText="Edit"
+      ctaBtnText={kycDetails.kycStatus === 'Rejected' ? 'Edit' : 'Go to Dashboard'}
       bottomCancelNeeded={false}
-      hasBottomActions={kycDetails.kycStatus === "Rejected"}
     >
       <ActionFeedbackCard
         content={getStatusContent(kycDetails.kycStatus)}
