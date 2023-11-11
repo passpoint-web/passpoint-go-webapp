@@ -5,7 +5,7 @@
 // import CustomSelect from "@/components/Custom/Select";
 import tableStyles from "../../assets/styles/table.module.css";
 import functions from "@/utils/functions";
-import { detailedDate, timeFromDate } from "@/utils/date-formats";
+import { detailedDate, timeFromDate, numericalDateDashReversed } from "@/utils/date-formats";
 import WalletTransactionModal from "./WalletTransactionModal";
 import { useEffect, useState } from "react";
 // import ngBanks from "@/utils/ng-banks";
@@ -16,33 +16,89 @@ import "react-datepicker/dist/react-datepicker.css";
 // import Input from "../Dashboard/Input";
 // import DateFilter from "../Tables/DateFilter";
 // import Input from "../Dashboard/Input";
-import { numericalDateDashReversed } from "@/utils/date-formats";
 import Pagination from "../Tables/Pagination/WalletPagination";
 import Select from "../Dashboard/Select";
+import TableLoader from "../Tables/Loader";
+// import Tab from "../Tab";
 
-const WalletTable = ({wallet,  styles }) => {
+const WalletTable = ({wallet,  styles, updateKey }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
+	const [getDataLoading, setGetDataLoading] = useState(true)
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
 	const transactionTypes = [
+		'All',
 		'Incoming',
-		'Outgoing'
+		'Outgoing',
+		'Payment'
 	]
+
+	// const [activeTab, setActiveTab] = useState('Wallet')
+
+	// const tabs = ['Wallet', 'Payments']
 
 	const [transactionType, setTransactionType] = useState(null)
 
 	const [pagination, setPagination] = useState({
-		currentPage: 2,
+		currentPage: 1,
 		totalPages: 0,
 		limit: 10,
 		totalData: 0,
 		pageDataLength: 0,
-		startDate: '2023-10-15',
+		startDate: '2023-09-01',
 		endDate: numericalDateDashReversed(new Date())
 	})
 	const getTransactions = async (
+		pageNumber,
+		currency = 'NGN' ,
+		startDate,
+		endDate,
+		pageSize,
+		type,
+		loading=false
+	) => {
+		let filters = {
+			pageNumber,
+			currency,
+			startDate,
+			endDate,
+			pageSize
+		}
 
+		if (filters.startDate === '') {
+			delete filters.startDate
+		}
+		if (filters.endDate === '') {
+			delete filters.endDate
+		}
+		setGetDataLoading(loading)
+		try {
+			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
+			const {data} = response.data
+			const {
+				currentPage,
+				pageCount,
+				pageSize,
+				totalCount
+			} = response.data
+			setPagination((prev)=>({
+				...prev,
+				currentPage,
+				totalPages: pageCount,
+				limit: pageSize,
+				pageDataLength: data.length || 0,
+				totalData: totalCount
+			}))
+			setTransactions(data)
+		} catch (_err) {
+			// 
+		} finally {
+			setGetDataLoading(false)
+		}
+	}
+	// eslint-disable-next-line no-unused-vars
+	const getAllTransactions = async (
 		pageNumber,
 		currency = 'NGN' ,
 		startDate,
@@ -50,15 +106,22 @@ const WalletTable = ({wallet,  styles }) => {
 		pageSize,
 		type
 	) => {
-		const filters = {
+		let filters = {
 			pageNumber,
 			currency,
 			startDate,
 			endDate,
 			pageSize
 		}
+
+		if (filters.startDate === '') {
+			delete filters.startDate
+		}
+		if (filters.endDate === '') {
+			delete filters.endDate
+		}
 		try {
-			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
+			const response = await wallet.allTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
 			const {data} = response.data
 			const {
 				currentPage,
@@ -78,6 +141,7 @@ const WalletTable = ({wallet,  styles }) => {
 		} catch (_err) {
 			// console.log(_err)
 		} finally {
+			setGetDataLoading(false)
 			//
 		}
 	}
@@ -88,19 +152,33 @@ const WalletTable = ({wallet,  styles }) => {
 	}
 
 	const handleEntry = (val) => {
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType)
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
 	}
 	const handleTransactionType = (val)=> {
 		setTransactionType(val)
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val)
+		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
 	}
 
 	const setPage = (val) => {
-		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
+		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
 	}
+
+	// useEffect(()=>{
+	// 	getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+	// },[])
+
 	useEffect(()=>{
-		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
-	},[])
+		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		// getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+	},[updateKey])
+
+	// useEffect(()=>{
+	// 	if (activeTab === 'Wallet') {
+	// 		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType)
+	// 	} else {
+	// 		getServicesTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, 'all')
+	// 	}
+	// },[activeTab])
 
 	const Filters = () => (
 		<div className={tableStyles.filters}>
@@ -122,8 +200,11 @@ const WalletTable = ({wallet,  styles }) => {
 							placeholder="Filter by Date"
 						/> */}
 			<div style={{width: 200, maxWidth: 250}}>
-				<Select
+				{
+					// activeTab === 'Wallet' ?
+					<Select
 					placeholder='Transaction Type'
+					// selectDisabled={activeTab === 'Payments'}
 					selectPlaceHolder='Transaction Type'
 					styleProps={{
 						option: {
@@ -136,7 +217,9 @@ const WalletTable = ({wallet,  styles }) => {
 					selectOptions={transactionTypes}
 					selectedOption={transactionType}
 					emitSelect={(val)=>handleTransactionType(val)}
-				/>
+				/> 
+				// : <></>
+				}
 				</div>
 		</div>
 	)
@@ -146,16 +229,24 @@ const WalletTable = ({wallet,  styles }) => {
 			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
 				transaction={currentTransaction}
 				styles={styles} /> : <></>}
-			<div className={`table-ctn ${tableStyles.travel__dashboard_table} ${tableStyles.wallet}`}>
+
+			<div className={tableStyles.table_container}>
+			{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}
+			<div className={`table-ctn ${tableStyles.wallet}`}>
 				<div className={tableStyles.table__outer}>
 					<div className={tableStyles.table__header}>
-						<div className="texts">
-							<h3 className="capitalize"> Transaction History</h3>
-							<p>Manage your transaction here</p>
+						<div className={tableStyles.top}>
+							<div className="texts">
+								<h3 className="capitalize"> Transaction History</h3>
+								<p>Manage your 
+									{/* {activeTab} */}
+									transaction here</p>
+							</div>
+							{Filters()}
 						</div>
-						{Filters()}
 					</div>
 					<div className={tableStyles.table__main}>
+						{!getDataLoading ?
 						<table>
 							<thead>
 								<tr className="table__header">
@@ -173,7 +264,7 @@ const WalletTable = ({wallet,  styles }) => {
 									<tr key={id}>
 										<td className={tableStyles.td_4}>
 											<div className={tableStyles.col}>
-												<h4>{data.beneficiaryAccountName.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
+												<h4>{data.beneficiaryAccountName?.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
 												<div className={tableStyles.accountNum}
 													style={{display: 'flex', gap: 10}}>
 													<p>{data.beneficiaryWalletId || data.beneficiaryAccountNumber}</p>
@@ -190,10 +281,14 @@ const WalletTable = ({wallet,  styles }) => {
 											{data.transactionCategory ==='PAYOUT' ?
 												<>
 													<span className="outgoing-circle" /> Outgoing
-												</> :
+												</> : data.transactionCategory ==='COLLECTION' ?
 												<>
 													<span className="incoming-circle" /> Incoming
-												</>
+												</> 
+												: data.transactionCategory ==='BILLPAYMENT' ?
+												<>
+												<span className="payment-circle" /> Payment
+												</> : <></>
 											}
 										</td>
 										<td className={tableStyles.td_3}>
@@ -220,13 +315,16 @@ const WalletTable = ({wallet,  styles }) => {
 									</tr>
 								))}
 							</tbody>
-						</table>
+						</table> : 
+						<TableLoader rowLength={7} />
+						}
 					</div>
 					<Pagination tableStyles={tableStyles}
 						handleEntry={(val)=>handleEntry(val)}
 						setPage={(val)=>setPage(val)}
 						pagination={pagination} />
 				</div>
+			</div>
 			</div>
 		</>
 	);

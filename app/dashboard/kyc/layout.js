@@ -1,5 +1,3 @@
-// 'use client'
-
 import LayoutLogic from "@/components/KYC/LayoutLogic";
 export const metadata = () => {
 	return {

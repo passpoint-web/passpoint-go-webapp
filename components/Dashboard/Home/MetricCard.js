@@ -17,7 +17,6 @@ const MetricCard = () => {
   const getMetrics = async () => {
     try {
       const response = await metrics();
-      console.log('yo')
       setData(response.data.metrics);
     } catch (error) {
       console.log(error);

@@ -3,9 +3,8 @@ import DashboardHeader from "@/components/Dashboard/Header"
 import DashboardSidebar from "@/components/Dashboard/Sidebar"
 import styles from "@/assets/styles/dashboard-layout.module.css"
 import { useEffect, useState } from "react"
-import { getToken } from "@/services/localService"
 import { useRouter } from "next/navigation"
-import { getCredentials } from "@/services/localService";
+import { getToken , getCredentials } from "@/services/localService";
 import FullScreenLoader from "@/components/Modal/FullScreenLoader"
 
 // eslint-disable-next-line no-unused-vars
@@ -24,20 +23,18 @@ export default function DashboardLayout({ children }) {
   const {push} = useRouter()
   const [loading, setLoading] = useState(true)
   const [savedCredentials, setSavedCredentials] = useState({});
-  useEffect(()=>{
-    tawk()
-  },[])
 
   const checkAuth = async () => {
     const auth = await getToken()
     if (!auth) {
       push(`/auth/login?fallBackUrl=${window.location.pathname}`)
     } else {
-        setLoading(false)
+      setLoading(false)
     }
   }
 
   useEffect(()=>{
+    tawk()
     checkAuth()
     setSavedCredentials(getCredentials());
   },[])
@@ -52,14 +49,14 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-      <div className={styles.dashLayout}>
+    <div className={styles.dashLayout}>
       <DashboardHeader styles={styles} user={savedCredentials} />
-       <div className={styles.dashContent}>
+      <div className={styles.dashContent}>
         <DashboardSidebar />
-        <div className={styles.dash_children}> 
+        <div className={styles.dash_children}>
           <main className={styles.dash_outlet}>{children}</main>
         </div>
-       </div>
       </div>
+    </div>
   )
 }

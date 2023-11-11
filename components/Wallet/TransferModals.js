@@ -14,7 +14,7 @@ import AccountTypeDropDown from "./AccountTypeDropDown";
 import TertiaryBtn from "../Btn/Tertiary";
 import CreatePinModal from "../Modal/CreatePin";
 
-const TransferModals = ({ onClose, styles }) => {
+const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	// const notify = useNotify();
 	const { formatMoney, sortAlphabetically } = functions;
 	const [accountType, setAccountType] = useState({name: 'Account Number', description: 'NUBAN'})
@@ -124,12 +124,13 @@ const TransferModals = ({ onClose, styles }) => {
 				setStatusMessage(response.data.responseMessage)
 				setCurrentLevel('success')
 			} catch (_err) {
-				console.log(_err.response.data.responseMessage)
+				// console.log(_err.response.data.responseMessage)
 				setStatusMessage(_err.response.data.responseMessage)
 				setCurrentLevel('failure')
 				// console.log(_err)
 			} finally {
 				setAccountTranferLoading(false)
+				updateWalletState()
 				//
 			}
 		} else {
@@ -161,6 +162,7 @@ const TransferModals = ({ onClose, styles }) => {
 				// console.log(_err)
 			} finally {
 				setAccountTranferLoading(false)
+				updateWalletState()
 				//
 			}
 		}
@@ -176,7 +178,7 @@ const TransferModals = ({ onClose, styles }) => {
 				setBanks(sortedBanks)
 			}
 		} catch (_err) {
-			console.log(_err.response.data)
+			// console.log(_err.response.data)
 		} finally {
 			setGetDataLoading(false)
 			//

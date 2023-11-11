@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 @font-face {
   font-family: "GraphikMedium";
   src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
@@ -840,7 +842,8 @@ form {
 .pending-circle,
 .success-circle,
 .incoming-circle,
-.outgoing-circle {
+.outgoing-circle,
+.payment-circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -859,6 +862,10 @@ form {
   background: #e9b500;
 }
 
+.payment-circle {
+  background-color: var(--grey-1);;
+}
+
 .incoming-circle {
   background-color: var(--sky-blue);
 }
@@ -874,7 +881,8 @@ form {
 .successful-tag,
 .pending-tag,
 .failed-tag,
-.failure-tag {
+.failure-tag,
+.processing-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
@@ -899,7 +907,8 @@ form {
   color: #23c38e;
 }
 
-.pending-tag {
+.pending-tag,
+.processing-tag {
   background: #fffae7;
   color: #e9b500;
 }
@@ -1281,6 +1290,28 @@ th {
     -moz-transform: translateY(0px);
     -ms-transform: translateY(0px);
     -o-transform: translateY(0px);
+  }
+}
+
+.rotate-infinite {
+  animation: rotate 0.7s infinite;
+  -webkit-animation: rotate 0.7s infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
   }
 }
 
