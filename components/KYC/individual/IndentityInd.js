@@ -69,7 +69,7 @@ const IdentityInd = ({ styles }) => {
 
   const uploadIdentity = async () => {
     try {
-      const uploadResponse = await kyc.uploadIndIdentity({
+      await kyc.uploadIndIdentity({
         ...payload,
         submitType,
       });
@@ -79,7 +79,7 @@ const IdentityInd = ({ styles }) => {
       });
       notify("success", "Your identity has been saved");
       push("/dashboard/kyc/individual/address");
-    } catch (uploadError) {
+    } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already saved")) {
@@ -240,7 +240,7 @@ const VerifyBVN = ({
       const otpVerifyResponse = await kycBvn.confirmBvn(data);
       if (otpVerifyResponse.status === 200) {
         // OTP verification is successful; proceed to upload KYC details
-        const uploadResponse = await kyc.uploadIndIdentity({
+        await kyc.uploadIndIdentity({
           ...payload,
           submitType,
         });
