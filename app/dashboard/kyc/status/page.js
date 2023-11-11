@@ -12,7 +12,6 @@ const Success = () => {
   useEffect(() => {
     const kyc_detail = getCredentials();
     setKycDetails(kyc_detail);
-    console.log(kyc_detail);
   }, []);
 
   const getStatusContent = (status) => {
@@ -21,8 +20,7 @@ const Success = () => {
         return {
           status: "pending",
           title: "KYC In Review",
-          value: `You have now completed your KYC Registration and your documents are
-          being reviewed by the admin, You will get an update in 24 hours.`,
+          value: `Your KYC registration is currently being reviewed by an admin, you will get an update within 48 Hours.`,
         };
       case "Rejected":
         return {
@@ -33,8 +31,8 @@ const Success = () => {
       default:
         return {
           status: "pending",
-          title: "KYC Status Unknown",
-          value: `The status of your KYC Registration is currently unknown. Please contact support for more information.`,
+          title: "KYC In Review",
+          value: `Your KYC registration is currently being reviewed by an admin, you will get an update within 48 Hours.`,
         };
     }
   };
@@ -58,7 +56,10 @@ const Success = () => {
       bottomCancelNeeded={false}
       hasBottomActions={kycDetails.kycStatus === "Rejected"}
     >
-      <ActionFeedbackCard content={getStatusContent(kycDetails.kycStatus)} />
+      <ActionFeedbackCard
+        content={getStatusContent(kycDetails.kycStatus)}
+        textTransform="none"
+      />
     </ModalWrapper>
   );
 };
