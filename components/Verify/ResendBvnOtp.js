@@ -1,7 +1,7 @@
 import styles from "@/assets/styles/auth-screens.module.css";
 import TertiaryBtn from "@/components/Btn/Tertiary";
 import { useEffect, useState } from "react";
-import { kycBvn } from "@/services/restService";
+import {kycBvn} from "@/services/restService";
 import { useNotify } from "@/utils/hooks";
 const ResendBvnOtp = ({ bvnNo, clearOtp }) => {
   const [resendOTPStatus, setResendOTPStatus] = useState("Resend OTP");

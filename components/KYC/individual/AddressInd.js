@@ -53,7 +53,7 @@ const AddressInd = ({ styles }) => {
         setSubmitType("NEW");
       }
     } catch (_err) {
-      console.log(_err)
+      // 
     } finally {
       setDataLoading(false);
     }
