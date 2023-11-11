@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { saveWalletState, getWalletState } from "@/services/localService";
 
 const Wallet = () => {
-	const [walletState, setWalletState] = useState('created') // no-wallet, pending, created
+	const [walletState, setWalletState] = useState('no-wallet') // no-wallet, pending, created
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
@@ -27,14 +27,22 @@ const Wallet = () => {
 			setWalletDetails(data)
 			setWalletAccount(data.walletAccount['NGN'])
 			// eslint-disable-next-line no-unused-vars
-			const {accountNumber} = data.walletAccount['NGN']
+			if (Object.keys(data.walletAccount).length) {
+				const accountNumber = data.walletAccount['NGN']?.accountNumber
+			// console.log(data)
+			// console.log(accountNumber)
 			if (accountNumber) {
+				// console.log('yo')
 				setWalletState('created')
-				saveWalletState('created')
-			}else if (!accountNumber) {
+				// saveWalletState('created')
+			} else if (!accountNumber) {
+				// console.log('yoyo')
 				setWalletState('pending')
-				saveWalletState('pending')
+				// saveWalletState('pending')
 				setShowPendingModal(true)
+			} else {
+				setWalletState('no-wallet')
+			}
 			}
 		} catch (_err) {
 			console.log(_err)
@@ -43,12 +51,16 @@ const Wallet = () => {
 		}
 	}
 	useEffect(()=>{
-		setWalletState(getWalletState())
+		// setWalletState(getWalletState())
 		getWallet()
 	},[])
 
+	// useEffect(()=>{
+		// console.log(walletState)
+	// },[])
+
 	const WalletProcessingModal = () => (
-		<ModalWrapper bottomCancelNeeded={false} ctaBtnText="Go Home" handleCta={()=>setShowPendingModal(false)} ctaBtnType="sd">
+		<ModalWrapper bottomCancelNeeded={false} ctaBtnText="Go Home" onClose={()=>setShowPendingModal(false)} handleCta={()=>setShowPendingModal(false)} ctaBtnType="sd">
 			<ActionFeedbackCard
 				content={{
 					title: 'Wallet Creation is Processing',

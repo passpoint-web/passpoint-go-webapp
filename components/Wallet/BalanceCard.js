@@ -10,6 +10,11 @@ import CreatePinModal from '../Modal/CreatePin'
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
+import {
+	// GrFormRefresh,
+	FaExclamationTriangle 
+} from 'react-icons/fa'
+import RefreshBtn from '../Btn/RefreshBtn';
 
 const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 	const searchParams = useSearchParams()
@@ -80,9 +85,12 @@ const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
 								<h1 className={!showBalance ? styles.hide_balance : ''}>
 									{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
 								</h1>
+								<div className={styles.card_action}>
 								<button onClick={()=>setShowBalance(!showBalance)}>
 									{!showBalance ? <EyeOpen /> : <EyeClose />}
 								</button>
+								<RefreshBtn />
+								</div>
 							</div>
 						</div>
 						<div className={styles.btn_sec}>
