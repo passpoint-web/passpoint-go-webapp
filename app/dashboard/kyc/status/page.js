@@ -20,7 +20,7 @@ const Success = () => {
         return {
           status: "pending",
           title: "KYC In Review",
-          value: `Your KYC registration is currently being reviewed by an admin, you will get an update within 48 Hours.`,
+          value: `Your KYC registration is currently being reviewed by an admin, you will get an update within 48 Hours.`,
         };
       case "Rejected":
         return {
@@ -32,7 +32,7 @@ const Success = () => {
         return {
           status: "pending",
           title: "KYC In Review",
-          value: `Your KYC registration is currently being reviewed by an admin, you will get an update within 48 Hours.`,
+          value: `Your KYC registration is currently being reviewed by an admin, you will get an update within 48 Hours.`,
         };
     }
   };

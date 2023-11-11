@@ -11,7 +11,7 @@ import WalletTable from "./WalletTable";
 import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
-import { saveWalletState, getWalletState } from "@/services/localService";
+// import { saveWalletState, getWalletState } from "@/services/localService";
 
 const Wallet = () => {
 	const [walletState, setWalletState] = useState('no-wallet') // no-wallet, pending, created

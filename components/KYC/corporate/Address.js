@@ -13,7 +13,6 @@ import { kyc } from "@/services/restService";
 import { documentType } from "@/utils/CONSTANTS";
 import { useNotify } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
-import { Suspense } from "react";
 import { useState, useEffect } from "react";
 
 const Address = ({ styles }) => {

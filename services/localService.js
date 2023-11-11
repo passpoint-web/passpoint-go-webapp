@@ -111,6 +111,11 @@ export const removeToken = () => {
     removePublicProfile()
   }
 }
+
+export const savePublicProfile = (val) => {
+  localStorage.setItem("public_profile", JSON.stringify(val));
+};
+
 export const getPublicProfile = () => {
   if (typeof window !== "undefined") {
     const val = localStorage.getItem("public_profile")

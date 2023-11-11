@@ -10,10 +10,6 @@ import CreatePinModal from '../Modal/CreatePin'
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
-import {
-	// GrFormRefresh,
-	FaExclamationTriangle 
-} from 'react-icons/fa'
 import RefreshBtn from '../Btn/RefreshBtn';
 
 const BalanceCard = ({ dataLoading, walletAccount, wallet, styles}) => {
