@@ -760,6 +760,15 @@ input[type="range"]:focus::-moz-range-thumb {
   padding-right: var(--input-padding);
   padding-left: 0;
 }
+.flight-services
+  .form-row
+  .custom-select
+  button:not(.table-ctn .custom-select button),
+.travel__dashboard_header_row_one
+  .custom-select
+  button:not(.table-ctn .custom-select button) {
+  padding: 0 var(--input-padding);
+}
 
 .flight-services .custom-select button {
   background: var(--grey-6);
