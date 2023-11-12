@@ -246,7 +246,11 @@ function eighteenYearsAgo() {
   const eighteenYearsAgo = new Date(currentDate)
   eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18)
   const formatted18YearsAgo = eighteenYearsAgo.toLocaleDateString()?.split("/")
-  const maxDate = `${formatted18YearsAgo[2]}-${formatted18YearsAgo[0]}-0${formatted18YearsAgo[1]}`
+  const maxDate = `${formatted18YearsAgo[2]}-${
+    formatted18YearsAgo[1] > 9 ? "" : "0"
+  }${formatted18YearsAgo[0]}-${formatted18YearsAgo[1] > 9 ? "" : "0"}${
+    formatted18YearsAgo[1]
+  }`
   console.log(maxDate)
   return maxDate
 }
