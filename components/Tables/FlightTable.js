@@ -22,10 +22,10 @@ const FlightTable = ({ title, setFlightDetails }) => {
   const [isLoading, setIsLoading] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10)
-  const getFlightBookings = async () => {
+  const getFlightBookings = async (goToPage) => {
     try {
       const response = await travel.getFlightBookings({
-        page,
+        page: goToPage || page,
         pageSize,
         searchParam,
       })
@@ -51,8 +51,9 @@ const FlightTable = ({ title, setFlightDetails }) => {
   }
 
   const handlePaginationEvent = (symbol) => {
-    setPage(symbol === "+" ? page + 1 : page - 1)
-    getFlightBookings()
+    const currentPage = symbol === "+" ? page + 1 : page - 1
+    setPage(currentPage)
+    getFlightBookings(currentPage)
   }
 
   useEffect(() => {
@@ -66,8 +67,8 @@ const FlightTable = ({ title, setFlightDetails }) => {
             <h3 className="capitalize"> {title} Booking History</h3>
             <p>Manage your {title} bookings here</p>
           </div>
-          <Loader size={60} />
 
+          {/* <Loader size={60} /> */}
           <Search
             id={"booking"}
             placeholder={"Search Booking ID"}
@@ -117,7 +118,9 @@ const FlightTable = ({ title, setFlightDetails }) => {
                     </div>
                   </td>
                   <td>
-                    <div className={`${c.status.toLowerCase()}-tag`}>{c.status.toLowerCase()}</div>
+                    <div className={`${c.status.toLowerCase()}-tag`}>
+                      {c.status.toLowerCase()}
+                    </div>
                   </td>
                   <td className="text-bold">
                     {formatMoney(c.amount, c.currency)}
