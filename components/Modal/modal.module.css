@@ -68,7 +68,7 @@
   background: #fff;
   position: relative;
   border-radius: var(--input-br);
-  min-height: 250px;
+  min-height: 200px;
   max-height: calc(100vh - 100px);
   padding: var(--inner-component-mg);
   overflow-y: auto;
