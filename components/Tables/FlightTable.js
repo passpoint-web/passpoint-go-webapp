@@ -8,9 +8,12 @@ import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Pagination from "./Pagination"
 import Loader from "../Btn/Loader"
+import { getCredentials } from "@/services/localService"
+import FWLoader from "../FWLoader"
 
 const FlightTable = ({ title, setFlightDetails }) => {
   const { formatMoney } = functions
+  const user = getCredentials()
   const notify = useNotify()
   const [data, setData] = useState([])
   const [paginationData, setPaginationData] = useState({})
@@ -24,8 +27,10 @@ const FlightTable = ({ title, setFlightDetails }) => {
   const [pageSize, setPageSize] = useState(10)
   const getFlightBookings = async (goToPage) => {
     try {
+      setIsLoading(true)
       const response = await travel.getFlightBookings({
-        page: goToPage || page,
+        email: user.email,
+        page: goToPage,
         pageSize,
         searchParam,
       })
@@ -42,6 +47,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
       }
       delete tempPaginationData.content
       setPaginationData(tempPaginationData)
+      setIsLoading(false)
     } catch (_err) {
       const { message } = _err.response?.data || _err
       notify("error", message)
@@ -54,10 +60,11 @@ const FlightTable = ({ title, setFlightDetails }) => {
     const currentPage = symbol === "+" ? page + 1 : page - 1
     setPage(currentPage)
     getFlightBookings(currentPage)
+    console.log(page, currentPage)
   }
 
   useEffect(() => {
-    getFlightBookings()
+    getFlightBookings(page)
   }, [searchParam])
   return (
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
@@ -89,6 +96,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
           /> */}
         </div>
         <div className={styles.table__main}>
+          {isLoading && <FWLoader />}
           <table>
             <thead>
               <tr className="table__header">
@@ -153,6 +161,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
         <Pagination
           tableStyles={styles}
           pagination={paginationData}
+          currentPage={page + 1}
           handlePaginationEvent={handlePaginationEvent}
         />
         {/* <div className={styles.table__pagination}>
