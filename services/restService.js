@@ -4,16 +4,22 @@ import { getToken, setLogout } from "./localService"
 // import { Redirect } from 'next';
 import { wallet } from "@/services/restService/wallet"
 const restAgent = axios.create({
-  baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+  // baseURL: "https://api.jessecoders.com/passpointGo/v1/",
+  // headers: {
+  // 	"Content-Type": "application/json",
+  // },
+  baseURL: "https://webapi-dev.mypasspoint.com/v1/",
   headers: {
     "Content-Type": "application/json",
   },
-  // baseURL: "https://webapi-dev.mypasspoint.com/v1/",
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
 })
 
+const kycBvnRestAgent = axios.create({
+  baseURL: "https://client-sandbox.mypasspoint.com/passpoint-usr/v1/kyc-app/",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 const flightRestAgent = axios.create({
   baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
   headers: {
@@ -65,6 +71,20 @@ const setTravelConfig = () => {
   // console.log(cookies.get('token'))
   const config = getRequestConfig()
   config.headers.Authorization = `Bearer 123`
+  return config
+}
+
+const setKycBvnConfig = () => {
+  const username = "PVTL3CYSKG"
+  const password = "-Zi-pIyZX9Udr0ms-13mS4Z6PcGuzLdvYC9VRgq6"
+  const token = `${username}:${password}`
+  const encodedToken = btoa(token)
+  const config = getRequestConfig()
+  config.headers.Authorization = `Basic ${encodedToken}`
+  config.headers["x-channel-id"] = "2"
+  config.headers["x-channel-code"] = "passpoint-infra-user"
+  config.headers["x-merchant-id"] = "e0b157a2-9245-40b9-8117-d25cadfdcfaa"
+
   return config
 }
 
@@ -152,9 +172,25 @@ export const publicProfile = {
   },
 }
 
+export const kycBvn = {
+  verifyBvn: (data) => {
+    return kycBvnRestAgent.post("verify-id", data, setKycBvnConfig())
+  },
+  confirmBvn: (data) => {
+    return kycBvnRestAgent.post(
+      "confirm-bvn-verification",
+      data,
+      setKycBvnConfig()
+    )
+  },
+}
+
 export const kyc = {
   getKycDetails: () => {
     return restAgent.get("getKycDetails", setConfig())
+  },
+  verifyBvn: (data) => {
+    return restAgent.post("verifyBvn", data, setConfig())
   },
   uploadKycIdentity: (data) => {
     return restAgent.post("kycProofCooperateIdentity", data, setConfig())

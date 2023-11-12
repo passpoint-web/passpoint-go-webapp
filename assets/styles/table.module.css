@@ -3,6 +3,10 @@
   margin-top: 2rem;
 }
 
+.table_container {
+  margin-top: 2rem;
+}
+
 .table__outer {
   border-radius: 16px;
   background: var(--white);
@@ -13,13 +17,6 @@
   padding: 1.5rem;
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
-  gap: 1rem;
-}
-
-.wallet .table__header {
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -80,7 +77,21 @@
 
 
 
-/* pagination */
+/* wallet */
+
+.wallet .table__header {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wallet .table__header .top {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* wallet pagination */
 
 .table__pagination.wallet {
   padding: 1.5rem;

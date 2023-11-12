@@ -1,19 +1,8 @@
 "use client";
 import Link from "next/link";
 import styles from "@/assets/styles/dashboard-layout.module.css";
-import { getCredentials } from "@/services/localService";
-import { useEffect, useState } from "react";
 
 const KycCard = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const credentials = getCredentials();
-    setUser(credentials);
-  }, []);
-
-  console.log(user);
-
   return (
     <div className={styles.dashKyc}>
       <div className={styles.dashKyc_content}>

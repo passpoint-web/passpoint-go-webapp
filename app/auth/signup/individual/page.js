@@ -135,6 +135,7 @@ const IndividualInformation = () => {
 							>
 								<PhoneInput
 									country={'ng'}
+                  onlyCountries={['ng']}
 									value={payload.phone}
 									onChange={(phone) => handleChange({ target: { name: 'phone', value: phone } })}
 								/>

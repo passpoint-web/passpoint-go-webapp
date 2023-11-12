@@ -47,17 +47,18 @@ const Identity = ({ styles }) => {
     try {
       const response = await kyc.getKycDetails();
       const data = response.data.data;
-      console.log(data);
       saveKycDetails(data);
       const documents = data.proofIdentity;
-      if (documents) {
+      if (documents && documents.length > 0) {
         setPayload((prev) => {
           const updatedPayload = [...prev];
-          updatedPayload[0].documentFile = documents[0].docFile;
-          updatedPayload[1].documentFile = documents[1].docFile;
+          updatedPayload[0].documentFile = documents[0]?.docFile;
+          updatedPayload[1].documentFile = documents[1]?.docFile;
           return updatedPayload;
         });
         setSubmitType("EDIT");
+      } else {
+        setSubmitType("NEW");
       }
     } catch (_err) {
       console.log(_err);
@@ -71,7 +72,6 @@ const Identity = ({ styles }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(payload);
     setCtaClicked(true);
     if (!allFieldsValid) {
       return;

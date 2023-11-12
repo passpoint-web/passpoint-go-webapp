@@ -23,6 +23,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
   const [searchParam, setSearchParam] = useState("")
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
+  const [getDataLoading, setGetDataLoading] = useState(true)
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10)
   const getFlightBookings = async (goToPage) => {
@@ -53,6 +54,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
       notify("error", message)
     } finally {
       setIsLoading(false)
+      setGetDataLoading(false)
     }
   }
 

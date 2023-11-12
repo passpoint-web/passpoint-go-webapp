@@ -6,9 +6,8 @@ import OverlayScreen from '../OverlayScreen'
 import Search from './Search'
 import { DropDownIcon } from '@/constants/icons'
 
-const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
+const CountrySelect = ({ emitCountry, countriesSelectProps, disabled }) => {
 	const [showCountriesSelect, setShowCountriesSelect] = useState(false)
-
 	const [countries, setCountries] = useState([])
 	const [filteredCountries, setFilteredCountries] = useState([])
 	const [country, setCountry] = useState({})
@@ -84,6 +83,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps }) => {
 				<button
 					className={`${showCountriesSelect ? styles.active : ''}`}
 					onClick={handleClick}
+					disabled={disabled}
 				>
 					{!countries?.name ? (
 						<div className={styles.content}>

@@ -63,12 +63,17 @@
   align-items: center;
 }
 
-.balance_card .balance button {
-  margin-right: 50px;
+.balance_card .balance .card_action {
+  margin-right: 0px;
+  display: flex;
+  gap: 15px;
+}
+
+.balance_card .balance .card_action button {
   transform: scale(1.2);
 }
 
-.balance_card .balance button svg path {
+.balance_card .balance .card_action button svg path {
   stroke: #fff;
 }
 

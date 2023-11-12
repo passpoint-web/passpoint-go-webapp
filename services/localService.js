@@ -85,9 +85,6 @@ export const setLogout = () => {
   }
 };
 
-export const savePublicProfile = (val) => {
-  localStorage.setItem("public_profile", JSON.stringify(val));
-};
 
 export const saveKycDetails = (val) => {
   localStorage.setItem("kyc_details", JSON.stringify(val));
@@ -114,6 +111,11 @@ export const removeToken = () => {
     removePublicProfile()
   }
 }
+
+export const savePublicProfile = (val) => {
+  localStorage.setItem("public_profile", JSON.stringify(val));
+};
+
 export const getPublicProfile = () => {
   if (typeof window !== "undefined") {
     const val = localStorage.getItem("public_profile")

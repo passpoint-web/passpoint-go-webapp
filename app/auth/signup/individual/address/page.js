@@ -127,6 +127,7 @@ const BusinessAddress = () => {
 								errorMsg="Country is required"
 							>
 								<CountrySelect
+									disabled
 									fieldError={ctaClicked && !payload.country?.name?.common}
 									emitCountry={(option) =>
 										handleChange({
