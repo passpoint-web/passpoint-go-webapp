@@ -3,7 +3,7 @@ import styles from '@/assets/styles/auth-screens.module.css'
 import { useRouter } from 'next/navigation'
 import { businessIndustries } from '@/utils/CONSTANTS'
 import { useState, useEffect } from 'react'
-import { registerUser } from '@/services/restService'
+import { authenticate } from '@/services/restService'
 import { getCredentials, saveCredentials } from '@/services/localService'
 import CustomSelect from '@/components/Custom/Select'
 import PrimaryBtn from '@/components/Btn/Primary'
@@ -19,6 +19,8 @@ const BusinessInformation = () => {
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [showBusinessWarning, setShowBusinessWarning] = useState(false)
+	const [businessNameCheckVerified, setBusinessNameCheckVerified] = useState(null)
+	const [businessNameChecking, setBusinessNameChecking] = useState(false)
 	const [payload, setPayload] = useState({
 		businessName: '',
 		businessIndustry: '',
@@ -44,7 +46,7 @@ const BusinessInformation = () => {
 		}
 		setIsLoading(true)
 		try {
-			const response = await registerUser('onBoardIndividualBusinessInfo', {email: savedCredentials.email, ...payload})
+			const response = await authenticate.registerUser('onBoardIndividualBusinessInfo', {email: savedCredentials.email, ...payload})
 			console.log(response)
 			// setSignupLevel({'business', 2})
 			saveCredentials({...savedCredentials, ...payload, regStage: 2})
@@ -64,9 +66,37 @@ const BusinessInformation = () => {
 		}, 1000)
 	},[])
 
+	useEffect(()=>{
+		if (payload.businessName.length) {
+			businessNameCheck()
+		}
+	},[payload.businessName])
+
+	const businessNameCheck = async () => {
+		const {businessName} = payload
+		setBusinessNameChecking(true)
+		setBusinessNameCheckVerified(null)
+		try {
+			await authenticate.checkBusinessName({
+				businessName
+			})
+			// console.log(response)
+			setBusinessNameCheckVerified(true)
+		} catch (_err) { 
+			// const { message } = _err.response?.data || _err
+			// console.log(message)
+			setBusinessNameCheckVerified(false)
+			// notify('error', message)
+		} finally {
+			setIsLoading(false)
+			setBusinessNameChecking(false)
+		}
+	}
+
+
 	useEffect(() => {
 		const {businessIndustry, businessName} = payload
-		const conditionsMet = businessName && businessIndustry
+		const conditionsMet = businessName && businessIndustry && businessNameCheckVerified
 		if (conditionsMet) {
 			setAllFieldsValid(true)
 		} else {
@@ -113,15 +143,17 @@ const BusinessInformation = () => {
 									/>
 								</Input>
 								<Input
-									label="Business Name"
-									id="business-name"
-									name="businessName"
-									placeholder="John Travels"
-									value={payload.businessName}
-									onChange={handleChange}
-									error={ctaClicked && !payload.businessName}
-									errorMsg={'Business name is required'}
-								/>
+								label="Business Name"
+								id="business-name"
+								name="businessName"
+								placeholder="John Travels"
+								value={payload.businessName}
+								onChange={handleChange}
+								error={(ctaClicked && !payload.businessName) ||businessNameCheckVerified === false}
+								errorMsg={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+								info={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+								successMsg={businessNameCheckVerified === true && payload.businessName.length ? 'Business name is valid' : ''}
+							/>
 							</div>
 							<div className={styles.action_ctn}>
 								<PrimaryBtn

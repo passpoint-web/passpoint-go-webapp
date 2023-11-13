@@ -69,7 +69,7 @@ const FlightPageHeader = ({ styles }) => {
 
   return (
     <div className={styles.travel__dashboard_header}>
-      <div className={styles.row_one}>
+      <div className={`${styles.row_one} travel__dashboard_header_row_one`}>
         <div>
           <h3>Flights</h3>
           <p>
@@ -84,11 +84,11 @@ const FlightPageHeader = ({ styles }) => {
             selectedOption={tripType}
             styleProps={{
               dropdown: {
-                height: 100
+                height: 100,
               },
               option: {
-                height: 40
-              }
+                height: 40,
+              },
             }}
             placeholder="Select Trip Type"
             emitSelect={(e) => setTripType(e)}
@@ -123,11 +123,11 @@ const FlightPageHeader = ({ styles }) => {
             selectedOption={flightClass}
             styleProps={{
               dropdown: {
-                height: 150
+                height: 150,
               },
               option: {
-                height: 40
-              }
+                height: 40,
+              },
             }}
             placeholder="Select Class"
             emitSelect={(e) => setFlightClass(e)}

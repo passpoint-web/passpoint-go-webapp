@@ -1,5 +1,6 @@
-import styles from "@/assets/styles/auth-screens.module.css"
-const Search = ({ search, searchCountry, id, placeholder }) => {
+import styles from './search.module.css'
+
+const Search = ({ search, searchItem, id, placeholder }) => {
   return (
     <div className={`custom-search ${styles.input_wrapper} ${styles.left}`}>
       <input
@@ -7,9 +8,12 @@ const Search = ({ search, searchCountry, id, placeholder }) => {
         id={id}
         placeholder={placeholder}
         value={search}
-        onChange={(e) => searchCountry(e.target.value.trim())}
+        onChange={(e) => searchItem(e.target.value)}
       />
-      <label className={styles.absolute_side} htmlFor={id}>
+      <label
+        className={styles.absolute_side}
+        htmlFor={id}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"

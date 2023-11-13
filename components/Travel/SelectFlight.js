@@ -90,6 +90,7 @@ const SelectFlight = () => {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   const isStopoverGreaterThan = (number = 0) => {
     return flights?.find(
       (flight) =>
@@ -238,7 +239,7 @@ const SelectFlight = () => {
             </div>
           </div>
           {/* STOPS FILTER */}
-          {isStopoverGreaterThan() && (
+          {/* {isStopoverGreaterThan() && (
             <div className={styles.filter__box}>
               <button className={styles.header}>
                 <h5 className="capitalize">Stops</h5>
@@ -260,7 +261,7 @@ const SelectFlight = () => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
           {/* TIME FILTER */}
           <div className={styles.filter__box}>
             <button className={styles.header}>
