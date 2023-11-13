@@ -32,7 +32,11 @@ const FlightCard = ({ selected, data, cheapest, quickest }) => {
         </div>
         <FlightTimeline data={data} isOutbound />
         <div className={styles.fc__price}>
-          {!selected && (
+          {selected ? (
+            <h5 className={styles.fc__tags}>
+              on {functions.formatTimestamp(outbound?.at(0)?.departure_time)}
+            </h5>
+          ) : (
             <div className={styles.fc__tags}>
               {quickest && <div className="primary-tag">Quickest</div>}
               {cheapest && <div className="success-tag">Cheapest</div>}
