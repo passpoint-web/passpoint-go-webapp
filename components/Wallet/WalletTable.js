@@ -152,15 +152,18 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	}
 
 	const handleEntry = (val) => {
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
+		// getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
+		getAllTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
 	}
 	const handleTransactionType = (val)=> {
 		setTransactionType(val)
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
+		// getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
+		getAllTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
 	}
 
 	const setPage = (val) => {
-		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
+		// getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
+		getAllTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
 	}
 
 	// useEffect(()=>{
@@ -168,8 +171,8 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	// },[])
 
 	useEffect(()=>{
-		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
-		// getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		// getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
 	},[updateKey])
 
 	// useEffect(()=>{
@@ -285,7 +288,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 												<>
 													<span className="incoming-circle" /> Incoming
 												</> 
-												: data.transactionCategory ==='BILLPAYMENT' ?
+												: data.transactionCategory ==='BILL_PAYMENT' ?
 												<>
 												<span className="payment-circle" /> Payment
 												</> : <></>

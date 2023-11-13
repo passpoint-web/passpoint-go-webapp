@@ -86,7 +86,7 @@ const BalanceCard = ({ dataLoading, balanceLoading, walletAccount, wallet, style
 								<button onClick={()=>setShowBalance(!showBalance)}>
 									{!showBalance ? <EyeOpen /> : <EyeClose />}
 								</button>
-								<RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} />
+								{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
 								</div>
 							</div>
 						</div>

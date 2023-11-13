@@ -83,10 +83,10 @@ const BusinessInformation = () => {
 			// console.log(response)
 			setBusinessNameCheckVerified(true)
 		} catch (_err) { 
-			const { message } = _err.response?.data || _err
+			// const { message } = _err.response?.data || _err
 			// console.log(message)
 			setBusinessNameCheckVerified(false)
-			notify('error', message)
+			// notify('error', message)
 		} finally {
 			setIsLoading(false)
 			setBusinessNameChecking(false)
@@ -150,9 +150,9 @@ const BusinessInformation = () => {
 								value={payload.businessName}
 								onChange={handleChange}
 								error={(ctaClicked && !payload.businessName) ||businessNameCheckVerified === false}
-								errorMsg={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'Business name is not unique' : businessNameChecking ? 'Checking' : ''}
-								info={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'Business name is not unique' : businessNameChecking ? 'Checking' : ''}
-								successMsg={businessNameCheckVerified === true && payload.businessName.length ? 'Business name verified' : ''}
+								errorMsg={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+								info={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+								successMsg={businessNameCheckVerified === true && payload.businessName.length ? 'Business name is valid' : ''}
 							/>
 							</div>
 							<div className={styles.action_ctn}>
