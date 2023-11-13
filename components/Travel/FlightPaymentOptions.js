@@ -13,16 +13,15 @@ import OtpInput from "react-otp-input"
 import formStyles from "@/assets/styles/auth-screens.module.css"
 import PaymentFail from "./PaymentFail"
 import Link from "next/link"
+import WarningModal from "./WarningModal"
 
-const FlightPaymentOptions = ({
-  makeFlightBooking,
-  totalAmount,
-}) => {
+const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
   const paymentOptions = ["My Passpoint Wallet", "Credit/Debit Card"]
   const [paymentOption, setPaymentOption] = useState(paymentOptions[0])
   const [paymentSuccessful, setPaymentSuccessful] = useState(false)
   const [paymentFailure, setPaymentFailure] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [warningModalVisible, setWarningModalVisible] = useState(false)
   const [walletAccount, setWalletAccount] = useState({})
   const [pins, setPins] = useState({
     pin: "",
@@ -51,7 +50,10 @@ const FlightPaymentOptions = ({
   const getWallet = async () => {
     try {
       const response = await wallet.getWalletDetails()
-      setWalletAccount(response.data.data.walletAccount["NGN"])
+      setWalletAccount({
+        ...response.data.data.walletAccount["NGN"],
+        pinCreated: response.data.data.pinCreated,
+      })
     } catch (_err) {
       console.log(_err)
     } finally {
@@ -70,8 +72,18 @@ const FlightPaymentOptions = ({
     getWallet()
   }, [])
 
+  useEffect(() => {
+    setWarningModalVisible(!walletAccount.pinCreated)
+  }, [walletAccount])
+
   return (
     <div className={`select-flight-wrapper ${styles.row__wrapper}`}>
+      {warningModalVisible && (
+        <WarningModal
+          styles={styles}
+          setModalVisible={setWarningModalVisible}
+        />
+      )}
       <button className={styles.row__header}>
         <div className="texts">
           <h3 className="capitalize"> Payment Options</h3>

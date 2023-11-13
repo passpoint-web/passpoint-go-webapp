@@ -6,6 +6,7 @@ import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Loader from "../Btn/Loader"
+import FWLoader from "../FWLoader"
 
 const FlightDetailsModal = ({
   setFlightDetailVisible,
@@ -25,6 +26,7 @@ const FlightDetailsModal = ({
   const [data, setData] = useState(flightDetails)
   const [baseFare, setBaseFare] = useState(0)
   const [fees, setFees] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
 
   const closeModal = () => {
@@ -34,7 +36,7 @@ const FlightDetailsModal = ({
 
   const getFlightBooking = async () => {
     try {
-      console.log(data)
+      setIsLoading(true)
       const response = await travel.getFlightBooking(id)
       setData({ ...response.data.data, ...flightDetails })
       calculateBaseFare(response.data.data)
@@ -43,7 +45,7 @@ const FlightDetailsModal = ({
       const { message, description } = _err.response?.data || _err
       notify("error", message || description)
     } finally {
-      // setIsLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -81,6 +83,7 @@ const FlightDetailsModal = ({
       containsTabLayout
       hasBottomActions={false}
     >
+      {isLoading && <FWLoader />}
       <div className={styles.modal__tab_group}>
         {tabs.map((tab) => (
           <button
@@ -92,7 +95,6 @@ const FlightDetailsModal = ({
           </button>
         ))}
       </div>
-
       {/* MAIN FLIGHT DETAILS CONTENT - GENERAL */}
       {activeTab === tabs[0] && (
         <div className={styles.modal__flight_details}>

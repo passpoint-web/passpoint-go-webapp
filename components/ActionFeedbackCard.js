@@ -4,6 +4,7 @@ import {
   ActionFailedIcon,
 } from "@/constants/icons";
 const ActionFeedbackCard = ({
+  icon,
   content = {
     status: "", // success, failure, pending
     title: "",
@@ -16,12 +17,12 @@ const ActionFeedbackCard = ({
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems: "center",
         gap: 16,
         maxWidth: 500,
       }}
     >
-      {content.status === "success" ? (
+      {icon ? (content.status === "success" ? (
         <ActionSuccessfulIcon />
       ) : content.status === "failure" ? (
         <ActionFailedIcon />
@@ -29,12 +30,12 @@ const ActionFeedbackCard = ({
         <ActionPendingIcon />
       ) : (
         <></>
-      )}
+      )): <></>}
       <h2 style={{ marginTop: "20px" }}>{content.title}</h2>
       <p
         style={{
           fontSize: 16,
-          textAlign: "center",
+          // textAlign: "center",
           textTransform: textTransform,
         }}
       >

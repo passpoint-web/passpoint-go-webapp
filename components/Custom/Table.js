@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Search from "../Custom/Search";
+import Search from "./Search";
 import CustomSelect from "@/components/Custom/Select";
 import styles from "../../assets/styles/table.module.css";
 
