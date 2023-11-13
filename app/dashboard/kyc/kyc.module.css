@@ -1,0 +1,133 @@
+.overlay_screen {
+  min-height: 100svh;
+  width: 100vw;
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 17, 50, 0.6);
+  cursor: unset;
+  display: grid;
+  place-items: center;
+}
+
+.layout_ctn {
+  background-color: #fff;
+  padding: var(--outer-component-mg) 0;
+  display: flex;
+  width: 75vw;
+  min-width: 900px;
+  border-radius: 8px;
+  height: 85vh;
+  overflow: auto;
+}
+
+.layout_ctn::-webkit-scrollbar {
+  display: none;
+}
+
+.layout_ctn > .lhs {
+  padding: 0 var(--outer-component-gap);
+  border-right: 1px solid var(--grey-5);
+  width: 33%;
+  position: sticky;
+  top: 0;
+  position: -webkit-sticky;
+}
+
+
+.lhs_kyc .top{
+  margin-bottom: var(--outer-component-mg);
+  display: flex;
+  flex-direction: column;
+}
+
+.pages {
+  height: 100%;
+  padding: var(--outer-component-gap) var(--outer-component-mg);
+  display: flex;
+  width: 70%;
+}
+
+.pages > .inner {
+  min-height: 100vh;
+  width: clamp(450px, 90%, 550px);
+}
+
+.pages > .inner > h2 {
+  margin-bottom: var(--inner-component-mg);
+}
+
+.pages > .inner > h4 {
+  margin-bottom: var(--inner-component-mg);
+}
+
+.inner .innerUpload {
+  margin-bottom: var(--btn-padding);
+}
+
+.inner .innerSucces {
+  padding: 56px 24px 53px;
+  text-align: center;
+  width: 80%;
+  border-radius: 12px;
+  border: 1px solid var(--grey-grey-5, #e5e7ef);
+  background: var(--white);
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.2);
+}
+.inner .innerSucces p {
+  margin: 10px 0 32px;
+}
+
+.action_ctn {
+  margin: 48px 0 var(--inner-component-mg);
+  display: flex;
+  gap: var(--inner-component-mg);
+}
+.action_ctn .primary {
+  width: 100%;
+}
+/* .action_ctn button.primary {
+  width: 60% !important;
+} */
+
+.action_ctn .back_btn {
+  height: 48px;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .layout_ctn > .lhs,
+  .pages {
+    width: 100%;
+  }
+
+  .pages > .inner {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  .lhs_kyc .top{
+    align-items: center;
+    text-align: center;
+  }
+
+  .layout_ctn > .lhs {
+    position: unset;
+  }
+
+  .levels_ctn {
+    display: flex;
+  }
+
+  .lhs_kyc .levels {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* .kyc_leve */
+  .layout_ctn {
+    flex-direction: column;
+    min-width: unset;
+  }
+  
+}

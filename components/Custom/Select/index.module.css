@@ -1,0 +1,192 @@
+/* countries select */
+.custom_select {
+  position: relative;
+  transform: none;
+}
+
+.custom_select button {
+  background-color: #fff;
+  border: 1px solid var(--input-border);
+  height: var(--input-height);
+  border-radius: var(--input-br);
+  padding: 0 var(--input-padding);
+  box-shadow: var(--input-box-shadow);
+  display: block;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--input-height);
+  -webkit-border-radius: var(--input-br);
+  -moz-border-radius: var(--input-br);
+  -ms-border-radius: var(--input-br);
+  -o-border-radius: var(--input-br);
+}
+
+.custom_select button:not(:disabled):hover {
+  border-color: var(--sky-blue);
+}
+
+.custom_select button:not(:disabled):focus {
+  border-color: var(--sky-blue);
+  box-shadow: 0px 0px 0px 3px var(--input-focus-box-shadow);
+}
+
+.custom_select.error button:not(:disabled) {
+  border: 1px solid var(--input-error-border) !important;
+  background-color: var(--input-error-bg) !important;
+}
+
+.custom_select.error button:not(:disabled):focus {
+  box-shadow: 0px 0px 0px 3px var(--input-error-box-shadow) !important;
+}
+
+.custom_select button:disabled {
+  background-color: var(--grey-5);
+  border: 1px solid var(--input-border-disabled) !important;
+}
+
+.custom_select button svg {
+  transition: 0.2s;
+}
+
+.custom_select button.active svg {
+  transform: rotate(-180deg);
+}
+
+.custom_select button .content {
+  width: calc(100% - 15px);
+}
+
+.custom_select .content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.custom_select .content input {
+  background: transparent;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+}
+.custom_select .content input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.custom_select .content_selected {
+  background-color: var(--grey-6);
+}
+
+.custom_select button .content p {
+  color: var(--grey-3);
+}
+
+.custom_select button .content p.option,
+.custom_select .select .content p.option {
+  color: var(--grey-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.1rem;
+  font-family: "GraphikLight";
+}
+
+.custom_select button .content p.option > span,
+.custom_select .select .content p.option > span {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--sky-blue);
+  margin-top: 4px;
+}
+
+.custom_select .select {
+  padding: var(--sm-inner-component-mg) 0;
+  /* border: 1px solid var(--grey-4); */
+  border-radius: var(--input-br);
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.2);
+  /* experimental */
+  height: clamp(
+    calc(var(--input-height) * 4 + (var(--sm-inner-component-mg) * 2)),
+    calc(var(--input-height) * 4 + (var(--sm-inner-component-mg) * 2)),
+    calc(var(--input-height) * 5 - var(--sm-inner-component-mg))
+  );
+  overflow-y: auto;
+  margin-top: calc(var(--sm-inner-component-mg));
+  position: absolute;
+  top: var(--input-height);
+  width: 100%;
+  z-index: var(--z-index-select-dropdown);
+  background-color: #fff;
+}
+
+.custom_select .select.top {
+  bottom: var(--input-height);
+  top: unset;
+  margin-bottom: calc(var(--sm-inner-component-mg));
+}
+
+/* hide countries container scroll bar */
+.custom_select .select::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.custom_select .select {
+  overflow: -moz-scrollbars-none;
+}
+
+.custom_select .select {
+  -ms-overflow-style: none;
+}
+/* end */
+
+.custom_select .select .input_wrapper {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  padding-bottom: var(--sm-inner-component-mg);
+}
+
+.custom_select .select input[type="search"] {
+  /* height: 40px; */
+  margin: 0 var(--sm-inner-component-mg);
+  width: calc(100% - var(--sm-inner-component-mg) * 2);
+  border-radius: 6px;
+}
+
+.custom_select .select input[type="search"]:focus {
+  box-shadow: none;
+}
+
+.custom_select .select input[type="search"]:focus + label svg path {
+  stroke: var(--grey-1);
+}
+
+.custom_select .select .content {
+  padding: 0 var(--input-padding);
+  height: var(--input-height);
+  display: flex;
+  align-items: center;
+  transition: 0.2;
+  cursor: pointer;
+}
+
+.custom_select .object__select .content {
+  height: 60px;
+}
+
+.custom_select .content .img,
+.custom_select .select .content .img {
+  border-radius: 50%;
+  border: 0.2px solid var(--grey-6);
+}
+
+.custom_select .select .content:hover {
+  background-color: var(--grey-6);
+}
+
+/* end */
+/* account type dropdown styles */

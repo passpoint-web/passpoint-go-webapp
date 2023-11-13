@@ -1,0 +1,638 @@
+/* TRAVEL DASHBOARD */
+.travel__dashboard_header {
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.travel__dashboard_header .row_one {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+}
+.travel__dashboard_header .row_one a {
+  display: inline-flex;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--sky-blue);
+  font-size: 1rem;
+}
+
+.travel__dashboard_header .row_one .quick__filter {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.travel__dashboard_header .row_one .quick__filter input {
+  background: var(--grey-6);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  color: #000;
+}
+.travel__dashboard_header .row_one .quick__filter input::placeholder {
+  color: var(--grey-1);
+}
+.travel__dashboard_header
+  .row_one
+  .quick__filter
+  input::-webkit-outer-spin-button,
+.travel__dashboard_header
+  .row_one
+  .quick__filter
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: textfield;
+}
+
+.travel__dashboard_header .row_one .quick__filter input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.travel__dashboard_header .row_two {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+.to__fro_group {
+  display: flex;
+  gap: 1rem;
+  flex-basis: 40%;
+  position: relative;
+  margin-top: 0;
+}
+.to__fro_group:nth-child(1) > div {
+  width: 50%;
+  margin-bottom: var(--inner-component-mg);
+}
+.to__fro_group .svg__wrapper svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 27px;
+  z-index: 1;
+  width: 40px;
+}
+.travel__dashboard_header .row_two a {
+  flex-basis: 20%;
+  gap: 0.4rem;
+  font-size: 1rem;
+  margin-bottom: var(--inner-component-mg);
+}
+
+/* SELECT FLIGHTS */
+.row__wrapper {
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  margin-bottom: 2rem;
+}
+.row__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  width: 100%;
+}
+.row__header h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fs__row {
+  padding: 0 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+.fs__row .lhs {
+  width: 280px;
+  min-width: 280px;
+  border-radius: 12px;
+  background: var(--white);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  border: 1px solid var(--grey-grey-5, #e5e7ef);
+  height: fit-content;
+}
+.fs__row .rhs {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.rhs .form__action {
+  margin-top: var(--inner-component-mg);
+}
+.filter__box {
+  border-bottom: 1px solid var(--grey-grey-5, #e5e7ef);
+}
+.filter__box:nth-last-child(1) {
+  border-bottom: 0;
+}
+.filter__box .header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+.filter__box .content {
+  padding: 1.5rem;
+  padding-top: 0;
+}
+.header h5 {
+  font-family: "GraphikMedium";
+}
+.filter__input_group h6 {
+  font-family: "GraphikMedium";
+  font-size: 0.875rem;
+  margin-bottom: 0.4rem;
+  margin-top: 1.4rem;
+}
+.filter__input_group:nth-child(1) h6 {
+  margin-top: 0;
+}
+.filter__input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--grey-2);
+}
+
+/* FLIGHT CARD */
+.flight__card {
+  border-radius: 12px;
+  background: var(--white);
+  border: 1px solid var(--grey-grey-5, #e5e7ef);
+  padding: 1.5rem;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  width: 100%;
+}
+.fc__row_one {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.fc__row_two {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-end;
+}
+.fc__airline {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fc__airline h6 {
+  font-size: 0.875rem;
+  font-family: "GraphikMedium";
+}
+.fc__airline > div {
+  border-radius: 8px;
+  border: 1px solid var(--grey-5);
+  background: var(--sky-blue-light);
+  width: 65px;
+  min-width: 65px;
+  height: 65px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.fc__tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.fc__row_one .fc__price {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-basis: 30%;
+  max-width: 200px;
+}
+.fc__price h4 {
+  color: var(--sky-blue);
+  font-family: "GraphikMedium";
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.fc__row_two > a {
+  flex-basis: 30%;
+  max-width: 200px;
+}
+
+/* FLIGHT CARD TIMELINE */
+.fc__timeline {
+  min-width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  flex-basis: 70%;
+  position: relative;
+}
+.fc__timeline .fc__col h5 {
+  font-family: "GraphikMedium";
+  color: var(--grey-2);
+  margin-bottom: 0.7rem;
+}
+.fc__timeline_range {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.circle__ctn {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.circle__ctn > div:not(.circle) {
+  position: absolute;
+  left: auto;
+  right: auto;
+  margin: auto;
+  font-size: 0.9rem;
+  text-align: center;
+  width: 60px;
+  margin-left: -25px;
+}
+.circle__ctn > div:nth-child(1) {
+  top: 1.3rem;
+  white-space: nowrap;
+}
+.circle__ctn > div:nth-last-child(1) {
+  bottom: 1.3rem;
+  white-space: nowrap;
+}
+.fc__timeline .circle {
+  min-width: 10px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 1px dashed var(--sky-blue);
+  background: var(--white);
+}
+.fc__timeline .fc__durations {
+  position: absolute;
+  top: 1.3rem;
+  display: flex;
+  justify-content: space-around;
+}
+.fc__timeline .fc__timeline_stop:nth-child(1) .circle {
+  border: none;
+  background: #cbebf3;
+}
+.fc__timeline .fc__timeline_stop:nth-last-child(1) .circle {
+  border: none;
+  background: var(--sky-blue);
+}
+.fc__timeline_stop {
+  display: flex;
+  align-items: center;
+  flex-basis: 50%;
+}
+.fc__timeline_stop:nth-last-child(1) {
+  flex-basis: 0;
+}
+.fc__line {
+  height: 1px;
+  width: 100%;
+  border: 0.5px solid var(--sky-blue);
+}
+.fc__timeline.fc__timeline_with_stopover .fc__line {
+  border: 0.5px dashed var(--sky-blue);
+}
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(2)
+  .fc__line {
+  border: 0.5px solid var(--sky-blue);
+}
+/* .fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-child(1)
+  .circle__ctn,
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(1)
+  .circle__ctn,
+.fc__timeline.fc__timeline_with_stopover
+  .fc__timeline_stop:nth-last-child(1)
+  .fc__line {
+  display: none;
+} */
+
+/* INPUT RANGE */
+.filter__input.range__input {
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+.filter__input.range__input:nth-last-child(1) {
+  margin-bottom: 0;
+}
+.filter__input_col_one {
+  text-align: left;
+  width: 100%;
+  font-family: "GraphikMedium";
+  color: var(--grey-2);
+  margin-bottom: 0.5rem;
+}
+.filter__input_col_one > span {
+  color: var(--grey-2);
+}
+.filter__input_col_two {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1.2rem;
+}
+.filter__input_col_two > div {
+}
+.filter__input_col_two > button {
+  font-size: 1rem;
+  color: var(--sky-blue);
+}
+.range__ctn {
+  position: relative;
+  width: 100%;
+}
+.range__ctn input {
+  position: absolute;
+  inset: 0;
+}
+
+/* FLIGHT SELECTED */
+
+.selected__row {
+  padding: 0 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+.selected__row .lhs {
+  flex-basis: 100%;
+  background: var(--white);
+}
+.selected__row .rhs {
+  flex-basis: 100%;
+  width: 200px;
+  max-width: 300px;
+  display: grid;
+  place-items: center;
+  padding: 0 5%;
+}
+.selected__row .rhs a {
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1px solid var(--sky-blue);
+  color: var(--sky-blue);
+}
+
+/* PAYMENTS ROW */
+.payments__row {
+  padding: 0 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+.payments__row .lhs {
+  width: 280px;
+  min-width: 280px;
+  border-right: 1px solid var(--grey-5);
+  margin-right: 1.5rem;
+  padding-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payments__row .rhs {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.payment__option_btn {
+  height: 50px;
+  width: 100%;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+.payment__option_btn > div {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 1px solid var(--grey-5);
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  display: grid;
+  place-items: center;
+}
+.payment__option_btn .option__btn_text {
+  font-family: "GraphikMedium";
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.2rem;
+}
+.payment__option_btn > div::after {
+  content: ".";
+  width: 0px;
+  height: 0px;
+  background: var(--sky-blue);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+.payment__option_btn.active > div {
+  border: 1px solid var(--sky-blue);
+}
+.payment__option_btn.active > div::after {
+  content: ".";
+  width: 16px;
+  height: 16px;
+}
+.payment__option_btn:hover,
+.payment__option_btn.active {
+  background: var(--grey-6);
+}
+.payments__row form {
+  width: 450px;
+  margin: 0 auto;
+  margin-bottom: 5%;
+}
+.wallet__flex {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.wallet__flex > div {
+  flex-basis: 50%;
+}
+
+/* PAYMENT SUCCESSFUL */
+.payment__successful {
+  max-width: 425px;
+  margin: 0 auto;
+  text-align: center;
+}
+.payment__successful p {
+  font-size: 1.15rem;
+  margin-top: 1rem;
+}
+.payment__successful a {
+  width: 250px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* FLIGHT DETAILS */
+.modal__tab_group {
+  display: flex;
+  border-bottom: 2px solid var(--grey-6);
+  overflow-x: auto;
+}
+
+.modal__tab_group button {
+  height: 40px;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid transparent;
+  color: var(--grey-3);
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+.modal__tab_group button.active,
+.modal__tab_group button:hover {
+  border-color: var(--sky-blue);
+  color: var(--sky-blue);
+}
+.modal__bottom_actions {
+  padding: var(--inner-component-mg);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 5%;
+}
+.modal__bottom_actions button {
+  width: auto;
+  padding: 0 1.5rem;
+}
+.modal__bottom_actions button:nth-child(1) {
+  color: var(--dark);
+  border: 1px solid var(--grey-5);
+  background: var(--white);
+}
+.modal__bottom_actions button:nth-child(2) {
+  background: var(--negative);
+}
+
+.modal__flight_details {
+  /* padding: var(--inner-component-mg); */
+  padding: 2rem;
+  /* min-height: 400px;
+  max-height: 57vh; */
+  height: 57vh;
+  overflow-y: auto;
+}
+.modal__flight_details_section {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.modal__flight_details .row {
+  display: flex;
+  gap: 2rem;
+}
+.modal__flight_details_section h5 {
+  font-size: 1.15rem;
+  font-family: "GraphikMedium";
+  font-weight: 70;
+  margin-top: 4rem;
+}
+.modal__flight_details_section:nth-child(1) h5 {
+  margin-top: 0;
+}
+.modal__flight_details .label {
+  width: 200px;
+  font-size: 1.15rem;
+  color: var(--grey-3);
+}
+.modal__flight_details .value span {
+  font-size: 1.15rem;
+  line-height: 1.8rem;
+}
+.modal__flight_details .value > span > span {
+  color: var(--grey-3);
+}
+.wallet__link {
+  width: "100%";
+  height: 50px;
+  display: grid;
+  place-items: center;
+}
+
+@media screen and (max-height: 800px) {
+  .modal__flight_details {
+    height: 50vh;
+  }
+}

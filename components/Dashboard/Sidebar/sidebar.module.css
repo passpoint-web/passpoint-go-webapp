@@ -1,0 +1,48 @@
+/* dashboard sidebar  */
+.dashSide_main .logo,
+.dashSide_link {
+  display: flex;
+  align-items: center;
+}
+
+.dashSide_main {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  background-color: var(--white);
+}
+
+.dashSide_main nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: var(--inner-component-mg);
+}
+
+.dashSide_main .logo {
+  height: var(--header-height);
+  padding: 0 30px;
+  border-bottom: 1px solid var(--grey-5);
+}
+
+.dashSide_link {
+  gap: var(--btn-fs);
+  color: var(--grey-3);
+  padding: 0 var(--btn-padding);
+  font-family: var(--graphikRegular);
+  letter-spacing: 0.3px;
+  font-size: 15px;
+  text-decoration: none !important;
+  height: 50px;
+}
+
+.dashSide_active {
+  color: var(--secondary);
+  font-family: var(--graphikSemibold);
+}
+
+.dashSide_active svg path {
+  fill: var(--secondary);
+  opacity: 1;
+}
