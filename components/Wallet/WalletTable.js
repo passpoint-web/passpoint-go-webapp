@@ -49,6 +49,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		startDate: '2023-09-01',
 		endDate: numericalDateDashReversed(new Date())
 	})
+	// eslint-disable-next-line no-unused-vars
 	const getTransactions = async (
 		pageNumber,
 		currency = 'NGN' ,

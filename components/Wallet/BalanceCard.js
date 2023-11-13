@@ -10,9 +10,9 @@ import CreatePinModal from '../Modal/CreatePin'
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
-import RefreshBtn from '../Btn/RefreshBtn';
+// import RefreshBtn from '../Btn/RefreshBtn';
 
-const BalanceCard = ({ dataLoading, balanceLoading, walletAccount, wallet, styles, updateWalletState, updateBalanceState}) => {
+const BalanceCard = ({ dataLoading, walletAccount, wallet, styles, updateWalletState}) => {
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
 	const {formatMoney, maskValue} = functions

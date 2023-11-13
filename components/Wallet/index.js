@@ -13,7 +13,7 @@ import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { saveWalletState, getWalletState } from "@/services/localService";
-import RefreshBtn from "../Btn/RefreshBtn";
+// import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
 	const [walletState, setWalletState] = useState('no-wallet') // no-wallet, pending, created
