@@ -266,17 +266,6 @@ function maskedPhoneNo(number) {
   return `${firstThree}${maskedSection}${lastThree}`
 }
 
-function maskedPhoneNo(number) {
-  // Check if the input number is valid
-  if (!number || number.length !== 11) {
-    throw new Error("Number must be exactly 11 digits long.")
-  }
-  const firstThree = number.substring(0, 3)
-  const lastThree = number.substring(number.length - 3)
-  const maskedSection = "*".repeat(number.length - 6)
-  return `${firstThree}${maskedSection}${lastThree}`
-}
-
 const functions = {
   lastFourDigits,
   formatNumber: number,
