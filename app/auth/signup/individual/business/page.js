@@ -78,7 +78,7 @@ const BusinessInformation = () => {
 		setBusinessNameCheckVerified(null)
 		try {
 			await authenticate.checkBusinessName({
-				businessName
+				businessName: businessName.trim()
 			})
 			// console.log(response)
 			setBusinessNameCheckVerified(true)
