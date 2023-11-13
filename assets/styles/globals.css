@@ -79,9 +79,9 @@
   --negative-box-shadow: #ffc7c3;
   --negative-bg: #ffe6e4;
 
-  --positive: #66cb9f;
-  --green-alert-bg: #e6f8ef;
-  --green-alert: #07b463;
+  --positive: #07b463;
+  --positive-box-shadow: #66cb9f;
+  --positive-bg: #e6f8ef;
 
   --warning-light: #ffd8bd;
   --warning-200: #df752b;
@@ -104,6 +104,9 @@
   --input-error-border: var(--negative);
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
+  --input-success-border: var(--positive);
+  --input-success-box-shadow: var(--positive-box-shadow);
+  --input-success-bg: var(--positive-bg);
   --input-checkbox-width: 16px;
 
   --flag-dropdown-width: clamp(40px, 15%, 200px);
