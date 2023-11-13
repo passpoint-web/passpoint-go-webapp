@@ -16,7 +16,8 @@ const kycBvnRestAgent = axios.create({
   },
 })
 const flightRestAgent = axios.create({
-  baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
+  baseURL: "https://travelapi.mypasspoint.com/api/v1/",
+  // baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
   headers: {
     "Content-Type": "application/json",
   },
