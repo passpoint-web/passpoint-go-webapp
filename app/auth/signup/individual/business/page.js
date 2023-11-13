@@ -99,10 +99,8 @@ const BusinessInformation = () => {
 		const conditionsMet = businessName && businessIndustry && businessNameCheckVerified
 		if (conditionsMet) {
 			setAllFieldsValid(true)
-			console.log('object')
 		} else {
 			setAllFieldsValid(false)
-			console.log('hh')
 		}
 	}, [payload, businessNameCheckVerified])
 
