@@ -73,7 +73,9 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
   }, [])
 
   useEffect(() => {
-    setWarningModalVisible(!walletAccount.pinCreated)
+    if (walletAccount.pinCreated) {
+      setWarningModalVisible(!walletAccount.pinCreated)
+    }
   }, [walletAccount])
 
   return (
