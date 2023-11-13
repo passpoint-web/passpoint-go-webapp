@@ -90,6 +90,7 @@ const SelectFlight = () => {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   const isStopoverGreaterThan = (number = 0) => {
     return flights?.find(
       (flight) =>

@@ -7,7 +7,7 @@ import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Pagination from "./Pagination"
-import Loader from "../Btn/Loader"
+// import Loader from "../Btn/Loader"
 import { getCredentials } from "@/services/localService"
 import FWLoader from "../FWLoader"
 
@@ -23,6 +23,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
   const [searchParam, setSearchParam] = useState("")
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [getDataLoading, setGetDataLoading] = useState(true)
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10)

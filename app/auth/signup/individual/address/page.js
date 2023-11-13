@@ -6,13 +6,10 @@ import { useRouter } from "next/navigation";
 import { registerUser } from "@/services/restService";
 import { CS } from "@/utils/CONSTANTS";
 import { getCredentials, saveCredentials } from "@/services/localService";
-import CustomSelect from "@/components/Custom/Select";
 import CountrySelect from "@/components/Custom/CountrySelect";
 // import BackBtn from '@/components/Btn/Back'
 import Input from "@/components/Dashboard/Input";
 import { useNotify } from "@/utils/hooks";
-import Select from "@/components/Dashboard/Select";
-import CustomSearchSelect from "@/components/Custom/Select/SearchSelect";
 import SearchSelect from "@/components/Dashboard/SearchSelect";
 
 const BusinessAddress = () => {

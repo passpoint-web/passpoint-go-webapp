@@ -6,7 +6,6 @@ import functions from "@/utils/functions";
 import OtpInput from "react-otp-input";
 // import styles from "./wallet.module.css";
 import formStyles from "@/assets/styles/auth-screens.module.css";
-import CustomSelect from "../Custom/Select";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import { wallet } from '@/services/restService/wallet'
 import MoneyInput from "../Custom/MoneyInput";
