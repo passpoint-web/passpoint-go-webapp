@@ -10,13 +10,13 @@ const restAgent = axios.create({
 })
 
 const kycBvnRestAgent = axios.create({
-  baseURL: "https://client-sandbox.mypasspoint.com/passpoint-usr/v1/kyc-app/",
+  baseURL: "https://client-staging.mypasspoint.com/passpoint-usr/v1/kyc-app/",
   headers: {
     "Content-Type": "application/json",
   },
 })
 const flightRestAgent = axios.create({
-  baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
+  baseURL: "https://travelapi.mypasspoint.com/api/v1/",
   headers: {
     "Content-Type": "application/json",
   },

@@ -5,7 +5,7 @@ import axios from 'axios';
 // const { returnBase64 } = functions
 import { getCredentials } from '../localService';
 const walletRestAgent = axios.create({
-	baseURL: "https://payment-sandbox.mypasspoint.com/passpoint-payserv/v1",
+	baseURL: "https://payment-staging.mypasspoint.com/passpoint-payserv/v1/",
 	headers: {
 		'Content-Type': 'application/json'
 	}
