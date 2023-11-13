@@ -13,6 +13,7 @@ import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { saveWalletState, getWalletState } from "@/services/localService";
+// import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
 	const [walletState, setWalletState] = useState('no-wallet') // no-wallet, pending, created
@@ -71,6 +72,15 @@ const Wallet = () => {
 		getWallet(false)
 	},[updateKey])
 
+	useEffect(function refreshData () {
+		const interval = setInterval(()=>{
+			// if (!balanceLoading) {
+				setUpdateKey(new Date().getTime())
+			// }
+		},45000)
+		return () => clearInterval(interval);
+	},[updateKey])
+
 	useEffect(()=>{
 		getWallet(false)
 	},[updateBalanceKey])
@@ -116,6 +126,7 @@ const Wallet = () => {
 							updateBalanceState={()=>updateBalanceState(true)}
 							styles={styles} />
 						{/* <VirtualAccountCard styles={styles} /> */}
+						{/* <RefreshBtn text={'Refresh'} refreshing={balanceLoading} onClick={()=>updateWalletState()} /> */}
 					</div>
 					{/* <div className={styles.wallet_chart}>
 					<section className={styles.chart_1}>
@@ -131,7 +142,7 @@ const Wallet = () => {
 							styles={styles} />
 					</div>
 				</> :
-				<CreateWallet wallet={wallet} styles={styles} />
+				(!dataLoading ? <CreateWallet wallet={wallet} styles={styles} /> : <></>)
 			}
 		</div>
 	)
