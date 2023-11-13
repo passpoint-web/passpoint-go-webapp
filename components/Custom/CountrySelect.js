@@ -33,7 +33,6 @@ const CountrySelect = ({ emitCountry, countriesSelectProps, disabled }) => {
 	}
 	const retrieveCountries = () => {
 		const data = COUNTRIES
-		console.log(data)
 		data.sort(function (a, b) {
 			if (a.name.common < b.name.common) {
 				return -1
@@ -51,7 +50,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps, disabled }) => {
 		emitCountry(defaultCountry)
 	}
 
-	const searchCountry = (item) => {
+	const searchCountries = (item) => {
 		setSearch(item)
 		setFilteredCountries(
 			countries.filter((c) => {
@@ -117,7 +116,7 @@ const CountrySelect = ({ emitCountry, countriesSelectProps, disabled }) => {
 							search={search}
 							id={'country'}
 							placeholder={'Search country'}
-							searchCountry={(e) => searchCountry(e)}
+							searchItem={(e) => searchCountries(e)}
 						/>
 						{filteredCountries.map((c, index) => (
 							<div

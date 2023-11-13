@@ -6,13 +6,13 @@ import functions from "@/utils/functions";
 import OtpInput from "react-otp-input";
 // import styles from "./wallet.module.css";
 import formStyles from "@/assets/styles/auth-screens.module.css";
-import CustomSelect from "../Custom/Select";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import { wallet } from '@/services/restService/wallet'
 import MoneyInput from "../Custom/MoneyInput";
 import AccountTypeDropDown from "./AccountTypeDropDown";
 import TertiaryBtn from "../Btn/Tertiary";
 import CreatePinModal from "../Modal/CreatePin";
+import SearchSelect from "../Dashboard/SearchSelect";
 
 const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	// const notify = useNotify();
@@ -307,22 +307,20 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 			{/* wallet id || account number */}
 			{accountType.name === 'Account Number' ?
 				<>
-					<Input
+					<SearchSelect
 						id="bank"
 						label="Select Bank"
 						error={ctaClicked && !bankDetail.bankName}
 						errorMsg="Bank name is required"
-					>
-						<CustomSelect
-							placeholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
-							selectOptions={banks}
-							disabled={banks.length === 0}
-							objKey={'name'}
-							selectedOption={bankDetail.bankName}
-							fieldError={ctaClicked && !bankDetail.bankName}
-							emitSelect={(option) => handleChange("bankName", option)}
-						/>
-					</Input>
+						selectPlaceholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
+						selectOptions={banks}
+						selectDisabled={banks.length === 0}
+						objKey={'name'}
+						selectedOption={bankDetail.bankName}
+						fieldError={ctaClicked && !bankDetail.bankName}
+						emitSelect={(option) => handleChange("bankName", option)}
+					/>
+
 					<Input
 						type="number"
 						label='Account Number'
@@ -345,7 +343,7 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 					onChange={(e) => handleChange("walletID", e.target.value)}
 					errorMsg={feedbackError.toLowerCase().includes('number')? 'Wallet ID is not valid' : 'Wallet ID is required'}
 				/>}
-			{accountNameRetrieved ?
+				{accountNameRetrieved ?
 				<>
 					<Input
 						disabled
