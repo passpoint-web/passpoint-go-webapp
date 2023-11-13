@@ -114,11 +114,7 @@ function getMonth(index) {
 }
 function isValidUrl(url) {
   // eslint-disable-next-line no-useless-escape
-  if (
-    url.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    )
-  ) {
+  if (url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
     return true
   }
   return false
@@ -253,6 +249,17 @@ function eighteenYearsAgo() {
   }`
   console.log(maxDate)
   return maxDate
+}
+
+function maskedPhoneNo(number) {
+  // Check if the input number is valid
+  if (!number || number.length !== 11) {
+    throw new Error("Number must be exactly 11 digits long.");
+  }
+  const firstThree = number.substring(0, 3);
+  const lastThree = number.substring(number.length - 3);
+  const maskedSection = "*".repeat(number.length - 6);
+  return `${firstThree}${maskedSection}${lastThree}`;
 }
 
 const functions = {
