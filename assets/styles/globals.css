@@ -751,9 +751,7 @@ input[type="range"]:focus::-moz-range-thumb {
   position: relative;
   top: -3px;
 }
-.table-ctn .custom-search label {
-  top: -2px;
-}
+
 .flight-services .quick__filter .input__ctn {
   max-width: 100px;
 }

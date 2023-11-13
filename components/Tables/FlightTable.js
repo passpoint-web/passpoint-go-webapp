@@ -10,6 +10,7 @@ import Pagination from "./Pagination"
 // import Loader from "../Btn/Loader"
 import { getCredentials } from "@/services/localService"
 import FWLoader from "../FWLoader"
+import Input from "../Dashboard/Input"
 
 const FlightTable = ({ title, setFlightDetails }) => {
   const { formatMoney } = functions
@@ -79,12 +80,14 @@ const FlightTable = ({ title, setFlightDetails }) => {
           </div>
 
           {/* <Loader size={60} /> */}
+          <Input>
           <Search
             id={"booking"}
             placeholder={"Search Booking ID"}
             search={searchParam}
-            searchCountry={setSearchParam}
+            searchItem={setSearchParam}
           />
+          </Input>
           {/* <CustomSelect
             id="status-type"
             selectOptions={["Confirmed", "Pending", "Failed"]}
