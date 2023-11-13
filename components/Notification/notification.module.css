@@ -98,8 +98,8 @@
   color: var(--sky-blue);
 }
 .paymentAlert {
-  background-color: var(--green-alert-bg);
-  color: var(--green-alert);
+  background-color: var(--positive-bg);
+  color: var(--positive);
 }
 .inventAlert,
 .reviewAlert {
