@@ -125,7 +125,7 @@ const BusinessInformation = () => {
 			setAllFieldsValid(false)
 		}
 	}, [
-		payload, checked
+		payload, checked, businessNameCheckVerified
 	])
 
 	return (
