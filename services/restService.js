@@ -38,12 +38,9 @@ const getRequestConfig = () => {
 
 restAgent.interceptors.response.use(undefined, (error) => {
   const statusCode = error.response ? error.response.status : null
-  console.log("Inte", statusCode)
   if (
     statusCode &&
     statusCode === 401
-    // ||
-    // (statusCode && statusCode === 403)
   ) {
     setLogout()
     if (!window.location.pathname.includes("/auth/login")) {
@@ -110,6 +107,9 @@ export const resendOtp = (data) => {
 export const authenticate = {
   registerUser: (path, data) => {
     return restAgent.post(path, data)
+  },
+  checkBusinessName: (data) => {
+    return restAgent.post('checkBusinessName', data)
   },
 
   verifyEmailOtp: (data) => {

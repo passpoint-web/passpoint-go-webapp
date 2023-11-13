@@ -4,7 +4,7 @@ import {
   ActionFailedIcon,
 } from "@/constants/icons";
 const ActionFeedbackCard = ({
-  icon,
+  icon=true,
   content = {
     status: "", // success, failure, pending
     title: "",
@@ -17,7 +17,7 @@ const ActionFeedbackCard = ({
       style={{
         display: "flex",
         flexDirection: "column",
-        // alignItems: "center",
+        alignItems: "center",
         gap: 16,
         maxWidth: 500,
       }}
@@ -35,7 +35,7 @@ const ActionFeedbackCard = ({
       <p
         style={{
           fontSize: 16,
-          // textAlign: "center",
+          textAlign: "center",
           textTransform: textTransform,
         }}
       >
