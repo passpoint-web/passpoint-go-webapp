@@ -163,7 +163,7 @@
   }
 } */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 700px) {
   .auth_level {
     min-height: unset;
     gap: 5px;

@@ -1,0 +1,77 @@
+.input_wrapper {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  padding-bottom: var(--sm-inner-component-mg);
+}
+
+.input_wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input_wrapper .absolute_side {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  transition: var(--input-transition);
+  transform: translateY(15px);
+  z-index: var(--z-index-input-icon);
+  height: calc(100% - var(--sm-inner-component-mg));
+}
+
+.input_wrapper.left .absolute_side {
+  left: 16px;
+  right: unset;
+}
+
+.input_wrapper.left input {
+  padding-left: 44px !important;
+}
+
+.input_wrapper.left input:focus label svg path {
+  stroke: var(--grey-1) !important;
+}
+
+.input_wrapper .absolute_side svg {
+  margin-left: 0;
+}
+
+.input_wrapper .absolute_side svg path {
+  transition: var(--input-transition);
+}
+
+.input_wrapper .absolute_side.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.input_wrapper svg path {
+  stroke: var(--input-border);
+}
+
+.input_wrapper button:focus svg path,
+.input_wrapper input:focus + button svg path {
+  stroke: var(--grey-1) !important;
+}
+
+.input_wrapper input[type="search"] {
+  margin: 0 var(--sm-inner-component-mg);
+  width: calc(100% - var(--sm-inner-component-mg) * 2);
+  border-radius: calc(var(--input-br) - var(--sm-inner-component-mg));
+}
+
+.input_wrapper input[type="search"]:focus {
+  box-shadow: none;
+}
+
+.input_wrapper input[type="search"]:focus
++ label
+svg
+path {
+  stroke: var(--grey-1);
+}

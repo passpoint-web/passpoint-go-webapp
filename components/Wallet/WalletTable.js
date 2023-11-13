@@ -49,6 +49,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		startDate: '2023-09-01',
 		endDate: numericalDateDashReversed(new Date())
 	})
+	// eslint-disable-next-line no-unused-vars
 	const getTransactions = async (
 		pageNumber,
 		currency = 'NGN' ,
@@ -121,7 +122,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 			delete filters.endDate
 		}
 		try {
-			const response = await wallet.allTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
+			const response = await wallet.allTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
 			const {data} = response.data
 			const {
 				currentPage,
@@ -152,15 +153,19 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	}
 
 	const handleEntry = (val) => {
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
+		// getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
+		getAllTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
 	}
 	const handleTransactionType = (val)=> {
 		setTransactionType(val)
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
+		console.log(val)
+		// getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
+		getAllTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
 	}
 
 	const setPage = (val) => {
-		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
+		// getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
+		getAllTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
 	}
 
 	// useEffect(()=>{
@@ -168,8 +173,8 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 	// },[])
 
 	useEffect(()=>{
-		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
-		// getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		// getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
 	},[updateKey])
 
 	// useEffect(()=>{
@@ -250,8 +255,10 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 						<table>
 							<thead>
 								<tr className="table__header">
+								
 									<th>BENEFICIARY DETAILS</th>
 									<th>BENEFICIARY BANK</th>
+									
 									<th>AMOUNT</th>
 									<th>TYPE</th>
 									<th>DATE &amp; TIME</th>
@@ -262,8 +269,11 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 							<tbody>
 								{transactions.map((data, id) => (
 									<tr key={id}>
-										<td className={tableStyles.td_4}>
-											<div className={tableStyles.col}>
+										{data.transactionCategory !== 'BILL_PAYMENT' ?
+										<>
+											<td className={tableStyles.td_4}>
+											{
+												<div className={tableStyles.col}>
 												<h4>{data.beneficiaryAccountName?.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
 												<div className={tableStyles.accountNum}
 													style={{display: 'flex', gap: 10}}>
@@ -272,8 +282,21 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 														value={data.beneficiaryWalletId || data.beneficiaryAccountNumber} />
 												</div>
 											</div>
+											}
 										</td>
-										<td className={tableStyles.td_3}>{data.beneficiaryBankName}</td>
+										<td className={tableStyles.td_3}>{data.transactionCategory !== 'BILL_PAYMENT' ? data.beneficiaryBankName : '-'}</td>
+										</> : 
+										<>
+											{/* <td className={tableStyles.td_4}>
+												<div style={{display: 'flex', gap: 10}}>
+												<h5>{data.transactionId.substring(0, 20)}...</h5>
+											<CopyValue color="#009ec4"
+														value={data.transactionId} />
+												</div>
+												</td> */}
+											<td className={tableStyles.td_4}>-</td>
+											<td className={tableStyles.td_3}>-</td>
+										</>}
 										<td className={`${tableStyles.td_3} text-bold`}>
 											{formatMoney(data.amount, data.currency)}
 										</td>
@@ -285,7 +308,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 												<>
 													<span className="incoming-circle" /> Incoming
 												</> 
-												: data.transactionCategory ==='BILLPAYMENT' ?
+												: data.transactionCategory ==='BILL_PAYMENT' ?
 												<>
 												<span className="payment-circle" /> Payment
 												</> : <></>

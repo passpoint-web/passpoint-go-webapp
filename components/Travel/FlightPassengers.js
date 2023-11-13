@@ -215,6 +215,11 @@ const FlightPassengers = ({
                 <CustomSelect
                   id="class"
                   selectOptions={["male", "female"]}
+                  styleProps={{
+                    dropdown: {
+                      height: 100
+                    }
+                  }}
                   selectedOption={passengerGenders[index]}
                   emitSelect={(e) => updateValue("gender", e, passenger?.id)}
                   placeholder="Select Gender"

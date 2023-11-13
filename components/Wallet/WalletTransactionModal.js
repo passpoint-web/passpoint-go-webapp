@@ -115,7 +115,9 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 					<span>{transaction.transactionId}</span>
 				</div>
 			</div>
-			<div className={styles.row}>
+			{transaction.transactionCategory !== 'BILL_PAYMENT' ?
+			<>
+				<div className={styles.row}>
 				<div className={styles.label}>Beneficiary Name</div>
 				<div className={styles.value}>
 					<span>{transaction.beneficiaryAccountName}</span>
@@ -148,16 +150,29 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 					<span>{transaction.senderAccountName}</span>
 				</div>
 			</div>
+			</> :
+			<>
+			<div className={styles.row}>
+				<div className={styles.label}>Payment Ref</div>
+				<div className={styles.value}>
+					<span>{transaction.paymentRef}</span>
+				</div>
+			</div>
+			</>
+			}
 			<div className={styles.row}>
 				<div className={styles.label}>Transaction Type</div>
 				<div className={styles.value}>
 					{transaction.transactionCategory ==='PAYOUT' ?
 						<>
 							<div className="outgoing-circle" /> Outgoing
-						</> :
+						</> : transaction.transactionCategory ==='COLLECTION' ?
 						<>
 							<div className="incoming-circle" /> Incoming
-						</>
+						</> : transaction.transactionCategory ==='BILL_PAYMENT' ?
+						<>
+						<div className="payment-circle" /> Payment
+						</> : <></>
 					}
 				</div>
 			</div>

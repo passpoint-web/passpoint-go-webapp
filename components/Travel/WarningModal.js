@@ -1,12 +1,11 @@
-"use client"
 import Link from "next/link"
 import ModalWrapper from "../Modal/ModalWrapper"
 import { AddMoneyIllustration } from "@/constants/icons"
 
-const WarningModal = ({ styles, setModalVisible }) => {
-  const closeModal = () => {
-    setModalVisible(false)
-  }
+const WarningModal = () => {
+  // const closeModal = () => {
+  //   setModalVisible(false)
+  // }
 
   return (
     <ModalWrapper
