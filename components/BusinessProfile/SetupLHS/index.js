@@ -1,10 +1,12 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import FormLevel from "../../FormLevel";
+import FormLevel from "../../FormLevel/FormLevel";
 import { useEffect, useState } from "react";
 import BackBtn from "@/components/Btn/Back";
 import { getPublicProfile } from "@/services/localService";
 import styles from "@/app/dashboard/business-profile-setup/business-profile.module.css";
+import formLevelStyles from "@components/Auth/SignupLayoutLHS/signup-layout-lhs.module.css";
+
 const PublicProfileSetupLHS = () => {
   // const savedPublicProfile = getPublicProfile()
   // console.log(savedPublicProfile)
@@ -60,7 +62,7 @@ const PublicProfileSetupLHS = () => {
       <BackBtn text="Dashboard" onClick={() => push("/dashboard")} />
       <div className={styles.lhs_levels_ctn}>
         {levelsToDisplay.map((e, index) => (
-          <FormLevel key={index} auth={{ ...e, level: index + 1 }} />
+          <FormLevel key={index} styles={formLevelStyles} auth={{ ...e, level: index + 1 }} />
         ))}
       </div>
     </>

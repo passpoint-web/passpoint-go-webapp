@@ -1,16 +1,9 @@
-import styles from "./Auth/SignupLayoutLHS/signup-layout-lhs.module.css";
+import styles from './form-level.module.css'
 
-const FormLevel = ({ auth }) => {
+const FormLevel = ({ auth, w1000 }) => {
   return (
-    // <div
-    // 	className={
-    // 		`${styles.auth_level}
-    // 		${mobileWidth === '1000' ? 'mobile_width_1000' : 'mobile_width_700'}
-    // 		${auth?.active ? styles.active : ''}
-    // 		${auth?.completed ? styles.completed : ''}`}
-    // >
     <div
-      className={`${styles.auth_level} 
+      className={`${styles.auth_level} ${w1000 ? styles.w_1000 : ''}
 				${auth?.active ? styles.active : ""} 
 				${auth?.completed ? styles.completed : ""}`}
     >

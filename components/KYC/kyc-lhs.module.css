@@ -119,12 +119,34 @@
   .auth_level {
     gap: 5px
   }
+
+  .auth_content_lhs{
+    padding: var(--screen-padding-top) 30px;
+  }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
   .auth_level {
     min-height: unset;
     gap: 5px;
+  }
+
+  .auth_content_lhs {
+    position: unset;
+    height: 100px;
+    min-height: 100px;
+    width: 100%;
+    border-right: none;
+    display: flex;
+    padding: var(--screen-padding-top) var(--header-padding);
+  }
+
+  .auth_content_lhs .inner {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    justify-content: center;
   }
 
   .auth_level {
