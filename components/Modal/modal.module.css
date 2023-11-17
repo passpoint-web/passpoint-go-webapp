@@ -149,7 +149,6 @@
 
   .mobile_top {
     position: absolute;
-    /* border: 1px solid red; */
     width: 100%;
     padding: 10px 0;
     display: flex;
@@ -165,7 +164,6 @@
 
   .child_ctn {
     min-width: 90%;
-    background: red;
   }
 
   .child {
