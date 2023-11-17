@@ -6,7 +6,7 @@ import ModalWrapper from "@/components/Modal/ModalWrapper";
 import { getCredentials } from "@/services/localService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { kyc } from "@/services/restService";
+// import { kyc } from "@/services/restService";
 
 const AccessLayout = ({children}) => {
   const {push} = useRouter()
