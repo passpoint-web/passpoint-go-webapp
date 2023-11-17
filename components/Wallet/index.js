@@ -4,6 +4,7 @@ import FullScreenLoader from "../Modal/FullScreenLoader";
 import ModalWrapper from "../Modal/ModalWrapper";
 import BalanceCard from "./BalanceCard";
 import CreateWallet from "./CreateWallet";
+import functions from "@/utils/functions";
 // import CashChart from "./CashChart";
 // import { InflowOutflowChart } from "./InflowOutflowChart";
 // import VirtualAccountCard from "./VirtualAccountCard";
@@ -12,10 +13,11 @@ import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
-import { saveWalletState, getWalletState } from "@/services/localService";
+import { saveWalletState, getWalletState, saveBanks } from "@/services/localService";
 // import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
+	const { sortAlphabetically } = functions;
 	const [walletState, setWalletState] = useState('no-wallet') // no-wallet, pending, created
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
@@ -58,6 +60,21 @@ const Wallet = () => {
 		}
 	}
 
+	const getBanksAndCache = async() => {
+		try {
+			const response = await wallet.getBanks()
+			const {data} = response.data
+			if (data) {
+				const sortedBanks = sortAlphabetically(data, 'name')
+				saveBanks(sortedBanks)
+			}
+		} catch (_err) {
+			// console.log(_err.response.data)
+		} finally {
+			//
+		}
+	}
+
 	const updateWalletState = () => {
 		setUpdateKey(new Date().getTime())
 		getWallet(false)
@@ -70,6 +87,7 @@ const Wallet = () => {
 	
 	useEffect(()=>{
 		getWallet(false)
+		getBanksAndCache()
 	},[updateKey])
 
 	useEffect(function refreshData () {
