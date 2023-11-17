@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useNotify } from "@/utils/hooks"
 
 
-const CreateWallet = ({wallet, styles}) => {
+const CreateWallet = ({wallet, styles, setWalletState}) => {
 	const notify = useNotify()
 	const [createWalletLoading, setCreateWalletLoading] = useState(false)
 	// eslint-disable-next-line no-unused-vars
@@ -18,7 +18,8 @@ const CreateWallet = ({wallet, styles}) => {
 			})
 			console.log(response)
 			notify("success", response.responseMessage || 'We have confirmed your wallet creation');
-			window.location.reload()
+			// window.location.reload()
+			setWalletState('pending')
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
 			setFeedbackError(responseMessage || message)
