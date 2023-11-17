@@ -152,7 +152,7 @@ const BusinessPersonalInfo = () => {
                 </p>
               </div>
               <div className={styles.action_ctn}>
-                <PrimaryBtn loading={isLoading} text="Open account" />
+                <PrimaryBtn loading={isLoading} text="Save and Continue" />
               </div>
             </div>
           </form>
