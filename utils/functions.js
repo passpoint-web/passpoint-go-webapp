@@ -114,7 +114,11 @@ function getMonth(index) {
 }
 function isValidUrl(url) {
   // eslint-disable-next-line no-useless-escape
-  if (url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
+  if (
+    url.match(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    )
+  ) {
     return true
   }
   return false
@@ -143,7 +147,7 @@ const splitOnCapsLetter = (string) => {
   str = str[0].toUpperCase() + str.slice(1) // incase the first letter is not in caps
   str = str.split(/(?=[A-Z])/)
   str = str.join(" ")
-  console.log(str)
+  // console.log(str)
   return str.split(/(?=[A-Z])/)
 }
 
@@ -247,19 +251,19 @@ function eighteenYearsAgo() {
   }${formatted18YearsAgo[0]}-${formatted18YearsAgo[1] > 9 ? "" : "0"}${
     formatted18YearsAgo[1]
   }`
-  console.log(maxDate)
+  // console.log(maxDate)
   return maxDate
 }
 
 function maskedPhoneNo(number) {
   // Check if the input number is valid
   if (!number || number.length !== 11) {
-    throw new Error("Number must be exactly 11 digits long.");
+    throw new Error("Number must be exactly 11 digits long.")
   }
-  const firstThree = number.substring(0, 3);
-  const lastThree = number.substring(number.length - 3);
-  const maskedSection = "*".repeat(number.length - 6);
-  return `${firstThree}${maskedSection}${lastThree}`;
+  const firstThree = number.substring(0, 3)
+  const lastThree = number.substring(number.length - 3)
+  const maskedSection = "*".repeat(number.length - 6)
+  return `${firstThree}${maskedSection}${lastThree}`
 }
 
 const functions = {

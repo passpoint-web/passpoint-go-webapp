@@ -1,0 +1,20 @@
+.main_page {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.main_page h1 {
+  line-height: 50px;
+}
+
+.main_page h3 {
+  line-height: 40px;
+}
+
+.sub_heading {
+  color: var(--grey-3);
+  font-size: 15px;
+  font-family: var(--graphikMedium);
+  line-height: 25px;
+}

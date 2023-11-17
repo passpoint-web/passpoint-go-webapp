@@ -6,6 +6,7 @@ import ModalWrapper from "@/components/Modal/ModalWrapper";
 import { getCredentials } from "@/services/localService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+// import { kyc } from "@/services/restService";
 
 const AccessLayout = ({children}) => {
   const {push} = useRouter()
@@ -13,8 +14,21 @@ const AccessLayout = ({children}) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
+    // getKycDetails()
     checkAccess()
   },[])
+
+  // const getKycDetails = async() => {
+  //   try {
+  //     const response = await kyc.getKycDetails()
+  //     console.log(response)
+  //   } catch (_err) {
+  //     console.log(_err)
+  //   }
+  //   finally {
+  //     // 
+  //   }
+  // }
 
   const checkAccess = async () => {
     const {kycStatus} = await getCredentials()

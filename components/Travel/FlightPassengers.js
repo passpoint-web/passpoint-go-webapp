@@ -80,18 +80,20 @@ const FlightPassengers = ({
 
   const isActivePassengersFieldsValid = () => {
     const ap = passengers?.at(activePassenger - 1)
-    console.log(functions.validEmail(ap?.email))
+    // console.log(functions.validEmail(ap?.email))
     if (documentsRequired) {
-      return ap?.first_name?.length > 1 &&
+      return (
+        ap?.first_name?.length > 1 &&
         ap?.last_name?.length > 1 &&
         functions.validEmail(ap?.email) &&
         ap?.gender &&
-        ap?.passenger_type === "adult"
-        ? isDate18YearsAgo(ap?.dob)
-        : ap?.dob &&
-            ap?.passport_no &&
-            ap?.passport_issue &&
-            ap?.passport_expiry
+        (ap?.passenger_type === "adult"
+          ? isDate18YearsAgo(ap?.dob)
+          : ap?.dob) &&
+        ap?.passport_no &&
+        ap?.passport_issue &&
+        ap?.passport_expiry
+      )
     }
     return (
       ap?.first_name?.length > 1 &&
@@ -215,11 +217,6 @@ const FlightPassengers = ({
                 <CustomSelect
                   id="class"
                   selectOptions={["male", "female"]}
-                  styleProps={{
-                    dropdown: {
-                      height: 100
-                    }
-                  }}
                   selectedOption={passengerGenders[index]}
                   emitSelect={(e) => updateValue("gender", e, passenger?.id)}
                   placeholder="Select Gender"

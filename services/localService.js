@@ -1,6 +1,28 @@
 // import cookiesFunc from "@/plugins/cookies"
 // const cookies = cookiesFunc()
 // setters
+const save2Local=(keyName, val)=>{
+  if (typeof window !== "undefined") {
+    localStorage.setItem(keyName, JSON.stringify(val))
+  }
+}
+
+const get4rmLocal=(keyName)=>{
+  if (typeof window !== "undefined") {
+    const val = localStorage.getItem(keyName)
+    if (val !== "undefined") {
+      return JSON.parse(val)
+    }
+    return null
+  }
+}
+
+export const remove4rmLocal = (keyName) => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(keyName)
+  }
+}
+
 export const saveCredentials = (credentials) => {
   localStorage.setItem("registration_cr3dentials", JSON.stringify(credentials));
 };
@@ -179,25 +201,12 @@ export const getSelectedFlight = () => {
   }
 }
 
-
-
-
 // wallets
 
+export const  saveWalletState = (val) => save2Local('wallet_state', val)
 
-export const  saveWalletState = (val) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("wallet_state", JSON.stringify(val))
-  }
-}
+export const getWalletState = () => get4rmLocal('wallet_state')
 
-export const getWalletState = () => {
-  if (typeof window !== "undefined") {
-    const val = localStorage.getItem("wallet_state")
-    if (val !== "undefined") {
-      return JSON.parse(val)
-    }
-    return null
-  }
-}
+export const  saveBanks = (val) => save2Local('available_banks', val)
 
+export const getBanks = () => get4rmLocal('available_banks')
