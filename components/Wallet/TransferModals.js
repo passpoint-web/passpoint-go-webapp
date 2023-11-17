@@ -13,6 +13,7 @@ import AccountTypeDropDown from "./AccountTypeDropDown";
 import TertiaryBtn from "../Btn/Tertiary";
 import CreatePinModal from "../Modal/CreatePin";
 import SearchSelect from "../Dashboard/SearchSelect";
+import { getBanks as getCachedBanks } from "@/services/localService";
 
 const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	// const notify = useNotify();
@@ -276,6 +277,7 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	},[currentLevel])
 
 	useEffect(()=>{
+		setBanks(getCachedBanks())
 		getBanks()
 	},[])
 
