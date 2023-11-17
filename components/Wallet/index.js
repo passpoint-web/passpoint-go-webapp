@@ -25,7 +25,6 @@ const Wallet = () => {
 	const [balanceLoading, setBalanceLoading] = useState(true)
 	const [updateKey, setUpdateKey] = useState(new Date().getTime())
 	const [updateBalanceKey, setUpdateBalanceKey] = useState(new Date().getTime())
-	// const [showPendingModal, setShowPendingModal] = useState(true)
 
 	const getWallet = async (loading) => {
 		setDataLoading(loading)
