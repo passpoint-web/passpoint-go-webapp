@@ -74,7 +74,7 @@ const FlightPageHeader = ({ styles }) => {
           <h3>Flights</h3>
           <p>
             {" "}
-            <Link href="/dashboard/travel">Travel Services</Link> {">>"} Flights{" "}
+            <Link href="/travel">Travel Services</Link> {">>"} Flights{" "}
           </p>
         </div>
         <div className={`${styles.quick__filter} quick__filter`}>
@@ -196,7 +196,7 @@ const FlightPageHeader = ({ styles }) => {
         </div>
         <Link
           className="primary_btn"
-          href={`/dashboard/travel/flights/search?adults=${adult || ""}&cabin=${
+          href={`/travel/flights/search?adults=${adult || ""}&cabin=${
             flightClass || ""
           }&children=${children || ""}&departureDate=${
             departureDate || ""

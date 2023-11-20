@@ -332,7 +332,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 												className="secondary_btn outline_btn"
 												text="View Details"
 												onClick={()=>handleCurrentTransaction(data)}
-												// href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}
+												// href={`/wallet?transactionModal=transaction&transactionId=${id}`}
 											/>
 										</td>
 									</tr>

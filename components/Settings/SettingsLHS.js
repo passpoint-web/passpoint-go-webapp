@@ -6,7 +6,7 @@ import { NotificationIcon, AccountProfileIcon, AccountSecurityIcon } from '@/con
 const SettingsLHS = () => {
 	return (
 		<div className={styles.settings_lhs}>
-			<Link href='/dashboard/settings/activity'
+			<Link href='/settings/activity'
 				className={styles.nav_sec}>
 				<div className={styles.icon}>
 					<AccountProfileIcon />
@@ -16,7 +16,7 @@ const SettingsLHS = () => {
 					<p>Monitor your account activity</p>
 				</div>
 			</Link>
-			{/* <Link href='/dashboard/settings/notification'
+			{/* <Link href='/settings/notification'
 				className={styles.nav_sec}>
 				<div className={styles.icon}>
 					<NotificationIcon color="#009EC4" />
@@ -27,7 +27,7 @@ const SettingsLHS = () => {
 					<p>Manage your notifications</p>
 				</div>
 			</Link> */}
-			<Link href='/dashboard/settings/security'
+			<Link href='/settings/security'
 				className={styles.nav_sec}>
 				<div className={styles.icon}>
 					<AccountSecurityIcon />

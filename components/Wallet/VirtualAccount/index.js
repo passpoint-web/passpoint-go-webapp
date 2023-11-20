@@ -23,7 +23,7 @@ const VirtualAccount = () => {
       <VirtualHome styles={styles} />
       <VirtualTable
         title="virtual account"
-        action="/dashboard/wallet/virtual-account?vat=1"
+        action="/wallet/virtual-account?vat=1"
       />
       {virtualDetailsVisible && (
         <VirtualDetailsModal

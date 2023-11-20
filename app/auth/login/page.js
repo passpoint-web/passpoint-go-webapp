@@ -71,14 +71,14 @@ const Login = () => {
       push(`/auth/signup/individual/${individualLevels[regStage]}`);
     } else if (kycStatus.toLowerCase() === "pending") {
       if (Number(userType) == 2) {
-        push("/dashboard/kyc/corporate/business");
+        push("/kyc/corporate/business");
       } else {
-        push("/dashboard/kyc/individual/identity");
+        push("/kyc/individual/identity");
       }
     } else if (kycStatus === "inReview") {
-      push("/dashboard/kyc/status");
+      push("/kyc/status");
     } else if (kycStatus.toLowerCase() === "rejected") {
-      push("/dashboard/kyc/status");
+      push("/kyc/status");
     } else if (!searchParams.get("fallBackUrl")) {
       push("/dashboard");
     } else {

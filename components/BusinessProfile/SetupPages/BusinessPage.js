@@ -136,7 +136,7 @@ const BusinessPage = ({styles}) => {
 			console.log(response)
 			savePublicProfile({...savedPublicProfile, profileStage: savedPublicProfile.profileStage > 2 ? savedPublicProfile.profileStage : 2})
 			notify('success', 'Your business Information has been saved')
-			push('/dashboard/business-profile-setup/services')
+			push('/business-profile-setup/services')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -274,7 +274,7 @@ const BusinessPage = ({styles}) => {
 					<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/business-profile-setup/identity')} />
+				<BackBtn onClick={()=>push('/business-profile-setup/identity')} />
 				<h1>About Business</h1>
 				<form onSubmit={handleSubmit}>
 					<Input

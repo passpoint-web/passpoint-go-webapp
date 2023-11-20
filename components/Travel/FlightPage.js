@@ -22,7 +22,7 @@ const FlightPage = ({ styles }) => {
       <FlightPageHeader styles={styles} />
       <FlightTable
         title="flight"
-        action="/dashboard/travel/flights?id=AH12345678"
+        action="/travel/flights?id=AH12345678"
         setFlightDetails={setFlightDetails}
       />
       {flightDetailVisible && (

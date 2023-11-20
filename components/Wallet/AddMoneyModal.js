@@ -16,7 +16,7 @@ const AddMoneyModal = ({styles, walletAccount, onClose}) => {
 	// 	} else {
 	// 		newParams.delete('addMoneyModal')
 	// 	}
-	// 	replace(createUrl('/dashboard/wallet', newParams))
+	// 	replace(createUrl('/wallet', newParams))
 	// }
 	return (
 		<ModalWrapper

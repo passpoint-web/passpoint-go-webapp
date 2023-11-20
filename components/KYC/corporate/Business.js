@@ -64,12 +64,12 @@ const Business = ({ styles }) => {
         KycStage: savedKycDetails?.KycStage > 1 ? savedKycDetails?.KycStage : 1,
       });
       notify("success", "Your information has been saved");
-      push("/dashboard/kyc/corporate/identity");
+      push("/kyc/corporate/identity");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already saved")) {
-        push("/dashboard/kyc/corporate/identity");
+        push("/kyc/corporate/identity");
       }
     } finally {
       setIsLoading(false);

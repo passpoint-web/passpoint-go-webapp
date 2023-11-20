@@ -42,14 +42,14 @@ const TravelServicesPage = ({ styles }) => {
             <h3>Travel Services</h3>
             <p>Kindly select your preferred service</p>
           </div>
-          {/* <Link className="primary_btn" href="/dashboard/travel/manage">
+          {/* <Link className="primary_btn" href="/travel/manage">
             <BriefcaseIcon />
             Manage Services
           </Link> */}
         </div>
         <div className={styles.row_two}>
           {travelServices.map((t, id) => (
-            <Link key={id} className={`${!t.active ? styles.in_active : ''}`} href={`/dashboard/travel/${t.active ? t.link : '#'}`}>
+            <Link key={id} className={`${!t.active ? styles.in_active : ''}`} href={`/travel/${t.active ? t.link : '#'}`}>
               <div>
                 {t.icon}
                 <h4>{t.name}</h4>
@@ -61,7 +61,7 @@ const TravelServicesPage = ({ styles }) => {
         </div>
       </div>
       <MetricCard />
-      {/* <CustomTable action="/dashboard/travel/flights?id=AH12345678" /> */}
+      {/* <CustomTable action="/travel/flights?id=AH12345678" /> */}
     </div>
   );
 };

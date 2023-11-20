@@ -15,7 +15,7 @@ const PublicProfileCard = () => {
         <PrimaryLink
           type="medium"
           text="Book Now"
-          href="/dashboard/travel/flights"
+          href="/travel/flights"
         />
       </div>
     </div>
