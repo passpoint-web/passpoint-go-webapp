@@ -90,8 +90,8 @@ const FlightPassengers = ({
         (ap?.passenger_type === "adult"
           ? isDate18YearsAgo(ap?.dob)
           : ap?.dob) &&
-        ap?.phone.length === 11 &&
-        Number(ap.phone).toString().length === 10 &&
+        ap?.phone_number?.length === 11 &&
+        Number(ap?.phone_number).toString().length === 10 &&
         ap?.passport_no &&
         ap?.passport_issue &&
         ap?.passport_expiry
@@ -103,8 +103,8 @@ const FlightPassengers = ({
       functions.validEmail(ap?.email) &&
       ap?.gender &&
       (ap?.passenger_type === "adult" ? isDate18YearsAgo(ap?.dob) : ap?.dob) &&
-      ap?.phone.length === 11 &&
-      Number(ap.phone).toString().length === 10
+      ap?.phone_number?.length === 11 &&
+      Number(ap?.phone_number).toString().length === 10
     )
   }
 
