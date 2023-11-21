@@ -3,9 +3,10 @@
 import ActionFeedbackCard from "@/components/ActionFeedbackCard";
 import FullScreenLoader from "@/components/Modal/FullScreenLoader"
 import ModalWrapper from "@/components/Modal/ModalWrapper";
-import { getCredentials } from "@/services/localService";
+import { getCredentials, saveCredentials } from "@/services/localService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { accountProfile } from "@/services/restService";
 
 const AccessLayout = ({children}) => {
   const {push} = useRouter()
@@ -13,12 +14,27 @@ const AccessLayout = ({children}) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
+    getUserDetails()
     checkAccess()
   },[])
 
+  const getUserDetails = async() => {
+    try {
+      const response = await accountProfile.getUserDetails()
+      const {kycStatus} = response.data.data
+      saveCredentials(response.data.data)
+      setShowModal(kycStatus.toLowerCase() !== 'approved')
+    } catch (_err) {
+      console.log(_err)
+    }
+    finally {
+      // 
+    }
+  }
+
   const checkAccess = async () => {
     const {kycStatus} = await getCredentials()
-    setShowModal(kycStatus !== 'Approved')
+    setShowModal(kycStatus.toLowerCase() !== 'approved')
     setLoading(false)
   }
   if (loading) {
@@ -35,7 +51,7 @@ const AccessLayout = ({children}) => {
     topClose={false}
     handleCta={()=>push('/dashboard')}
     >
-      <ActionFeedbackCard content={{status: 'failure', title: 'KYC not Approved', value: 'You do have have access to this page because your KYC has not been approved'}}/>
+      <ActionFeedbackCard content={{status: 'failure', title: 'KYC not Approved', value: 'You do not have access to this page because your KYC has not been approved'}}/>
     </ModalWrapper> : 
     children
     }

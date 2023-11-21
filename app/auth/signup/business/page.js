@@ -27,6 +27,7 @@ const BusinessInformation = () => {
 	const [feedbackError, setFeedbackError] = useState('')
 	const [businessNameCheckVerified, setBusinessNameCheckVerified] = useState(null)
 	const [businessNameChecking, setBusinessNameChecking] = useState(false)
+	const [timeOut, setTimeOut] = useState(null)
 	const [payload, setPayload] = useState({
 		businessName: '',
 		email: '',
@@ -75,7 +76,11 @@ const BusinessInformation = () => {
 
 	useEffect(()=>{
 		if (payload.businessName.length) {
-			businessNameCheck()
+			clearTimeout(timeOut)
+			const val = setTimeout(()=>{
+				businessNameCheck()
+			},1000)
+			setTimeOut(val)
 		}
 	},[payload.businessName])
 
@@ -85,7 +90,7 @@ const BusinessInformation = () => {
 		setBusinessNameCheckVerified(null)
 		try {
 			await authenticate.checkBusinessName({
-				businessName
+				businessName: businessName.trim()
 			})
 			// console.log(response)
 			setBusinessNameCheckVerified(true)
@@ -239,7 +244,7 @@ const BusinessInformation = () => {
 							</p>
 						</div>
 						<div className={styles.action_ctn}>
-							<PrimaryBtn text="Save and continue"
+							<PrimaryBtn text="Open Account"
 								loading={isLoading} />
 						</div>
 					</form>

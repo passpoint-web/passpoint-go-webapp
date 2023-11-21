@@ -6,13 +6,13 @@ import { CS } from '@/utils/CONSTANTS'
 import { getCredentials,
 	saveCredentials
 } from '@/services/localService'
-import CustomSelect from '@/components/Custom/Select'
 import CountrySelect from '@/components/Custom/CountrySelect'
 // import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
 import { useNotify } from '@/utils/hooks'
+import SearchSelect from '@/components/Dashboard/SearchSelect'
 
 const BusinessAddress = () => {
 	// eslint-disable-next-line no-unused-vars
@@ -129,38 +129,39 @@ const BusinessAddress = () => {
 										})}
 								/>
 							</Input>
-							<Input
+							<SearchSelect 
 								id="state"
 								label="Select state"
 								error={ctaClicked && !payload.state}
 								errorMsg="State is required"
-							>
-								<CustomSelect
-									disabled={!payload.country?.name?.common}
-									fieldError={ctaClicked && !payload.state}
-									selectOptions={states}
-									selectedOption={payload.state}
-									emitSelect={(e) => handleChange({
-										target: { name: 'state', value: e },
-									})}
-								/>
-							</Input>
-							<Input
-								id="lga"
-								label="Select Local Govt."
-								error={ctaClicked && payload.state && (lgas?.length && !payload.lga)}
-								errorMsg="lga is required"
-							>
-								<CustomSelect
-									disabled={!payload.state}
-									fieldError={ctaClicked && payload.state && (lgas?.length && !payload.lga)}
-									selectOptions={lgas}
-									selectedOption={payload.lga}
-									emitSelect={(e) => handleChange({
-										target: { name: 'lga', value: e },
-									})}
-								/>
-							</Input>
+								selectDisabled={!payload.country?.name?.common}
+								fieldError={ctaClicked && !payload.state}
+								selectOptions={states}
+								selectedOption={payload.state}
+								emitSelect={(e) =>
+									handleChange({
+										target: { name: "state", value: e },
+									})
+									}
+							/>
+							<SearchSelect 
+							id="lga"
+							label="Select Local Govt."
+							error={
+								ctaClicked && payload.state && lgas?.length && !payload.lga
+							}
+							errorMsg="lga is required"
+								selectDisabled={!payload.state}
+								fieldError={
+									ctaClicked && payload.state && lgas?.length && !payload.lga
+								}
+								selectOptions={lgas}
+								selectedOption={payload.lga}
+								emitSelect={(e) =>
+									handleChange({
+										target: { name: "lga", value: e },
+									})
+								}/>
 							<Input
 								label="Street No."
 								id="street-no"

@@ -1,6 +1,6 @@
 'use client'
 import styles from './signup-layout-lhs.module.css'
-import FormLevel from '../../FormLevel'
+import FormLevel from '../../FormLevel/FormLevel'
 import { getCredentials } from '@/services/localService'
 import {usePathname} from 'next/navigation'
 import { useEffect, useState } from 'react'
