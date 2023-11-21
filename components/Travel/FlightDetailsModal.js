@@ -426,7 +426,7 @@ const FlightDetailsModal = ({
             <div className={styles.row}>
               <div className={styles.label}>Contact Number</div>
               <div className={styles.value}>
-                <span>+{data?.phoneNumber}</span>
+                <span>{data?.phoneNumber}</span>
               </div>
             </div>
             <div className={styles.row}>

@@ -90,6 +90,8 @@ const FlightPassengers = ({
         (ap?.passenger_type === "adult"
           ? isDate18YearsAgo(ap?.dob)
           : ap?.dob) &&
+        ap?.phone.length === 11 &&
+        Number(ap.phone).toString().length === 10 &&
         ap?.passport_no &&
         ap?.passport_issue &&
         ap?.passport_expiry
@@ -100,7 +102,9 @@ const FlightPassengers = ({
       ap?.last_name?.length > 1 &&
       functions.validEmail(ap?.email) &&
       ap?.gender &&
-      ap?.dob
+      (ap?.passenger_type === "adult" ? isDate18YearsAgo(ap?.dob) : ap?.dob) &&
+      ap?.phone.length === 11 &&
+      Number(ap.phone).toString().length === 10
     )
   }
 
@@ -247,17 +251,17 @@ const FlightPassengers = ({
                     updateValue("dob", e.target.value, passenger?.id)
                   }
                 />
-                {documentsRequired && (
-                  <Input
-                    label="Passport Number"
-                    placeholder="A000123456"
-                    name="passport"
-                    // value={passenger.passport_no}
-                    onChange={(e) =>
-                      updateValue("passport_no", e.target.value, passenger?.id)
-                    }
-                  />
-                )}
+                <Input
+                  label="Phone Number"
+                  type="number"
+                  name="phone"
+                  placeholder="Enter phone number"
+                  max={100000000000}
+                  // value={passenger.dob}
+                  onChange={(e) =>
+                    updateValue("phone_number", e.target.value, passenger?.id)
+                  }
+                />
               </div>
               {documentsRequired && (
                 <div className="form-row">
@@ -289,6 +293,19 @@ const FlightPassengers = ({
                   />
                 </div>
               )}
+              <div className="form-row mt-12">
+                {documentsRequired && (
+                  <Input
+                    label="Passport Number"
+                    placeholder="A000123456"
+                    name="passport"
+                    // value={passenger.passport_no}
+                    onChange={(e) =>
+                      updateValue("passport_no", e.target.value, passenger?.id)
+                    }
+                  />
+                )}
+              </div>
 
               {/* FORM ACTION */}
               <div className={styles.form__action}>
