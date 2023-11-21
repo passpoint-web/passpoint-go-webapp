@@ -45,10 +45,12 @@ const BusinessPersonalInfo = () => {
       return;
     }
     setIsLoading(true);
+    let {phone} = payload
+    phone = phone.replace('+','')
     try {
       const response = await registerUser("onBoardUserPersonalInfo", {
         email: savedCredentials?.email,
-        ...payload,
+        ...payload, phone,
       });
       console.log(response);
       saveCredentials({ ...savedCredentials, ...payload, regStage: 3 });

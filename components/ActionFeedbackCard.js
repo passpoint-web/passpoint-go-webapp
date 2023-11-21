@@ -10,7 +10,7 @@ const ActionFeedbackCard = ({
     title: "",
     value: "",
   },
-  textTransform = "capitalize",
+  textTransform = "",
 }) => {
   return (
     <div
