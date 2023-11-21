@@ -15,7 +15,6 @@ const PayFlightPage = ({ styles }) => {
   const [sortedPassengers, setSortedPassengers] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [priceConfirmed, setPriceConfirmed] = useState(false)
-  // eslint-disable-next-line no-unused-vars
   const [totalAmount, setTotalAmount] = useState(0)
   const [documentsRequired, setDocumentsRequired] = useState(null)
   const [bookingRef, setBookingRef] = useState(null)
