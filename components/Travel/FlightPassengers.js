@@ -1,5 +1,4 @@
 "use client"
-
 import styles from "../../assets/styles/flight.module.css"
 // eslint-disable-next-line no-unused-vars
 import { FaChevronDown, FaTrashAlt } from "react-icons/fa"
@@ -9,11 +8,12 @@ import { useEffect, useState } from "react"
 import Input from "../Dashboard/Input"
 // import Textarea from "../Dashboard/Textarea"
 import PrimaryBtn from "../Btn/Primary"
-import CustomSelect from "../Custom/Select"
+// import CustomSelect from "../Custom/Select"
 import Link from "next/link"
 import { getMostRecentFlightSearchURL } from "@/services/localService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
+import Select from "../Dashboard/Select"
 
 const FlightPassengers = ({
   passengersParent,
@@ -216,22 +216,24 @@ const FlightPassengers = ({
                 }
               />
               <div className="form-row bottom">
-                <CustomSelect
-                  id="class"
-                  selectOptions={["male", "female"]}
-                  selectedOption={passengerGenders[index]}
-                  emitSelect={(e) => updateValue("gender", e, passenger?.id)}
-                  placeholder="Select Gender"
-                />
-                <CustomSelect
-                  id="type"
-                  selectOptions={["adult", "child", "infant"]}
-                  selectedOption={passenger.passenger_type}
-                  disabled
-                  emitSelect={(e) =>
-                    updateValue("passenger_type", e, passenger?.id)
-                  }
-                  placeholder="Select Passenger Type"
+              <Select
+                label="Select Gender"
+                id="class"
+                selectOptions={["male", "female"]}
+                selectedOption={passengerGenders[index]}
+                emitSelect={(e) => updateValue("gender", e, passenger?.id)}
+                placeholder="Select Gender"
+               />
+              <Select
+                label="Passenger Type"
+                id="type"
+                selectOptions={["adult", "child", "infant"]}
+                selectedOption={passenger.passenger_type}
+                disabled
+                emitSelect={(e) =>
+                  updateValue("passenger_type", e, passenger?.id)
+                }
+                placeholder="Select Passenger Type"
                 />
               </div>
               <div className="form-row">
