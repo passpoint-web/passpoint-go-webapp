@@ -45,10 +45,12 @@ const BusinessPersonalInfo = () => {
       return;
     }
     setIsLoading(true);
+    let {phone} = payload
+    phone = phone.replace('+','')
     try {
       const response = await registerUser("onBoardUserPersonalInfo", {
         email: savedCredentials?.email,
-        ...payload,
+        ...payload, phone,
       });
       console.log(response);
       saveCredentials({ ...savedCredentials, ...payload, regStage: 3 });
@@ -152,7 +154,7 @@ const BusinessPersonalInfo = () => {
                 </p>
               </div>
               <div className={styles.action_ctn}>
-                <PrimaryBtn loading={isLoading} text="Open account" />
+                <PrimaryBtn loading={isLoading} text="Save and Continue" />
               </div>
             </div>
           </form>
