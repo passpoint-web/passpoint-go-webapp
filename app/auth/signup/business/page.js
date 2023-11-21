@@ -244,7 +244,7 @@ const BusinessInformation = () => {
 							</p>
 						</div>
 						<div className={styles.action_ctn}>
-							<PrimaryBtn text="Save and continue"
+							<PrimaryBtn text="Open Account"
 								loading={isLoading} />
 						</div>
 					</form>

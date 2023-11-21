@@ -1,6 +1,6 @@
 "use client"
 
-import { getSelectedFlight, getCredentials } from "@/services/localService"
+import { getSelectedFlight } from "@/services/localService"
 import { travel } from "@/services/restService"
 import { wallet } from "@/services/restService/wallet"
 import { useEffect, useState } from "react"
@@ -22,12 +22,13 @@ const PayFlightPage = ({ styles }) => {
 
   // eslint-disable-next-line no-unused-vars
   const sortPassengersData = async (command) => {
-    const credentials = getCredentials()
     const tempPassengers = []
     passengers.forEach((passenger) => {
       const tempPassenger = { ...passenger }
       tempPassenger.title = passenger.gender === "male" ? "mr" : "miss"
-      tempPassenger.phone_number = credentials.phoneNumber
+      tempPassenger.phone_number = `+234${tempPassenger?.phone_number?.substring(
+        1
+      )}`
       if (documentsRequired) {
         tempPassenger.documents = {
           number: passenger.passport_no,

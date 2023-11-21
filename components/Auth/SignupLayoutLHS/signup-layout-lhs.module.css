@@ -123,13 +123,27 @@
 
 @media screen and (max-width: 700px) {
   .auth_level {
+    display: flex;
     min-height: unset;
     gap: 5px;
   }
 
-  .auth_level {
+  .auth_content_lhs {
+    position: unset;
+    height: 100px;
+    min-height: 100px;
+    width: 100%;
+    border-right: none;
     display: flex;
-    /* flex: 1 1; */
+    padding: var(--screen-padding-top) var(--header-padding);
+  }
+
+  .auth_content_lhs .inner {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    justify-content: center;
   }
 
   .auth_level .lhs {
@@ -153,3 +167,4 @@
     display: none;
   }
 }
+
