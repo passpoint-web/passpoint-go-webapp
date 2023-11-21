@@ -21,6 +21,7 @@ const BusinessInformation = () => {
 	const [showBusinessWarning, setShowBusinessWarning] = useState(false)
 	const [businessNameCheckVerified, setBusinessNameCheckVerified] = useState(null)
 	const [businessNameChecking, setBusinessNameChecking] = useState(false)
+	const [timeOut, setTimeOut] = useState(null)
 	const [payload, setPayload] = useState({
 		businessName: '',
 		businessIndustry: '',
@@ -68,7 +69,11 @@ const BusinessInformation = () => {
 
 	useEffect(()=>{
 		if (payload.businessName.length) {
-			businessNameCheck()
+			clearTimeout(timeOut)
+			const val = setTimeout(()=>{
+				businessNameCheck()
+			},1000)
+			setTimeOut(val)
 		}
 	},[payload.businessName])
 

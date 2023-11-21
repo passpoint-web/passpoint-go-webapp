@@ -147,7 +147,7 @@ const splitOnCapsLetter = (string) => {
   str = str[0].toUpperCase() + str.slice(1) // incase the first letter is not in caps
   str = str.split(/(?=[A-Z])/)
   str = str.join(" ")
-  console.log(str)
+  // console.log(str)
   return str.split(/(?=[A-Z])/)
 }
 
@@ -251,7 +251,7 @@ function eighteenYearsAgo() {
   }${formatted18YearsAgo[0]}-${formatted18YearsAgo[1] > 9 ? "" : "0"}${
     formatted18YearsAgo[1]
   }`
-  console.log(maxDate)
+  // console.log(maxDate)
   return maxDate
 }
 

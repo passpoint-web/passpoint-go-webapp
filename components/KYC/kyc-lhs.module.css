@@ -117,13 +117,16 @@
 
 @media screen and (max-width: 1024px) {
   .auth_level {
-    gap: 5px;
+    gap: 5px
+  }
+
+  .auth_content_lhs{
+    padding: var(--screen-padding-top) 30px;
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
   .auth_level {
-    display: flex;
     min-height: unset;
     gap: 5px;
   }
@@ -144,6 +147,11 @@
     flex-direction: row;
     /* justify-content: space-between; */
     justify-content: center;
+  }
+
+  .auth_level {
+    display: flex;
+    /* flex: 1 1; */
   }
 
   .auth_level .lhs {
@@ -167,4 +175,3 @@
     display: none;
   }
 }
-

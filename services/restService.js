@@ -214,6 +214,9 @@ export const accountProfile = {
   getAccountActivity: () => {
     return restAgent.get("getActivities", setConfig())
   },
+  getUserDetails: () => {
+    return restAgent.get('getUserDetails', setConfig())
+  }
 }
 
 export const travel = {

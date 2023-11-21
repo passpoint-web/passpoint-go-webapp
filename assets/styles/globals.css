@@ -221,6 +221,10 @@ button:disabled {
   /* -webkit-animation: skeleton 2.5s ease-in-out infinite; */
 }
 
+.mt-12 {
+  margin-top: 1.5rem;
+}
+
 button .loading {
   width: 40px;
   height: 40px;
@@ -873,7 +877,7 @@ form {
 }
 
 .payment-circle {
-  background-color: var(--grey-1);;
+  background-color: var(--grey-1);
 }
 
 .incoming-circle {
@@ -1128,6 +1132,18 @@ th {
   :root {
     --header-padding: 16px;
   }
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 15% 0;
+}
+.empty-state h2 {
+  font-size: 4rem;
+}
+.empty-state h3 {
+  margin-top: 2rem;
 }
 
 /* ANIMS */
