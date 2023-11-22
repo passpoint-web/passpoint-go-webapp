@@ -107,7 +107,7 @@ const BusinessInformation = () => {
 		} else {
 			setAllFieldsValid(false)
 		}
-	}, [payload])
+	}, [payload, businessNameCheckVerified])
 
 	return (
 		<>
