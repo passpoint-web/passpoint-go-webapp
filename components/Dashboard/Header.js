@@ -11,10 +11,12 @@ import { menuItems } from "@/constants/general";
 import { useRouter } from "next/navigation";
 import ModalWrapper from "../Modal/ModalWrapper";
 
-const DashboardHeader = ({ setOpenNotify, styles, user }) => {
+const DashboardHeader = ({ setOpenNotify, styles, user, authenticated }) => {
 	const [showDropDown, setShowDropDown] = useState(false);
 	const [logoutModal, setLogoutModal] = useState(false);
 	const { push } = useRouter();
+
+
 
   const handleLogout = () => {
     setLogout();
@@ -52,7 +54,7 @@ const DashboardHeader = ({ setOpenNotify, styles, user }) => {
 				<PlusIcon />
         Generate Storefront
       </button> */}
-			<div
+			{authenticated ? <div
 				className={styles.dashHeader_profile}
 				onClick={() => setShowDropDown(!showDropDown)}
 			>
@@ -81,7 +83,7 @@ const DashboardHeader = ({ setOpenNotify, styles, user }) => {
 						))}
 					</div>
 				):<></>}
-			</div>
+			</div> : <></>}
 		</div></>
 	);
 };
