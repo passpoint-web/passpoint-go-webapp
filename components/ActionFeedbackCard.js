@@ -9,6 +9,7 @@ const ActionFeedbackCard = ({
     status: "", // success, failure, pending
     title: "",
     value: "",
+    titleFS: 'normal'
   },
   textTransform = "",
 }) => {
@@ -31,7 +32,7 @@ const ActionFeedbackCard = ({
       ) : (
         <></>
       )): <></>}
-      <h2 style={{ marginTop: "20px" }}>{content.title}</h2>
+      <h2 style={{ marginTop: "20px", fontSize: content.titleFS === 'xl' ? '40px' : '24px' }}>{content.title}</h2>
       <p
         style={{
           fontSize: 16,
