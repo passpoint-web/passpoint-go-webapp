@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link"
 import Search from "../Custom/Search"
 import styles from "../../assets/styles/table.module.css"
 import { useEffect, useState } from "react"
@@ -11,13 +10,17 @@ import Pagination from "./Pagination"
 import { getCredentials } from "@/services/localService"
 import FWLoader from "../FWLoader"
 import Input from "../Dashboard/Input"
+import FlightDetailsModal from "../Travel/FlightDetailsModal"
+import Button from "../Btn/Button"
 
-const FlightTable = ({ title, setFlightDetails }) => {
+const FlightTable = ({title, modalStyles}) => {
   const { formatMoney } = functions
   const user = getCredentials()
   const notify = useNotify()
   const [data, setData] = useState([])
   const [paginationData, setPaginationData] = useState({})
+  const [flightDetails, setFlightDetails] = useState({})
+  const [flightDetailVisible, setFlightDetailVisible] = useState(null)
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0)
   // eslint-disable-next-line no-unused-vars
@@ -60,17 +63,30 @@ const FlightTable = ({ title, setFlightDetails }) => {
     }
   }
 
+  const handleFlightDetails = (f) => {
+    setFlightDetails(f)
+    setFlightDetailVisible(true)
+  }
+
   const handlePaginationEvent = (symbol) => {
     const currentPage = symbol === "+" ? page + 1 : page - 1
     setPage(currentPage)
     getFlightBookings(currentPage)
-    console.log(page, currentPage)
   }
 
   useEffect(() => {
     getFlightBookings(page)
   }, [searchParam])
   return (
+
+  <>
+    {flightDetailVisible ? (
+      <FlightDetailsModal
+      closeModal={()=>setFlightDetailVisible(false)}
+        styles={modalStyles}
+        flightDetails={flightDetails}
+      />
+    ) : <></>}
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
       <div className={styles.table__outer}>
         <div className={styles.table__header}>
@@ -151,13 +167,20 @@ const FlightTable = ({ title, setFlightDetails }) => {
                     )}
                   </td>
                   <td>
-                    <Link
+                    {/* <Se */}
+                    {/* <Link
                       className="secondary_btn outline_btn"
                       href={`./flights?id=${c.reference}`}
                       onClick={() => setFlightDetails(c)}
                     >
                       View Details
-                    </Link>
+                    </Link> */}
+                    <Button
+												className="secondary_btn outline_btn"
+												text="View Details"
+												onClick={()=>handleFlightDetails(c)}
+												// href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}
+											/>
                   </td>
                 </tr>
               ))}
@@ -175,6 +198,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
         </div> */}
       </div>
     </div>
+    </>
   )
 }
 
