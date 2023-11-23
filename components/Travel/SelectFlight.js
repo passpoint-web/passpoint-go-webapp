@@ -404,12 +404,12 @@ const SelectFlight = () => {
               quickest={flight.id === quickestFlight}
             />
           ))}
-          {sortedFlights?.length === 0 && (
+          {sortedFlights?.length === 0 && !isLoading ? (
             <div className="empty-state">
               <h2>✈️</h2>
               <h3>No Flights Available</h3>
             </div>
-          )}
+          ):<></>}
         </div>
       </div>
     </div>
