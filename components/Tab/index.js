@@ -1,15 +1,20 @@
 import styles from './tab.module.css'
 
-const Tab = ({tabs, setActiveTab, activeTab, tabStyle}) => {
+const Tab = ({tabs, objKey, setActiveTab, activeTab, tabStyle}) => {
+  const handleActiveTab = (e, tab) => {
+    e.preventDefault()
+    setActiveTab(tab)
+  }
   return (
     <div style={tabStyle} className={styles.tab_group}>
-    {tabs.map((tab) => (
+    {tabs.map((tab, id) => (
       <button
-        key={tab}
-        onClick={() => setActiveTab(tab)}
-        className={tab === activeTab ? styles.active : ""}
+        key={id}
+        onClick={(e)=>handleActiveTab(e, tab)}
+        className={(objKey ? tab[objKey] === activeTab[objKey] : tab === activeTab) ? styles.active : ""}
+        style={{width: `calc(100%/${tabs.length})`}}
       >
-        {tab}
+        {objKey ? tab[objKey] : tab}
       </button>
     ))}
   </div>

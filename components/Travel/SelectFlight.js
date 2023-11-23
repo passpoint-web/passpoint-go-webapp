@@ -167,7 +167,6 @@ const SelectFlight = () => {
       <button className={styles.row__header}>
         <div className="texts">
           <h3 className="capitalize">
-            {" "}
             Select Flights ({sortedFlights?.length})
           </h3>
           {/* <p>Manage your bookings here</p> */}
