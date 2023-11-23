@@ -9,15 +9,17 @@ import formStyles from "@/assets/styles/auth-screens.module.css";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import { wallet } from '@/services/restService/wallet'
 import MoneyInput from "../Custom/MoneyInput";
-import AccountTypeDropDown from "./AccountTypeDropDown";
+// import AccountTypeDropDown from "./AccountTypeDropDown";
 import TertiaryBtn from "../Btn/Tertiary";
 import CreatePinModal from "../Modal/CreatePin";
 import SearchSelect from "../Dashboard/SearchSelect";
 import { getBanks as getCachedBanks } from "@/services/localService";
+import Tab from "../Tab";
 
 const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	// const notify = useNotify();
 	const { formatMoney, sortAlphabetically } = functions;
+	const accountTypes = [{name: 'Account Number', description: 'NUBAN'}, {name: 'Wallet ID', description: 'Passpoint Wallet ID'}]
 	const [accountType, setAccountType] = useState({name: 'Account Number', description: 'NUBAN'})
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [tranferPin, setTransferPin] = useState("");
@@ -303,9 +305,11 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	const GetBanksFlow = () => (
 		<>
 			<div style={{marginBottom: 10}}>
-				<AccountTypeDropDown selectedOption={accountType}
-					emitSelect={(e)=>setAccountType(e)} />
+				{/* <AccountTypeDropDown selectedOption={accountType}
+					emitSelect={(e)=>setAccountType(e)} /> */}
+					<Tab tabs={accountTypes} objKey={'name'} setActiveTab={(e)=>setAccountType(e)} activeTab={accountType} />
 			</div>
+			{/* <Tab tabs={accountTypes} objKey={'name'} /> */}
 			{/* wallet id || account number */}
 			{accountType.name === 'Account Number' ?
 				<>

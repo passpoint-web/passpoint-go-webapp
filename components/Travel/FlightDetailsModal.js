@@ -143,11 +143,9 @@ const FlightDetailsModal = ({
             <div className={styles.row}>
               <div className={styles.label}>Booking Status</div>
               <div className={styles.value}>
-                {data.amount ? (
-                  <div className="success-tag">Paid</div>
-                ) : (
-                  <div className="pending-tag">Not yet paid</div>
-                )}
+              <div className={`${data?.status?.toLowerCase()}-tag`}>
+                {data?.status?.toLowerCase()}
+              </div>
               </div>
             </div>
             <div className={styles.row}>
