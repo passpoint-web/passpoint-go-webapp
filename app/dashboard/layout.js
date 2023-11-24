@@ -22,14 +22,17 @@ function tawk() {
 export default function DashboardLayout({ children }) {
   const {push} = useRouter()
   const [loading, setLoading] = useState(true)
+  const [authenticated, setAuthenticated] = useState(false)
   const [savedCredentials, setSavedCredentials] = useState({});
 
   const checkAuth = async () => {
     const auth = await getToken()
     if (!auth) {
+      setAuthenticated(false)
       push(`/auth/login?fallBackUrl=${window.location.pathname}`)
     } else {
-        setLoading(false)
+      setAuthenticated(true)
+      setLoading(false)
     }
   }
 
@@ -50,7 +53,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className={styles.dashLayout}>
-      <DashboardHeader styles={styles} user={savedCredentials} />
+      <DashboardHeader authenticated={authenticated} styles={styles} user={savedCredentials} />
       <div className={styles.dashContent}>
         <DashboardSidebar />
         <div className={styles.dash_children}>

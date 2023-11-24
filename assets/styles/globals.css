@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 @font-face {
   font-family: "GraphikMedium";
   src: url("../fonts/Graphik-Font-Family/GraphikMedium.otf");
@@ -77,9 +79,9 @@
   --negative-box-shadow: #ffc7c3;
   --negative-bg: #ffe6e4;
 
-  --positive: #66cb9f;
-  --green-alert-bg: #e6f8ef;
-  --green-alert: #07b463;
+  --positive: #07b463;
+  --positive-box-shadow: #66cb9f;
+  --positive-bg: #e6f8ef;
 
   --warning-light: #ffd8bd;
   --warning-200: #df752b;
@@ -102,6 +104,9 @@
   --input-error-border: var(--negative);
   --input-error-box-shadow: var(--negative-box-shadow);
   --input-error-bg: var(--negative-bg);
+  --input-success-border: var(--positive);
+  --input-success-box-shadow: var(--positive-box-shadow);
+  --input-success-bg: var(--positive-bg);
   --input-checkbox-width: 16px;
 
   --flag-dropdown-width: clamp(40px, 15%, 200px);
@@ -214,6 +219,10 @@ button:disabled {
   /* background-size: 200% !important; */
   /* animation: skeleton 2.5s ease-in-out infinite; */
   /* -webkit-animation: skeleton 2.5s ease-in-out infinite; */
+}
+
+.mt-12 {
+  margin-top: 1.5rem;
 }
 
 button .loading {
@@ -746,9 +755,7 @@ input[type="range"]:focus::-moz-range-thumb {
   position: relative;
   top: -3px;
 }
-.table-ctn .custom-search label {
-  top: -2px;
-}
+
 .flight-services .quick__filter .input__ctn {
   max-width: 100px;
 }
@@ -759,6 +766,15 @@ input[type="range"]:focus::-moz-range-thumb {
   box-shadow: none;
   padding-right: var(--input-padding);
   padding-left: 0;
+}
+.flight-services
+  .form-row
+  .custom-select
+  button:not(.table-ctn .custom-select button),
+.travel__dashboard_header_row_one
+  .custom-select
+  button:not(.table-ctn .custom-select button) {
+  padding: 0 var(--input-padding);
 }
 
 .flight-services .custom-select button {
@@ -840,7 +856,8 @@ form {
 .pending-circle,
 .success-circle,
 .incoming-circle,
-.outgoing-circle {
+.outgoing-circle,
+.payment-circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -859,6 +876,10 @@ form {
   background: #e9b500;
 }
 
+.payment-circle {
+  background-color: var(--grey-1);
+}
+
 .incoming-circle {
   background-color: var(--sky-blue);
 }
@@ -874,7 +895,8 @@ form {
 .successful-tag,
 .pending-tag,
 .failed-tag,
-.failure-tag {
+.failure-tag,
+.processing-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
@@ -899,7 +921,8 @@ form {
   color: #23c38e;
 }
 
-.pending-tag {
+.pending-tag,
+.processing-tag {
   background: #fffae7;
   color: #e9b500;
 }
@@ -1111,6 +1134,18 @@ th {
   }
 }
 
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 15% 0;
+}
+.empty-state h2 {
+  font-size: 4rem;
+}
+.empty-state h3 {
+  margin-top: 2rem;
+}
+
 /* ANIMS */
 
 .squeeze-in {
@@ -1284,6 +1319,28 @@ th {
   }
 }
 
+.rotate-infinite {
+  animation: rotate 0.7s infinite;
+  -webkit-animation: rotate 0.7s infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
 @keyframes come-down-sm-w-opacity {
   0% {
     opacity: 0;
@@ -1368,6 +1425,40 @@ th {
     -moz-transform: translateY(0px);
     -ms-transform: translateY(0px);
     -o-transform: translateY(0px);
+  }
+}
+
+.fw-loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+.loader {
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #000;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 0.5s linear infinite;
+  animation: spin 0.5s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 

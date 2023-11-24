@@ -6,6 +6,7 @@ const Input = ({
 	label,
 	error = false,
 	errorMsg,
+	successMsg,
 	info,
 	msgPositionCenter,
 	styleProps,
@@ -15,7 +16,7 @@ const Input = ({
 }) => {
 	return (
 		<>
-			<div className={`${styles.form_group} input__ctn ${error ? "error" : ""}`} style={styleProps}>
+			<div className={`${styles.form_group} input__ctn ${error ? "error" : ''}`} style={styleProps}>
 				{label ? <div className={styles.label_ctn} style={{display: 'flex'}}>
 					<label htmlFor={props.id} style={{margin: label_center ? '0 auto 8px' : ''}}>
 						{label}
@@ -30,7 +31,8 @@ const Input = ({
 					info ? (
 						<FeedbackInfo center={msgPositionCenter} type='info'
 						message={info} />
-					) : <></>
+					) : successMsg ?  <FeedbackInfo center={msgPositionCenter} type='success'
+					message={successMsg} /> : <></>
 				)}
 			</div>
 		</>

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { businessIndustries, businessTypes } from '@/utils/CONSTANTS'
-import { registerUser } from '@/services/restService'
+import { authenticate } from '@/services/restService'
 import { saveCredentials } from '@/services/localService'
 import styles from '@/assets/styles/auth-screens.module.css'
 import PrimaryBtn from '@/components/Btn/Primary'
@@ -13,6 +13,7 @@ import CustomSelect from '@/components/Custom/Select'
 import BackBtn from '@/components/Btn/Back'
 import Input from '@/components/Dashboard/Input'
 import { useNotify } from '@/utils/hooks'
+// import StatusInput from '@/components/Dashboard/StatusInput'
 
 const BusinessInformation = () => {
 
@@ -24,6 +25,9 @@ const BusinessInformation = () => {
 	const [checked, setChecked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [feedbackError, setFeedbackError] = useState('')
+	const [businessNameCheckVerified, setBusinessNameCheckVerified] = useState(null)
+	const [businessNameChecking, setBusinessNameChecking] = useState(false)
+	const [timeOut, setTimeOut] = useState(null)
 	const [payload, setPayload] = useState({
 		businessName: '',
 		email: '',
@@ -49,12 +53,9 @@ const BusinessInformation = () => {
 		if (!allFieldsValid) {
 			return
 		}
-
 		setIsLoading(true)
 		try {
-			const response = await registerUser('onBoardUserBusinessInfo', payload)
-			console.log(response)
-			// setSignupLevel({'business', 2})
+			await authenticate.registerUser('onBoardUserBusinessInfo', payload)
 			let credentials = {...payload, regStage: 1}
 			delete credentials.password
 			saveCredentials(credentials)
@@ -71,6 +72,37 @@ const BusinessInformation = () => {
 
 	const toggleChecked = () => {
 		setChecked(!checked)
+	}
+
+	useEffect(()=>{
+		if (payload.businessName.length) {
+			clearTimeout(timeOut)
+			const val = setTimeout(()=>{
+				businessNameCheck()
+			},1000)
+			setTimeOut(val)
+		}
+	},[payload.businessName])
+
+	const businessNameCheck = async () => {
+		const {businessName} = payload
+		setBusinessNameChecking(true)
+		setBusinessNameCheckVerified(null)
+		try {
+			await authenticate.checkBusinessName({
+				businessName: businessName.trim()
+			})
+			// console.log(response)
+			setBusinessNameCheckVerified(true)
+		} catch (_err) { 
+			// const { message } = _err.response?.data || _err
+			// console.log(message)
+			setBusinessNameCheckVerified(false)
+			// notify('error', message)
+		} finally {
+			setIsLoading(false)
+			setBusinessNameChecking(false)
+		}
 	}
 
 	useEffect(() => {
@@ -90,7 +122,7 @@ const BusinessInformation = () => {
       businessIndustry &&
       businessType &&
       validEmail(email) &&
-      password &&
+      password && businessNameCheckVerified &&
       checked
 		if (conditionsMet) {
 			setAllFieldsValid(true)
@@ -98,7 +130,7 @@ const BusinessInformation = () => {
 			setAllFieldsValid(false)
 		}
 	}, [
-		payload, checked
+		payload, checked, businessNameCheckVerified
 	])
 
 	return (
@@ -121,8 +153,10 @@ const BusinessInformation = () => {
 								placeholder="John Travels"
 								value={payload.businessName}
 								onChange={handleChange}
-								error={ctaClicked && !payload.businessName}
-								errorMsg={'Business name is required'}
+								error={(ctaClicked && !payload.businessName) ||businessNameCheckVerified === false}
+								errorMsg={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+								info={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+								successMsg={businessNameCheckVerified === true && payload.businessName.length ? 'Business name is valid' : ''}
 							/>
 							<Input
 								label="Business Email Address"
@@ -210,7 +244,7 @@ const BusinessInformation = () => {
 							</p>
 						</div>
 						<div className={styles.action_ctn}>
-							<PrimaryBtn text="Save and continue"
+							<PrimaryBtn text="Open Account"
 								loading={isLoading} />
 						</div>
 					</form>

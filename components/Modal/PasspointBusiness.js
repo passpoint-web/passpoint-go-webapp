@@ -3,7 +3,6 @@ import styles from './modal.module.css'
 const PasspointBusinessModal = ({onClose}) => {
 	return (
 		<ModalWrapper
-			overlayClose={true}
 			contentStyle={{maxWidth: '500px'}}
 			ctaBtnText='Proceed'
 			heading='Passpoint Business Warning'

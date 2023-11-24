@@ -1,41 +1,43 @@
 "use client"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
 import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Loader from "../Btn/Loader"
+import FWLoader from "../FWLoader"
 
 const FlightDetailsModal = ({
-  setFlightDetailVisible,
   styles,
+  closeModal,
   flightDetails,
 }) => {
   const { formatMoney } = functions
   const notify = useNotify()
-  const searchParams = useSearchParams()
-  const id = searchParams.get("id")
-  const path = usePathname()
+  // const path = usePathname()
   // const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  // const router = useRouter()
   const tabs = ["General", "Itinerary", "Cost & Payment", "Traveler's Info"]
   const [activeTab, setActiveTab] = useState(tabs[0])
   // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState(flightDetails)
+  const [data, setData] = useState({})
   const [baseFare, setBaseFare] = useState(0)
   const [fees, setFees] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
 
-  const closeModal = () => {
-    setFlightDetailVisible(null)
-    router.push(path.substring(path.indexOf("?")))
+  const handleCloseModal = () => {
+    closeModal
   }
+
+  useEffect(()=>{
+    setData(flightDetails)
+  },[])
 
   const getFlightBooking = async () => {
     try {
-      console.log(data)
-      const response = await travel.getFlightBooking(id)
+      setIsLoading(true)
+      const response = await travel.getFlightBooking(flightDetails.reference)
       setData({ ...response.data.data, ...flightDetails })
       calculateBaseFare(response.data.data)
     } catch (_err) {
@@ -43,7 +45,7 @@ const FlightDetailsModal = ({
       const { message, description } = _err.response?.data || _err
       notify("error", message || description)
     } finally {
-      // setIsLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -60,7 +62,7 @@ const FlightDetailsModal = ({
 
   const cancelBooking = async () => {
     setIsUploading(true)
-    const promise = await travel.cancelBooking({ bookingReference: id })
+    const promise = await travel.cancelBooking({ bookingReference: flightDetails.reference })
     setIsUploading(false)
     if (promise.data.code === "200") closeModal()
   }
@@ -72,8 +74,9 @@ const FlightDetailsModal = ({
   return (
     <ModalWrapper
       loading={false}
-      onClose={() => closeModal()}
+      onClose={()=>handleCloseModal()}
       ctaBtnType="none"
+      topClose={false}
       heading={"Flight Details"}
       subHeading={"See all your booking details here"}
       ctaBtnText="Modify"
@@ -81,6 +84,7 @@ const FlightDetailsModal = ({
       containsTabLayout
       hasBottomActions={false}
     >
+      {isLoading && <FWLoader />}
       <div className={styles.modal__tab_group}>
         {tabs.map((tab) => (
           <button
@@ -92,7 +96,6 @@ const FlightDetailsModal = ({
           </button>
         ))}
       </div>
-
       {/* MAIN FLIGHT DETAILS CONTENT - GENERAL */}
       {activeTab === tabs[0] && (
         <div className={styles.modal__flight_details}>
@@ -108,7 +111,7 @@ const FlightDetailsModal = ({
             <div className={styles.row}>
               <div className={styles.label}>Booking Reference</div>
               <div className={styles.value}>
-                <span className="text-blue text-bold uppercase">{id}</span>
+                <span className="text-blue text-bold uppercase">{flightDetails.reference}</span>
               </div>
             </div>
             <div className={styles.row}>
@@ -140,11 +143,10 @@ const FlightDetailsModal = ({
             <div className={styles.row}>
               <div className={styles.label}>Booking Status</div>
               <div className={styles.value}>
-                {data.status.toLowerCase() === "success" && (
-                  <div className="success-tag">Success</div>
-                )}
-                {data.status.toLowerCase() === "pending" && (
-                  <div className="pending-tag">Pending</div>
+                {data.amount ? (
+                  <div className="success-tag">Paid</div>
+                ) : (
+                  <div className="pending-tag">Not yet paid</div>
                 )}
               </div>
             </div>
@@ -424,7 +426,7 @@ const FlightDetailsModal = ({
             <div className={styles.row}>
               <div className={styles.label}>Contact Number</div>
               <div className={styles.value}>
-                <span>+{data?.phoneNumber}</span>
+                <span>{data?.phoneNumber}</span>
               </div>
             </div>
             <div className={styles.row}>

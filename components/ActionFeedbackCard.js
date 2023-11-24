@@ -4,12 +4,14 @@ import {
   ActionFailedIcon,
 } from "@/constants/icons";
 const ActionFeedbackCard = ({
+  icon=true,
   content = {
     status: "", // success, failure, pending
     title: "",
     value: "",
+    titleFS: 'normal'
   },
-  textTransform = "capitalize",
+  textTransform = "",
 }) => {
   return (
     <div
@@ -21,7 +23,7 @@ const ActionFeedbackCard = ({
         maxWidth: 500,
       }}
     >
-      {content.status === "success" ? (
+      {icon ? (content.status === "success" ? (
         <ActionSuccessfulIcon />
       ) : content.status === "failure" ? (
         <ActionFailedIcon />
@@ -29,8 +31,8 @@ const ActionFeedbackCard = ({
         <ActionPendingIcon />
       ) : (
         <></>
-      )}
-      <h2 style={{ marginTop: "20px" }}>{content.title}</h2>
+      )): <></>}
+      <h2 style={{ marginTop: "20px", fontSize: content.titleFS === 'xl' ? '40px' : '24px' }}>{content.title}</h2>
       <p
         style={{
           fontSize: 16,

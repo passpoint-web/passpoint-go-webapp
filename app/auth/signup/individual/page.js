@@ -66,8 +66,10 @@ const IndividualInformation = () => {
 			return
 		}
 		setIsLoading(true)
+		let {phone} = payload
+		phone = phone.replace('+','')
 		try {
-			const response = await registerUser('onBoardIndividualPersonalInfo', {...payload, phone: `+${payload.phone}`})
+			const response = await registerUser('onBoardIndividualPersonalInfo', {...payload, phone})
 			console.log(response)
 			let credentials = {...payload, regStage: 1}
 			delete credentials.password

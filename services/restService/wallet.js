@@ -60,7 +60,7 @@ export const wallet = {
 	transactions: ({data, type}) => {
 		return walletRestAgent.post(`ft-app/transaction-history?type=${type}`, data, setConfig())
 	},
-	servicesTransactions: ({data, type}) => {
+	allTransactions: ({data, type}) => {
 		return walletRestAgent.post(`wallet-app/wallet-history?type=${type}`, data, setConfig())
 	},
 	payBills: (data) => {

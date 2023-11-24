@@ -6,15 +6,16 @@ import functions from "@/utils/functions";
 import OtpInput from "react-otp-input";
 // import styles from "./wallet.module.css";
 import formStyles from "@/assets/styles/auth-screens.module.css";
-import CustomSelect from "../Custom/Select";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import { wallet } from '@/services/restService/wallet'
 import MoneyInput from "../Custom/MoneyInput";
 import AccountTypeDropDown from "./AccountTypeDropDown";
 import TertiaryBtn from "../Btn/Tertiary";
 import CreatePinModal from "../Modal/CreatePin";
+import SearchSelect from "../Dashboard/SearchSelect";
+import { getBanks as getCachedBanks } from "@/services/localService";
 
-const TransferModals = ({ onClose, styles }) => {
+const TransferModals = ({ onClose, styles, updateWalletState }) => {
 	// const notify = useNotify();
 	const { formatMoney, sortAlphabetically } = functions;
 	const [accountType, setAccountType] = useState({name: 'Account Number', description: 'NUBAN'})
@@ -124,12 +125,13 @@ const TransferModals = ({ onClose, styles }) => {
 				setStatusMessage(response.data.responseMessage)
 				setCurrentLevel('success')
 			} catch (_err) {
-				console.log(_err.response.data.responseMessage)
+				// console.log(_err.response.data.responseMessage)
 				setStatusMessage(_err.response.data.responseMessage)
 				setCurrentLevel('failure')
 				// console.log(_err)
 			} finally {
 				setAccountTranferLoading(false)
+				updateWalletState()
 				//
 			}
 		} else {
@@ -161,6 +163,7 @@ const TransferModals = ({ onClose, styles }) => {
 				// console.log(_err)
 			} finally {
 				setAccountTranferLoading(false)
+				updateWalletState()
 				//
 			}
 		}
@@ -176,7 +179,7 @@ const TransferModals = ({ onClose, styles }) => {
 				setBanks(sortedBanks)
 			}
 		} catch (_err) {
-			console.log(_err.response.data)
+			// console.log(_err.response.data)
 		} finally {
 			setGetDataLoading(false)
 			//
@@ -274,6 +277,7 @@ const TransferModals = ({ onClose, styles }) => {
 	},[currentLevel])
 
 	useEffect(()=>{
+		setBanks(getCachedBanks())
 		getBanks()
 	},[])
 
@@ -305,22 +309,20 @@ const TransferModals = ({ onClose, styles }) => {
 			{/* wallet id || account number */}
 			{accountType.name === 'Account Number' ?
 				<>
-					<Input
+					<SearchSelect
 						id="bank"
 						label="Select Bank"
 						error={ctaClicked && !bankDetail.bankName}
 						errorMsg="Bank name is required"
-					>
-						<CustomSelect
-							placeholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
-							selectOptions={banks}
-							disabled={banks.length === 0}
-							objKey={'name'}
-							selectedOption={bankDetail.bankName}
-							fieldError={ctaClicked && !bankDetail.bankName}
-							emitSelect={(option) => handleChange("bankName", option)}
-						/>
-					</Input>
+						selectPlaceholder={getDataLoading && !banks.length ? 'Loading...' : 'Select Bank'}
+						selectOptions={banks}
+						selectDisabled={banks.length === 0}
+						objKey={'name'}
+						selectedOption={bankDetail.bankName}
+						fieldError={ctaClicked && !bankDetail.bankName}
+						emitSelect={(option) => handleChange("bankName", option)}
+					/>
+
 					<Input
 						type="number"
 						label='Account Number'
@@ -343,7 +345,7 @@ const TransferModals = ({ onClose, styles }) => {
 					onChange={(e) => handleChange("walletID", e.target.value)}
 					errorMsg={feedbackError.toLowerCase().includes('number')? 'Wallet ID is not valid' : 'Wallet ID is required'}
 				/>}
-			{accountNameRetrieved ?
+				{accountNameRetrieved ?
 				<>
 					<Input
 						disabled

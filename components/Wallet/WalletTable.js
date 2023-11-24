@@ -21,16 +21,17 @@ import Select from "../Dashboard/Select";
 import TableLoader from "../Tables/Loader";
 // import Tab from "../Tab";
 
-const WalletTable = ({wallet,  styles }) => {
+const WalletTable = ({wallet,  styles, updateKey }) => {
 	const { formatMoney } = functions;
 	const [transactions, setTransactions] = useState([])
 	const [getDataLoading, setGetDataLoading] = useState(true)
 	const [showTransactionModal, setShowTransactionModal] = useState(false)
 	const [currentTransaction, setCurrentTransaction] = useState({})
 	const transactionTypes = [
-		'No Type',
+		'All',
 		'Incoming',
-		'Outgoing'
+		'Outgoing',
+		'Payment'
 	]
 
 	// const [activeTab, setActiveTab] = useState('Wallet')
@@ -48,6 +49,7 @@ const WalletTable = ({wallet,  styles }) => {
 		startDate: '2023-09-01',
 		endDate: numericalDateDashReversed(new Date())
 	})
+	// eslint-disable-next-line no-unused-vars
 	const getTransactions = async (
 		pageNumber,
 		currency = 'NGN' ,
@@ -73,7 +75,54 @@ const WalletTable = ({wallet,  styles }) => {
 		}
 		setGetDataLoading(loading)
 		try {
-			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
+			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
+			const {data} = response.data
+			const {
+				currentPage,
+				pageCount,
+				pageSize,
+				totalCount
+			} = response.data
+			setPagination((prev)=>({
+				...prev,
+				currentPage,
+				totalPages: pageCount,
+				limit: pageSize,
+				pageDataLength: data.length || 0,
+				totalData: totalCount
+			}))
+			setTransactions(data)
+		} catch (_err) {
+			// 
+		} finally {
+			setGetDataLoading(false)
+		}
+	}
+	// eslint-disable-next-line no-unused-vars
+	const getAllTransactions = async (
+		pageNumber,
+		currency = 'NGN' ,
+		startDate,
+		endDate,
+		pageSize,
+		type
+	) => {
+		let filters = {
+			pageNumber,
+			currency,
+			startDate,
+			endDate,
+			pageSize
+		}
+
+		if (filters.startDate === '') {
+			delete filters.startDate
+		}
+		if (filters.endDate === '') {
+			delete filters.endDate
+		}
+		try {
+			const response = await wallet.allTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
 			const {data} = response.data
 			const {
 				currentPage,
@@ -94,56 +143,9 @@ const WalletTable = ({wallet,  styles }) => {
 			// console.log(_err)
 		} finally {
 			setGetDataLoading(false)
+			//
 		}
 	}
-	// const getServicesTransactions = async (
-
-	// 	pageNumber,
-	// 	currency = 'NGN' ,
-	// 	startDate,
-	// 	endDate,
-	// 	pageSize,
-	// 	type
-	// ) => {
-	// 	let filters = {
-	// 		pageNumber,
-	// 		currency,
-	// 		startDate,
-	// 		endDate,
-	// 		pageSize
-	// 	}
-
-	// 	if (filters.startDate === '') {
-	// 		delete filters.startDate
-	// 	}
-	// 	if (filters.endDate === '') {
-	// 		delete filters.endDate
-	// 	}
-	// 	try {
-	// 		const response = await wallet.servicesTransactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : 'all'})
-	// 		const {data} = response.data
-	// 		console.log(data)
-	// 		// const {
-	// 		// 	currentPage,
-	// 		// 	pageCount,
-	// 		// 	pageSize,
-	// 		// 	totalCount
-	// 		// } = response.data
-	// 		// setPagination((prev)=>({
-	// 		// 	...prev,
-	// 		// 	currentPage,
-	// 		// 	totalPages: pageCount,
-	// 		// 	limit: pageSize,
-	// 		// 	pageDataLength: data.length || 0,
-	// 		// 	totalData: totalCount
-	// 		// }))
-	// 		// setTransactions(data)
-	// 	} catch (_err) {
-	// 		// console.log(_err)
-	// 	} finally {
-	// 		//
-	// 	}
-	// }
 
 	const handleCurrentTransaction = (val) => {
 		setCurrentTransaction(val)
@@ -151,20 +153,29 @@ const WalletTable = ({wallet,  styles }) => {
 	}
 
 	const handleEntry = (val) => {
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
+		// getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
+		getAllTransactions(1, 'NGN', pagination.startDate, pagination.endDate, val, transactionType, false)
 	}
 	const handleTransactionType = (val)=> {
 		setTransactionType(val)
-		getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
+		console.log(val)
+		// getTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
+		getAllTransactions(1, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, val, false)
 	}
 
 	const setPage = (val) => {
-		getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
+		// getTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
+		getAllTransactions(val, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, false)
 	}
 
+	// useEffect(()=>{
+	// 	getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+	// },[])
+
 	useEffect(()=>{
-		getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
-	},[])
+		// getTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+		getAllTransactions(pagination.currentPage, 'NGN', pagination.startDate, pagination.endDate, pagination.limit, transactionType, true)
+	},[updateKey])
 
 	// useEffect(()=>{
 	// 	if (activeTab === 'Wallet') {
@@ -244,8 +255,10 @@ const WalletTable = ({wallet,  styles }) => {
 						<table>
 							<thead>
 								<tr className="table__header">
+								
 									<th>BENEFICIARY DETAILS</th>
 									<th>BENEFICIARY BANK</th>
+									
 									<th>AMOUNT</th>
 									<th>TYPE</th>
 									<th>DATE &amp; TIME</th>
@@ -256,9 +269,12 @@ const WalletTable = ({wallet,  styles }) => {
 							<tbody>
 								{transactions.map((data, id) => (
 									<tr key={id}>
-										<td className={tableStyles.td_4}>
-											<div className={tableStyles.col}>
-												<h4>{data.beneficiaryAccountName.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
+										{data.transactionCategory !== 'BILL_PAYMENT' ?
+										<>
+											<td className={tableStyles.td_4}>
+											{
+												<div className={tableStyles.col}>
+												<h4>{data.beneficiaryAccountName?.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
 												<div className={tableStyles.accountNum}
 													style={{display: 'flex', gap: 10}}>
 													<p>{data.beneficiaryWalletId || data.beneficiaryAccountNumber}</p>
@@ -266,8 +282,21 @@ const WalletTable = ({wallet,  styles }) => {
 														value={data.beneficiaryWalletId || data.beneficiaryAccountNumber} />
 												</div>
 											</div>
+											}
 										</td>
-										<td className={tableStyles.td_3}>{data.beneficiaryBankName}</td>
+										<td className={tableStyles.td_3}>{data.transactionCategory !== 'BILL_PAYMENT' ? data.beneficiaryBankName : '-'}</td>
+										</> : 
+										<>
+											{/* <td className={tableStyles.td_4}>
+												<div style={{display: 'flex', gap: 10}}>
+												<h5>{data.transactionId.substring(0, 20)}...</h5>
+											<CopyValue color="#009ec4"
+														value={data.transactionId} />
+												</div>
+												</td> */}
+											<td className={tableStyles.td_4}>-</td>
+											<td className={tableStyles.td_3}>-</td>
+										</>}
 										<td className={`${tableStyles.td_3} text-bold`}>
 											{formatMoney(data.amount, data.currency)}
 										</td>
@@ -275,10 +304,14 @@ const WalletTable = ({wallet,  styles }) => {
 											{data.transactionCategory ==='PAYOUT' ?
 												<>
 													<span className="outgoing-circle" /> Outgoing
-												</> :
+												</> : data.transactionCategory ==='COLLECTION' ?
 												<>
 													<span className="incoming-circle" /> Incoming
-												</>
+												</> 
+												: data.transactionCategory ==='BILL_PAYMENT' ?
+												<>
+												<span className="payment-circle" /> Payment
+												</> : <></>
 											}
 										</td>
 										<td className={tableStyles.td_3}>

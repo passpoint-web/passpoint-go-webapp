@@ -1,5 +1,4 @@
 "use client"
-
 import styles from "../../assets/styles/flight.module.css"
 // eslint-disable-next-line no-unused-vars
 import { FaChevronDown, FaTrashAlt } from "react-icons/fa"
@@ -11,11 +10,12 @@ import { useEffect, useState } from "react"
 import Input from "../Dashboard/Input"
 // import Textarea from "../Dashboard/Textarea"
 import PrimaryBtn from "../Btn/Primary"
-import CustomSelect from "../Custom/Select"
+// import CustomSelect from "../Custom/Select"
 import Link from "next/link"
 import { getMostRecentFlightSearchURL } from "@/services/localService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
+import Select from "../Dashboard/Select"
 
 const FlightPassengers = ({
   passengersParent,
@@ -80,25 +80,31 @@ const FlightPassengers = ({
 
   const isActivePassengersFieldsValid = () => {
     const ap = passengers?.at(activePassenger - 1)
-    console.log(functions.validEmail(ap?.email))
+    // console.log(functions.validEmail(ap?.email))
     if (documentsRequired) {
-      return ap?.first_name?.length > 1 &&
+      return (
+        ap?.first_name?.length > 1 &&
         ap?.last_name?.length > 1 &&
         functions.validEmail(ap?.email) &&
         ap?.gender &&
-        ap?.passenger_type === "adult"
-        ? isDate18YearsAgo(ap?.dob)
-        : ap?.dob &&
-            ap?.passport_no &&
-            ap?.passport_issue &&
-            ap?.passport_expiry
+        (ap?.passenger_type === "adult"
+          ? isDate18YearsAgo(ap?.dob)
+          : ap?.dob) &&
+        ap?.phone_number?.length === 11 &&
+        Number(ap?.phone_number).toString().length === 10 &&
+        ap?.passport_no &&
+        ap?.passport_issue &&
+        ap?.passport_expiry
+      )
     }
     return (
       ap?.first_name?.length > 1 &&
       ap?.last_name?.length > 1 &&
       functions.validEmail(ap?.email) &&
       ap?.gender &&
-      ap?.dob
+      (ap?.passenger_type === "adult" ? isDate18YearsAgo(ap?.dob) : ap?.dob) &&
+      ap?.phone_number?.length === 11 &&
+      Number(ap?.phone_number).toString().length === 10
     )
   }
 
@@ -212,22 +218,24 @@ const FlightPassengers = ({
                 }
               />
               <div className="form-row bottom">
-                <CustomSelect
-                  id="class"
-                  selectOptions={["male", "female"]}
-                  selectedOption={passengerGenders[index]}
-                  emitSelect={(e) => updateValue("gender", e, passenger?.id)}
-                  placeholder="Select Gender"
-                />
-                <CustomSelect
-                  id="type"
-                  selectOptions={["adult", "child", "infant"]}
-                  selectedOption={passenger.passenger_type}
-                  disabled
-                  emitSelect={(e) =>
-                    updateValue("passenger_type", e, passenger?.id)
-                  }
-                  placeholder="Select Passenger Type"
+              <Select
+                label="Select Gender"
+                id="class"
+                selectOptions={["male", "female"]}
+                selectedOption={passengerGenders[index]}
+                emitSelect={(e) => updateValue("gender", e, passenger?.id)}
+                placeholder="Select Gender"
+               />
+              <Select
+                label="Passenger Type"
+                id="type"
+                selectOptions={["adult", "child", "infant"]}
+                selectedOption={passenger.passenger_type}
+                disabled
+                emitSelect={(e) =>
+                  updateValue("passenger_type", e, passenger?.id)
+                }
+                placeholder="Select Passenger Type"
                 />
               </div>
               <div className="form-row">
@@ -245,17 +253,17 @@ const FlightPassengers = ({
                     updateValue("dob", e.target.value, passenger?.id)
                   }
                 />
-                {documentsRequired && (
-                  <Input
-                    label="Passport Number"
-                    placeholder="A000123456"
-                    name="passport"
-                    // value={passenger.passport_no}
-                    onChange={(e) =>
-                      updateValue("passport_no", e.target.value, passenger?.id)
-                    }
-                  />
-                )}
+                <Input
+                  label="Phone Number"
+                  type="number"
+                  name="phone"
+                  placeholder="Enter phone number"
+                  max={100000000000}
+                  // value={passenger.dob}
+                  onChange={(e) =>
+                    updateValue("phone_number", e.target.value, passenger?.id)
+                  }
+                />
               </div>
               {documentsRequired && (
                 <div className="form-row">
@@ -287,6 +295,19 @@ const FlightPassengers = ({
                   />
                 </div>
               )}
+              <div className="form-row mt-12">
+                {documentsRequired && (
+                  <Input
+                    label="Passport Number"
+                    placeholder="A000123456"
+                    name="passport"
+                    // value={passenger.passport_no}
+                    onChange={(e) =>
+                      updateValue("passport_no", e.target.value, passenger?.id)
+                    }
+                  />
+                )}
+              </div>
 
               {/* FORM ACTION */}
               <div className={styles.form__action}>

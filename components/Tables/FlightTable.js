@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link"
 import Search from "../Custom/Search"
 import styles from "../../assets/styles/table.module.css"
 import { useEffect, useState } from "react"
@@ -7,28 +6,37 @@ import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Pagination from "./Pagination"
-import Loader from "../Btn/Loader"
-import TableLoader from "./Loader"
+// import Loader from "../Btn/Loader"
+import { getCredentials } from "@/services/localService"
+import FWLoader from "../FWLoader"
+import Input from "../Dashboard/Input"
+import FlightDetailsModal from "../Travel/FlightDetailsModal"
+import Button from "../Btn/Button"
 
-const FlightTable = ({ title, setFlightDetails }) => {
+const FlightTable = ({title, modalStyles}) => {
   const { formatMoney } = functions
+  const user = getCredentials()
   const notify = useNotify()
   const [data, setData] = useState([])
   const [paginationData, setPaginationData] = useState({})
+  const [flightDetails, setFlightDetails] = useState({})
+  const [flightDetailVisible, setFlightDetailVisible] = useState(null)
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0)
   // eslint-disable-next-line no-unused-vars
   const [searchParam, setSearchParam] = useState("")
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [getDataLoading, setGetDataLoading] = useState(true)
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10)
-  const getFlightBookings = async (loading = false) => {
-    setGetDataLoading(loading)
+  const getFlightBookings = async (goToPage) => {
     try {
+      setIsLoading(true)
       const response = await travel.getFlightBookings({
-        page,
+        email: user.email,
+        page: goToPage,
         pageSize,
         searchParam,
       })
@@ -45,6 +53,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
       }
       delete tempPaginationData.content
       setPaginationData(tempPaginationData)
+      setIsLoading(false)
     } catch (_err) {
       const { message } = _err.response?.data || _err
       notify("error", message)
@@ -54,15 +63,30 @@ const FlightTable = ({ title, setFlightDetails }) => {
     }
   }
 
+  const handleFlightDetails = (f) => {
+    setFlightDetails(f)
+    setFlightDetailVisible(true)
+  }
+
   const handlePaginationEvent = (symbol) => {
-    setPage(symbol === "+" ? page + 1 : page - 1)
-    getFlightBookings()
+    const currentPage = symbol === "+" ? page + 1 : page - 1
+    setPage(currentPage)
+    getFlightBookings(currentPage)
   }
 
   useEffect(() => {
-    getFlightBookings(true)
+    getFlightBookings(page)
   }, [searchParam])
   return (
+
+  <>
+    {flightDetailVisible ? (
+      <FlightDetailsModal
+      closeModal={()=>setFlightDetailVisible(false)}
+        styles={modalStyles}
+        flightDetails={flightDetails}
+      />
+    ) : <></>}
     <div className={`table-ctn ${styles.travel__dashboard_table}`}>
       <div className={styles.table__outer}>
         <div className={styles.table__header}>
@@ -70,14 +94,16 @@ const FlightTable = ({ title, setFlightDetails }) => {
             <h3 className="capitalize"> {title} Booking History</h3>
             <p>Manage your {title} bookings here</p>
           </div>
-          <Loader size={60} />
 
+          {/* <Loader size={60} /> */}
+          <Input>
           <Search
             id={"booking"}
             placeholder={"Search Booking ID"}
             search={searchParam}
-            searchCountry={setSearchParam}
+            searchItem={setSearchParam}
           />
+          </Input>
           {/* <CustomSelect
             id="status-type"
             selectOptions={["Confirmed", "Pending", "Failed"]}
@@ -92,72 +118,79 @@ const FlightTable = ({ title, setFlightDetails }) => {
           /> */}
         </div>
         <div className={styles.table__main}>
-         {
-          !getDataLoading ? 
+          {isLoading && <FWLoader />}
           <table>
-          <thead>
-            <tr className="table__header">
-              <th>BOOKING ID</th>
-              <th>SERVICE</th>
-              <th>DATE &amp; TIME</th>
-              <th>BOOKING STATUS</th>
-              <th>AMOUNT</th>
-              <th>PAYMENT STATUS</th>
-              <th>ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((c, i) => (
-              <tr key={i}>
-                <td className="text-bold text-blue">
-                  {c.reference || "No Reference"}
-                </td>
-                <td>Flights</td>
-                <td>
-                  <div className="date-time">
-                    <div className="date">
-                      {functions.formatTimestamp(c.createdDate).substring(4)},{" "}
-                      {functions.formatCustomTime(c.createdDate)}
-                    </div>
-                    {/* <div className="time">8:45 PM</div> */}
-                  </div>
-                </td>
-                <td>
-                  <div className={`${c.status.toLowerCase()}-tag`}>{c.status.toLowerCase()}</div>
-                </td>
-                <td className="text-bold">
-                  {formatMoney(c.amount, c.currency)}
-                </td>
-                <td>
-                  {c.amount ? (
-                    <>
-                      <div className="success-circle" /> Paid
-                    </>
-                  ) : (
-                    <>
-                      <div className="pending-circle" /> Not yet paid
-                    </>
-                  )}
-                </td>
-                <td>
-                  <Link
-                    className="secondary_btn outline_btn"
-                    href={`./flights?id=${c.reference}`}
-                    onClick={() => setFlightDetails(c)}
-                  >
-                    View Details
-                  </Link>
-                </td>
+            <thead>
+              <tr className="table__header">
+                <th>BOOKING ID</th>
+                <th>SERVICE</th>
+                <th>DATE &amp; TIME</th>
+                <th>BOOKING STATUS</th>
+                <th>AMOUNT</th>
+                <th>PAYMENT STATUS</th>
+                <th>ACTION</th>
               </tr>
-            ))}
-          </tbody>
-        </table> : 
-				<TableLoader rowLength={7} />
-         }
+            </thead>
+            <tbody>
+              {data.map((c, i) => (
+                <tr key={i}>
+                  <td className="text-bold text-blue">
+                    {c.reference || "No Reference"}
+                  </td>
+                  <td>Flights</td>
+                  <td>
+                    <div className="date-time">
+                      <div className="date">
+                        {functions.formatTimestamp(c.createdDate).substring(4)},{" "}
+                        {functions.formatCustomTime(c.createdDate)}
+                      </div>
+                      {/* <div className="time">8:45 PM</div> */}
+                    </div>
+                  </td>
+                  <td>
+                    <div className={`${c.status.toLowerCase()}-tag`}>
+                      {c.status.toLowerCase()}
+                    </div>
+                  </td>
+                  <td className="text-bold">
+                    {formatMoney(c.amount, c.currency)}
+                  </td>
+                  <td>
+                    {c.amount ? (
+                      <>
+                        <div className="success-circle" /> Paid
+                      </>
+                    ) : (
+                      <>
+                        <div className="pending-circle" /> Not yet paid
+                      </>
+                    )}
+                  </td>
+                  <td>
+                    {/* <Se */}
+                    {/* <Link
+                      className="secondary_btn outline_btn"
+                      href={`./flights?id=${c.reference}`}
+                      onClick={() => setFlightDetails(c)}
+                    >
+                      View Details
+                    </Link> */}
+                    <Button
+												className="secondary_btn outline_btn"
+												text="View Details"
+												onClick={()=>handleFlightDetails(c)}
+												// href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}
+											/>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <Pagination
           tableStyles={styles}
           pagination={paginationData}
+          currentPage={page + 1}
           handlePaginationEvent={handlePaginationEvent}
         />
         {/* <div className={styles.table__pagination}>
@@ -165,6 +198,7 @@ const FlightTable = ({ title, setFlightDetails }) => {
         </div> */}
       </div>
     </div>
+    </>
   )
 }
 
