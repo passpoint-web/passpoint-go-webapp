@@ -896,7 +896,8 @@ form {
 .pending-tag,
 .failed-tag,
 .failure-tag,
-.processing-tag {
+.processing-tag,
+.issued-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
@@ -908,7 +909,8 @@ form {
   display: inline-block;
 }
 
-.primary-tag {
+.primary-tag,
+.issued-tag {
   background: var(--sky-blue-light);
   color: var(--sky-blue);
 }

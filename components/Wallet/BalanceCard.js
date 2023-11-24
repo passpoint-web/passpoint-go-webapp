@@ -10,9 +10,10 @@ import CreatePinModal from '../Modal/CreatePin'
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
-import Button from '../Btn/Button';
+// import Button from '../Btn/Button';
 // import RefreshBtn from '../Btn/RefreshBtn';
 
+// eslint-disable-next-line no-unused-vars
 const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles, updateWalletState}) => {
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
@@ -109,10 +110,10 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 									{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
 								</h1>
 								<div className={styles.card_action}>
-								<button onClick={()=>setShowBalance(!showBalance)}>
-									{!showBalance ? <EyeOpen /> : <EyeClose />}
-								</button>
-								{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
+									<button onClick={()=>setShowBalance(!showBalance)}>
+										{!showBalance ? <EyeOpen /> : <EyeClose />}
+									</button>
+									{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
 								</div>
 							</div>
 						</div>
