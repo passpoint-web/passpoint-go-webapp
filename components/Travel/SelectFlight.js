@@ -386,15 +386,15 @@ const SelectFlight = () => {
 				<div className={styles.rhs}>
 					{isLoading &&
             [1, 2, 3, 4].map((key) => (
-            	<div
-            		key={key}
-            		className={`${styles.dashMetric_content} skeleton`}
-            		style={{
-            			borderRadius: "16px",
-            			height: "200px",
-            			boxShadow: "none",
-            		}}
-            	/>
+            <div
+              key={key}
+              className={`${styles.dashMetric_content} skeleton`}
+              style={{
+                borderRadius: "16px",
+                height: "200px",
+                boxShadow: "none",
+              }}
+            />
             ))}
 					{sortedFlights?.map((flight) => (
 						<FlightCard
