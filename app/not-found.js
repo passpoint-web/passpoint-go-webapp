@@ -4,6 +4,7 @@ import styles from "@/assets/styles/dashboard-layout.module.css";
 import Error from "../assets/images/dashboard/error.svg";
 import Image from "next/image";
 import PrimaryLink from "@/components/Link/Primary";
+
 const NotFound = () => {
   return (
     <main className={styles.errorPage}>
