@@ -896,6 +896,10 @@ form {
 .pending-tag,
 .failed-tag,
 .failure-tag,
+.processing-tag,
+.issued-tag,
+.reserved-tag,
+.cancelled-tag,
 .processing-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
@@ -916,19 +920,28 @@ form {
 .successful-tag,
 .success-tag,
 .confirmed-tag,
-.completed-tag {
+.completed-tag,
+.issued-tag {
   background: #e9f9f4;
   color: #23c38e;
 }
 
+.reserved-tag {
+  background: var(--grey-6);
+  color: var(--grey-3);
+}
+
 .pending-tag,
+.processing-tag
+.reserved-tag,
 .processing-tag {
   background: #fffae7;
   color: #e9b500;
 }
 
 .failure-tag,
-.failed-tag {
+.failed-tag,
+.cancelled-tag {
   background: #fee8e8;
   color: #f21818;
 }

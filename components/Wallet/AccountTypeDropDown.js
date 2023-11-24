@@ -8,6 +8,7 @@ const AccountTypeDropDown = ({
 	emitSelect,
 }) => {
 	const [showSelect, setShowSelect] = useState(false)
+	const accountTypes = [{name: 'Account Number', description: 'NUBAN'}, {name: 'Wallet ID', description: 'Passpoint Wallet ID'}]
 
 	const handleClick = (e) => {
 		e.preventDefault()
@@ -54,7 +55,7 @@ const AccountTypeDropDown = ({
 								className={`${styles.select} dropdown`}
 								style={{height: 100, top: 20, right: 0, width: 150, borderRadius: 5, padding: 0}}
 							>
-								{[{name: 'Account Number', description: 'NUBAN'}, {name: 'Wallet ID', description: 'Passpoint Wallet ID'}].map((option, index) => (
+								{accountTypes.map((option, index) => (
 									<div
 										key={index}
 										className={`${styles.content} ${(option.name === selectedOption.name) ? styles.content_selected : ''
