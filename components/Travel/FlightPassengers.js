@@ -343,7 +343,7 @@ const FlightPassengers = ({
                     loading={isLoading}
                     text="Confirm Booking Cost"
                     disabled={
-                      !(activePassengersFieldsValid && isPassengerNameSimilar)
+                      !(activePassengersFieldsValid && !isPassengerNameSimilar)
                     }
                     onClick={() => saveAndContinue(index)}
                   />
