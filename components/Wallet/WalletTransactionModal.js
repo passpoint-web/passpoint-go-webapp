@@ -38,9 +38,9 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 		defineModalContents(currentLevel)
 	},[currentLevel])
 
-	// useEffect(()=>{
-	// 	console.log(transaction)
-	// },[transaction])
+	useEffect(()=>{
+		console.log(transaction)
+	},[transaction])
 
 	const handleIssueSelect = () => {};
 
@@ -209,12 +209,6 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 					{transaction.narration}
 				</div>
 			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Booking Status</div>
-				<div className={styles.value}>
-					{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
-				</div>
-			</div>
 		</div> :
 		<div className={styles.modal__wallet_details_section}>
 			<div className={styles.row}>
@@ -231,6 +225,12 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 					<span className="text-blue uppercase">
 						{formatMoney(transaction.amount, transaction.currency)}
 					</span>
+				</div>
+			</div>
+			<div className={styles.row}>
+				<div className={styles.label}>Booking Status</div>
+				<div className={styles.value}>
+					{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
 				</div>
 			</div>
 			<div className={styles.row}>
