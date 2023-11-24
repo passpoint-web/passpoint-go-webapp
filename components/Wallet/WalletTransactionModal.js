@@ -38,9 +38,9 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 		defineModalContents(currentLevel)
 	},[currentLevel])
 
-	useEffect(()=>{
-		console.log(transaction)
-	},[transaction])
+	// useEffect(()=>{
+	// 	console.log(transaction)
+	// },[transaction])
 
 	const handleIssueSelect = () => {};
 
