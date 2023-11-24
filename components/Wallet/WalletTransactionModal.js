@@ -127,7 +127,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			<div className={styles.row}>
 				<div className={styles.label}>Transaction ID</div>
 				<div className={styles.value}>
-					<span>{transaction.transactionId}</span>
+					{transaction.transactionId}
 				</div>
 			</div>
 			{transaction.transactionCategory !== 'BILL_PAYMENT' ?
@@ -206,7 +206,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			<div className={styles.row}>
 				<div className={styles.label}>Narration</div>
 				<div className={styles.value}>
-					<span>{transaction.narration}</span>
+					{transaction.narration}
 				</div>
 			</div>
 			<div className={styles.row}>
