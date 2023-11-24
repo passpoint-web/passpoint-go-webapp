@@ -14,6 +14,7 @@ import { getMostRecentFlightSearchURL } from "@/services/localService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Select from "../Dashboard/Select"
+import FeedbackInfo from "../FeedbackInfo"
 
 const FlightPassengers = ({
   passengersParent,
@@ -26,6 +27,7 @@ const FlightPassengers = ({
   const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isPassengerNameSimilar, setIsPassengerNameSimilar] = useState(false)
   const [activePassengersFieldsValid, setActivePassengersFieldsValid] =
     useState(false)
   const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
@@ -60,6 +62,27 @@ const FlightPassengers = ({
       tempGenders[passengerIndex] = temp[label] = value
       setPassengerGenders(tempGenders)
     }
+
+    // CHECK IF PASSENGER HAS A SIMILAR NAME AS OTHER PASSENGERS
+    let similarityCount = 0
+    passengers?.forEach((passenger) => {
+      const tempPassengerFullName =
+        `${temp.first_name} ${temp.last_name}`.trim()
+      const passengerFullName =
+        `${passenger.first_name} ${passenger.last_name}`.trim()
+      if (
+        passengerFullName === tempPassengerFullName &&
+        passenger.id !== temp.id
+      ) {
+        similarityCount += 1
+      }
+    })
+    if (similarityCount > 0) {
+      setIsPassengerNameSimilar(true)
+    } else {
+      setIsPassengerNameSimilar(false)
+    }
+
     setActivePassengersFieldsValid(isActivePassengersFieldsValid())
   }
 
@@ -79,6 +102,7 @@ const FlightPassengers = ({
   const isActivePassengersFieldsValid = () => {
     const ap = passengers?.at(activePassenger - 1)
     // console.log(functions.validEmail(ap?.email))
+    console.log("isPassengerNameSimilar", isPassengerNameSimilar)
     if (documentsRequired) {
       return (
         ap?.first_name?.length > 1 &&
@@ -186,6 +210,9 @@ const FlightPassengers = ({
               }
               onSubmit={(e) => e.preventDefault()}
             >
+              {isPassengerNameSimilar && (
+                <FeedbackInfo message="This passenger has a similar name as another passenger" />
+              )}
               <div className="form-row">
                 <Input
                   label="First Name"
@@ -216,24 +243,24 @@ const FlightPassengers = ({
                 }
               />
               <div className="form-row bottom">
-              <Select
-                label="Select Gender"
-                id="class"
-                selectOptions={["male", "female"]}
-                selectedOption={passengerGenders[index]}
-                emitSelect={(e) => updateValue("gender", e, passenger?.id)}
-                placeholder="Select Gender"
-               />
-              <Select
-                label="Passenger Type"
-                id="type"
-                selectOptions={["adult", "child", "infant"]}
-                selectedOption={passenger.passenger_type}
-                disabled
-                emitSelect={(e) =>
-                  updateValue("passenger_type", e, passenger?.id)
-                }
-                placeholder="Select Passenger Type"
+                <Select
+                  label="Select Gender"
+                  id="class"
+                  selectOptions={["male", "female"]}
+                  selectedOption={passengerGenders[index]}
+                  emitSelect={(e) => updateValue("gender", e, passenger?.id)}
+                  placeholder="Select Gender"
+                />
+                <Select
+                  label="Passenger Type"
+                  id="type"
+                  selectOptions={["adult", "child", "infant"]}
+                  selectedOption={passenger.passenger_type}
+                  disabled
+                  emitSelect={(e) =>
+                    updateValue("passenger_type", e, passenger?.id)
+                  }
+                  placeholder="Select Passenger Type"
                 />
               </div>
               <div className="form-row">
@@ -313,13 +340,17 @@ const FlightPassengers = ({
                   <PrimaryBtn
                     loading={isLoading}
                     text="Confirm Booking Cost"
-                    disabled={!activePassengersFieldsValid}
+                    disabled={
+                      !(activePassengersFieldsValid && isPassengerNameSimilar)
+                    }
                     onClick={() => saveAndContinue(index)}
                   />
                 ) : (
                   <PrimaryBtn
                     text="Continue"
-                    disabled={!activePassengersFieldsValid}
+                    disabled={
+                      !(activePassengersFieldsValid && !isPassengerNameSimilar)
+                    }
                     onClick={() => saveAndContinue(index)}
                   />
                 )}

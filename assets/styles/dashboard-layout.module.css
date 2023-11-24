@@ -305,3 +305,49 @@
   color: var(--positive);
 }
 /* end  */
+
+/* 404 error page  */
+.errorPage {
+  width: 100%;
+  min-height: 100vh;
+}
+.errorPage_main {
+  height: calc(100vh - var(--header-height));
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background-image: url(../images/dashboard/404.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: -140px;
+}
+.errorPage_content {
+  width: 40%;
+}
+.errorPage_content p {
+  font-size: 18px;
+  color: var(--grey-2);
+  margin: 20px 0;
+}
+.errorPage_link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.errorPage_link a {
+  width: fit-content;
+}
+@media screen and (max-width: 1024px) {
+  .errorPage_content {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .errorPage_main {
+    background-size: contain;
+    background-position: center;
+  }
+  .errorPage_content {
+    width: 90%;
+  }
+}

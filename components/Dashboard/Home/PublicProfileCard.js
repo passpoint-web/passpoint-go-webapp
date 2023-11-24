@@ -9,7 +9,7 @@ const PublicProfileCard = () => {
         <h3>Explore Travel Services</h3>
         <p>
           You can book your flights and hotels here seamlessly, What are you
-          waiting for ?
+          waiting for?
         </p>
         {/* <Link href="">Start Setup</Link> */}
         <PrimaryLink
