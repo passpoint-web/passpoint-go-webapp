@@ -14,7 +14,7 @@ const ContactInd = ({ styles }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    push("/dashboard/kyc/individual/identity");
+    push("/kyc/individual/identity");
   };
 
   useEffect(() => {

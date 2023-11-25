@@ -161,7 +161,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                   />
                   {walletAccount?.availableBalance < totalAmount && (
                     <Link
-                      href="/dashboard/wallet?add-money=true"
+                      href="/wallet?add-money=true"
                       className={styles.wallet__link}
                     >
                       Top-up Wallet

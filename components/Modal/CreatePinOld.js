@@ -56,7 +56,7 @@ const CreatePinModal = ({onClose }) => {
 	// 	} else {
 	// 		newParams.delete(currentModal)
 	// 	}
-	// 	replace(createUrl('/dashboard/wallet', newParams))
+	// 	replace(createUrl('/wallet', newParams))
 	// }
 
 	// const confirmPassword = async () => {

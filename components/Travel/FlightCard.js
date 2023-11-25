@@ -62,7 +62,7 @@ const FlightCard = ({ selected, data, cheapest, quickest }) => {
         )}
         {inbound?.length > 0 ? <FlightTimeline data={data} /> : <div />}
         <Link
-          href={`/dashboard/travel/flights/pay/${data?.id}`}
+          href={`/travel/flights/pay/${data?.id}`}
           className="primary_btn"
           style={{ visibility: selected ? "hidden" : "visible" }}
           onClick={() => selectFlight(data)}

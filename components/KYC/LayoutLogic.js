@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/app/dashboard/kyc/kyc.module.css";
+import styles from "@/app/kyc/kyc.module.css";
 import KycSetupLHS from "@/components/KYC/SetupLHS";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,8 +9,8 @@ const LayoutLogic = ({ children }) => {
   const [pathnamees, setPathnames] = useState([]);
   useEffect(() => {
     setPathnames([
-      "/dashboard/kyc/corporate/verify-bvn",
-      "/dashboard/kyc/status",
+      "/kyc/corporate/verify-bvn",
+      "/kyc/status",
     ]);
   }, [pathname]);
   return (

@@ -8,7 +8,7 @@ const VirtualHome = ({ styles }) => {
         <h3>Virtual Account</h3>
         <p>
           {" "}
-          <Link href="/dashboard/wallet">Wallets {">>"} </Link>Virtual Accounts{" "}
+          <Link href="/wallet">Wallets {">>"} </Link>Virtual Accounts{" "}
         </p>
       </section>
       <section className={styles.virtualHome_button}>
