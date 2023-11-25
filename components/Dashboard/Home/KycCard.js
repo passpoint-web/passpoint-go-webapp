@@ -8,7 +8,7 @@ const KycCard = () => {
       <div className={styles.dashKyc_content}>
         <h3>Wallet & Virtual Accounts</h3>
         <p>Manage your wallet and your virtual account here.</p>
-        <Link href="/dashboard/wallet" className="primary_link medium">
+        <Link href="/wallet" className="primary_link medium">
           Get Started
         </Link>
       </div>

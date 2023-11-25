@@ -125,7 +125,7 @@ const ForgotPasswordFlow = () => {
 		} else {
 			newParams.delete("forgotPasswordLevel");
 		}
-		replace(createUrl("/dashboard/settings/security", newParams));
+		replace(createUrl("/settings/security", newParams));
 	};
 
 	const handleCta = () => {

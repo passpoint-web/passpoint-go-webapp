@@ -4,6 +4,7 @@ import functions from "@/utils/functions"
 import styles from "../../assets/styles/flight.module.css"
 
 const FlightTimeline = ({ data, isOutbound }) => {
+  const {formatCustomTime, getFormattedAirportByIata, convertMinutesToHHMM} = functions
   // eslint-disable-next-line no-unused-vars
   const totalDuration = isOutbound
     ? data?.total_outbound_duration
@@ -17,9 +18,9 @@ const FlightTimeline = ({ data, isOutbound }) => {
       ]}`}
     >
       <div className={styles.fc__col}>
-        <h5>{functions.formatCustomTime(flights?.at(-1)?.departure_time)}</h5>
+        <h5>{formatCustomTime(flights?.at(-1)?.departure_time)}</h5>
         <div>
-          {functions.getFormattedAirportByIata(flights?.at(0)?.airport_from)}
+          {getFormattedAirportByIata(flights?.at(0)?.airport_from)}
         </div>
       </div>
       <div className={styles.fc__timeline_range}>
@@ -35,9 +36,9 @@ const FlightTimeline = ({ data, isOutbound }) => {
             <div key={flight.arrival_time} className={styles.fc__timeline_stop}>
               <div className={styles.circle__ctn}>
                 <div>
-                  {functions.convertMinutesToHHMM(flight?.duration)}
+                  {convertMinutesToHHMM(flight?.duration)}
                   {/* {flight?.layover &&
-                    `(${functions.convertMinutesToHHMM(flight?.layover)})`} */}
+                    `(${convertMinutesToHHMM(flight?.layover)})`} */}
                 </div>
                 <div>{directFlight ? "Direct" : flight?.airport_to}</div>
               </div>
@@ -51,9 +52,9 @@ const FlightTimeline = ({ data, isOutbound }) => {
         </div>
       </div>
       <div className={styles.fc__col}>
-        <h5>{functions.formatCustomTime(flights?.at(-1)?.arrival_time)}</h5>
+        <h5>{formatCustomTime(flights?.at(-1)?.arrival_time)}</h5>
         <div>
-          {functions.getFormattedAirportByIata(flights?.at(-1)?.airport_to)}
+          {getFormattedAirportByIata(flights?.at(-1)?.airport_to)}
         </div>
       </div>
     </div>

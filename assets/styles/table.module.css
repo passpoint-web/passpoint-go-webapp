@@ -20,6 +20,10 @@
   gap: 1rem;
 }
 
+.table__main  {
+  overflow: auto;
+}
+
 .table__main th {
   font-family: var(--graphikRegular);
   letter-spacing: 0.6px;
@@ -28,6 +32,11 @@
 .table__main td > div.col {
   display: flex;
   flex-direction: column;
+}
+
+.table__main td,
+.table__main th {
+  padding: 0 3px;
 }
 
 .table__main td h4 {

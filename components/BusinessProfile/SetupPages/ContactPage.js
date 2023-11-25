@@ -170,7 +170,7 @@ const ContactPage = ({ styles }) => {
 			savePublicProfile({productStage: 2})
 			console.log(response)
 			notify('success', 'Your business contacts info has been saved')
-			push('/dashboard/business-profile/preview')
+			push('/business-profile/preview')
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
@@ -426,7 +426,7 @@ const ContactPage = ({ styles }) => {
 		<>
 			{dataLoading ? <FullScreenLoader /> : <></>}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/business-profile-setup/services')} />
+				<BackBtn onClick={()=>push('/business-profile-setup/services')} />
 				<h1>Contact Information</h1>
 				<div className={styles.contact_breadcrumbs}>
 					<TertiaryBtn text="Business Contact"

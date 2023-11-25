@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import FormLevel from "../../FormLevel/FormLevel";
 import { useEffect, useState } from "react";
 // import BackBtn from "@/components/Btn/Back";
-import styles from "@/app/dashboard/kyc/kyc.module.css";
+import styles from '@/app/(dashboard)/kyc/kyc.module.css'
 // import formLevelStyles from '../kyc-lhs.module.css'
 import { getCredentials, getKycDetails } from "@/services/localService";
 
@@ -20,20 +20,20 @@ const KycSetupLHS = () => {
     // {
     //   title: "Contact Information",
     //   sub_title: "Please provide essential details about your business.",
-    //   active: pathname === "/dashboard/kyc/individual/contact",
+    //   active: pathname === "/kyc/individual/contact",
     //   completed: false,
     // },
     {
       title: "Proof Of Identity",
       sub_title:
         "Verify your identity to ensure a secure and trusted experience.",
-      active: pathname === "/dashboard/kyc/individual/identity",
+      active: pathname === "/kyc/individual/identity",
       completed: kycDetailsState?.KycStage > 0,
     },
     {
       title: "Proof of Address",
       sub_title: "Verify your current address for accurate communication.",
-      active: pathname === "/dashboard/kyc/individual/address",
+      active: pathname === "/kyc/individual/address",
       completed: kycDetailsState?.isCompleted,
     },
   ];
@@ -43,27 +43,27 @@ const KycSetupLHS = () => {
     {
       title: "Business Information",
       sub_title: "Please provide essential details about your business.",
-      active: pathname === "/dashboard/kyc/corporate/business",
+      active: pathname === "/kyc/corporate/business",
       completed: kycDetailsState?.KycStage > 0,
     },
     {
       title: "Proof Of Identity",
       sub_title:
         "Verify your identity to ensure a secure and trusted experience.",
-      active: pathname === "/dashboard/kyc/corporate/identity",
+      active: pathname === "/kyc/corporate/identity",
       completed: kycDetailsState?.KycStage > 1,
     },
     {
       title: "Proof of Address",
       sub_title: "Verify your current address for accurate communication.",
-      active: pathname === "/dashboard/kyc/corporate/address",
+      active: pathname === "/kyc/corporate/address",
       completed: kycDetailsState?.isCompleted,
     },
     // Not needed for MVP
     // {
     //   title: "Proof of Ownership",
     //   sub_title: "Demonstrate your ownership of relevant assets or properties.",
-    //   active: pathname === "/dashboard/kyc/corporate/ownership",
+    //   active: pathname === "/kyc/corporate/ownership",
     //   completed: false,
     // },
   ];
