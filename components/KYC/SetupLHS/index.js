@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import FormLevel from "../../FormLevel/FormLevel";
 import { useEffect, useState } from "react";
 // import BackBtn from "@/components/Btn/Back";
-import styles from "@/app/kyc/kyc.module.css";
+import styles from '@/app/(dashboard)/kyc/kyc.module.css'
 // import formLevelStyles from '../kyc-lhs.module.css'
 import { getCredentials, getKycDetails } from "@/services/localService";
 

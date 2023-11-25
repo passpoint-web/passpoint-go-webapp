@@ -11,7 +11,7 @@ import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import CopyValue from "../CopyValue";
 import Tab from "../Tab";
-import FlightTimeline from "../Travel/FlightTimeline";
+// import FlightTimeline from "../Travel/FlightTimeline";
 
 const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => {
 	const { formatMoney } = functions;
@@ -100,7 +100,7 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 		}
 	};
 
-	const FlightTimeline = () => (
+	// const FlightTimeline = () => (
 
 // airlineLogo
 // airlineName
@@ -110,23 +110,23 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 // departureCode
 // departureTime
 // flightNumber
-<></>
-	)
+{/* <></> */}
+	// )
 
 	// flight service details
-	const FlightInfo = () => (
-		<div className={styles.fc__row_one}>
-		<div className={styles.fc__airline}>
-			<div
-				style={{
-					// backgroundImage: `url(${outbound?.at(0)?.airline_details?.logo})`,
-				}}
-			></div>
-			{/* <h6>{outbound?.[0]?.airline_details?.name}</h6> */}
-		</div>
-		{/* <FlightTimeline data={data} isOutbound /> */}
-	</div>
-	)
+	// const FlightInfo = () => (
+	// 	<div className={styles.fc__row_one}>
+	// 	<div className={styles.fc__airline}>
+	// 		<div
+	// 			style={{
+	// 				// backgroundImage: `url(${outbound?.at(0)?.airline_details?.logo})`,
+	// 			}}
+	// 		></div>
+	// 		{/* <h6>{outbound?.[0]?.airline_details?.name}</h6> */}
+	// 	</div>
+	// 	{/* <FlightTimeline data={data} isOutbound /> */}
+	// </div>
+	// )
 	const FlightServiceDetails = () => (
 		<div className={styles.modal__wallet_details_section}>
 		<div className={styles.row}>

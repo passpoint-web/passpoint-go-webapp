@@ -1,5 +1,5 @@
 import { CancelIcon_border } from "@/constants/icons"
-import styles from '@/app/business-profile-setup/business-profile.module.css'
+import styles from '@/app/dashboard/business-profile-setup/business-profile.module.css'
 import Image from "next/image"
 import functions from "@/utils/functions"
 
