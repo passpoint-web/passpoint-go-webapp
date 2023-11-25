@@ -38,7 +38,7 @@ const FlightPageHeader = ({ styles }) => {
     returnDate: searchParams.get("returnDate"),
     tripType: searchParams.get("tripType"),
   }
-  console.log(queryParams?.tripType)
+  // console.log(queryParams?.tripType)
 
   const today = new Date().toISOString().split("T")[0]
 

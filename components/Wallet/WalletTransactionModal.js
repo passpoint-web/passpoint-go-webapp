@@ -11,8 +11,9 @@ import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import ActionFeedbackCard from "../ActionFeedbackCard";
 import CopyValue from "../CopyValue";
 import Tab from "../Tab";
+import FlightTimeline from "../Travel/FlightTimeline";
 
-const WalletTransactionModal = ({onClose, styles, transaction}) => {
+const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => {
 	const { formatMoney } = functions;
 	const [currentLevel, setCurrentLevel] = useState('transaction')
 	// const [errorMsg, setErrorMsg] = useState("");
@@ -99,6 +100,134 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 		}
 	};
 
+	const FlightTimeline = () => (
+
+// airlineLogo
+// airlineName
+// arrivalCode
+// arrivalTime
+// cabinType
+// departureCode
+// departureTime
+// flightNumber
+<></>
+	)
+
+	// flight service details
+	const FlightInfo = () => (
+		<div className={styles.fc__row_one}>
+		<div className={styles.fc__airline}>
+			<div
+				style={{
+					// backgroundImage: `url(${outbound?.at(0)?.airline_details?.logo})`,
+				}}
+			></div>
+			{/* <h6>{outbound?.[0]?.airline_details?.name}</h6> */}
+		</div>
+		{/* <FlightTimeline data={data} isOutbound /> */}
+	</div>
+	)
+	const FlightServiceDetails = () => (
+		<div className={styles.modal__wallet_details_section}>
+		<div className={styles.row}>
+			<div className={styles.label}>Service Type</div>
+			<div className={`${styles.value} capitalize`}>
+				<span>
+					{metadata?.serviceType}
+				</span>
+			</div>
+		</div>
+		<div className={styles.row}>
+			<div className={styles.label}>Amount</div>
+			<div className={styles.value}>
+				<span className="text-blue uppercase">
+					{formatMoney(transaction.amount, transaction.currency)}
+				</span>
+			</div>
+		</div>
+		<div className={styles.row}>
+			<div className={styles.label}>Booking Status</div>
+			<div className={styles.value}>
+				{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
+			</div>
+		</div>
+		<div className={styles.row}>
+			<div className={styles.label}>Date Issued</div>
+			<div className={styles.value}>
+				<span>
+					{detailedDate(metadata?.dateFlightIssued)}
+				</span>
+			</div>
+		</div>
+		<div className={styles.row}>
+			<div className={styles.label}>Ticket Status</div>
+			<div className={styles.value}>
+				<span className={`${metadata?.ticketStatus}-tag`}>
+					{metadata?.ticketStatus}
+				</span>
+			</div>
+		</div>
+		<div className={styles.row}>
+			<div className={styles.label}>PNR</div>
+			<div className={styles.value}>
+				<span>
+					{metadata?.pnr}
+				</span>
+			</div>
+		</div>
+		<div className={styles.row}>
+			<div className={styles.label}>Biller Reference</div>
+			<div className={styles.value}>
+				<span>
+					{metadata?.billerRef}
+				</span>
+			</div>
+		</div>
+		{/* <FlightInfo /> */}
+		<div className={tableStyles.table_container}>
+			{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}
+			<div className={`table-ctn ${tableStyles.wallet}`}>
+				<div className={tableStyles.table__outer}>
+					<div className={tableStyles.table__header}>
+						<div className={tableStyles.top}>
+							<div className="texts">
+								<h3 className="capitalize"> Passenger Details</h3>
+							</div>
+						</div>
+					</div>
+					<div className={tableStyles.table__main}>
+							<table>
+								<thead>
+									<tr className="table__header">
+										<th className={tableStyles.td_3}>FULL NAME</th>
+										<th className={tableStyles.td_3}>EMAIL</th>
+										<th className={tableStyles.td_3}>PHONE</th>
+										<th className={tableStyles.td_3}>TYPE-GENDER</th>
+										<th className={tableStyles.td_3}>DOB</th>
+										<th className={tableStyles.td_3}>TICKET NUMBER</th>
+									</tr>
+								</thead>
+								<tbody>
+									{passengers.map((data, id) => (
+										<tr key={id}>
+											<td className={tableStyles.td_3}>{data.firstName} {data.lastName}</td>
+											<td className={tableStyles.td_3}>{data.email}</td>
+											<td className={tableStyles.td_3}>{data.phoneNumber}</td>
+											<td className={`${tableStyles.td_3} uppercase`}>{data.passengerType} - {data.gender}</td>
+											<td className={tableStyles.td_3}>{detailedDate(data.dateOfBirth)}</td>
+											<td className={tableStyles.td_3}>{data.ticketNumber}</td>
+
+										</tr>
+									))}
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	)
+
 	const TransactionDetails = () => (
 		<>
 		{
@@ -116,7 +245,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			</div>
 			<div className={styles.row}>
 				<div className={styles.label}>Service fee</div>
-				<div className={styles.value}>{formatMoney(transaction.fee, transaction.currency)}</div>
+				<div className={styles.value}>{formatMoney(transaction.charges, transaction.currency)}</div>
 			</div>
 			<div className={styles.row}>
 				<div className={styles.label}>Date & Time</div>
@@ -215,62 +344,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				</div>
 			</div>
 		</div> :
-		<div className={styles.modal__wallet_details_section}>
-			<div className={styles.row}>
-				<div className={styles.label}>Service Type</div>
-				<div className={`${styles.value} capitalize`}>
-					<span>
-						{metadata?.serviceType}
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Amount</div>
-				<div className={styles.value}>
-					<span className="text-blue uppercase">
-						{formatMoney(transaction.amount, transaction.currency)}
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Booking Status</div>
-				<div className={styles.value}>
-					{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Date Issued</div>
-				<div className={styles.value}>
-					<span>
-						{detailedDate(metadata?.dateFlightIssued)}
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Ticket Status</div>
-				<div className={styles.value}>
-					<span className={`${metadata?.ticketStatus}-tag`}>
-						{metadata?.ticketStatus}
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>PNR</div>
-				<div className={styles.value}>
-					<span>
-						{metadata?.pnr}
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Biller Reference</div>
-				<div className={styles.value}>
-					<span>
-						{metadata?.billerRef}
-					</span>
-				</div>
-			</div>
-		</div>
+	<FlightServiceDetails />
 		}
 		</>
 	);
@@ -310,6 +384,8 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			/>
 		</form>
 	);
+
+	// MAIN
 	return (
 		<ModalWrapper
 			loading={isLoading}
@@ -320,6 +396,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			subHeading={modalContent.subHeading}
 			ctaBtnText={modalContent.ctaText}
 			ctaBtnColor={modalContent.ctaBtnColor}
+			width={'700px'}
 			bottomCancelNeeded={modalContent.bottomCancelNeeded}
 			secNegative={modalContent.secNegative}
 			hasBottomActions={false}

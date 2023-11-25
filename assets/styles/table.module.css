@@ -34,6 +34,11 @@
   flex-direction: column;
 }
 
+.table__main td,
+.table__main th {
+  padding: 0 3px;
+}
+
 .table__main td h4 {
   color: var(--grey-1);
   font-family: var(--graphikRegular);

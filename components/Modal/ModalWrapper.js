@@ -11,6 +11,7 @@ const ModalWrapper = ({
   bottomCancelNeeded = true,
   subHeading,
   heading,
+  width='',
   contentStyle,
   onClose,
   handleCta,
@@ -55,6 +56,7 @@ const ModalWrapper = ({
         className={`${styles.child_ctn} ${
           containsTabLayout ? styles.contains_tab : ""
         }`}
+        style={{minWidth: width}}
       >
         {topClose ? (
           <button className={`${styles.close_btn} button`} onClick={onClose}>
