@@ -21,6 +21,9 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 	// eslint-disable-next-line no-unused-vars
 	const [isLoading, setIsLoading] = useState(false);
 	const [activeTab, setActiveTab] = useState('General Info')
+	const [metadata, setMetadata] = useState({})
+	// eslint-disable-next-line no-unused-vars
+	const [passengers, setPassengers] = useState([])
 	const tabs = [
 		'General Info',
 		'Service Details'
@@ -40,6 +43,8 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 
 	useEffect(()=>{
 		console.log(transaction)
+		setMetadata(transaction?.metadata || {})
+		setPassengers(transaction?.metadata?.passengers)
 	},[transaction])
 
 	const handleIssueSelect = () => {};
@@ -194,7 +199,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 			<div className={styles.row}>
 				<div className={styles.label}>Service Type</div>
 				<div className={`${styles.value} capitalize`}>
-					<span>{transaction?.metadata?.serviceType}</span>
+					<span>{metadata?.serviceType}</span>
 				</div>
 			</div>
 			<div className={styles.row}>
@@ -215,7 +220,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				<div className={styles.label}>Service Type</div>
 				<div className={`${styles.value} capitalize`}>
 					<span>
-						{transaction?.metadata?.serviceType}
+						{metadata?.serviceType}
 					</span>
 				</div>
 			</div>
@@ -237,15 +242,15 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				<div className={styles.label}>Date Issued</div>
 				<div className={styles.value}>
 					<span>
-						{detailedDate(transaction?.metadata?.dateFlightIssued)}
+						{detailedDate(metadata?.dateFlightIssued)}
 					</span>
 				</div>
 			</div>
 			<div className={styles.row}>
 				<div className={styles.label}>Ticket Status</div>
 				<div className={styles.value}>
-					<span className={`${transaction?.metadata?.ticketStatus}-tag`}>
-						{transaction?.metadata?.ticketStatus}
+					<span className={`${metadata?.ticketStatus}-tag`}>
+						{metadata?.ticketStatus}
 					</span>
 				</div>
 			</div>
@@ -253,7 +258,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				<div className={styles.label}>PNR</div>
 				<div className={styles.value}>
 					<span>
-						{transaction?.metadata?.pnr}
+						{metadata?.pnr}
 					</span>
 				</div>
 			</div>
@@ -261,7 +266,7 @@ const WalletTransactionModal = ({onClose, styles, transaction}) => {
 				<div className={styles.label}>Biller Reference</div>
 				<div className={styles.value}>
 					<span>
-						{transaction?.metadata?.billerRef}
+						{metadata?.billerRef}
 					</span>
 				</div>
 			</div>

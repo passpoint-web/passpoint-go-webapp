@@ -20,6 +20,10 @@
   gap: 1rem;
 }
 
+.table__main  {
+  overflow: auto;
+}
+
 .table__main th {
   font-family: var(--graphikRegular);
   letter-spacing: 0.6px;
