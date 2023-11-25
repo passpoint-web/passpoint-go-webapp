@@ -40,9 +40,9 @@ const Success = () => {
   const redirectKyc = () => {
     if (kycDetails.kycStatus === "Rejected") {
       if (kycDetails.userType === "1") {
-        push("/dashboard/kyc/individual/identity");
+        push("/kyc/individual/identity");
       } else {
-        push("/dashboard/kyc/corporate/business");
+        push("/kyc/corporate/business");
       }
     } else {
       push('/dashboard')

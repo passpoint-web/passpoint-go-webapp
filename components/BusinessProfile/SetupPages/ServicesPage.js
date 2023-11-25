@@ -218,7 +218,7 @@ const ServicesPage = ({styles}) => {
 			await publicProfile.addServices(payload)
 			savePublicProfile({...savedPublicProfile, profileStage: savedPublicProfile.profileStage > 3 ? savedPublicProfile.profileStage : 3})
 			notify('success', 'Your services have been saved')
-			push('/dashboard/business-profile-setup/contact')
+			push('/business-profile-setup/contact')
 		} catch (_err) {
 			console.log(_err)
 			const { message } = _err.response?.data || _err
@@ -737,7 +737,7 @@ const ServicesPage = ({styles}) => {
 						<></>
 			}
 			<div className={styles.inner}>
-				<BackBtn onClick={()=>push('/dashboard/business-profile-setup/business')} />
+				<BackBtn onClick={()=>push('/business-profile-setup/business')} />
 				<h1>Services</h1>
 				<form onSubmit={handleSubmit}>
 					{AddBusinessServices()}

@@ -254,6 +254,7 @@ const FlightPassengers = ({
                 <Select
                   label="Passenger Type"
                   id="type"
+                  selectDisabled={true}
                   selectOptions={["adult", "child", "infant"]}
                   selectedOption={passenger.passenger_type}
                   disabled

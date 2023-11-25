@@ -40,7 +40,7 @@ const PreviewNav = ({ togglePreview, data }) => {
 						</button>
 					</li>
 					<li>
-						<button className={`primary_btn ${styles.fade__btn}`} onClick={()=>push('/dashboard/business-profile-setup/identity')}>
+						<button className={`primary_btn ${styles.fade__btn}`} onClick={()=>push('/business-profile-setup/identity')}>
               Edit
 						</button>
 					</li>
