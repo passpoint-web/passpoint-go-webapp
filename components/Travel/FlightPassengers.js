@@ -196,7 +196,7 @@ const FlightPassengers = ({
             onClick={() => notify("info", "Update Passenger details here")}
           >
             <PlusIcon />
-            Add Another Passenger
+            Edit Flight Details
           </Link>
         </div>
         <div className={styles.rhs}>
