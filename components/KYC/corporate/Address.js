@@ -80,12 +80,12 @@ const Address = ({ styles }) => {
       });
       console.log(response);
       notify("success", "Your Address has been saved");
-      push("/dashboard/kyc/status");
+      push("/kyc/status");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already uploaded")) {
-        push("/dashboard/kyc/status");
+        push("/kyc/status");
       }
     } finally {
       setIsLoading(false);
@@ -140,7 +140,7 @@ const Address = ({ styles }) => {
               buttonType="button"
               className="half sd"
               text="Back"
-              onClick={() => push("/dashboard/kyc/corporate/identity")}
+              onClick={() => push("/kyc/corporate/identity")}
             />
             <PrimaryBtn
               className="primary sd half"

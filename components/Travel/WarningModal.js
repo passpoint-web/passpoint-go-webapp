@@ -27,7 +27,7 @@ const WarningModal = () => {
         <Link
           className="primary_btn"
           style={{ maxWidth: "200px", margin: "auto", marginTop: "2rem" }}
-          href="/dashboard/wallet"
+          href="/wallet"
         >
           Set Pin
         </Link>

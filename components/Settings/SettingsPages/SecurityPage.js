@@ -46,7 +46,7 @@ const Security = () => {
 	const handleForgotPasswordLevel = (val) => {
 		const newParams = new URLSearchParams(searchParams.toString());
 		newParams.set("forgotPasswordLevel", val);
-		push(createUrl("/dashboard/settings/security", newParams));
+		push(createUrl("/settings/security", newParams));
 	};
 
 	const handleResetPasswordSubmit = async (e) => {

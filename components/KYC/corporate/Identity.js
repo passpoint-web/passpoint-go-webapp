@@ -89,12 +89,12 @@ const Identity = ({ styles }) => {
           savedKycDetails?.KycStage > 2 ? savedKycDetails?.KycStage : 2,
       });
       notify("success", "Your identity has been saved");
-      push("/dashboard/kyc/corporate/address");
+      push("/kyc/corporate/address");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already uploaded")) {
-        push("/dashboard/kyc/corporate/address");
+        push("/kyc/corporate/address");
       }
     } finally {
       setIsLoading(false);
@@ -139,7 +139,7 @@ const Identity = ({ styles }) => {
               type="sd"
               text="Back"
               className="half sd"
-              onClick={() => push("/dashboard/kyc/corporate/business")}
+              onClick={() => push("/kyc/corporate/business")}
             />
             <Button
               className="primary sd half"

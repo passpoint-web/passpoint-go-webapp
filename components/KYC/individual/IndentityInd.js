@@ -78,12 +78,12 @@ const IdentityInd = ({ styles }) => {
         KycStage: savedKycDetails?.KycStage > 1 ? savedKycDetails?.KycStage : 1,
       });
       notify("success", "Your identity has been saved");
-      push("/dashboard/kyc/individual/address");
+      push("/kyc/individual/address");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already saved")) {
-        push("/dashboard/kyc/individual/address");
+        push("/kyc/individual/address");
       }
     } finally {
       setIsLoading(false);
@@ -182,7 +182,7 @@ const IdentityInd = ({ styles }) => {
             type="button"
             className="half sd"
             text="Back"
-            onClick={() => push("/dashboard/kyc/individual/contact")}
+            onClick={() => push("/kyc/individual/contact")}
           /> */}
             <PrimaryBtn
               type="submit"
@@ -253,7 +253,7 @@ const VerifyBVN = ({
           "success",
           "Your BVN and identity have been successfully verified and saved."
         );
-        push("/dashboard/kyc/individual/address");
+        push("/kyc/individual/address");
         setShowVerifyBVNModal(false);
       }
     } catch (otpError) {

@@ -72,6 +72,7 @@ const PayFlightPage = ({ styles }) => {
       flightId: selectedFlight?.id,
       passengers: sortedPassengers,
     })
+    console.log(bookingPromise.data.data.reference)
     setBookingRef(bookingPromise.data.data.reference)
 
     // Charge Wallet for Booking just created

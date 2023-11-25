@@ -73,7 +73,7 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 
 	const closeAddMoneyModal = () => {
 		setCurrentModal(null)
-		replace('/dashboard/wallet')
+		replace('/wallet')
 	}
 
 	useEffect(()=>{
