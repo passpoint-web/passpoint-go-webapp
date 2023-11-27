@@ -51,6 +51,7 @@ export const wallet = {
 	accountEnquiry: (data) => {
 		return walletRestAgent.post(`ft-app/account-enquiry`, data, setConfig())
 	},
+
 	passpointWalletEnquiry: (data) => {
 		return walletRestAgent.post(`ft-app/passpoint-enquiry`, data, setConfig())
 	},
