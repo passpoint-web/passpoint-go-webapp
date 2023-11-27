@@ -51,6 +51,7 @@ export const wallet = {
 	accountEnquiry: (data) => {
 		return walletRestAgent.post(`ft-app/account-enquiry`, data, setConfig())
 	},
+
 	passpointWalletEnquiry: (data) => {
 		return walletRestAgent.post(`ft-app/passpoint-enquiry`, data, setConfig())
 	},
@@ -64,6 +65,6 @@ export const wallet = {
 		return walletRestAgent.post(`wallet-app/wallet-history?type=${type}`, data, setConfig())
 	},
 	payBills: (data) => {
-		return walletRestAgent.post(`ft-app/pay-bills`, data, setConfig())
+		return walletRestAgent.post(`biller-app/pay-bills`, data, setConfig())
 	},
 }
