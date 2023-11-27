@@ -64,6 +64,6 @@ export const wallet = {
 		return walletRestAgent.post(`wallet-app/wallet-history?type=${type}`, data, setConfig())
 	},
 	payBills: (data) => {
-		return walletRestAgent.post(`ft-app/pay-bills`, data, setConfig())
+		return walletRestAgent.post(`biller-app/pay-bills`, data, setConfig())
 	},
 }
