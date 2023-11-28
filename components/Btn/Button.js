@@ -6,7 +6,7 @@ const Button = ({text,loading=false, ...props}) => {
 			{...props}
 			disabled={loading || props.disabled}
 		>
-			{!loading ? text : <Loader />}
+			{!loading ? text : <Loader size={20} />}
 		</button>
 	)
 }

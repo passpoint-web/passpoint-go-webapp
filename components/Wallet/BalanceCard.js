@@ -1,5 +1,5 @@
 "use client";
-// import Button from '../Btn/Button'
+import Button from '../Btn/Button'
 import BorderIconBtn from '../Btn/BorderIconBtn'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AddMoneyModal from './AddMoneyModal'
@@ -7,69 +7,64 @@ import TransferModals from './TransferModals'
 import CopyValue from '../CopyValue'
 import { AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
+import { useNotify } from "@/utils/hooks";
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
-// import Button from '../Btn/Button';
 // import RefreshBtn from '../Btn/RefreshBtn';
 
 // eslint-disable-next-line no-unused-vars
 const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles, updateWalletState}) => {
+	const notify = useNotify();
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
 	const {formatMoney, maskValue} = functions
 	const [showBalance, setShowBalance] = useState(true)
+	const [pinResetLoading, setPinResetLoading] = useState(false)
 	const [reference, setReference] = useState('')
 	// const [feedbackError, setFeedbackError] = useState('')
-	const [currentModal, setCurrentModal] = useState('tranfer')
-	const [pinCheckLoading, setPinCheckLoading] = useState(false)
+	const [currentModal, setCurrentModal] = useState(null)
+	// const [pinCheckLoading, setPinCheckLoading] = useState(false)
 
-	const initiatePinForTransfer = async () => {
-		setPinCheckLoading(true)
-		try {
-			const response = await wallet.initiatePin()
-			const {reference} = response.data
-			if (reference) {
-				setReference(reference)
-				setCurrentModal('create pin')
-			} else {
-				setCurrentModal('transfer')
-			}
-		} catch (_err) {
-			const {responseMessage = undefined } = _err.response?.data || _err;
-			// setFeedbackError(responseMessage || message)
-			if (responseMessage === 'Pin has already been set') {
-				setCurrentModal('transfer')
-			}
-		} finally {
-			setPinCheckLoading(false)
-		}
-	}
-
-	// const initiatePinReset = async (e, boo) => {
-	// 	e.preventDefault()
-	// 	// setCurrentModal('transfer')
-	// 	setPinResetLoading(true)
+	// const initiatePinForTransfer = async () => {
+	// 	setPinCheckLoading(true)
 	// 	try {
-	// 		const response = await wallet.initiatePin(boo)
+	// 		const response = await wallet.initiatePin()
 	// 		const {reference} = response.data
 	// 		if (reference) {
 	// 			setReference(reference)
-	// 			setCurrentLevel('reset pin')
+	// 			setCurrentModal('create pin')
 	// 		} else {
-	// 			// setCurrentModal('transfer')
+	// 			setCurrentModal('transfer')
 	// 		}
 	// 	} catch (_err) {
-	// 		const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
-	// 		setFeedbackError(responseMessage || message)
-	// 		// console.log(responseMessage || message)
-	// 		// if (responseMessage === 'Pin has already been set') {
-	// 			// setCurrentModal('transfer')
-	// 		// }
+	// 		const {responseMessage = undefined } = _err.response?.data || _err;
+	// 		// setFeedbackError(responseMessage || message)
+	// 		if (responseMessage === 'Pin has already been set') {
+	// 			setCurrentModal('transfer')
+	// 		}
 	// 	} finally {
-	// 		setPinResetLoading(false)
+	// 		setPinCheckLoading(false)
 	// 	}
 	// }
+
+	const initiatePinReset = async (e, boo) => {
+		e.preventDefault()
+		setPinResetLoading(true)
+		try {
+			const response = await wallet.initiatePin(boo)
+			const {reference} = response.data
+			setReference(reference)
+			setCurrentModal('create pin')
+		} catch (_err) {
+			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err
+			if (responseMessage || message) {
+				notify("error", responseMessage || message);
+			}
+		} finally {
+			setPinResetLoading(false)
+		}
+	}
 
 	const closeAddMoneyModal = () => {
 		setCurrentModal(null)
@@ -86,8 +81,9 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 		<>
 			{
 				currentModal === 'create pin' ?
-					<CreatePinModal handlePinCreation={()=>setCurrentModal('transfer')}
+					<CreatePinModal handlePinCreation={()=>setCurrentModal(null)}
 						reference={reference}
+						pinCreated={walletDetails.pinCreated}
 						onClose={()=>setCurrentModal(null)} /> :
 					currentModal === 'add money' ?
 						<AddMoneyModal walletAccount={walletAccount}
@@ -128,8 +124,8 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 								bgColor='#fff'
 								classProps='no-border i sd'
 								styleProps={{color: '#009EC4'}}
-								loading={pinCheckLoading}
-								onClick={()=>initiatePinForTransfer()}
+								// loading={pinCheckLoading}
+								onClick={()=>setCurrentModal('transfer')}
 								icon={<WithdrawMoneyIcon />}
 								text='Withdraw'
 							/>
@@ -155,7 +151,9 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 									<CopyValue value={walletAccount.accountNumber} />
 								</div>
 							</div>
-							{/* <Button className={`${styles.reset_pin} tertiary`} text={walletDetails.pinCreated ? 'Reset Pin' : 'Set Pin'} /> */}
+							<Button className={`${styles.reset_pin} tertiary`}
+								onClick={(e)=>initiatePinReset(e, true)}
+								text={walletDetails.pinCreated && !pinResetLoading ? 'Reset Pin' : !walletDetails.pinCreated && !pinResetLoading ? 'Set Pin' : 'Loading...'} />
 						</div>
 					</div>
 				</div> : <div className={styles.balance_card}>
