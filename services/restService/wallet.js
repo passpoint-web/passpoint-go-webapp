@@ -17,7 +17,7 @@ const getRequestConfig = () => {
 		headers: {
 			'x-channel-id' : 2,
 			'x-channel-code' : 'passpoint-infra-user',
-			'x-merchant-id' : merchantId || '749ed60a-535d-4c04-a2a9-16d00f9aaa3a'
+			'x-merchant-id' : merchantId
 		},
 		params: {},
 	};
