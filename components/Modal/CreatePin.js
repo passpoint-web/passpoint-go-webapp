@@ -12,7 +12,7 @@ import { getCredentials } from '@/services/localService';
 // import { saveCredentials, saveToken } from "@/services/localService";
 import { wallet } from '@/services/restService/wallet';
 
-const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
+const CreatePinModal = ({ handlePinCreation, pinCreated, topClose, cancelBtnDisabled, onClose, reference }) => {
 	const notify = useNotify();
 	const {maskedEmail} = functions
 	const {email} = getCredentials()
@@ -45,13 +45,21 @@ const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 				otp: pins.otp,
 				reference
 			})
-			console.log('PIN Setup successful')
+			// console.log('PIN Setup successful')
+			if (pinCreated) {
+				notify("success", 'Congrats your PIN has been reset');
+			} else {
+				notify("success", 'Congrats your PIN has been set');
+			}
 			handlePinCreation()
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
 			setFeedbackError(responseMessage || message)
 			if (responseMessage || message) {
 				notify("error", responseMessage || message);
+			}
+			if (responseMessage === 'pin reset code mis-match') {
+				setCurrentLevel('otp')
 			}
 		} finally {
 			setIsLoading(false)
@@ -72,19 +80,21 @@ const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 	return (
 		<ModalWrapper
 			ctaBtnText={'Proceed'}
+			topClose={topClose}
+			cancelBtnDisabled={currentLevel === 'otp' ? cancelBtnDisabled : false}
 			ctaDisabled={currentLevel === 'otp' ? pins.otp.length < 6 : (pins.pin.length < 4 || pins.confirmPin.length < 4)}
-			heading={currentLevel === 'otp' ? 'Enter OTP' : 'Create PIN'}
+			heading={currentLevel === 'otp' ? (pinCreated ? 'Reset PIN' : 'Setup PIN') : 'Create PIN'}
 			loading={isLoading}
-			subHeading={currentLevel === 'pin' ? 'Create a unique PIN for your account' : ''}
+			subHeading={(currentLevel === 'pin' || currentLevel === 'otp') ? 'Create a unique PIN for your account' : ''}
 			onClose={()=>onClose()}
 			handleBottomSecAction={()=>currentLevel === 'pin' ? setCurrentLevel('otp') : onClose()}
 			handleCta={()=>currentLevel === 'otp' ? setCurrentLevel('pin') : handleModalCta()}
 		>
 			<form>
 				{currentLevel === 'otp' ?
-					<Input label={`Enter OTP sent to ${maskedEmail(email)}`}
-						error={ctaClicked && feedbackError?.toLowerCase().includes('otp')}
-						errorMsg={'OTP is not valid'}>
+					<Input label={`Enter the OTP sent to ${maskedEmail(email)}`}
+						error={ctaClicked && (feedbackError?.toLowerCase().includes('otp') || feedbackError?.toLowerCase().includes('mis-match'))}
+						errorMsg={feedbackError?.toLowerCase().includes('otp') ? 'OTP is not valid' : feedbackError?.toLowerCase().includes('mis-match') ? feedbackError : ''}>
 						<div className={formStyles.otp_input_four}>
 							<OtpInput
 								value={pins.otp}
