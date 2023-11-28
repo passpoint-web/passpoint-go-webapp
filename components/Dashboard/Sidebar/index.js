@@ -15,7 +15,7 @@ const DashboardSidebar = () => {
 						href={item.path}
 						key={index}
 						className={`${styles.dashSide_link} ${
-							pathname === item.path ? styles.dashSide_active : ''
+							pathname.includes(item.path) ? styles.dashSide_active : ''
 						}`}
 					>
 						<item.icon />
