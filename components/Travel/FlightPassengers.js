@@ -103,8 +103,6 @@ const FlightPassengers = ({
 
   const isActivePassengersFieldsValid = () => {
     const ap = passengers?.at(activePassenger - 1)
-    // console.log(functions.validEmail(ap?.email))
-    console.log("isPassengerNameSimilar", isPassengerNameSimilar)
     if (documentsRequired) {
       return (
         ap?.first_name?.length > 1 &&
@@ -213,7 +211,7 @@ const FlightPassengers = ({
               onSubmit={(e) => e.preventDefault()}
             >
               {isPassengerNameSimilar && (
-                <FeedbackInfo message="This passenger has a similar name as another passenger" />
+                <FeedbackInfo border={true} message="A passenger has a similar name as another passenger" />
               )}
               <div className="form-row">
                 <Input
@@ -248,6 +246,11 @@ const FlightPassengers = ({
                 <Select
                   label="Select Gender"
                   id="class"
+                  styleProps={{
+                    dropdown:{
+                      height: 100
+                    }
+                  }}
                   selectOptions={["male", "female"]}
                   selectedOption={passengerGenders[index]}
                   emitSelect={(e) => updateValue("gender", e, passenger?.id)}

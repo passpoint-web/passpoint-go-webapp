@@ -1,5 +1,5 @@
 'use client'
-import ActionFeedbackCard from "../ActionFeedbackCard";
+// import ActionFeedbackCard from "../ActionFeedbackCard";
 import FullScreenLoader from "../Modal/FullScreenLoader";
 // import ModalWrapper from "../Modal/ModalWrapper";
 import BalanceCard from "./BalanceCard";
@@ -14,6 +14,7 @@ import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { saveWalletState, getWalletState, saveBanks } from "@/services/localService";
+import CreatePinModal from "../Modal/CreatePin";
 // import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
@@ -25,6 +26,7 @@ const Wallet = () => {
 	const [balanceLoading, setBalanceLoading] = useState(true)
 	const [updateKey, setUpdateKey] = useState(new Date().getTime())
 	const [updateBalanceKey, setUpdateBalanceKey] = useState(new Date().getTime())
+	const [reference, setReference] = useState('')
 
 	const getWallet = async (loading) => {
 		setDataLoading(loading)
@@ -32,14 +34,15 @@ const Wallet = () => {
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
+			// console.log(data)
 			setWalletDetails(data)
 			setWalletAccount(data.walletAccount['NGN'])
 			if (Object.keys(data.walletAccount).length) {
 				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				if (accountNumber) {
-					setWalletState('created')
+					setWalletState('pending')
 				} else {
-					console.log('no-wallet')
+					// console.log('no-wallet')
 					setWalletState('no-wallet')
 				}
 			}
@@ -71,6 +74,19 @@ const Wallet = () => {
 		getWallet(false)
 	}
 
+	const initiatePinCreation = async() =>{
+		setDataLoading(true)
+		try {
+			const response = await wallet.initiatePin()
+			setReference(response.data.reference)
+		} catch (_err) {
+			console.log(_err)
+		}
+		finally {
+			setDataLoading(false)
+		}
+	}
+
 	const updateBalanceState = () => {
 		setUpdateBalanceKey(new Date().getTime())
 		getWallet(false)
@@ -80,6 +96,12 @@ const Wallet = () => {
 		getWallet(false)
 		getBanksAndCache()
 	},[updateKey])
+
+	useEffect(()=>{
+		if (walletState==='pending' && !walletDetails.pinCreated) {
+			initiatePinCreation()
+		}
+	},[walletState])
 
 	useEffect(function refreshData () {
 		const interval = setInterval(()=>{
@@ -107,22 +129,25 @@ const Wallet = () => {
 		// console.log(walletState)
 	// },[])
 
-	const WalletProcessing = () => (
-			<div className={styles.wallet_processing}>
-				<ActionFeedbackCard
-				content={{
-					title: 'Wallet Creation is Processing',
-					value: 'Please check back in few minutes',
-					status: 'pending',
-				}}
-			/>
-			</div>
-	)
+	// const WalletProcessing = () => (
+	// 		<div className={styles.wallet_processing}>
+	// 			<ActionFeedbackCard
+	// 			content={{
+	// 				title: 'Wallet Creation is Processing',
+	// 				value: 'Please check back in few minutes',
+	// 				status: 'pending',
+	// 			}}
+	// 		/>
+	// 		</div>
+	// )
 	return (
 		<div className={styles.wallet_page}>
 			{dataLoading ? <FullScreenLoader /> : <></>}
-			{walletState === 'pending' ? 
-			<WalletProcessing /> : 
+			{walletState === 'pending' ?
+			<CreatePinModal handlePinCreation={''}
+			reference={reference}
+			onClose={''} /> : 
+			// <WalletProcessing /> : 
 			walletState === 'created' ?
 				<>
 					<div className={styles.top}>

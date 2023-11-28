@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { getToken , getCredentials } from "@/services/localService";
 import FullScreenLoader from "@/components/Modal/FullScreenLoader"
+import { authenticate } from "@/services/restService"
 
 // eslint-disable-next-line no-unused-vars
 var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date()
@@ -23,12 +24,14 @@ export default function DashboardLayout({ children }) {
   const {push} = useRouter()
   const [loading, setLoading] = useState(true)
   const [savedCredentials, setSavedCredentials] = useState({});
+  const [authenticated, setAuthenticated] = useState(false);
 
   const checkAuth = async () => {
     const auth = await getToken()
     if (!auth) {
       push(`/auth/login?fallBackUrl=${window.location.pathname}`)
     } else {
+      setAuthenticated(true)
       setLoading(false)
     }
   }
@@ -50,7 +53,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className={styles.dashLayout}>
-      <DashboardHeader styles={styles} user={savedCredentials} />
+      <DashboardHeader styles={styles} user={savedCredentials} authenticated={authenticated} />
       <div className={styles.dashContent}>
         <DashboardSidebar />
         <div className={styles.dash_children}>

@@ -3,7 +3,7 @@
 import styles from "../../assets/styles/flight.module.css"
 import PrimaryBtn from "../Btn/Primary"
 
-const PaymentFail = ({ restartPayment }) => {
+const PaymentFail = ({ restartPayment, message }) => {
   return (
     <div className={styles.payment__successful}>
       <svg
@@ -31,7 +31,7 @@ const PaymentFail = ({ restartPayment }) => {
       </svg>
 
       <h3>Payment Failed</h3>
-      <p>You might have entered the wrong credentials.</p>
+      <p>{message || 'An error occured, Please try again'}</p>
       <br />
       <PrimaryBtn
         className="primary_btn"

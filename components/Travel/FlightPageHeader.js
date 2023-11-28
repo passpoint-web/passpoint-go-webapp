@@ -97,6 +97,8 @@ const FlightPageHeader = ({ styles }) => {
             id="passengers"
             name="passengers"
             type="number"
+            min="0"
+            max="20"
             placeholder="Adults"
             value={adult}
             onChange={(e) => setAdult(e.target.value)}
@@ -105,6 +107,8 @@ const FlightPageHeader = ({ styles }) => {
             id="passengers"
             name="passengers"
             type="number"
+            min="0"
+            max="20"
             placeholder="Children"
             value={children}
             onChange={(e) => setChildren(e.target.value)}
@@ -113,6 +117,8 @@ const FlightPageHeader = ({ styles }) => {
             id="passengers"
             name="passengers"
             type="number"
+            min="0"
+            max="20"
             placeholder="Infants"
             value={infants}
             onChange={(e) => setInfants(e.target.value)}

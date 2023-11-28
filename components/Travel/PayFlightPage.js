@@ -93,11 +93,11 @@ const PayFlightPage = ({ styles }) => {
       if (
         walletPromise.data.responseDescription?.toLowerCase() === "successful"
       ) {
-        return "success"
+        return {type: 'success', message: walletPromise.data.responseMessage}
       }
-    } catch (err) {
-      console.log(err)
-      return "failure"
+    } catch (_err) {
+      // console.log(_err.response.data.responseMessage)
+      return {type: 'failure', message: _err.response.data.responseMessage}
     }
 
     return "failure"

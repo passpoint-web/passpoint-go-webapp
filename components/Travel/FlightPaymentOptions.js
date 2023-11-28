@@ -16,12 +16,16 @@ import Link from "next/link"
 import WarningModal from "./WarningModal"
 
 const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
-  const paymentOptions = ["My Passpoint Wallet", "Credit/Debit Card"]
+  const paymentOptions = 
+  ["My Passpoint Wallet", 
+  // "Credit/Debit Card"
+]
   const [paymentOption, setPaymentOption] = useState(paymentOptions[0])
   const [paymentSuccessful, setPaymentSuccessful] = useState(false)
   const [paymentFailure, setPaymentFailure] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [warningModalVisible, setWarningModalVisible] = useState(false)
+  const [paymentResponse, setPaymentResponse] = useState({})
   const [walletAccount, setWalletAccount] = useState({})
   const [pins, setPins] = useState({
     pin: "",
@@ -38,7 +42,8 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
   const makePayment = async (pin) => {
     setIsLoading(true)
     const promise = await makeFlightBooking(pin)
-    if (promise === "success") {
+    setPaymentResponse(promise)
+    if (promise.type === "success") {
       setPaymentSuccessful(true)
     } else {
       setPaymentFailure(true)
@@ -88,7 +93,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
       )}
       <button className={styles.row__header}>
         <div className="texts">
-          <h3 className="capitalize"> Payment Options</h3>
+          <h3 className=""> Payment Option(s)</h3>
           {/* <p>Manage your bookings here</p> */}
         </div>
         <FaChevronDown />
@@ -169,9 +174,9 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                   )}
                 </div>
               )}
-              {paymentSuccessful && !isLoading && <PaymentSuccessful />}
+              {paymentSuccessful && !isLoading && <PaymentSuccessful message={paymentResponse.message} />}
               {paymentFailure && !isLoading && (
-                <PaymentFail restartPayment={restartPayment} />
+                <PaymentFail message={paymentResponse.message} restartPayment={restartPayment} />
               )}
             </form>
           )}

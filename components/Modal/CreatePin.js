@@ -73,9 +73,9 @@ const CreatePinModal = ({ handlePinCreation, onClose, reference }) => {
 		<ModalWrapper
 			ctaBtnText={'Proceed'}
 			ctaDisabled={currentLevel === 'otp' ? pins.otp.length < 6 : (pins.pin.length < 4 || pins.confirmPin.length < 4)}
-			heading={currentLevel === 'otp' ? 'Enter OTP' : 'Create PIN'}
+			heading={currentLevel === 'otp' ? 'Setup PIN' : 'Create PIN'}
 			loading={isLoading}
-			subHeading={currentLevel === 'pin' ? 'Create a unique PIN for your account' : ''}
+			subHeading={(currentLevel === 'pin' || currentLevel === 'otp') ? 'Create a unique PIN for your account' : ''}
 			onClose={()=>onClose()}
 			handleBottomSecAction={()=>currentLevel === 'pin' ? setCurrentLevel('otp') : onClose()}
 			handleCta={()=>currentLevel === 'otp' ? setCurrentLevel('pin') : handleModalCta()}
