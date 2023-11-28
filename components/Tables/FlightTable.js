@@ -12,6 +12,7 @@ import FWLoader from "../FWLoader"
 import Input from "../Dashboard/Input"
 import FlightDetailsModal from "../Travel/FlightDetailsModal"
 import Button from "../Btn/Button"
+import { payment } from "@/services/restService/payment"
 
 const FlightTable = ({title, modalStyles}) => {
   const { formatMoney } = functions
@@ -34,26 +35,36 @@ const FlightTable = ({title, modalStyles}) => {
   const getFlightBookings = async (goToPage) => {
     try {
       setIsLoading(true)
-      const response = await travel.getFlightBookings({
-        email: user.email,
-        page: goToPage,
-        pageSize,
-        searchParam,
+      // const response = await travel.getFlightBookings({
+      //   email: user.email,
+      //   page: goToPage,
+      //   pageSize,
+      //   searchParam,
+      // })
+      const response = await payment.billPaymentHistory({
+        service: 'flight',
+        data: {
+          "startDate":"2023-10-15",
+          "endDate": '2023-11-30',
+          pageNumber: 1,
+          pageSize
+        }
       })
-      const { content } = response.data.data
-      if (content) {
-        setData(content)
-      }
+      console.log(response)
+      // const { content } = response.data.data
+      // if (content) {
+      //   setData(content)
+      // }
 
       // Compile Pagination Data
-      const tempPaginationData = {
-        ...response.data.data,
-        pageSize,
-        currentPage: page + 1,
-      }
-      delete tempPaginationData.content
-      setPaginationData(tempPaginationData)
-      setIsLoading(false)
+      // const tempPaginationData = {
+      //   ...response.data.data,
+      //   pageSize,
+      //   currentPage: page + 1,
+      // }
+      // delete tempPaginationData.content
+      // setPaginationData(tempPaginationData)
+      // setIsLoading(false)
     } catch (_err) {
       const { message } = _err.response?.data || _err
       notify("error", message)

@@ -220,6 +220,11 @@ export const accountProfile = {
 }
 
 export const travel = {
+  // getFlightBookings: (params) => {
+  //   const config = setTravelConfig()
+  //   config.params = params
+  //   return flightRestAgent.get("flight/bookings", config)
+  // },
   getFlightBookings: (params) => {
     const config = setTravelConfig()
     config.params = params
