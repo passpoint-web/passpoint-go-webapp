@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { getToken , getCredentials } from "@/services/localService";
 import FullScreenLoader from "@/components/Modal/FullScreenLoader"
-import { authenticate } from "@/services/restService"
 
 // eslint-disable-next-line no-unused-vars
 var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date()
