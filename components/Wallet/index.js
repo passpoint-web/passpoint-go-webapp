@@ -35,19 +35,22 @@ const Wallet = () => {
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
+			console.log(Object.keys(data.walletAccount).length)
 			if (Object.keys(data.walletAccount).length) {
 				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				const {pinCreated} = data
 				setPinCreated(pinCreated)
-				if (accountNumber && !pinCreated) {
+				if (!accountNumber) {
 					setWalletState('pending')
-				} else if (accountNumber && pinCreated) {
+				} else if (accountNumber) {
 					setWalletState('created')
 				} else {
 					setWalletState('no-wallet')
 				}
 				setWalletDetails(data)
 				setWalletAccount(data.walletAccount['NGN'])
+			} else {
+				setWalletState('no-wallet')
 			}
 		} catch (_err) {
 			// console.log(_err)
@@ -107,7 +110,7 @@ const Wallet = () => {
 	},[updateKey])
 
 	useEffect(()=>{
-		if (walletState==='pending' && !walletDetails.pinCreated) {
+		if (!pinCreated) {
 			initiatePinCreation()
 		}
 	},[walletState])
@@ -182,6 +185,14 @@ const Wallet = () => {
 	return (
 		<div className={styles.wallet_page}>
 			{
+			pinCreated === false ? 
+				<CreatePinModal handlePinCreation={()=>handlePinCreation()}
+				topClose={false}
+				cancelBtnDisabled={true}
+				reference={reference}
+				onClose={''} /> : <></>
+			}
+			{
 				walletState === 'pending' || walletState === 'no-wallet' ?
 					<div className={styles.create_wallet}>
 						<h3>Wallet</h3>
@@ -190,13 +201,7 @@ const Wallet = () => {
 							<FullScreenLoader />
 							:
 							walletState === 'pending' ?
-								(!pinCreated ?
-									<CreatePinModal handlePinCreation={()=>handlePinCreation()}
-										topClose={false}
-										cancelBtnDisabled={true}
-										reference={reference}
-										onClose={''} /> :
-									WalletProcessing()) :
+									WalletProcessing() :
 								walletState === 'no-wallet' ?
 									<CreateWallet wallet={wallet}
 										styles={styles}
@@ -210,6 +215,7 @@ const Wallet = () => {
 						<div className={styles.create_wallet}>
 							<h3>Wallet</h3>
 							<h4>Manage your wallet here</h4>
+							<FullScreenLoader />
 						</div>
 			}
 		</div>

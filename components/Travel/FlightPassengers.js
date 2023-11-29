@@ -23,6 +23,7 @@ const FlightPassengers = ({
 }) => {
   const [passengers, setPassengers] = useState([])
   const [passengerGenders, setPassengerGenders] = useState([])
+  const [passengerPassportIssue, setPassengerPassportIssue] = useState([])
   const [activePassenger, setActivePassenger] = useState(1)
   const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
@@ -61,6 +62,12 @@ const FlightPassengers = ({
       const tempGenders = [...passengerGenders]
       tempGenders[passengerIndex] = temp[label] = value
       setPassengerGenders(tempGenders)
+    }
+
+    if (label === "passport_issue") {
+      const tempPassengerPassportIssue = [...passengerPassportIssue]
+      tempPassengerPassportIssue[passengerIndex] = temp[label] = value
+      setPassengerPassportIssue(tempPassengerPassportIssue)
     }
 
     // CHECK IF PASSENGER HAS A SIMILAR NAME AS OTHER PASSENGERS
@@ -209,7 +216,10 @@ const FlightPassengers = ({
               onSubmit={(e) => e.preventDefault()}
             >
               {isPassengerNameSimilar && (
-                <FeedbackInfo border={true} message="A passenger has a similar name as another passenger" />
+                <FeedbackInfo
+                  border={true}
+                  message="A passenger has a similar name as another passenger"
+                />
               )}
               <div className="form-row">
                 <Input
@@ -240,14 +250,14 @@ const FlightPassengers = ({
                   updateValue("email", e.target.value, passenger?.id)
                 }
               />
-              <div className="form-row bottom">
+              <div className={`form-row`}>
                 <Select
                   label="Select Gender"
                   id="class"
                   styleProps={{
-                    dropdown:{
-                      height: 100
-                    }
+                    dropdown: {
+                      height: 100,
+                    },
                   }}
                   selectOptions={["male", "female"]}
                   selectedOption={passengerGenders[index]}
@@ -267,7 +277,7 @@ const FlightPassengers = ({
                   placeholder="Select Passenger Type"
                 />
               </div>
-              <div className="form-row">
+              <div className={`form-row ${documentsRequired ? "" : "bottom"}`}>
                 <Input
                   label="Date of Birth"
                   type="date"
@@ -300,7 +310,6 @@ const FlightPassengers = ({
                     label="Passport Issue Date"
                     type="date"
                     name="passport-issue"
-                    // value={passenger.last_name}
                     onChange={(e) =>
                       updateValue(
                         "passport_issue",
@@ -313,7 +322,9 @@ const FlightPassengers = ({
                     label="Passport Expiry Date"
                     type="date"
                     name="passport-expiry"
-                    // value={passenger.last_name}
+                    min={functions.formattedTodayDate(
+                      passengerPassportIssue[index]?.toString()
+                    )}
                     onChange={(e) =>
                       updateValue(
                         "passport_expiry",
@@ -324,7 +335,7 @@ const FlightPassengers = ({
                   />
                 </div>
               )}
-              <div className="form-row mt-12">
+              <div className={`form-row ${documentsRequired ? "bottom" : ""}`}>
                 {documentsRequired && (
                   <Input
                     label="Passport Number"
