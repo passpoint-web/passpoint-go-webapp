@@ -247,12 +247,21 @@ function eighteenYearsAgo() {
   eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18)
   const formatted18YearsAgo = eighteenYearsAgo.toLocaleDateString()?.split("/")
   const maxDate = `${formatted18YearsAgo[2]}-${
-    formatted18YearsAgo[1] > 9 ? "" : "0"
+    formatted18YearsAgo[0] > 9 ? "" : "0"
   }${formatted18YearsAgo[0]}-${formatted18YearsAgo[1] > 9 ? "" : "0"}${
     formatted18YearsAgo[1]
   }`
   // console.log(maxDate)
   return maxDate
+}
+
+function formattedTodayDate(dateParam) {
+  let date = new Date(dateParam)
+  date.setDate(date.getDate() + 1)
+  date = date.toLocaleDateString()?.split("/")
+  return `${date[2]}-${date[0] > 9 ? "" : "0"}${date[0]}-${
+    date[1] > 9 ? "" : "0"
+  }${date[1]}`
 }
 
 function maskedPhoneNo(number) {
@@ -291,6 +300,7 @@ const functions = {
   convertMinutesToHHMM,
   eighteenYearsAgo,
   maskedPhoneNo,
+  formattedTodayDate,
   // encryptData,
   // decryptData
 }
