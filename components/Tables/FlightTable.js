@@ -50,7 +50,7 @@ const FlightTable = ({ title, modalStyles }) => {
         response.data.data?.map((booking) => {
           const data = booking?.metadata
           const outbound = data?.passengers?.at(0)?.departureLeg?.at(0)
-          const inbound = data?.passengers?.at(0)?.arrivalLeg?.at(0)
+          const inbound = data?.passengers?.at(0)?.returnLeg?.at(0)
 
           // Get duration for inbound and outbound
           const outboundTime =

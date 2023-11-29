@@ -2,14 +2,11 @@
 import { useEffect, useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
 import { travel } from "@/services/restService"
-import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
 import Loader from "../Btn/Loader"
-import FWLoader from "../FWLoader"
 
 const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
   const { formatMoney } = functions
-  const notify = useNotify()
   // const path = usePathname()
   // const [isLoading, setIsLoading] = useState(true)
   // const router = useRouter()
@@ -19,7 +16,7 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
   const [data, setData] = useState({})
   const [baseFare, setBaseFare] = useState(0)
   const [fees, setFees] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
 
   const handleCloseModal = () => {
@@ -30,20 +27,20 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
     setData(flightDetails)
   }, [])
 
-  const getFlightBooking = async () => {
-    try {
-      setIsLoading(true)
-      const response = await travel.getFlightBooking(flightDetails.reference)
-      setData({ ...response.data.data, ...flightDetails })
-      calculateBaseFare(response.data.data)
-    } catch (_err) {
-      // console.log(_err.response.data.description)
-      const { message, description } = _err.response?.data || _err
-      notify("error", message || description)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // const getFlightBooking = async () => {
+  //   try {
+  //     setIsLoading(true)
+  //     const response = await travel.getFlightBooking(flightDetails.reference)
+  //     setData({ ...response.data.data, ...flightDetails })
+  //     calculateBaseFare(response.data.data)
+  //   } catch (_err) {
+  //     // console.log(_err.response.data.description)
+  //     const { message, description } = _err.response?.data || _err
+  //     notify("error", message || description)
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   const calculateBaseFare = (dataParam) => {
     let total = dataParam?.totalAmount
@@ -83,7 +80,7 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
       containsTabLayout
       hasBottomActions={false}
     >
-      {isLoading && <FWLoader />}
+      {/* {isLoading && <FWLoader />} */}
       <div className={styles.modal__tab_group}>
         {tabs.map((tab) => (
           <button
@@ -153,12 +150,12 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
                 </div>
               </div>
             </div>
-            {/* <div className={styles.row}>
+            <div className={styles.row}>
               <div className={styles.label}>Return Ticket</div>
               <div className={styles.value}>
-                <span>{data?.inbound?.length > 0 ? "Yes" : "No"}</span>
+                <span>{data?.inbound ? "Yes" : "No"}</span>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       )}
@@ -236,85 +233,71 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
           </div>
 
           {/* INBOUND FLIGHTS */}
-          {data?.inbound?.length > 0 && (
-            <div className={styles.modal__flight_details_section}>
-              <h5>Inbound (Return) Flight</h5>
-              <div className={styles.row}>
-                <div className={styles.label}>Airline</div>
-                <div className={styles.value}>
-                  <span>{data?.inbound?.at(0)?.airline_details?.name}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Flight Number</div>
-                <div className={styles.value}>
-                  <span>{data?.inbound?.at(0)?.flight_number}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Departure</div>
-                <div className={styles.value}>
-                  <span>
-                    {functions.getFormattedAirportByIata(
-                      data?.inbound?.at(0)?.airport_from
-                    )}
-                    <br />
-                    {new Date(
-                      data?.inbound?.at(0)?.departure_time
-                    )?.toDateString()}
-                    ,{" "}
-                    <span>
-                      {functions.formatCustomTime(
-                        data?.inbound?.at(0)?.departure_time
-                      )}
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Arrival</div>
-                <div className={styles.value}>
-                  <span>
-                    {functions.getFormattedAirportByIata(
-                      data?.inbound?.at(0)?.airport_to
-                    )}
-                    <br />
-                    {new Date(
-                      data?.inbound?.at(0)?.arrival_time
-                    )?.toDateString()}
-                    ,{" "}
-                    <span>
-                      {functions.formatCustomTime(
-                        data?.inbound?.at(0)?.arrival_time
-                      )}
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Flight Duration</div>
-                <div className={styles.value}>
-                  <span>
-                    {functions.convertMinutesToHHMM(
-                      data?.inbound?.at(0)?.duration
-                    )}
-                  </span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Cabin Type</div>
-                <div className={styles.value}>
-                  <span>{data?.inbound?.at(0)?.cabin_type}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Baggage Allowance</div>
-                <div className={styles.value}>
-                  <span>{data?.inbound?.at(0)?.baggage}</span>
-                </div>
+          <div className={styles.modal__flight_details_section}>
+            <h5>Inbound Flight</h5>
+            <div className={styles.row}>
+              <div className={styles.label}>Airline</div>
+              <div className={styles.value}>
+                <span>{data?.inbound?.airlineName}</span>
               </div>
             </div>
-          )}
+            <div className={styles.row}>
+              <div className={styles.label}>Flight Number</div>
+              <div className={styles.value}>
+                <span>{data?.inbound?.flightNumber}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Departure</div>
+              <div className={styles.value}>
+                <span>
+                  {functions.getFormattedAirportByIata(
+                    data?.inbound?.departureCode
+                  )}
+                  <br />
+                  {new Date(data?.inbound?.departureTime)?.toDateString()},{" "}
+                  <span>
+                    {functions.formatCustomTime(data?.inbound?.departureTime)}
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Arrival</div>
+              <div className={styles.value}>
+                <span>
+                  {functions.getFormattedAirportByIata(
+                    data?.inbound?.arrivalCode
+                  )}
+                  <br />
+                  {new Date(data?.inbound?.arrivalTime)?.toDateString()},{" "}
+                  <span>
+                    {functions.formatCustomTime(data?.inbound?.arrivalTime)}
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Flight Duration</div>
+              <div className={styles.value}>
+                <span>
+                  {functions.convertMinutesToHHMM(data?.inbound?.duration)}
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Cabin Type</div>
+              <div className={styles.value}>
+                <span>{data?.inbound?.cabinType}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Baggage Allowance</div>
+              <div className={styles.value}>
+                <span>{data?.inbound?.baggage}</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
