@@ -255,9 +255,9 @@ function eighteenYearsAgo() {
   return maxDate
 }
 
-function formattedTodayDate(dateParam) {
+function formattedTodayDate(dateParam, subtract = false) {
   let date = new Date(dateParam)
-  date.setDate(date.getDate() + 1)
+  date.setDate(subtract ? date.getDate() - 1 : date.getDate() + 1)
   date = date.toLocaleDateString()?.split("/")
   return `${date[2]}-${date[0] > 9 ? "" : "0"}${date[0]}-${
     date[1] > 9 ? "" : "0"

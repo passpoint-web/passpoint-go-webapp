@@ -250,7 +250,7 @@ const FlightPassengers = ({
                   updateValue("email", e.target.value, passenger?.id)
                 }
               />
-              <div className="form-row bottom">
+              <div className={`form-row`}>
                 <Select
                   label="Select Gender"
                   id="class"
@@ -277,7 +277,7 @@ const FlightPassengers = ({
                   placeholder="Select Passenger Type"
                 />
               </div>
-              <div className="form-row">
+              <div className={`form-row ${documentsRequired ? "" : "bottom"}`}>
                 <Input
                   label="Date of Birth"
                   type="date"
@@ -335,7 +335,7 @@ const FlightPassengers = ({
                   />
                 </div>
               )}
-              <div className="form-row">
+              <div className={`form-row ${documentsRequired ? "bottom" : ""}`}>
                 {documentsRequired && (
                   <Input
                     label="Passport Number"
