@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 @font-face {
@@ -932,8 +936,7 @@ form {
 }
 
 .pending-tag,
-.processing-tag
-.reserved-tag,
+.processing-tag .reserved-tag,
 .processing-tag {
   background: #fffae7;
   color: #e9b500;

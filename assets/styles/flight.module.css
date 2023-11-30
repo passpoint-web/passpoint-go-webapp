@@ -541,6 +541,9 @@
   margin: 2rem auto;
   padding: 0 2rem;
 }
+.payment__successful svg {
+  display: inline-block;
+}
 
 /* FLIGHT DETAILS */
 .modal__tab_group {
