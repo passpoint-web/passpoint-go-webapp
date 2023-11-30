@@ -37,7 +37,7 @@ const TravelServicesPage = ({ styles }) => {
   return (
     <div className={`${styles.inner} travel-services`}>
       <div className={styles.travel__dashboard_header}>
-        <div className={styles.row_one}>
+        <div className={`${styles.row_one} mb-[200px]`}>
           <div>
             <h3>Travel Services</h3>
             <p>Kindly select your preferred service</p>
