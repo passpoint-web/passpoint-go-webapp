@@ -4,7 +4,7 @@ import ModalWrapper from "../Modal/ModalWrapper"
 import { travel } from "@/services/restService"
 import functions from "@/utils/functions"
 import Loader from "../Btn/Loader"
-import PaymentSuccessful from "./PaymentSuccessful"
+// import PaymentSuccessful from "./PaymentSuccessful"
 import InfoComp from "./InfoComp"
 
 const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
