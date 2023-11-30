@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import MetricCard from "./MetricCard";
+// import MetricCard from "./MetricCard";
 const TravelServicesPage = ({ styles }) => {
   const travelServices = [
     {
@@ -60,7 +60,7 @@ const TravelServicesPage = ({ styles }) => {
           ))}
         </div>
       </div>
-      <MetricCard />
+      {/* <MetricCard /> */}
       {/* <CustomTable action="/travel/flights?id=AH12345678" /> */}
     </div>
   );
