@@ -8,8 +8,11 @@ import { useEffect, useState } from "react"
 import FlightPassengers from "./FlightPassengers"
 import FlightPaymentOptions from "./FlightPaymentOptions"
 import SelectedFlight from "./SelectedFlight"
+import { useNotify } from '@/utils/hooks'
+import { payment } from "@/services/restService/payment"
 
 const PayFlightPage = ({ styles }) => {
+	const notify = useNotify()
 	const selectedFlight = getSelectedFlight()
 	const [passengers, setPassengers] = useState([])
 	const [sortedPassengers, setSortedPassengers] = useState([])
@@ -18,7 +21,10 @@ const PayFlightPage = ({ styles }) => {
 	// eslint-disable-next-line no-unused-vars
 	const [totalAmount, setTotalAmount] = useState(0)
 	const [documentsRequired, setDocumentsRequired] = useState(null)
+	// eslint-disable-next-line no-unused-vars
 	const [bookingRef, setBookingRef] = useState(null)
+	// const [feedbackError, setFeedbackError] = useState('')
+	const [bookingLoading, setBookingLoading] = useState(false)
 
 	// eslint-disable-next-line no-unused-vars
 	const sortPassengersData = async (command) => {
@@ -56,6 +62,7 @@ const PayFlightPage = ({ styles }) => {
 	}
 
 	const confirmFlightPrice = async () => {
+		setBookingLoading(true)
 		const promise = await travel.confirmFlightPrice({
 			flightId: selectedFlight?.id,
 		})
@@ -68,24 +75,42 @@ const PayFlightPage = ({ styles }) => {
 		await sortPassengersData()
 
 		// Create Booking
-		const bookingPromise = await travel.createFlightBooking({
+		try {const bookingPromise = await payment.createFlightBooking({
 			flightId: selectedFlight?.id,
 			passengers: sortedPassengers,
 		})
-		console.log(bookingPromise.data.data.reference)
-		setBookingRef(bookingPromise.data.data.reference)
+		console.log(bookingPromise)
+		// console.log(bookingPromise.data.data.billerRef)
+		const {billerRef} = bookingPromise?.data?.data || undefined
+		if (billerRef) {
+			setBookingRef(billerRef)
 
 		// Charge Wallet for Booking just created
+		chargeWallet(pin, bookingPromise)
+		}
+	} catch (_err) {
+		const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
+		if (responseMessage || message) {
+			notify("error", responseMessage || message);
+		}
+		setBookingLoading(false)
+		return {type: 'failure', message: responseMessage || message || 'Something went wring, Please try again or contact admin'}
+	} finally {
+		// 
+	}
+	}
+
+	const chargeWallet = async (pin, ref) => {
 		try {
 			const walletPromise = await wallet.payBills({
 				amount: totalAmount.toString(),
 				narration: `Wallet Payment for Booking ${
-					bookingRef || bookingPromise.data.data.reference
+					ref
 				}`,
 				pin,
 				transactionCurrency: "NGN",
 				paymentDetails: {
-					billerReference: bookingRef || bookingPromise.data.data.reference,
+					billerReference: ref,
 					serviceType: "flight",
 				},
 			})
@@ -95,12 +120,16 @@ const PayFlightPage = ({ styles }) => {
 			) {
 				return {type: 'success', message: walletPromise.data.responseMessage}
 			}
+			setBookingLoading(false)
 		} catch (_err) {
-			// console.log(_err.response.data.responseMessage)
+			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
+			if (responseMessage || message) {
+				notify("error", responseMessage || message);
+			}
 			return {type: 'failure', message: _err.response.data.responseMessage}
 		}
 
-		return "failure"
+		return {type: 'failure', message: 'Something went wring, Please try again or contact admin'}
 	}
 
 	useEffect(() => {
@@ -145,6 +174,7 @@ const PayFlightPage = ({ styles }) => {
 			{priceConfirmed && (
 				<FlightPaymentOptions
 					makeFlightBooking={makeFlightBooking}
+					bookingLoading={bookingLoading}
 					selectedFlight={selectedFlight}
 					totalAmount={totalAmount}
 				/>

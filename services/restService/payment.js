@@ -37,4 +37,8 @@ export const payment = {
 	billPaymentHistory: ({service, data}) => {
 		return paymentRestAgent.post(`biller-app/bill-payment-history?serviceType=${service}`, data, setConfig())
 	},
+	createFlightBooking: ({flightId, passengers}) => {
+		const data = {flightId, passengers}
+		return paymentRestAgent.post(`biller-app/book-flight`, data, setConfig())
+	},
 }
