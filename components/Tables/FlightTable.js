@@ -2,10 +2,13 @@
 import Search from "../Custom/Search"
 import styles from "../../assets/styles/table.module.css"
 import { useEffect, useState } from "react"
+// eslint-disable-next-line no-unused-vars
 import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
+import { numericalDateDashReversed } from "@/utils/date-formats";
 import functions from "@/utils/functions"
-import Pagination from "./Pagination"
+// import Pagination from "./Pagination"
+import Pagination from "../Tables/Pagination/WalletPagination";
 // import Loader from "../Btn/Loader"
 import { getCredentials } from "@/services/localService"
 import FWLoader from "../FWLoader"
@@ -13,41 +16,80 @@ import Input from "../Dashboard/Input"
 import FlightDetailsModal from "../Travel/FlightDetailsModal"
 import Button from "../Btn/Button"
 import { payment } from "@/services/restService/payment"
+// eslint-disable-next-line no-unused-vars
 import { duration } from "moment"
 
 const FlightTable = ({ title, modalStyles }) => {
   const { formatMoney } = functions
+  // eslint-disable-next-line no-unused-vars
   const user = getCredentials()
   const notify = useNotify()
   const [data, setData] = useState([])
-  const [paginationData, setPaginationData] = useState({})
+  // const [paginationData, setPaginationData] = useState({})
+  const [pagination, setPagination] = useState({
+		currentPage: 1,
+		totalPages: 0,
+		limit: 10,
+		totalData: 0,
+		pageDataLength: 0,
+		startDate: '2023-09-01',
+		endDate: numericalDateDashReversed(new Date())
+	})
+
   const [flightDetails, setFlightDetails] = useState({})
   const [flightDetailVisible, setFlightDetailVisible] = useState(null)
-  // eslint-disable-next-line no-unused-vars
-  const [page, setPage] = useState(0)
   // eslint-disable-next-line no-unused-vars
   const [searchParam, setSearchParam] = useState("")
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [getDataLoading, setGetDataLoading] = useState(true)
-  // eslint-disable-next-line no-unused-vars
-  const [pageSize, setPageSize] = useState(10)
+  // const [getDataLoading, setGetDataLoading] = useState(true)
 
-  const getFlightBookings = async (goToPage) => {
+  const getFlightBookings = async (
+    pageNumber,
+		startDate,
+		endDate,
+		pageSize
+    ) => {
+    let filters = {
+			pageNumber,
+			startDate,
+			endDate,
+			pageSize
+		}
+    // remove undefined filters
+		if (filters.startDate === '') {
+			delete filters.startDate
+		}
+		if (filters.endDate === '') {
+			delete filters.endDate
+		}
     try {
       setIsLoading(true)
       const response = await payment.billPaymentHistory({
         service: "flight",
-        data: {
-          startDate: "2023-10-15",
-          endDate: functions.formattedTodayDate(new Date().toDateString()),
-          pageNumber: 1,
-          pageSize,
-        },
+        data: filters
       })
+      // console.log(response)
+      const {data} = response.data
+			const {
+				currentPage,
+				pageCount,
+				pageSize,
+				totalCount
+			} = response.data
+      // set pagination from data gotten
+      setPagination((prev)=>({
+				...prev,
+				currentPage,
+				totalPages: pageCount,
+				limit: pageSize,
+				pageDataLength: data.length || 0,
+				totalData: totalCount
+			}))
+      // set table data
       setData(
-        response.data.data?.map((booking) => {
+      data.map((booking) => {
           const data = booking?.metadata
           const outbound = data?.passengers?.at(0)?.departureLeg?.at(0)
           const inbound = data?.passengers?.at(0)?.returnLeg?.at(0)
@@ -79,7 +121,7 @@ const FlightTable = ({ title, modalStyles }) => {
       notify("error", message)
     } finally {
       setIsLoading(false)
-      setGetDataLoading(false)
+      // setGetDataLoading(false)
     }
   }
 
@@ -87,15 +129,17 @@ const FlightTable = ({ title, modalStyles }) => {
     setFlightDetails(f)
     setFlightDetailVisible(true)
   }
+  const handleEntry = (val) => {
+    getFlightBookings(pagination.currentPage, pagination.startDate, pagination.endDate, val)
+	}
 
-  const handlePaginationEvent = (symbol) => {
-    const currentPage = symbol === "+" ? page + 1 : page - 1
-    setPage(currentPage)
-    getFlightBookings(currentPage)
-  }
+  const setPage = (val) => {
+		getFlightBookings(val, pagination.startDate, pagination.endDate, pagination.limit)
+	}
+ 
 
   useEffect(() => {
-    getFlightBookings(page)
+    getFlightBookings(pagination.currentPage, pagination.startDate, pagination.endDate, pagination.limit)
   }, [searchParam])
   return (
     <>
@@ -214,12 +258,16 @@ const FlightTable = ({ title, modalStyles }) => {
               </tbody>
             </table>
           </div>
-          <Pagination
+          {/* <Pagination
             tableStyles={styles}
             pagination={paginationData}
             currentPage={page + 1}
             handlePaginationEvent={handlePaginationEvent}
-          />
+          /> */}
+          <Pagination tableStyles={styles}
+							handleEntry={(val)=>handleEntry(val)}
+							setPage={(val)=>setPage(val)}
+							pagination={pagination} />
           {/* <div className={styles.table__pagination}>
           Showing {data?.length} items out of {data?.length} results found
         </div> */}

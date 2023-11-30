@@ -208,7 +208,7 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 									</tr>
 								</thead>
 								<tbody>
-									{passengers.map((data, id) => (
+									{passengers?.map((data, id) => (
 										<tr key={id}>
 											<td className={tableStyles.td_3}>{data.firstName} {data.lastName}</td>
 											<td className={tableStyles.td_3}>{data.email}</td>

@@ -50,55 +50,6 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		endDate: numericalDateDashReversed(new Date())
 	})
 	// eslint-disable-next-line no-unused-vars
-	const getTransactions = async (
-		pageNumber,
-		currency = 'NGN' ,
-		startDate,
-		endDate,
-		pageSize,
-		type,
-		loading=false
-	) => {
-		let filters = {
-			pageNumber,
-			currency,
-			startDate,
-			endDate,
-			pageSize
-		}
-
-		if (filters.startDate === '') {
-			delete filters.startDate
-		}
-		if (filters.endDate === '') {
-			delete filters.endDate
-		}
-		setGetDataLoading(loading)
-		try {
-			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
-			const {data} = response.data
-			const {
-				currentPage,
-				pageCount,
-				pageSize,
-				totalCount
-			} = response.data
-			setPagination((prev)=>({
-				...prev,
-				currentPage,
-				totalPages: pageCount,
-				limit: pageSize,
-				pageDataLength: data.length || 0,
-				totalData: totalCount
-			}))
-			setTransactions(data)
-		} catch (_err) {
-			//
-		} finally {
-			setGetDataLoading(false)
-		}
-	}
-	// eslint-disable-next-line no-unused-vars
 	const getAllTransactions = async (
 		pageNumber,
 		currency = 'NGN' ,

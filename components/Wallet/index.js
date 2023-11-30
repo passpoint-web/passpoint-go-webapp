@@ -185,7 +185,7 @@ const Wallet = () => {
 	return (
 		<div className={styles.wallet_page}>
 			{
-			!pinCreated ? 
+			pinCreated === false ? 
 				<CreatePinModal handlePinCreation={()=>handlePinCreation()}
 				topClose={false}
 				cancelBtnDisabled={true}
