@@ -113,10 +113,9 @@ function getMonth(index) {
   return months[index - 1]
 }
 function isValidUrl(url) {
-  // eslint-disable-next-line no-useless-escape
   if (
-    url.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    // eslint-disable-next-line no-useless-escape
+    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
     )
   ) {
     return true
@@ -235,6 +234,7 @@ function getFormattedAirportByIata(iata) {
 }
 
 function maskValue(num) {
+  // eslint-disable-next-line no-unused-vars
   const str = num?.toString()?.split("")
   // return str.map((_x)=> '*').join('') +' **'
   return "**** **"

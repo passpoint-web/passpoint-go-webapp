@@ -1,6 +1,7 @@
 import axios from "axios"
 import { getToken, setLogout } from "./localService"
 // import cookies from '@/plugins/cookies';
+// eslint-disable-next-line no-unused-vars
 import { wallet } from "@/services/restService/wallet"
 const restAgent = axios.create({
   baseURL: "https://webapi-dev.mypasspoint.com/v1/",
@@ -266,19 +267,6 @@ export const travel = {
       `/flight/confirmprice?flightId=${queryParams.flightId}`,
       setTravelConfig()
     )
-  },
-  bookFlight: (data) => {
-    const { pin, amount, ref } = data
-    return wallet.payBills({
-      amount,
-      narration: "Flight Booking",
-      pin,
-      transactionCurrency: "NGN",
-      paymentDetails: {
-        billerReference: ref,
-        bankCode: "flight",
-      },
-    })
   },
   cancelBooking: (queryParams) => {
     return flightRestAgent.post(
