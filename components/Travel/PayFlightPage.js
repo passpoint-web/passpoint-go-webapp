@@ -75,7 +75,8 @@ const PayFlightPage = ({ styles }) => {
 		await sortPassengersData()
 
 		// Create Booking
-		try {const bookingPromise = await payment.createFlightBooking({
+		try {
+			const bookingPromise = await payment.createFlightBooking({
 			flightId: selectedFlight?.id,
 			passengers: sortedPassengers,
 		})
@@ -84,9 +85,8 @@ const PayFlightPage = ({ styles }) => {
 		const {billerRef} = bookingPromise?.data?.data || undefined
 		if (billerRef) {
 			setBookingRef(billerRef)
-
-		// Charge Wallet for Booking just created
-		chargeWallet(pin, bookingPromise)
+			// Charge Wallet for Booking just created
+			chargeWallet(pin, bookingPromise)
 		}
 	} catch (_err) {
 		const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
@@ -94,7 +94,10 @@ const PayFlightPage = ({ styles }) => {
 			notify("error", responseMessage || message);
 		}
 		setBookingLoading(false)
-		return {type: 'failure', message: responseMessage || message || 'Something went wring, Please try again or contact admin'}
+		return {
+			type: 'failure', 
+			message: responseMessage || message || 'Something went wring, Please try again or contact admin'
+		}
 	} finally {
 		// 
 	}
