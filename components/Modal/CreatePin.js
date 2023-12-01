@@ -8,7 +8,7 @@ import OtpInput from 'react-otp-input'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { useNotify } from "@/utils/hooks";
 // import { authenticate } from '@/services/restService';
-import { getCredentials } from '@/services/localService';
+import { getCredentials, savePinCreated } from '@/services/localService';
 // import { saveCredentials, saveToken } from "@/services/localService";
 import { wallet } from '@/services/restService/wallet';
 
@@ -51,6 +51,7 @@ const CreatePinModal = ({ handlePinCreation, pinCreated, topClose, cancelBtnDisa
 			} else {
 				notify("success", 'Congrats your PIN has been set');
 			}
+			savePinCreated(true)
 			handlePinCreation()
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
