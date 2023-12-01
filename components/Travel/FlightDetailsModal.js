@@ -170,6 +170,18 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
                 <span>{data?.paymentReference}</span>
               </div>
             </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Payment Status</div>
+              <div className={styles.value}>
+                <div
+                  className={`${
+                    data?.paymentStatus?.toLowerCase() || "pending"
+                  }-tag`}
+                >
+                  {data?.paymentStatus?.toLowerCase() || "Pending"}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
