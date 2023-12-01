@@ -5,10 +5,10 @@ import { useEffect, useState } from "react"
 // eslint-disable-next-line no-unused-vars
 import { travel } from "@/services/restService"
 import { useNotify } from "@/utils/hooks"
-import { numericalDateDashReversed } from "@/utils/date-formats";
+import { numericalDateDashReversed } from "@/utils/date-formats"
 import functions from "@/utils/functions"
 // import Pagination from "./Pagination"
-import Pagination from "../Tables/Pagination/WalletPagination";
+import Pagination from "../Tables/Pagination/WalletPagination"
 // import Loader from "../Btn/Loader"
 import { getCredentials } from "@/services/localService"
 import FWLoader from "../FWLoader"
@@ -27,14 +27,14 @@ const FlightTable = ({ title, modalStyles }) => {
   const [data, setData] = useState([])
   // const [paginationData, setPaginationData] = useState({})
   const [pagination, setPagination] = useState({
-		currentPage: 1,
-		totalPages: 0,
-		limit: 10,
-		totalData: 0,
-		pageDataLength: 0,
-		startDate: '2023-09-01',
-		endDate: numericalDateDashReversed(new Date())
-	})
+    currentPage: 1,
+    totalPages: 0,
+    limit: 10,
+    totalData: 0,
+    pageDataLength: 0,
+    startDate: "2023-09-01",
+    endDate: numericalDateDashReversed(new Date()),
+  })
 
   const [flightDetails, setFlightDetails] = useState({})
   const [flightDetailVisible, setFlightDetailVisible] = useState(null)
@@ -47,66 +47,79 @@ const FlightTable = ({ title, modalStyles }) => {
 
   const getFlightBookings = async (
     pageNumber,
-		startDate,
-		endDate,
-		pageSize
-    ) => {
+    startDate,
+    endDate,
+    pageSize
+  ) => {
     let filters = {
-			pageNumber,
-			startDate,
-			endDate,
-			pageSize
-		}
+      pageNumber,
+      startDate,
+      endDate,
+      pageSize,
+    }
     // remove undefined filters
-		if (filters.startDate === '') {
-			delete filters.startDate
-		}
-		if (filters.endDate === '') {
-			delete filters.endDate
-		}
+    if (filters.startDate === "") {
+      delete filters.startDate
+    }
+    if (filters.endDate === "") {
+      delete filters.endDate
+    }
     try {
       setIsLoading(true)
       const response = await payment.billPaymentHistory({
         service: "flight",
-        data: filters
+        data: filters,
       })
       // console.log(response)
-      const {data} = response.data
-			const {
-				currentPage,
-				pageCount,
-				pageSize,
-				totalCount
-			} = response.data
+      const { data } = response.data
+      const { currentPage, pageCount, pageSize, totalCount } = response.data
       // set pagination from data gotten
-      setPagination((prev)=>({
-				...prev,
-				currentPage,
-				totalPages: pageCount,
-				limit: pageSize,
-				pageDataLength: data.length || 0,
-				totalData: totalCount
-			}))
+      setPagination((prev) => ({
+        ...prev,
+        currentPage,
+        totalPages: pageCount,
+        limit: pageSize,
+        pageDataLength: data.length || 0,
+        totalData: totalCount,
+      }))
       // set table data
       setData(
-      data.map((booking) => {
+        data.map((booking) => {
           const data = booking?.metadata
-          const outbound = data?.passengers?.at(0)?.departureLeg?.at(0)
-          const inbound = data?.passengers?.at(0)?.returnLeg?.at(0)
+          const outbound = data?.passengers
+            ?.at(0)
+            ?.departureLeg?.map((flight) => {
+              const time =
+                (new Date(flight?.arrivalTime).getTime() -
+                  new Date(flight?.departureTime).getTime()) /
+                1000 /
+                60
+              flight.duration = time
+              return flight
+            })
+          const inbound = data?.passengers?.at(0)?.returnLeg?.map((flight) => {
+            const time =
+              (new Date(flight?.arrivalTime).getTime() -
+                new Date(flight?.departureTime).getTime()) /
+              1000 /
+              60
+            flight.duration = time
+            return flight
+          })
 
-          // Get duration for inbound and outbound
-          const outboundTime =
-            (new Date(outbound?.arrivalTime).getTime() -
-              new Date(outbound?.departureTime).getTime()) /
-            1000 /
-            60
-          if (outbound) outbound.duration = outboundTime
-          const inboundTime =
-            (new Date(inbound?.arrivalTime).getTime() -
-              new Date(inbound?.departureTime).getTime()) /
-            1000 /
-            60
-          if (inbound) inbound.duration = inboundTime
+          // // Get duration for inbound and outbound
+          // const outboundTime =
+          //   (new Date(outbound?.arrivalTime).getTime() -
+          //     new Date(outbound?.departureTime).getTime()) /
+          //   1000 /
+          //   60
+          // if (outbound) outbound.duration = outboundTime
+          // const inboundTime =
+          //   (new Date(inbound?.arrivalTime).getTime() -
+          //     new Date(inbound?.departureTime).getTime()) /
+          //   1000 /
+          //   60
+          // if (inbound) inbound.duration = inboundTime
 
           return {
             ...booking,
@@ -130,16 +143,30 @@ const FlightTable = ({ title, modalStyles }) => {
     setFlightDetailVisible(true)
   }
   const handleEntry = (val) => {
-    getFlightBookings(pagination.currentPage, pagination.startDate, pagination.endDate, val)
-	}
+    getFlightBookings(
+      pagination.currentPage,
+      pagination.startDate,
+      pagination.endDate,
+      val
+    )
+  }
 
   const setPage = (val) => {
-		getFlightBookings(val, pagination.startDate, pagination.endDate, pagination.limit)
-	}
- 
+    getFlightBookings(
+      val,
+      pagination.startDate,
+      pagination.endDate,
+      pagination.limit
+    )
+  }
 
   useEffect(() => {
-    getFlightBookings(pagination.currentPage, pagination.startDate, pagination.endDate, pagination.limit)
+    getFlightBookings(
+      pagination.currentPage,
+      pagination.startDate,
+      pagination.endDate,
+      pagination.limit
+    )
   }, [searchParam])
   return (
     <>
@@ -264,10 +291,12 @@ const FlightTable = ({ title, modalStyles }) => {
             currentPage={page + 1}
             handlePaginationEvent={handlePaginationEvent}
           /> */}
-          <Pagination tableStyles={styles}
-							handleEntry={(val)=>handleEntry(val)}
-							setPage={(val)=>setPage(val)}
-							pagination={pagination} />
+          <Pagination
+            tableStyles={styles}
+            handleEntry={(val) => handleEntry(val)}
+            setPage={(val) => setPage(val)}
+            pagination={pagination}
+          />
           {/* <div className={styles.table__pagination}>
           Showing {data?.length} items out of {data?.length} results found
         </div> */}
