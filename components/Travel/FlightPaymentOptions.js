@@ -16,11 +16,7 @@ import Link from "next/link"
 import WarningModal from "./WarningModal"
 import { payment } from "@/services/restService/payment"
 
-const FlightPaymentOptions = ({
-  makeFlightBooking,
-  totalAmount,
-  bookingLoading,
-}) => {
+const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
   const paymentOptions = [
     "My Passpoint Wallet",
     // "Credit/Debit Card"
