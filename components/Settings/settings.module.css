@@ -87,7 +87,7 @@
   margin-bottom: var(--inner-component-mg);
 }
 
-.border_box > *:not(:last-child) {
+.border_box > div:not(:last-child) {
   border-bottom: 1px solid var(--grey-5);
 }
 

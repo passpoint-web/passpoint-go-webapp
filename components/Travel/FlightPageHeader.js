@@ -9,6 +9,7 @@ import { travel } from "@/services/restService"
 import { getAirportsState, setAirportsState } from "@/services/localService"
 import CustomObjectSelect from "../Custom/CustomObjectSelect"
 import { useSearchParams } from "next/navigation"
+import Select from "../Dashboard/Select"
 
 const FlightPageHeader = ({ styles }) => {
   const searchParams = useSearchParams()
@@ -78,8 +79,9 @@ const FlightPageHeader = ({ styles }) => {
           </p>
         </div>
         <div className={`${styles.quick__filter} quick__filter`}>
-          <CustomSelect
+          <Select
             id="trip-type"
+            label='Trip'
             selectOptions={["Round Trip", "One way"]}
             selectedOption={tripType}
             styleProps={{
@@ -96,6 +98,7 @@ const FlightPageHeader = ({ styles }) => {
           <Input
             id="passengers"
             name="passengers"
+            label='No. Adults'
             type="number"
             min="0"
             max="20"
@@ -105,6 +108,7 @@ const FlightPageHeader = ({ styles }) => {
           />
           <Input
             id="passengers"
+            label='No. Children'
             name="passengers"
             type="number"
             min="0"
@@ -116,6 +120,7 @@ const FlightPageHeader = ({ styles }) => {
           <Input
             id="passengers"
             name="passengers"
+            label='No. Infants'
             type="number"
             min="0"
             max="20"
@@ -123,8 +128,9 @@ const FlightPageHeader = ({ styles }) => {
             value={infants}
             onChange={(e) => setInfants(e.target.value)}
           />
-          <CustomSelect
+          <Select
             id="class"
+            label="Type"
             selectOptions={["Economy", "Premium Economy", "Business", "First"]}
             selectedOption={flightClass}
             styleProps={{

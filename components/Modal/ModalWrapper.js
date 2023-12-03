@@ -75,7 +75,7 @@ const ModalWrapper = ({
 					</div>
 					<div className={styles.top}>
 						<h2>{heading}</h2>
-						<p>{subHeading}</p>
+						<div className={styles.sub_heading}>{subHeading}</div>
 					</div>
 					{children}
 					{hasBottomActions ? (

@@ -17,11 +17,14 @@ import ForgotPasswordFlow from '@/components/Settings/ForgotPasswordFlow'
 import { wallet } from "@/services/restService/wallet";
 import CreatePinModal from "@/components/Modal/CreatePin";
 import { savePinCreated, getPinCreated } from "@/services/localService";
+import Toggle2FA from "../2FA";
 // import Link from 'next/link'
 const Security = () => {
 	const { createUrl } = functions;
 	const { push } = useRouter();
 	const searchParams = useSearchParams();
+	const [show2FAModal, setShow2FAModal] = useState(false)
+	const [tuEfAy, setTuEfAy] = useState(false)
 	const notify = useNotify();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -85,13 +88,13 @@ const Security = () => {
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
-				const {pinCreated} = data
-				setPinCreated(pinCreated)
-				savePinCreated(pinCreated)
+			const {pinCreated} = data
+			setPinCreated(pinCreated)
+			savePinCreated(pinCreated)
 		} catch (_err) {
-			// 
+			//
 		} finally {
-			// 
+			//
 		}
 	}
 
@@ -249,28 +252,51 @@ const Security = () => {
 
 	return (
 		<div className={styles.security_page}>
-		{
-		showPinCreationModal ?
-			<CreatePinModal handlePinCreation={()=>{
-				setShowPinCreationModal(false)
-				setPinCreated(true)
-			}}
-			pinCreated={pinCreated}
-			reference={reference}
-			onClose={()=>setShowPinCreationModal(false)} 
-			/> : <></>
-		}
+			{show2FAModal ?
+				<Toggle2FA onClose={(val)=>{
+					setTuEfAy(!!val)
+					setShow2FAModal(false)
+				}}
+				/> :
+				<></>
+			}
+			{
+				showPinCreationModal ?
+					<CreatePinModal handlePinCreation={()=>{
+						setShowPinCreationModal(false)
+						setPinCreated(true)
+					}}
+					pinCreated={pinCreated}
+					reference={reference}
+					onClose={()=>setShowPinCreationModal(false)}
+					/> : <></>
+			}
 			<h1>Security & Privacy</h1>
 			<div className={styles.border_box}>
 				{ChangePassword()}
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h3>{pinCreated ? 'Reset' : 'Create'} PIN</h3>
-					<Button className='tertiary' text={pinCreationLoading ? 'Loading...' : pinCreated ? 'Reset PIN' : 'Create PIN'} onClick={()=>initiatePinCreation()} />
+					<Button className='tertiary'
+						text={pinCreationLoading ? 'Loading...' : pinCreated ? 'Reset PIN' : 'Create PIN'}
+						onClick={()=>initiatePinCreation()} />
 				</div>
 			</div>
-			
+
 			<div className={`${styles.border_box} ${styles.privacy}`}>
-				<h3>Settings</h3>
+				<h3>2-Factor Authentication</h3>
+				<div className={`${styles.inner} ${styles.flex}`}>
+					<h4>Enable 2FA</h4>
+					<button onClick={()=>{
+						setShow2FAModal(true)
+					}}>
+						<Switch disabled
+							checked={tuEfAy}
+							onChange={()=>setTuEfAy(!tuEfAy)} />
+					</button>
+				</div>
+			</div>
+			<div className={`${styles.border_box} ${styles.privacy}`}>
+				<h3>Privacy Settings</h3>
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Bookings updates</h4>
 					<Switch />
