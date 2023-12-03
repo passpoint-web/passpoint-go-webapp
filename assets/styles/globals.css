@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 @font-face {
@@ -890,6 +894,7 @@ form {
 
 .primary-tag,
 .success-tag,
+.paid-tag,
 .completed-tag,
 .confirmed-tag,
 .successful-tag,
@@ -919,6 +924,7 @@ form {
 
 .successful-tag,
 .success-tag,
+.paid-tag,
 .confirmed-tag,
 .completed-tag,
 .issued-tag {
@@ -932,8 +938,7 @@ form {
 }
 
 .pending-tag,
-.processing-tag
-.reserved-tag,
+.processing-tag .reserved-tag,
 .processing-tag {
   background: #fffae7;
   color: #e9b500;

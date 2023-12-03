@@ -1,6 +1,7 @@
 import axios from "axios"
 import { getToken, setLogout } from "./localService"
 // import cookies from '@/plugins/cookies';
+// eslint-disable-next-line no-unused-vars
 import { wallet } from "@/services/restService/wallet"
 const restAgent = axios.create({
   baseURL: "https://webapi.mypasspoint.com/v1/",
@@ -220,6 +221,11 @@ export const accountProfile = {
 }
 
 export const travel = {
+  // getFlightBookings: (params) => {
+  //   const config = setTravelConfig()
+  //   config.params = params
+  //   return flightRestAgent.get("flight/bookings", config)
+  // },
   getFlightBookings: (params) => {
     const config = setTravelConfig()
     config.params = params
@@ -261,19 +267,6 @@ export const travel = {
       `/flight/confirmprice?flightId=${queryParams.flightId}`,
       setTravelConfig()
     )
-  },
-  bookFlight: (data) => {
-    const { pin, amount, ref } = data
-    return wallet.payBills({
-      amount,
-      narration: "Flight Booking",
-      pin,
-      transactionCurrency: "NGN",
-      paymentDetails: {
-        billerReference: ref,
-        bankCode: "flight",
-      },
-    })
   },
   cancelBooking: (queryParams) => {
     return flightRestAgent.post(

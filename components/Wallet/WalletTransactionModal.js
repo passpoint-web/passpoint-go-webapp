@@ -208,7 +208,7 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 									</tr>
 								</thead>
 								<tbody>
-									{passengers.map((data, id) => (
+									{passengers?.map((data, id) => (
 										<tr key={id}>
 											<td className={tableStyles.td_3}>{data.firstName} {data.lastName}</td>
 											<td className={tableStyles.td_3}>{data.email}</td>
@@ -216,7 +216,6 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 											<td className={`${tableStyles.td_3} uppercase`}>{data.passengerType} - {data.gender}</td>
 											<td className={tableStyles.td_3}>{detailedDate(data.dateOfBirth)}</td>
 											<td className={tableStyles.td_3}>{data.ticketNumber}</td>
-
 										</tr>
 									))}
 								</tbody>
@@ -325,12 +324,14 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 					}
 				</div>
 			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Service Type</div>
-				<div className={`${styles.value} capitalize`}>
-					<span>{metadata?.serviceType}</span>
-				</div>
-			</div>
+			{ transaction.transactionCategory === 'BILL_PAYMENT' ?
+				<div className={styles.row}>
+					<div className={styles.label}>Service Type</div>
+					<div className={`${styles.value} capitalize`}>
+						<span>{metadata?.serviceType}</span>
+					</div>
+				</div> : <></>
+			}
 			<div className={styles.row}>
 				<div className={styles.label}>Transaction Method</div>
 				<div className={styles.value}>
