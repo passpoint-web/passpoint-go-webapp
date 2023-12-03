@@ -2,7 +2,7 @@
 
 import { AirplaneIcon, FlightExchangeIcon } from "@/constants/icons"
 import Link from "next/link"
-import CustomSelect from "@/components/Custom/Select"
+// import CustomSelect from "@/components/Custom/Select"
 import Input from "../Dashboard/Input"
 import { useEffect, useState } from "react"
 import { travel } from "@/services/restService"
@@ -81,7 +81,7 @@ const FlightPageHeader = ({ styles }) => {
         <div className={`${styles.quick__filter} quick__filter`}>
           <Select
             id="trip-type"
-            label='Trip'
+            // label='Trip'
             selectOptions={["Round Trip", "One way"]}
             selectedOption={tripType}
             styleProps={{
@@ -98,7 +98,7 @@ const FlightPageHeader = ({ styles }) => {
           <Input
             id="passengers"
             name="passengers"
-            label='No. Adults'
+            // label='No. Adults'
             type="number"
             min="0"
             max="20"
@@ -108,7 +108,7 @@ const FlightPageHeader = ({ styles }) => {
           />
           <Input
             id="passengers"
-            label='No. Children'
+            // label='No. Children'
             name="passengers"
             type="number"
             min="0"
@@ -120,7 +120,7 @@ const FlightPageHeader = ({ styles }) => {
           <Input
             id="passengers"
             name="passengers"
-            label='No. Infants'
+            // label='No. Infants'
             type="number"
             min="0"
             max="20"
@@ -130,7 +130,7 @@ const FlightPageHeader = ({ styles }) => {
           />
           <Select
             id="class"
-            label="Type"
+            // label="Type"
             selectOptions={["Economy", "Premium Economy", "Business", "First"]}
             selectedOption={flightClass}
             styleProps={{

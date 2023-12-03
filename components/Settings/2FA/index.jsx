@@ -14,7 +14,9 @@ import ActionFeedbackCard from '@/components/ActionFeedbackCard'
 import QRCode from './QRCode'
 
 const Toggle2FA = ({onClose}) => {
+	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false);
+	// eslint-disable-next-line no-unused-vars
 	const [feedbackError, setFeedbackError] = useState("");
 	const [step, setStep] = useState(0);
 	const [renderInput, setRenderInput] = useState(false)
@@ -107,13 +109,6 @@ const Toggle2FA = ({onClose}) => {
 		// 	return
 		// }
 		setStep('success')
-	}
-
-	const handleLevelThreeCta = () => {
-		// if (!payload) {
-		// 	return
-		// }
-		// setShow2FAModal(false)
 	}
 
 	useEffect(() => {
