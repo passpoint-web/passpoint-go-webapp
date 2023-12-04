@@ -29,30 +29,30 @@ const FlightPageHeader = ({ styles }) => {
   )
 
   const queryParams = {
-    adults: searchParams.get("adults"),
-    cabin: searchParams.get("cabin"),
-    children: searchParams.get("children"),
-    departureDate: searchParams.get("departureDate"),
-    destination: searchParams.get("destination"),
-    infants: searchParams.get("infants"),
-    origin: searchParams.get("origin"),
-    returnDate: searchParams.get("returnDate"),
-    tripType: searchParams.get("tripType"),
+    adults: searchParams?.get("adults"),
+    cabin: searchParams?.get("cabin"),
+    children: searchParams?.get("children"),
+    departureDate: searchParams?.get("departureDate"),
+    destination: searchParams?.get("destination"),
+    infants: searchParams?.get("infants"),
+    origin: searchParams?.get("origin"),
+    returnDate: searchParams?.get("returnDate"),
+    tripType: searchParams?.get("tripType"),
   }
   // console.log(queryParams?.tripType)
 
   const today = new Date().toISOString().split("T")[0]
 
-  const [fromAirport, setFromAirport] = useState(queryParams.origin || "")
-  const [toAirport, setToAirport] = useState(queryParams.destination || "")
+  const [fromAirport, setFromAirport] = useState(queryParams?.origin || "")
+  const [toAirport, setToAirport] = useState(queryParams?.destination || "")
   const [departureDate, setDepartureDate] = useState(
-    queryParams.departureDate || ""
+    queryParams?.departureDate || ""
   )
-  const [returnDate, setReturnDate] = useState(queryParams.returnDate || "")
-  const [tripType, setTripType] = useState(queryParams.tripType || "One Way")
-  const [infants, setInfants] = useState(queryParams.infants || "")
-  const [children, setChildren] = useState(queryParams.children || "")
-  const [adult, setAdult] = useState(queryParams.adults || 1)
+  const [returnDate, setReturnDate] = useState(queryParams?.returnDate || "")
+  const [tripType, setTripType] = useState(queryParams?.tripType || "One Way")
+  const [infants, setInfants] = useState(queryParams?.infants || "")
+  const [children, setChildren] = useState(queryParams?.children || "")
+  const [adult, setAdult] = useState(queryParams?.adults || 1)
   const [flightClass, setFlightClass] = useState(
     queryParams?.cabin || "Economy"
   )

@@ -45,16 +45,16 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
 	//   }
 	// }
 
-	const calculateBaseFare = (dataParam) => {
-		let total = dataParam?.totalAmount
-		// dataParam.travelers_price.forEach((traveler) => {
-		//   const amountValues = Object.values(traveler)
-		//   total += Number(amountValues[0])
-		// })
-		setBaseFare(total)
-		setFees(Number(dataParam.totalAmount) - total)
-		return total
-	}
+  const calculateBaseFare = (dataParam) => {
+    let total = dataParam?.totalAmount
+    // dataParam.travelers_price.forEach((traveler) => {
+    //   const amountValues = Object.values(traveler)
+    //   total += Number(amountValues[0])
+    // })
+    setBaseFare(Number(dataParam.totalAmount) - Number(dataParam.charges))
+    setFees(Number(dataParam.charges))
+    return total
+  }
 
 	const cancelBooking = async () => {
 		setIsUploading(true)
@@ -125,187 +125,215 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
                 </span>
               </div>
             </div> */}
-						<div className={styles.row}>
-							<div className={styles.label}>Total Cost</div>
-							<div className={`${styles.value}`}>
-								<span className="text-bold">
-									{formatMoney(data?.totalAmount, data?.currency)}
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Booking Status</div>
-							<div className={styles.value}>
-								<div
-									className={`${
-										data?.pnrStatus?.toLowerCase() || "pending"
-									}-tag`}
-								>
-									{data?.pnrStatus?.toLowerCase() || "Pending"}
-								</div>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Return Ticket</div>
-							<div className={styles.value}>
-								<span>{data?.inbound ? "Yes" : "No"}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			)}
+            <div className={styles.row}>
+              <div className={styles.label}>Total Cost</div>
+              <div className={`${styles.value}`}>
+                <span className="text-bold">
+                  {formatMoney(data?.totalAmount, data?.currency)}
+                </span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Booking Status</div>
+              <div className={styles.value}>
+                <div
+                  className={`${
+                    data?.pnrStatus?.toLowerCase() || "pending"
+                  }-tag`}
+                >
+                  {data?.pnrStatus?.toLowerCase() || "Pending"}
+                </div>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Return Ticket</div>
+              <div className={styles.value}>
+                <span>{data?.inbound ? "Yes" : "No"}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>PNR</div>
+              <div className={styles.value}>
+                <span>{data?.pnr}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Payment Reference</div>
+              <div className={styles.value}>
+                <span>{data?.paymentReference}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.label}>Payment Status</div>
+              <div className={styles.value}>
+                <div
+                  className={`${
+                    data?.paymentStatus?.toLowerCase() || "pending"
+                  }-tag`}
+                >
+                  {data?.paymentStatus?.toLowerCase() || "Pending"}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
-			{/* MAIN FLIGHT DETAILS CONTENT - ITINERARY */}
-			{activeTab === tabs[1] &&
-			(!data?.inbound?.airlineName ? (
-				<InfoComp />
-			) : (
-				<div className={styles.modal__flight_details}>
-					{/* OUTBOUND FLIGHTS */}
-					<div className={styles.modal__flight_details_section}>
-						<h5>Outbound Flight</h5>
-						<div className={styles.row}>
-							<div className={styles.label}>Airline</div>
-							<div className={styles.value}>
-								<span>{data?.outbound?.airlineName}</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Flight Number</div>
-							<div className={styles.value}>
-								<span>{data?.outbound?.flightNumber}</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Departure</div>
-							<div className={styles.value}>
-								<span>
-									{functions.getFormattedAirportByIata(
-										data?.outbound?.departureCode
-									)}
-									<br />
-									{new Date(
-										data?.outbound?.departureTime
-									)?.toDateString()},{" "}
-									<span>
-										{functions.formatCustomTime(
-											data?.outbound?.departureTime
-										)}
-									</span>
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Arrival</div>
-							<div className={styles.value}>
-								<span>
-									{functions.getFormattedAirportByIata(
-										data?.outbound?.arrivalCode
-									)}
-									<br />
-									{new Date(
-										data?.outbound?.arrivalTime
-									)?.toDateString()},{" "}
-									<span>
-										{functions.formatCustomTime(data?.outbound?.arrivalTime)}
-									</span>
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Flight Duration</div>
-							<div className={styles.value}>
-								<span>
-									{functions.convertMinutesToHHMM(data?.outbound?.duration)}
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Cabin Type</div>
-							<div className={styles.value}>
-								<span>{data?.outbound?.cabinType}</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Baggage Allowance</div>
-							<div className={styles.value}>
-								<span>{data?.outbound?.baggage}</span>
-							</div>
-						</div>
-					</div>
+      {/* MAIN FLIGHT DETAILS CONTENT - ITINERARY */}
+      {activeTab === tabs[1] &&
+        (!data?.outbound?.length > 0 ? (
+          <InfoComp />
+        ) : (
+          <div className={styles.modal__flight_details}>
+            {/* OUTBOUND FLIGHTS */}
+            {data?.outbound?.map((outbound, index) => (
+              <div
+                className={styles.modal__flight_details_section}
+                key={outbound.departureTime}
+              >
+                <h5>
+                  Outbound Flight {data?.outbound?.length > 1 ? index + 1 : ""}
+                </h5>
+                <div className={styles.row}>
+                  <div className={styles.label}>Airline</div>
+                  <div className={styles.value}>
+                    <span>{outbound?.airlineName}</span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Flight Number</div>
+                  <div className={styles.value}>
+                    <span>#{outbound?.flightNumber}</span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Departure</div>
+                  <div className={styles.value}>
+                    <span>
+                      {functions.getFormattedAirportByIata(
+                        outbound?.departureCode
+                      )}
+                      <br />
+                      {new Date(outbound?.departureTime)?.toDateString()},{" "}
+                      <span>
+                        {functions.formatCustomTime(outbound?.departureTime)}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Arrival</div>
+                  <div className={styles.value}>
+                    <span>
+                      {functions.getFormattedAirportByIata(
+                        outbound?.arrivalCode
+                      )}
+                      <br />
+                      {new Date(outbound?.arrivalTime)?.toDateString()},{" "}
+                      <span>
+                        {functions.formatCustomTime(outbound?.arrivalTime)}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Flight Duration</div>
+                  <div className={styles.value}>
+                    <span>
+                      {functions.convertMinutesToHHMM(outbound?.duration)}
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Cabin Type</div>
+                  <div className={styles.value}>
+                    <span>{outbound?.cabinType}</span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Baggage Allowance</div>
+                  <div className={styles.value}>
+                    <span>{outbound?.baggage}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
 
-					{/* INBOUND FLIGHTS */}
-					<div className={styles.modal__flight_details_section}>
-						<h5>Inbound Flight</h5>
-						<div className={styles.row}>
-							<div className={styles.label}>Airline</div>
-							<div className={styles.value}>
-								<span>{data?.inbound?.airlineName || "Pending Booking"}</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Flight Number</div>
-							<div className={styles.value}>
-								<span>
-									{data?.inbound?.flightNumber || "Pending Booking"}
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Departure</div>
-							<div className={styles.value}>
-								<span>
-									{functions.getFormattedAirportByIata(
-										data?.inbound?.departureCode
-									)}
-									<br />
-									{new Date(
-										data?.inbound?.departureTime
-									)?.toDateString()},{" "}
-									<span>
-										{functions.formatCustomTime(data?.inbound?.departureTime)}
-									</span>
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Arrival</div>
-							<div className={styles.value}>
-								<span>
-									{functions.getFormattedAirportByIata(
-										data?.inbound?.arrivalCode
-									)}
-									<br />
-									{new Date(data?.inbound?.arrivalTime)?.toDateString()},{" "}
-									<span>
-										{functions.formatCustomTime(data?.inbound?.arrivalTime)}
-									</span>
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Flight Duration</div>
-							<div className={styles.value}>
-								<span>
-									{functions.convertMinutesToHHMM(data?.inbound?.duration)}
-								</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Cabin Type</div>
-							<div className={styles.value}>
-								<span>{data?.inbound?.cabinType}</span>
-							</div>
-						</div>
-						<div className={styles.row}>
-							<div className={styles.label}>Baggage Allowance</div>
-							<div className={styles.value}>
-								<span>{data?.inbound?.baggage}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			))}
+            {/* INBOUND FLIGHTS */}
+            {data?.inbound?.map((inbound, index) => (
+              <div
+                className={styles.modal__flight_details_section}
+                key={inbound.departureTime}
+              >
+                <h5>
+                  Inbound Flight {data?.inbound?.length > 1 ? index + 1 : ""}
+                </h5>
+                <div className={styles.row}>
+                  <div className={styles.label}>Airline</div>
+                  <div className={styles.value}>
+                    <span>{inbound?.airlineName}</span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Flight Number</div>
+                  <div className={styles.value}>
+                    <span>#{inbound?.flightNumber}</span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Departure</div>
+                  <div className={styles.value}>
+                    <span>
+                      {functions.getFormattedAirportByIata(
+                        inbound?.departureCode
+                      )}
+                      <br />
+                      {new Date(inbound?.departureTime)?.toDateString()},{" "}
+                      <span>
+                        {functions.formatCustomTime(inbound?.departureTime)}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Arrival</div>
+                  <div className={styles.value}>
+                    <span>
+                      {functions.getFormattedAirportByIata(
+                        inbound?.arrivalCode
+                      )}
+                      <br />
+                      {new Date(inbound?.arrivalTime)?.toDateString()},{" "}
+                      <span>
+                        {functions.formatCustomTime(inbound?.arrivalTime)}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Flight Duration</div>
+                  <div className={styles.value}>
+                    <span>
+                      {functions.convertMinutesToHHMM(inbound?.duration)}
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Cabin Type</div>
+                  <div className={styles.value}>
+                    <span>{inbound?.cabinType}</span>
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.label}>Baggage Allowance</div>
+                  <div className={styles.value}>
+                    <span>{inbound?.baggage}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
 
 			{/* MAIN FLIGHT DETAILS CONTENT - COST & PAYMENT */}
 			{activeTab === tabs[2] && (

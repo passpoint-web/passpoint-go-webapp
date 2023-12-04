@@ -62,12 +62,17 @@ const PayFlightPage = ({ styles }) => {
   }
 
   const confirmFlightPrice = async () => {
-    setBookingLoading(true)
-    const promise = await travel.confirmFlightPrice({
-      flightId: selectedFlight?.id,
-    })
-    setTotalAmount(promise.data.data.amount)
-    setDocumentsRequired(promise.data.data.document_required)
+    try {
+      setBookingLoading(true)
+      const promise = await travel.confirmFlightPrice({
+        flightId: selectedFlight?.id,
+      })
+      setTotalAmount(promise.data.data.amount)
+      setDocumentsRequired(promise.data.data.document_required)
+    } catch (err) {
+      notify("error", "Service provider error. Please try again later")
+      setBookingLoading(false)
+    }
   }
 
   const makeFlightBooking = async (pin) => {

@@ -894,6 +894,7 @@ form {
 
 .primary-tag,
 .success-tag,
+.paid-tag,
 .completed-tag,
 .confirmed-tag,
 .successful-tag,
@@ -923,6 +924,7 @@ form {
 
 .successful-tag,
 .success-tag,
+.paid-tag,
 .confirmed-tag,
 .completed-tag,
 .issued-tag {
