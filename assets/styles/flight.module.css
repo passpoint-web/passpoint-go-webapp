@@ -23,8 +23,13 @@
 
 .travel__dashboard_header .row_one .quick__filter {
   display: flex;
-  gap: 1rem;
+  column-gap: 1rem;
   margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.travel__dashboard_header .row_one .quick__filter > * {
+  min-width: 150px;
 }
 .travel__dashboard_header .row_one .quick__filter input {
   background: var(--grey-6);

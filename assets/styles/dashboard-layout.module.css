@@ -323,6 +323,9 @@
 }
 .errorPage_content {
   width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .errorPage_content p {
   font-size: 18px;

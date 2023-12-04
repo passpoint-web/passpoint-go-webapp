@@ -6,43 +6,44 @@ import functions from "@/utils/functions"
 import Loader from "../Btn/Loader"
 // import PaymentSuccessful from "./PaymentSuccessful"
 import InfoComp from "./InfoComp"
+import Tab from "../Tab"
 
 const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
-  const { formatMoney } = functions
-  // const path = usePathname()
-  // const [isLoading, setIsLoading] = useState(true)
-  // const router = useRouter()
-  const tabs = ["General", "Itinerary", "Cost & Payment", "Traveler's Info"]
-  const [activeTab, setActiveTab] = useState(tabs[0])
-  // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState({})
-  const [baseFare, setBaseFare] = useState(0)
-  const [fees, setFees] = useState(0)
-  // const [isLoading, setIsLoading] = useState(false)
-  const [isUploading, setIsUploading] = useState(false)
+	const { formatMoney } = functions
+	// const path = usePathname()
+	// const [isLoading, setIsLoading] = useState(true)
+	// const router = useRouter()
+	const tabs = ["General", "Itinerary", "Cost & Payment", "Traveler's Info"]
+	const [activeTab, setActiveTab] = useState(tabs[0])
+	// eslint-disable-next-line no-unused-vars
+	const [data, setData] = useState({})
+	const [baseFare, setBaseFare] = useState(0)
+	const [fees, setFees] = useState(0)
+	// const [isLoading, setIsLoading] = useState(false)
+	const [isUploading, setIsUploading] = useState(false)
 
-  const handleCloseModal = () => {
-    closeModal
-  }
+	const handleCloseModal = () => {
+		closeModal
+	}
 
-  useEffect(() => {
-    setData(flightDetails)
-  }, [])
+	useEffect(() => {
+		setData(flightDetails)
+	}, [])
 
-  // const getFlightBooking = async () => {
-  //   try {
-  //     setIsLoading(true)
-  //     const response = await travel.getFlightBooking(flightDetails.reference)
-  //     setData({ ...response.data.data, ...flightDetails })
-  //     calculateBaseFare(response.data.data)
-  //   } catch (_err) {
-  //     // console.log(_err.response.data.description)
-  //     const { message, description } = _err.response?.data || _err
-  //     notify("error", message || description)
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
+	// const getFlightBooking = async () => {
+	//   try {
+	//     setIsLoading(true)
+	//     const response = await travel.getFlightBooking(flightDetails.reference)
+	//     setData({ ...response.data.data, ...flightDetails })
+	//     calculateBaseFare(response.data.data)
+	//   } catch (_err) {
+	//     // console.log(_err.response.data.description)
+	//     const { message, description } = _err.response?.data || _err
+	//     notify("error", message || description)
+	//   } finally {
+	//     setIsLoading(false)
+	//   }
+	// }
 
   const calculateBaseFare = (dataParam) => {
     let total = dataParam?.totalAmount
@@ -55,50 +56,42 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
     return total
   }
 
-  const cancelBooking = async () => {
-    setIsUploading(true)
-    const promise = await travel.cancelBooking({
-      bookingReference: flightDetails.reference,
-    })
-    setIsUploading(false)
-    if (promise.data.code === "200") closeModal()
-  }
+	const cancelBooking = async () => {
+		setIsUploading(true)
+		const promise = await travel.cancelBooking({
+			bookingReference: flightDetails.reference,
+		})
+		setIsUploading(false)
+		if (promise.data.code === "200") closeModal()
+	}
 
-  useEffect(() => {
-    calculateBaseFare(data)
-    // getFlightBooking()
-  }, [data])
+	useEffect(() => {
+		calculateBaseFare(data)
+		// getFlightBooking()
+	}, [data])
 
-  return (
-    <ModalWrapper
-      loading={false}
-      onClose={() => handleCloseModal()}
-      ctaBtnType="none"
-      topClose={false}
-      heading={"Flight Details"}
-      subHeading={"See all your booking details here"}
-      ctaBtnText="Modify"
-      bottomCancelNeeded={false}
-      containsTabLayout
-      hasBottomActions={false}
-    >
-      {/* {isLoading && <FWLoader />} */}
-      <div className={styles.modal__tab_group}>
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={tab === activeTab ? styles.active : ""}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      {/* MAIN FLIGHT DETAILS CONTENT - GENERAL */}
-      {activeTab === tabs[0] && (
-        <div className={styles.modal__flight_details}>
-          <div className={styles.modal__flight_details_section}>
-            {/* <div className={styles.row}>
+	return (
+		<ModalWrapper
+			loading={false}
+			onClose={() => handleCloseModal()}
+			ctaBtnType="none"
+			topClose={false}
+			heading={"Flight Details"}
+			subHeading={"See all your booking details here"}
+			ctaBtnText="Modify"
+			bottomCancelNeeded={false}
+			containsTabLayout
+			hasBottomActions={false}
+		>
+			{/* {isLoading && <FWLoader />} */}
+			<Tab tabs={tabs}
+				setActiveTab={(val)=>setActiveTab(val)}
+				activeTab={activeTab} />
+			{/* MAIN FLIGHT DETAILS CONTENT - GENERAL */}
+			{activeTab === tabs[0] && (
+				<div className={styles.modal__flight_details}>
+					<div className={styles.modal__flight_details_section}>
+						{/* <div className={styles.row}>
 						<div className={styles.label}>
             Booking ID
 						</div>
@@ -106,24 +99,24 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
 							<span className="text-blue uppercase">{id}</span>
 						</div>
 					</div> */}
-            <div className={styles.row}>
-              <div className={styles.label}>Booking Reference</div>
-              <div className={styles.value}>
-                <span className="text-blue text-bold uppercase">
-                  {flightDetails.bookingReference}
-                </span>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.label}>Booking Date & Time</div>
-              <div className={styles.value}>
-                <span>
-                  {functions.formatTimestamp(data?.dateCreated).substring(4)},{" "}
-                  <span>{functions.formatCustomTime(data?.dateCreated)}</span>
-                </span>
-              </div>
-            </div>
-            {/* <div className={styles.row}>
+						<div className={styles.row}>
+							<div className={styles.label}>Booking Reference</div>
+							<div className={styles.value}>
+								<span className="text-blue text-bold uppercase">
+									{flightDetails.bookingReference}
+								</span>
+							</div>
+						</div>
+						<div className={styles.row}>
+							<div className={styles.label}>Booking Date & Time</div>
+							<div className={styles.value}>
+								<span>
+									{functions.formatTimestamp(data?.dateCreated).substring(4)},{" "}
+									<span>{functions.formatCustomTime(data?.dateCreated)}</span>
+								</span>
+							</div>
+						</div>
+						{/* <div className={styles.row}>
               <div className={styles.label}>Booking Expiration Date</div>
               <div className={styles.value}>
                 <span>
@@ -342,132 +335,134 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
           </div>
         ))}
 
-      {/* MAIN FLIGHT DETAILS CONTENT - COST & PAYMENT */}
-      {activeTab === tabs[2] && (
-        <div className={styles.modal__flight_details}>
-          <div className={styles.modal__flight_details_section}>
-            <h5>Cost</h5>
-            <div className={styles.row}>
-              <div className={styles.label}>Base Fare</div>
-              <div className={styles.value}>
-                <span>{functions.formatMoney(baseFare, data.currency)}</span>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.label}>Taxes (VAT) & Fees</div>
-              <div className={styles.value}>
-                <span>{functions.formatMoney(fees, data.currency)}</span>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.label}>Total Costs</div>
-              <div className={styles.value}>
-                <span className="text-bold">
-                  {functions.formatMoney(data.totalAmount, data.currency)}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.modal__flight_details_section}>
-            <h5>Payment Information</h5>
-            <div className={styles.row}>
-              <div className={styles.label}>Payment Method</div>
-              <div className={styles.value}>
-                <span>Passpoint Wallet</span>
-              </div>
-            </div>
-            {/* <div className={styles.row}>
+			{/* MAIN FLIGHT DETAILS CONTENT - COST & PAYMENT */}
+			{activeTab === tabs[2] && (
+				<div className={styles.modal__flight_details}>
+					<div className={styles.modal__flight_details_section}>
+						<h5>Cost</h5>
+						<div className={styles.row}>
+							<div className={styles.label}>Base Fare</div>
+							<div className={styles.value}>
+								<span>{functions.formatMoney(baseFare, data.currency)}</span>
+							</div>
+						</div>
+						<div className={styles.row}>
+							<div className={styles.label}>Taxes (VAT) & Fees</div>
+							<div className={styles.value}>
+								<span>{functions.formatMoney(fees, data.currency)}</span>
+							</div>
+						</div>
+						<div className={styles.row}>
+							<div className={styles.label}>Total Costs</div>
+							<div className={styles.value}>
+								<span className="text-bold">
+									{functions.formatMoney(data.totalAmount, data.currency)}
+								</span>
+							</div>
+						</div>
+					</div>
+					<div className={styles.modal__flight_details_section}>
+						<h5>Payment Information</h5>
+						<div className={styles.row}>
+							<div className={styles.label}>Payment Method</div>
+							<div className={styles.value}>
+								<span>Passpoint Wallet</span>
+							</div>
+						</div>
+						{/* <div className={styles.row}>
               <div className={styles.label}>Card Information</div>
               <div className={styles.value}>
                 <span>**** 5678</span>
               </div>
             </div> */}
-            <div className={styles.row}>
-              <div className={styles.label}>Payment Status</div>
-              <div className={styles.value}>
-                <span className="tag text-bold text-blue text-black-50">
-                  {data?.transactionStatus}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+						<div className={styles.row}>
+							<div className={styles.label}>Payment Status</div>
+							<div className={styles.value}>
+								<span className="tag text-bold text-blue text-black-50">
+									{data?.transactionStatus}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 
-      {/* MAIN FLIGHT DETAILS CONTENT - TRAVELER INFO */}
-      {activeTab === tabs[3] && (
-        <div className={styles.modal__flight_details}>
-          {!data?.passengers && <h4>No passengers Data</h4>}
-          {data?.passengers?.map((passenger, index) => (
-            <div
-              key={passenger?.documents?.number}
-              className={styles.modal__flight_details_section}
-            >
-              <h5>Traveler {index + 1}</h5>
-              <div className={styles.row}>
-                <div className={styles.label}>Name</div>
-                <div className={styles.value}>
-                  <span className="capitalize">
-                    {passenger?.title} {passenger?.firstName}{" "}
-                    {passenger?.lastName}
-                  </span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Contact Email</div>
-                <div className={styles.value}>
-                  <span>{passenger?.email}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Contact Number</div>
-                <div className={styles.value}>
-                  <span>{passenger?.phoneNumber}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Date of Birth</div>
-                <div className={styles.value}>
-                  <span>
-                    {functions
-                      .formatTimestamp(passenger?.dateOfBirth)
-                      ?.substring(4)}
-                  </span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Gender</div>
-                <div className={styles.value}>
-                  <span className="capitalize">{passenger?.gender}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Ticket Number</div>
-                <div className={styles.value}>
-                  <span className="text-blue">{passenger?.ticketNumber}</span>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Passenger Type</div>
-                <div className={styles.value}>
-                  <span className="capitalize">{passenger?.passengerType}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+			{/* MAIN FLIGHT DETAILS CONTENT - TRAVELER INFO */}
+			{activeTab === tabs[3] && (
+				<div className={styles.modal__flight_details}>
+					{!data?.passengers && <h4>No passengers Data</h4>}
+					{data?.passengers?.map((passenger, index) => (
+						<div
+							key={passenger?.documents?.number}
+							className={styles.modal__flight_details_section}
+						>
+							<h5>Traveler {index + 1}</h5>
+							<div className={styles.row}>
+								<div className={styles.label}>Name</div>
+								<div className={styles.value}>
+									<span className="capitalize">
+										{passenger?.title} {passenger?.firstName}{" "}
+										{passenger?.lastName}
+									</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Contact Email</div>
+								<div className={styles.value}>
+									<span>{passenger?.email}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Contact Number</div>
+								<div className={styles.value}>
+									<span>{passenger?.phoneNumber}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Date of Birth</div>
+								<div className={styles.value}>
+									<span>
+										{functions
+											.formatTimestamp(passenger?.dateOfBirth)
+											?.substring(4)}
+									</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Gender</div>
+								<div className={styles.value}>
+									<span className="capitalize">{passenger?.gender}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Ticket Number</div>
+								<div className={styles.value}>
+									<span className="text-blue">{passenger?.ticketNumber}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Passenger Type</div>
+								<div className={styles.value}>
+									<span className="capitalize">{passenger?.passengerType}</span>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			)}
 
-      <div className={styles.modal__bottom_actions}>
-        <button className="primary_btn" onClick={() => closeModal()}>
+			<div className={styles.modal__bottom_actions}>
+				<button className="primary_btn"
+					onClick={() => closeModal()}>
           Close
-        </button>
-        <button className="primary_btn" onClick={() => cancelBooking()}>
-          {isUploading ? <Loader /> : "Cancel Bookings"}
-        </button>
-      </div>
-    </ModalWrapper>
-  )
+				</button>
+				<button className="primary_btn"
+					onClick={() => cancelBooking()}>
+					{isUploading ? <Loader /> : "Cancel Bookings"}
+				</button>
+			</div>
+		</ModalWrapper>
+	)
 }
 
 export default FlightDetailsModal

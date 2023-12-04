@@ -11,7 +11,7 @@
   width: 350px;
   max-width: 35%;
   border-right: 1px solid var(--grey-5);
-  min-height: 100%;
+  height: 50vh;
   position: sticky;
   position: -webkit-sticky;
   top: 0;
@@ -34,16 +34,19 @@
   place-items: center;
 }
 
+.nav_sec.active,
 .nav_sec:hover {
   text-decoration: unset;
   background-color: var(--sky-blue-hover);
-  border-radius: var(--ctn-br-sd);
+  /* border-radius: var(--ctn-br-sd); */
 }
 
+.nav_sec.active .icon,
 .nav_sec:hover .icon {
   background-color: var(--sky-blue);
 }
 
+.nav_sec.active .icon svg path,
 .nav_sec:hover .icon svg path {
   stroke: #fff;
 }
@@ -82,6 +85,10 @@
   border-radius: 16px;
   padding: var(--inner-component-mg);
   margin-bottom: var(--inner-component-mg);
+}
+
+.border_box > div:not(:last-child) {
+  border-bottom: 1px solid var(--grey-5);
 }
 
 .border_box.privacy {

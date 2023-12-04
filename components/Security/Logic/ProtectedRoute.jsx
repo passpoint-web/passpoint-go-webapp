@@ -1,5 +1,5 @@
 
-import ModalWrapper from '../Modal/ModalWrapper'
+import ModalWrapper from '../../Modal/ModalWrapper'
 
 const ProtectedRoute = () => {
   return (
