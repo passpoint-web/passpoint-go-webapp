@@ -1,8 +1,7 @@
 import axios from "axios"
-import { getToken, setLogout } from "./localService"
+import { getToken, setLogout, getCredentials } from "./localService"
 // import cookies from '@/plugins/cookies';
 // eslint-disable-next-line no-unused-vars
-import { wallet } from "@/services/restService/wallet"
 const restAgent = axios.create({
 	baseURL: "https://webapi-dev.mypasspoint.com/v1/",
 	headers: {
@@ -69,15 +68,16 @@ const setTravelConfig = () => {
 }
 
 const setKycBvnConfig = () => {
-	const username = "PVTL3CYSKG"
-	const password = "-Zi-pIyZX9Udr0ms-13mS4Z6PcGuzLdvYC9VRgq6"
+	const {merchantId} = getCredentials()
+	const username = process.env.NEXT_PUBLIC_PAYMENT_USERNAME
+	const password =  process.env.NEXT_PUBLIC_PAYMENT_PASSWORD
 	const token = `${username}:${password}`
 	const encodedToken = btoa(token)
 	const config = getRequestConfig()
 	config.headers.Authorization = `Basic ${encodedToken}`
 	config.headers["x-channel-id"] = "2"
 	config.headers["x-channel-code"] = "passpoint-infra-user"
-	config.headers["x-merchant-id"] = "e0b157a2-9245-40b9-8117-d25cadfdcfaa"
+	config.headers["x-merchant-id"] = merchantId
 
 	return config
 }
