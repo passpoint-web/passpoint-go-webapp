@@ -1,6 +1,6 @@
-"use client";
-import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
+"use client"
+import Link from "next/link"
+import { FaArrowRight } from "react-icons/fa"
 // import MetricCard from "./MetricCard";
 const TravelServicesPage = ({ styles }) => {
   const travelServices = [
@@ -9,30 +9,30 @@ const TravelServicesPage = ({ styles }) => {
       link: "flights",
       icon: "✈️",
       description: "Book your flights here",
-      active:true
+      active: true,
     },
     {
       name: "Hotels",
       link: "hotels",
       icon: "🏨",
       description: "Coming soon",
-      active: false
+      active: true,
     },
     {
       name: "Airport Taxis",
       link: "taxis",
       icon: "🚕",
       description: "Coming soon",
-      active: false
+      active: false,
     },
     {
       name: "Logistics",
       link: "logitics",
       icon: "🚚",
       description: "Coming soon",
-      active: false
+      active: false,
     },
-  ];
+  ]
 
   return (
     <div className={`${styles.inner} travel-services`}>
@@ -49,7 +49,11 @@ const TravelServicesPage = ({ styles }) => {
         </div>
         <div className={styles.row_two}>
           {travelServices.map((t, id) => (
-            <Link key={id} className={`${!t.active ? styles.in_active : ''}`} href={`/travel/${t.active ? t.link : '#'}`}>
+            <Link
+              key={id}
+              className={`${!t.active ? styles.in_active : ""}`}
+              href={`/travel/${t.active ? t.link : "#"}`}
+            >
               <div>
                 {t.icon}
                 <h4>{t.name}</h4>
@@ -63,7 +67,7 @@ const TravelServicesPage = ({ styles }) => {
       {/* <MetricCard /> */}
       {/* <CustomTable action="/travel/flights?id=AH12345678" /> */}
     </div>
-  );
-};
+  )
+}
 
-export default TravelServicesPage;
+export default TravelServicesPage
