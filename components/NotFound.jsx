@@ -1,14 +1,15 @@
 
-'use client'
+// 'use client'
 import DashboardHeader from "@/components/Dashboard/Header";
 import styles from "@/assets/styles/dashboard-layout.module.css";
 import Error from "../assets/images/dashboard/error.svg";
 import Image from "next/image";
-import Button from "./Btn/Button";
-import { useRouter } from "next/navigation";
+// import Button from "./Btn/Button";
+// import { useRouter } from "next/navigation";
+import PrimaryLink from "./Link/Primary";
 
 const NotFound = () => {
-	const {back} = useRouter()
+	// const {back} = useRouter()
 	return (
 		<main className={styles.errorPage}>
 			<DashboardHeader styles={styles} />
@@ -22,9 +23,10 @@ const NotFound = () => {
             on vacation.`}
 					</p>
 					<div className={styles.errorPage_link}>
-						<Button className="primary"
+						{/* <Button className="primary"
 							text="Go Back"
-							onClick={back()} />
+							onClick={back()} /> */}
+							<PrimaryLink text='Go Back' href="/dashboard" />
 					</div>
 				</div>
 			</section>

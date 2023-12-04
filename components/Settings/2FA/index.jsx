@@ -187,7 +187,7 @@ const Toggle2FA = ({onClose}) => {
 						<div className={styles.scan_sec}>
 							<div className={styles.qr_code}>
 								<p>Scan QR code</p>
-								<QRCode styles={styles} value='deborah' />
+								<QRCode styles={styles} value='9a6d4b1f8c7e3a2d5b0f9e8c1d3a5b0' />
 							</div>
 							<div className={styles.copy_code}>
 								<p>Or copy the code below</p>

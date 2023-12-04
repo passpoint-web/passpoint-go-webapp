@@ -99,6 +99,7 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 			{
 				!dataLoading ? <div className={`${styles.balance_card} wallet_balance_card`}>
 					<div className={styles.lhs}>
+						<div className={styles.balance_ctn}>
 						<div className={styles.available_balance}>
 							<h4>Available Balance</h4>
 							<div className={styles.balance}>
@@ -112,6 +113,16 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 									{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
 								</div>
 							</div>
+
+						</div>
+						{/* <div className={styles.ledger_balance}>
+							<h4>Ledger Balance</h4>
+							<div className={styles.balance}>
+								<h3 className={!showBalance ? styles.hide_balance : ''}>
+									{showBalance ? formatMoney(walletAccount.ledgerBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
+								</h3>
+							</div>
+						</div> */}
 						</div>
 						<div className={styles.btn_sec}>
 							<BorderIconBtn
