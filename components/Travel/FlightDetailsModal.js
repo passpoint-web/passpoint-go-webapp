@@ -50,8 +50,8 @@ const FlightDetailsModal = ({ styles, closeModal, flightDetails }) => {
     //   const amountValues = Object.values(traveler)
     //   total += Number(amountValues[0])
     // })
-    setBaseFare(total)
-    setFees(Number(dataParam.totalAmount) - total)
+    setBaseFare(Number(dataParam.totalAmount) - Number(dataParam.charges))
+    setFees(Number(dataParam.charges))
     return total
   }
 
