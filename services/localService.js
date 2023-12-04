@@ -210,3 +210,7 @@ export const getWalletState = () => get4rmLocal('wallet_state')
 export const  saveBanks = (val) => save2Local('available_banks', val)
 
 export const getBanks = () => get4rmLocal('available_banks')
+
+export const  savePinCreated = (val) => save2Local('pin_created', val)
+
+export const getPinCreated = () => get4rmLocal('pin_created')

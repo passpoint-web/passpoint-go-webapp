@@ -70,7 +70,7 @@ const PayFlightPage = ({ styles }) => {
       setTotalAmount(promise.data.data.amount)
       setDocumentsRequired(promise.data.data.document_required)
     } catch (err) {
-      notify("error", "An Error Occured. Please Reload Page")
+      notify("error", "Service provider error. Please try again later")
       setBookingLoading(false)
     }
   }

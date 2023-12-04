@@ -13,7 +13,7 @@ import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
-import { saveWalletState, getWalletState, saveBanks } from "@/services/localService";
+import { saveWalletState, getWalletState, saveBanks, getBanks } from "@/services/localService";
 import CreatePinModal from "../Modal/CreatePin";
 // import RefreshBtn from "../Btn/RefreshBtn";
 
@@ -61,17 +61,19 @@ const Wallet = () => {
 	}
 
 	const getBanksAndCache = async() => {
-		try {
-			const response = await wallet.getBanks()
-			const {data} = response.data
-			if (data) {
-				const sortedBanks = sortAlphabetically(data, 'name')
-				saveBanks(sortedBanks)
+		if (!getBanks().length) {
+			try {
+				const response = await wallet.getBanks()
+				const {data} = response.data
+				if (data) {
+					const sortedBanks = sortAlphabetically(data, 'name')
+					saveBanks(sortedBanks)
+				}
+			} catch (_err) {
+				// console.log(_err.response.data)
+			} finally {
+				//
 			}
-		} catch (_err) {
-			// console.log(_err.response.data)
-		} finally {
-			//
 		}
 	}
 
@@ -110,7 +112,7 @@ const Wallet = () => {
 	},[updateKey])
 
 	useEffect(()=>{
-		if (!pinCreated) {
+		if (!pinCreated === false) {
 			initiatePinCreation()
 		}
 	},[walletState])

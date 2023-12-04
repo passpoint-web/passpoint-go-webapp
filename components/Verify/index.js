@@ -74,18 +74,18 @@ const VerifyEmail = ({nextPath = '/auth/login', backBtnNeeded = false, email, ot
 							>
 								<div className={styles.otp_input}>
 									{
-										renderInput ? 
-										<OtpInput
-										value={otp}
-										onChange={setOtp}
-										numInputs={6}
-										shouldAutoFocus={true}
-										inputType="number"
-										inputMode={null}
-										renderSeparator={<span />}
-										renderInput={(props) => <input {...props} />}
-									/>
-									: <></>
+										renderInput ?
+											<OtpInput
+												value={otp}
+												onChange={setOtp}
+												numInputs={6}
+												shouldAutoFocus={true}
+												inputType="number"
+												inputMode={null}
+												renderSeparator={<span />}
+												renderInput={(props) => <input {...props} />}
+											/>
+											: <></>
 									}
 								</div>
 							</Input>
