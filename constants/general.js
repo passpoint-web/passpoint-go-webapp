@@ -14,6 +14,7 @@ import {
 	SideIcon8,
 	SideIcon9,
 } from "@/constants/icons";
+import { getCredentials } from "@/services/localService";
 
 export const sidebarData = [
 	{
@@ -46,11 +47,12 @@ export const sidebarData = [
 		icon: SideIcon6,
 		path: "/wallet",
 	},
-	// {
-	// 	title: "Team Setup",
-	// 	icon: SideIcon7,
-	// 	path: "/team",
-	// },
+	{
+		title: "Team Setup",
+		icon: SideIcon7,
+		path: "/team",
+		access: getCredentials()
+	},
 	{
 		title: "Settings",
 		icon: SideIcon8,

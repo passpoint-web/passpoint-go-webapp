@@ -5,7 +5,7 @@ import { sidebarData } from "@/constants/general";
 import Link from "next/link";
 
 const DashboardSidebar = () => {
-  const pathname = usePathname()
+	const pathname = usePathname()
 
 	return (
 		<div className={styles.dashSide_main}>

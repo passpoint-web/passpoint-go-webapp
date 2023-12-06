@@ -10,56 +10,59 @@ import FullScreenLoader from "@/components/Modal/FullScreenLoader"
 // eslint-disable-next-line no-unused-vars
 var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date()
 function tawk() {
-  let s1 = document.createElement("script"),
-    s0 = document.getElementsByTagName("script")[0]
-  s1.async = true
-  s1.src = "https://embed.tawk.to/653f9783a84dd54dc486acda/1he06fn7u"
-  s1.charset = "UTF-8"
-  s1.setAttribute("crossorigin", "*")
-  s0.parentNode.insertBefore(s1, s0)
+	let s1 = document.createElement("script"),
+		s0 = document.getElementsByTagName("script")[0]
+	s1.async = true
+	s1.src = "https://embed.tawk.to/653f9783a84dd54dc486acda/1he06fn7u"
+	s1.charset = "UTF-8"
+	s1.setAttribute("crossorigin", "*")
+	s0.parentNode.insertBefore(s1, s0)
 }
 
 export default function DashboardLayout({ children }) {
-  const {push} = useRouter()
-  const [loading, setLoading] = useState(true)
-  const [authenticated, setAuthenticated] = useState(false)
-  const [savedCredentials, setSavedCredentials] = useState({});
+	const {push} = useRouter()
+	const [loading, setLoading] = useState(true)
+	const [authenticated, setAuthenticated] = useState(false)
+	const [savedCredentials, setSavedCredentials] = useState({});
 
-  const checkAuth = async () => {
-    const auth = await getToken()
-    if (!auth) {
-      setAuthenticated(false)
-      push(`/auth/login?fallBackUrl=${window.location.pathname}`)
-    } else {
-      setAuthenticated(true)
-      setLoading(false)
-    }
-  }
+	const checkAuth = async () => {
+		const auth = await getToken()
+		if (!auth) {
+			setAuthenticated(false)
+			push(`/auth/login?fallBackUrl=${window.location.pathname}`)
+		} else {
+			setAuthenticated(true)
+			setLoading(false)
+		}
+	}
 
-  useEffect(()=>{
-    tawk()
-    checkAuth()
-    setSavedCredentials(getCredentials());
-  },[])
+	useEffect(()=>{
+		tawk()
+		checkAuth()
+		setSavedCredentials(getCredentials());
+	},[])
 
-  if (loading) {
-    return (
-      <>
-        <DashboardHeader styles={styles} user={savedCredentials} />
-        <FullScreenLoader />
-      </>
-    )
-  }
+	if (loading) {
+		return (
+			<>
+				<DashboardHeader styles={styles}
+					user={savedCredentials} />
+				<FullScreenLoader />
+			</>
+		)
+	}
 
-  return (
-    <div className={styles.dashLayout}>
-      <DashboardHeader authenticated={authenticated} styles={styles} user={savedCredentials} />
-      <div className={styles.dashContent}>
-        <DashboardSidebar />
-        <div className={styles.dash_children}>
-          <main className={styles.dash_outlet}>{children}</main>
-        </div>
-      </div>
-    </div>
-  )
+	return (
+		<div className={styles.dashLayout}>
+			<DashboardHeader authenticated={authenticated}
+				styles={styles}
+				user={savedCredentials} />
+			<div className={styles.dashContent}>
+				<DashboardSidebar />
+				<div className={styles.dash_children}>
+					<main className={styles.dash_outlet}>{children}</main>
+				</div>
+			</div>
+		</div>
+	)
 }
