@@ -52,27 +52,27 @@
   margin-bottom: 30px;
 }
 
-.card .role {
+.role {
   padding: 2px 6px;
   width: fit-content;
   margin-top: 8px;
   border-radius: 3px;
 }
 
-.card.co-administrator .role,
+.co-administrator .role,
 .card.co-administrator .initials {
   background-color: #F2F0FF;
   color: #7B61FF;
 }
 
-.card.team-member .role,
-.card.team-member .initials {
+.team-member .role,
+.team-member .initials {
   color: #DF752B;
   background-color: #FCF2EA;
 }
 
-.card.support-agent .role,
-.card.support-agent .initials {
+.support-agent .role,
+.support-agent .initials {
   color: #07B463;
   background-color: #E7F8F0;
 }

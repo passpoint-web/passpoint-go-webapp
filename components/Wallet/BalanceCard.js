@@ -4,7 +4,7 @@ import BorderIconBtn from '../Btn/BorderIconBtn'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AddMoneyModal from './AddMoneyModal'
 import TransferModals from './TransferModals'
-import CopyValue from '../CopyValue'
+import CopyValue from '../Copy/CopyValue'
 import { AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
 import { useNotify } from "@/utils/hooks";

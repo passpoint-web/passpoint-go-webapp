@@ -10,7 +10,7 @@ const DashboardSidebar = () => {
 	return (
 		<div className={styles.dashSide_main}>
 			<nav>
-				{sidebarData.map((item, index) => (
+				{sidebarData.filter(e=> !e.hide).map((item, index) => (
 					<Link
 						href={item.path}
 						key={index}

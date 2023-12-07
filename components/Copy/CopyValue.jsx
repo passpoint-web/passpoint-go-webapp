@@ -1,5 +1,5 @@
 // import { CheckIcon } from "@/constants/icons"
-import Button from "./Btn/Button"
+import Button from "../Btn/Button"
 import { useState } from "react"
 
 const CopyValue = ({value='', color='#fff'}) => {

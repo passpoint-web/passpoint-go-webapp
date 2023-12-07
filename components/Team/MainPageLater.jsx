@@ -4,9 +4,6 @@ import Button from '@/components/Btn/Button'
 import styles from './team.module.css'
 import RoleCard from './RoleCard'
 import { useEffect, useState } from 'react'
-import ModalWrapper from '../Modal/ModalWrapper'
-import Tab from '../Tab'
-import CheckBox from '../Custom/Check'
 
 const MainPage = () => {
 	const ManageRolesIcon = () => (
@@ -66,15 +63,6 @@ const MainPage = () => {
 
 	const [roleMembers, setRoleMembers] = useState([])
 
-	const [roleMemberDetails, setRoleMemberDetails] = useState(false)
-
-	const [showRoleMemberDetails, setShowRoleMemberDetails] = useState(false)
-
-	function showContent (val) {
-		setRoleMemberDetails(val)
-		setShowRoleMemberDetails(true)
-	}
-
 	useEffect(()=>{
 		setRoles([
 			'Co-Administrator',
@@ -126,77 +114,47 @@ const MainPage = () => {
 			}
 		])
 	},[])
-
-	const RoleDetailsHeader = () => (
-		<div className={`${styles[roleMemberDetails?.role?.toLowerCase()?.replaceAll(' ','-')]}`}
-			style={{display: 'flex', alignItems: 'center', gap: '10px'}}><h2>{roleMemberDetails.firstName} {roleMemberDetails.lastName}</h2> <p className={styles.role}
-				style={{marginTop: 0}}>{roleMemberDetails.role}</p></div>
-	)
 	return (
-		<>
-			{showRoleMemberDetails ?
-				<ModalWrapper heading={
-					<RoleDetailsHeader />
-				}
-				subHeading={roleMemberDetails.email}
-				onClose={()=>setShowRoleMemberDetails(false)}
-				cancelBtnDisabled={true}
-				ctaBtnText='Modify'>
-					<>
-						<Tab tabs={['Permission']}
-							activeTab={'Permission'}/>
-						<div>
-							<CheckBox />
-						</div>
-					</>
-
-				</ModalWrapper>
-				:
-				<></>
-			}
-			<div className={`page_main_card ${styles.main_page}`}>
-				<div className={styles.top}>
-					<div className={styles.lhs}>
-						<h3>Team Setup</h3>
-						<h4>Manage your team here</h4>
-					</div>
-					<div className={styles.rhs}>
-						<BorderIconBtn
-							bdColor='#009EC4'
-							classProps='border i sd'
-							styleProps={{color: '#009EC4'}}
-							onClick={()=>{
-								console.log('yo')
-							}}
-							icon={
-								<ManageRolesIcon />
-							}
-							text='Manage Roles'
-						/>
-						<Button className='primary sd'
-							icon={<AddNewMembersIcon />}
-							text={'Add New Members'} />
+		<div className={`page_main_card ${styles.main_page}`}>
+			<div className={styles.top}>
+				<div className={styles.lhs}>
+					<h3>Team Setup</h3>
+					<h4>Manage your team here</h4>
+				</div>
+				<div className={styles.rhs}>
+					<BorderIconBtn
+						bdColor='#009EC4'
+						classProps='border i sd'
+						styleProps={{color: '#009EC4'}}
+						onClick={()=>{
+							console.log('yo')
+						}}
+						icon={
+							<ManageRolesIcon />
+						}
+						text='Manage Roles'
+					/>
+					<Button className='primary sd'
+						icon={<AddNewMembersIcon />}
+						text={'Add New Members'} />
+				</div>
+			</div>
+			{roles.map((role, index)=>(
+				<div key={index}
+					className={styles.role_section}>
+					<h3>{role}</h3>
+					<div className={styles.role_row}>
+						{roleMembers.filter(e=>e.role ===role).map((role, id)=>(
+							<RoleCard key={id}
+								styles={styles}
+								roleMember={role} />
+						))
+						}
 					</div>
 				</div>
-				{roles.map((role, index)=>(
-					<div key={index}
-						className={styles.role_section}>
-						<h3>{role}</h3>
-						<div className={styles.role_row}>
-							{roleMembers.filter(e=>e.role ===role).map((role, id)=>(
-								<RoleCard key={id}
-									styles={styles}
-									roleMember={role}
-									handleClick={(val)=>showContent(val)}
-								/>
-							))
-							}
-						</div>
-					</div>
-				))
-				}
-			</div>
-		</>
+			))
+			}
+		</div>
 	)
 }
 

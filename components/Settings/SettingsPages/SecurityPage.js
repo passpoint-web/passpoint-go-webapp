@@ -35,6 +35,7 @@ const Security = () => {
 	const [showPinCreationModal, setShowPinCreationModal] = useState(false);
 	const [pinCreated, setPinCreated] = useState(null);
 	const [reference, setReference] = useState('');
+	const [is2faEnabled, setIs2faEnabled] = useState(false)
 	const [payload, setPayload] = useState({
 		password: "",
 		newPassword: "",
@@ -253,10 +254,8 @@ const Security = () => {
 	return (
 		<div className={styles.security_page}>
 			{show2FAModal ?
-				<Toggle2FA onClose={(val)=>{
-					setTuEfAy(!!val)
-					setShow2FAModal(false)
-				}}
+				<Toggle2FA onClose={()=>setShow2FAModal(false)}
+					onSuccess={(val)=>setIs2faEnabled(val)}
 				/> :
 				<></>
 			}
@@ -290,8 +289,8 @@ const Security = () => {
 						setShow2FAModal(true)
 					}}>
 						<Switch disabled
-							checked={tuEfAy}
-							onChange={()=>setTuEfAy(!tuEfAy)} />
+							checked={is2faEnabled}
+							onChange={()=>setIs2faEnabled(!is2faEnabled)} />
 					</button>
 				</div>
 			</div>

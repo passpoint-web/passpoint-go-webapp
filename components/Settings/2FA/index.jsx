@@ -12,14 +12,23 @@ import PhoneInput from 'react-phone-input-2'
 import ResendOTP from '../../Verify/ResendOTP'
 import ActionFeedbackCard from '@/components/ActionFeedbackCard'
 import QRCode from './QRCode'
+import { security } from '@/services/restService'
+import { useNotify } from '@/utils/hooks'
+import { getCredentials } from '@/services/localService'
 
-const Toggle2FA = ({onClose}) => {
+const Toggle2FA = ({onClose, onSuccess}) => {
 	// eslint-disable-next-line no-unused-vars
 	const [ctaClicked, setCtaClicked] = useState(false);
+	const savedCredentials = getCredentials()
+	const notify = useNotify()
 	// eslint-disable-next-line no-unused-vars
 	const [feedbackError, setFeedbackError] = useState("");
 	const [step, setStep] = useState(0);
+	const [tuEfAyDetails, setTuEfAyDetails]=  useState({})
 	const [renderInput, setRenderInput] = useState(false)
+	const [postDataLoading, setPostDataLoading] = useState(false)
+	const [getDataLoading, setGetDataLoading] = useState(false)
+	const [is2faEnabled, setIs2faEnabled] = useState(false)
 	const [payload, setPayload] = useState({
 		password: "",
 		phoneNumber: "09059493939",
@@ -27,9 +36,11 @@ const Toggle2FA = ({onClose}) => {
 		otp: ""
 	});
 
-	const [activeTab, setActiveTab] = useState('Phone Number')
+	const [activeTab, setActiveTab] = useState('Authenticator App')
 
-	const authTabs = ['Phone Number', 'Authenticator App']
+	const authTabs = [
+		// 'Phone Number',
+		'Authenticator App']
 
 	const levels = [
 		{
@@ -69,12 +80,7 @@ const Toggle2FA = ({onClose}) => {
 		}));
 	};
 
-	// const toggle2FA = () => {
-	// 	setShow2FAModal(true)
-	// }
-
 	const handleCta = (level) => {
-		console.log(level)
 		switch (level) {
 		case 0:
 			handleLevelZeroCta();
@@ -86,34 +92,92 @@ const Toggle2FA = ({onClose}) => {
 			handleLevelTwoCta();
 			break;
 		case 'success':
-			onClose('success');
+			onClose();
 			break;
 		}
 	}
 
 	const handleLevelZeroCta = () => {
-		console.log('yoyo')
 		if (!payload.password) {
 			return
 		}
-		setStep(1)
+		validatePassword()
 	}
 	const handleLevelOneCta = () => {
-		if (!payload.phone) {
-			return
-		}
+		// if (!payload.phone) {
+		// 	return
+		// }
 		setStep(2)
 	}
 	const handleLevelTwoCta = () => {
 		// if (!payload) {
 		// 	return
 		// }
-		setStep('success')
+		updateTuEfAyStatus()
 	}
 
+	async function updateTuEfAyStatus () {
+		try {
+			setPostDataLoading(true)
+			const response = await security.updateTuEfAyStatus({
+				action: !is2faEnabled ? 'ENABLE' : 'DISABLE',
+				otp: payload.otp
+			})
+			console.log(response)
+			onSuccess(is2faEnabled)
+			setStep('success')
+		} catch (_err) {
+			const { message } = _err.response?.data || _err;
+			console.log(message)
+			setFeedbackError(message)
+			notify("error", message === 'Invaild Account Credentials' ? 'Password is wrong' : message)
+		} finally {
+			setPostDataLoading(false)
+		}
+	}
+
+	async function getTuEfAyDetails () {
+		setGetDataLoading(true)
+		try {
+			const response = await security.getTuEfAyDetails()
+			const data = response.data
+			setTuEfAyDetails(data)
+		} catch (_err) {
+			// console.log(_err)
+		} finally {
+			setGetDataLoading(false)
+		}
+	}
+
+	async function validatePassword () {
+		const {password} = payload
+		setPostDataLoading(true)
+		try {
+			await security.validatePassword({password})
+			setStep(1)
+		} catch (_err) {
+			const { message } = _err.response?.data || _err;
+			setFeedbackError(message)
+			notify("error", message === 'Invaild Account Credentials' ? 'Password is wrong' : message)
+		} finally {
+			setPostDataLoading(false)
+		}
+	}
+
+	// const toggle2FA = () => {
+	// 	setShow2FAModal(true)
+	// }
+
 	useEffect(() => {
+		setIs2faEnabled(savedCredentials.is2faEnable)
 		setRenderInput(true)
 	}, [])
+
+	useEffect(()=>{
+		if (step === 1 && activeTab === 'Authenticator App') {
+			getTuEfAyDetails()
+		}
+	},[step, activeTab])
 
 	const Step0 = () => (
 		<>
@@ -184,17 +248,9 @@ const Toggle2FA = ({onClose}) => {
 								</li>
 							</ol>
 						</div>
-						<div className={styles.scan_sec}>
-							<div className={styles.qr_code}>
-								<p>Scan QR code</p>
-								<QRCode styles={styles} value='9a6d4b1f8c7e3a2d5b0f9e8c1d3a5b0' />
-							</div>
-							<div className={styles.copy_code}>
-								<p>Or copy the code below</p>
-								<Input value='9a6d4b1f8c7e3a2d5b0f9e8c1d3a5b0'
-									disabled />
-							</div>
-						</div>
+						<QRCode styles={styles}
+							qr={{...tuEfAyDetails}}
+						/>
 					</div>
 			}
 		</>
@@ -249,14 +305,15 @@ const Toggle2FA = ({onClose}) => {
 				heading={levels[step]?.heading}
 				subHeading={levels[step]?.subHeading}
 				ctaBtnType='sd'
-				ctaDisabled={levels[step]?.disabled()}
+				ctaDisabled={levels[step]?.disabled() || getDataLoading}
 				onClose={()=>onClose()}
 				bottomCancelNeeded={[1, 2].includes(step)}
 				handleCta={()=>handleCta(step)}
 				handleBottomSecAction={()=>setStep(step-1)}
 				ctaBtnText={levels[step]?.ctaBtnText}
 				width='480px'
-				hasBottomActions={!(step === 1 && activeTab=== 'Authenticator App')}
+				loading={postDataLoading}
+				// hasBottomActions={!(step === 1 && activeTab=== 'Authenticator App')}
 			>
 				<form>
 					{step === 0 ?
@@ -268,7 +325,7 @@ const Toggle2FA = ({onClose}) => {
 								step === 'success' ?
 									<ActionFeedbackCard
 										content={{
-											title: '2FA Successfully Enabled',
+											title: `2FA Successfully ${is2faEnabled ? 'Enabled' : 'Disabled'}`,
 											value: 'You have successfully added a double layer of security to your account',
 											status: 'success'
 										}}

@@ -16,9 +16,12 @@ const Input = ({
 }) => {
 	return (
 		<>
-			<div className={`${styles.form_group} input__ctn ${error ? "error" : ''}`} style={styleProps}>
-				{label ? <div className={styles.label_ctn} style={{display: 'flex'}}>
-					<label htmlFor={props.id} style={{margin: label_center ? '0 auto 8px' : ''}}>
+			<div className={`${styles.form_group} input__ctn ${error ? "error" : ''}`}
+				style={styleProps}>
+				{label ? <div className={styles.label_ctn}
+					style={{display: 'flex'}}>
+					<label htmlFor={props.id}
+						style={{margin: label_center ? '0 auto 8px' : ''}}>
 						{label}
 					</label>
 					{toolTipMessage ? <ToolTip message={toolTipMessage} /> : <></>}
@@ -29,10 +32,12 @@ const Input = ({
 						message={errorMsg} />
 				) : (
 					info ? (
-						<FeedbackInfo center={msgPositionCenter} type='info'
-						message={info} />
-					) : successMsg ?  <FeedbackInfo center={msgPositionCenter} type='success'
-					message={successMsg} /> : <></>
+						<FeedbackInfo center={msgPositionCenter}
+							type='info'
+							message={info} />
+					) : successMsg ?  <FeedbackInfo center={msgPositionCenter}
+						type='success'
+						message={successMsg} /> : <></>
 				)}
 			</div>
 		</>
