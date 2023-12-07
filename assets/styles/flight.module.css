@@ -596,6 +596,9 @@
 .modal__bottom_actions button:nth-child(2) {
   background: var(--negative);
 }
+.modal__bottom_actions.modal__bottom_actions_no_red button:nth-child(2) {
+  background: var(--dark);
+}
 
 .modal__flight_details {
   /* padding: var(--inner-component-mg); */
