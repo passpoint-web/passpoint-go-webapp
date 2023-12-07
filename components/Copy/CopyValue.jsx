@@ -1,5 +1,5 @@
 // import { CheckIcon } from "@/constants/icons"
-import Button from "./Btn/Button"
+import Button from "../Btn/Button"
 import { useState } from "react"
 
 const CopyValue = ({value='', color='#fff'}) => {
@@ -60,7 +60,7 @@ const CopyValue = ({value='', color='#fff'}) => {
 						justifyContent: 'center',
 						transition: 'none'
 					}}
-					text={!copied ? <CopyIcon color='#fff'  /> : <CheckIcon />}
+					icon={!copied ? <CopyIcon color='#fff'  /> : <CheckIcon />}
 					// disabled={copied}
 					onClick={()=>handleCopyValue()} /> :
 				<></>}

@@ -83,6 +83,7 @@
 .copy_code {
   display: flex;
   flex-direction: column;
+  gap: var(--inner-component-gap);
   align-items: center;
   text-align: center;
 }

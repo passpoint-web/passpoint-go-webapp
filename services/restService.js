@@ -281,3 +281,18 @@ export const notifyAndAccess = {
 		return notifyAndAccessRestAgent.get("notify/page", setConfig())
 	},
 }
+
+export const security = {
+	getTuEfAyDetails: () => {
+		return restAgent.get("/get2faDetails", setConfig())
+	},
+	validatePassword: (data) => {
+		return restAgent.post("/validatePassword", data, setConfig())
+	},
+	verifyTuEfAy: (data) => {
+		return restAgent.post("/update2faOtp", data, setConfig())
+	},
+	updateTuEfAyStatus: (data) => {
+		return restAgent.post("/update2faStaus", data, setConfig())
+	},
+}
