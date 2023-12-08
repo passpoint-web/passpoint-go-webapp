@@ -16,7 +16,7 @@ import { accountProfile } from '@/services/restService'
 import ForgotPasswordFlow from '@/components/Settings/ForgotPasswordFlow'
 import { wallet } from "@/services/restService/wallet";
 import CreatePinModal from "@/components/Modal/CreatePin";
-import { savePinCreated, getPinCreated } from "@/services/localService";
+import { savePinCreated, getPinCreated, getCredentials } from "@/services/localService";
 import Toggle2FA from "../2FA";
 // import Link from 'next/link'
 const Security = () => {
@@ -48,6 +48,10 @@ const Security = () => {
 			[name]: value,
 		}));
 	};
+
+	useEffect(()=>{
+		setIs2faEnabled(getCredentials().is2faEnable)
+	},[])
 
 	const handleForgotPasswordModals = (e) => {
 		e.preventDefault();
@@ -255,7 +259,7 @@ const Security = () => {
 		<div className={styles.security_page}>
 			{show2FAModal ?
 				<Toggle2FA onClose={()=>setShow2FAModal(false)}
-					onSuccess={(val)=>setIs2faEnabled(val)}
+					onSuccess={(val)=>setIs2faEnabled(!val)}
 				/> :
 				<></>
 			}
@@ -284,7 +288,7 @@ const Security = () => {
 			<div className={`${styles.border_box} ${styles.privacy}`}>
 				<h3>2-Factor Authentication</h3>
 				<div className={`${styles.inner} ${styles.flex}`}>
-					<h4>Enable 2FA</h4>
+					<h4>{is2faEnabled ? 'Dis' : 'En'}able 2FA</h4>
 					<button onClick={()=>{
 						setShow2FAModal(true)
 					}}>
