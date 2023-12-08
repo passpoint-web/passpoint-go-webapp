@@ -10,8 +10,10 @@ import CheckBox from '../Custom/Check'
 import TeamMemberModal from './TeamMemberModal'
 import { AddNewMembersIcon, ManageRolesIcon } from '@/constants/icons'
 import AddTeamMemberModal from './AddTeamMemberModal'
+import { useRouter } from 'next/navigation'
 
 const MainPage = () => {
+	const router = useRouter()
 	const [roles, setRoles] = useState([])
 
 	const [roleMembers, setRoleMembers] = useState([])
@@ -105,7 +107,7 @@ const MainPage = () => {
 							classProps='border i sd'
 							styleProps={{color: '#009EC4'}}
 							onClick={()=>{
-								console.log('yo')
+								router.push('/team/roles')
 							}}
 							icon={
 								<ManageRolesIcon />
