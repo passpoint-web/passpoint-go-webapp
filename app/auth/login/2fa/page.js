@@ -37,7 +37,10 @@ const LoginTuEfAy = () => {
 			}
 			const response = await authenticate.verifyEmailOtp(payload)
 			console.log(response)
-			notify('success', 'Your email has been verified!')
+			// saveCredentials(data);
+			// directUser(data);
+			// saveToken(token);
+			// notify("success", `You're logged in as ${payload.email}`);
 		} catch (_err) {
 			const { message } = _err.response?.data || _err
 			notify('error', message)
