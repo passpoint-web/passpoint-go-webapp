@@ -46,6 +46,30 @@ const LoginTuEfAy = () => {
 		}
 	}
 
+	// const directUser = ({ userType, isActive, regStage, kycStatus }) => {
+	// 	const businessLevels = ["", "address", "personal", "verify"];
+	// 	const individualLevels = ["", "business", "address", "verify"];
+	// 	if (!isActive && Number(userType) == 2) {
+	// 		push(`/auth/signup/business/${businessLevels[regStage]}`);
+	// 	} else if (!isActive && Number(userType) == 1) {
+	// 		push(`/auth/signup/individual/${individualLevels[regStage]}`);
+	// 	} else if (kycStatus.toLowerCase() === "pending") {
+	// 		if (Number(userType) == 2) {
+	// 			push("/kyc/corporate/business");
+	// 		} else {
+	// 			push("/kyc/individual/identity");
+	// 		}
+	// 	} else if (kycStatus === "inReview") {
+	// 		push("/kyc/status");
+	// 	} else if (kycStatus.toLowerCase() === "rejected") {
+	// 		push("/kyc/status");
+	// 	} else if (!searchParams.get("fallBackUrl")) {
+	// 		push("/dashboard");
+	// 	} else {
+	// 		push(searchParams.get("fallBackUrl"));
+	// 	}
+	// };
+
 	useEffect(() => {
 		setRenderInput(true)
 		setErrorMsg('')
