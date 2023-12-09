@@ -76,7 +76,7 @@ const AddTeamMemberModal = ({ styles, closeModal }) => {
 								height: 100,
 							},
 						}}
-						selectOptions={["male", "female"]}
+						selectOptions={["Co-Administrator", "Team Member", "Support Agent"]}
 						selectedOption={role}
 						emitSelect={(e) => setRole(e.target.value)}
 						placeholder="Select a Role"

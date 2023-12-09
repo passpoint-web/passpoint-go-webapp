@@ -1,7 +1,7 @@
 import CustomSelect from "../Custom/Select"
 import Input from "./Input"
 
-const Select = ({styleProps, dropDownTop, selectDisabled, objKey, selectId,selectPlaceHolder, selectOptions, selectedOption, fieldError, emitSelect,...props}) => {
+const Select = ({styleProps, dropDownTop, selectDisabled, objKey, selectId,selectPlaceHolder, selectOptions, selectedOption, fieldError, noShadow, emitSelect,...props}) => {
 	return (
 		<Input {...props}>
 			<CustomSelect
@@ -14,6 +14,7 @@ const Select = ({styleProps, dropDownTop, selectDisabled, objKey, selectId,selec
 				emitSelect={(option) =>emitSelect(option)}
 				disabled={selectDisabled}
 				objKey={objKey}
+				noShadow={noShadow}
 				styleProps={styleProps}
 			/>
 		</Input>

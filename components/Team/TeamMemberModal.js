@@ -6,6 +6,7 @@ import Loader from "../Btn/Loader"
 import Tab from "../Tab"
 import flightStyles from '@/assets/styles/flight.module.css'
 import { Button, Stack } from "@chakra-ui/react"
+import Select from "../Dashboard/Select"
 
 const TeamMemberModal = ({ styles, closeModal }) => {
 	const tabs = ["Bio", "Permissions"]
@@ -13,6 +14,7 @@ const TeamMemberModal = ({ styles, closeModal }) => {
 	// eslint-disable-next-line no-unused-vars
 	// const [isLoading, setIsLoading] = useState(false)
 	const [isUploading, setIsUploading] = useState(false)
+	const [role, setRole] = useState('Co-Administrator')
 	const [permissions, setPermissions] = useState([
 		'User Management: Create, edit, and delete user accounts.',
 		'Dashboard Access: Full access to all dashboard features and settings.',
@@ -76,9 +78,20 @@ const TeamMemberModal = ({ styles, closeModal }) => {
 					<div className={flightStyles.row}>
 						<div className={flightStyles.label}>Role</div>
 						<div className={flightStyles.value}>
-							<span className=" text-bold">
-								Co-Administrator
-							</span>
+							<Select
+								label=""
+								id="class"
+								styleProps={{
+									dropdown: {
+										height: 150,
+									},
+								}}
+								selectOptions={["Co-Administrator", "Team Member", "Support Agent"]}
+								selectedOption={role}
+								noShadow
+								emitSelect={(e) => setRole(e.target.value)}
+								placeholder="Select a Role"
+							/>
 						</div>
 					</div>
 					<div className={flightStyles.row}>

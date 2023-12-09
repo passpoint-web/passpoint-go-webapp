@@ -13,6 +13,7 @@ const CustomSelect = ({
 	placeholder = "Please Select",
 	fieldError,
 	styleProps,
+	noShadow,
 	dropDownTop=false
 }) => {
 	const [showSelect, setShowSelect] = useState(false)
@@ -45,6 +46,7 @@ const CustomSelect = ({
 					disabled={disabled}
 					className={`${showSelect ? styles.active : ''}`}
 					onClick={handleClick}
+					style={noShadow ? { boxShadow: 'none' } : {}}
 				>
 					<div className={styles.content}>
 						{(objKey ? selectedOption?.[objKey] : selectedOption) ? (
@@ -61,7 +63,7 @@ const CustomSelect = ({
 						style={{ ...styleProps?.dropdown }}>
 						{selectOptions.map((option, index) => (
 							<div
-							style={{ ...styleProps?.option }}
+								style={{ ...styleProps?.option }}
 								key={index}
 								className={`${styles.content} ${(objKey ? option?.[objKey] === selectedOption?.[objKey] : option === selectedOption) ? styles.content_selected : ''
 								}`}
