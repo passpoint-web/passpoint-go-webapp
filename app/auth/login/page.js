@@ -8,7 +8,7 @@ import PasswordField from "@/components/Auth/PasswordField";
 import functions from "@/utils/functions";
 import { login } from "@/services/restService";
 import Input from "@/components/Dashboard/Input";
-import { saveToken, saveCredentials, saveTuEfAyRef } from "@/services/localService";
+import { saveToken, saveCredentials, saveTuEfAyToken } from "@/services/localService";
 import { useNotify } from "@/utils/hooks";
 // import loginUser
 
@@ -47,16 +47,17 @@ const Login = () => {
 		setIsLoading(true);
 		try {
 			const response = await login(payload);
-			const { data, token, ref } = response.data;
-			if (token) {
-				saveCredentials(data);
-				directUser(data);
-				saveToken(token);
-				notify("success", `You're logged in as ${payload.email}`);
-			} else {
-				saveTuEfAyRef(ref)
+			console.log(response.data)
+			const { data, token, mesg } = response.data
+			if (data!== undefined) {
+				saveCredentials(data)
+				directUser(data)
+				saveToken(token)
+				notify("success", `You're logged in as ${payload.email}`)
+			} else if (mesg.includes('otp')) {
+				saveTuEfAyToken(token)
+				push('/auth/login/2fa')
 			}
-			
 		} catch (_err) {
 			const { message } = _err.response?.data || _err;
 			console.log(message);

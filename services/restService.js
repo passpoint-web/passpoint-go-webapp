@@ -133,6 +133,9 @@ export const authenticate = {
 	resendOtp: (data) => {
 		return restAgent.post("resendOtp", data)
 	},
+	validate2faOtp: (data) => {
+		return restAgent.post("validate2faOtp", data)
+	},
 }
 
 export const metrics = () => {

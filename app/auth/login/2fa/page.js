@@ -8,15 +8,17 @@ import Input from '@/components/Dashboard/Input'
 import { useNotify } from '@/utils/hooks'
 import BackBtn from '@/components/Btn/Back'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { authenticate } from '@/services/restService'
-// import { getTuEfAyRef } from '@/services/localService'
+import { getTuEfAyToken, saveCredentials, saveToken } from '@/services/localService'
 
 const LoginTuEfAy = () => {
 	// console.log(getTuEfAyRef)
 	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
+	const searchParams = useSearchParams();
 	const [errorMsg, setErrorMsg] = useState('')
 	const [ctaClicked, setCtaClicked] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
@@ -33,50 +35,61 @@ const LoginTuEfAy = () => {
 		setIsLoading(true)
 		try {
 			const payload = {
-				otp,
+				code: otp,
+				token: getTuEfAyToken()
 			}
-			const response = await authenticate.verifyEmailOtp(payload)
-			console.log(response)
-			// saveCredentials(data);
-			// directUser(data);
-			// saveToken(token);
-			// notify("success", `You're logged in as ${payload.email}`);
+			const response = await authenticate.validate2faOtp(payload)
+			const { data, token } = response.data
+			saveCredentials(data)
+			directUser(data)
+			saveToken(token)
+			notify("success", `You're logged in as ${payload.email}`)
 		} catch (_err) {
-			const { message } = _err.response?.data || _err
-			notify('error', message)
+			const { message, msg } = _err.response?.data || _err
+			notify('error', message || msg)
+			if (
+				msg.toLowerCase().includes('otp') ||
+				msg.toLowerCase().includes('code')
+			) {
+				setErrorMsg(msg)
+			}
 		} finally {
 			setIsLoading(false)
 		}
 	}
 
-	// const directUser = ({ userType, isActive, regStage, kycStatus }) => {
-	// 	const businessLevels = ["", "address", "personal", "verify"];
-	// 	const individualLevels = ["", "business", "address", "verify"];
-	// 	if (!isActive && Number(userType) == 2) {
-	// 		push(`/auth/signup/business/${businessLevels[regStage]}`);
-	// 	} else if (!isActive && Number(userType) == 1) {
-	// 		push(`/auth/signup/individual/${individualLevels[regStage]}`);
-	// 	} else if (kycStatus.toLowerCase() === "pending") {
-	// 		if (Number(userType) == 2) {
-	// 			push("/kyc/corporate/business");
-	// 		} else {
-	// 			push("/kyc/individual/identity");
-	// 		}
-	// 	} else if (kycStatus === "inReview") {
-	// 		push("/kyc/status");
-	// 	} else if (kycStatus.toLowerCase() === "rejected") {
-	// 		push("/kyc/status");
-	// 	} else if (!searchParams.get("fallBackUrl")) {
-	// 		push("/dashboard");
-	// 	} else {
-	// 		push(searchParams.get("fallBackUrl"));
-	// 	}
-	// };
+	const directUser = ({ userType, isActive, regStage, kycStatus }) => {
+		const businessLevels = ["", "address", "personal", "verify"];
+		const individualLevels = ["", "business", "address", "verify"];
+		if (!isActive && Number(userType) == 2) {
+			push(`/auth/signup/business/${businessLevels[regStage]}`);
+		} else if (!isActive && Number(userType) == 1) {
+			push(`/auth/signup/individual/${individualLevels[regStage]}`);
+		} else if (kycStatus.toLowerCase() === "pending") {
+			if (Number(userType) == 2) {
+				push("/kyc/corporate/business");
+			} else {
+				push("/kyc/individual/identity");
+			}
+		} else if (kycStatus === "inReview") {
+			push("/kyc/status");
+		} else if (kycStatus.toLowerCase() === "rejected") {
+			push("/kyc/status");
+		} else if (!searchParams.get("fallBackUrl")) {
+			push("/dashboard");
+		} else {
+			push(searchParams.get("fallBackUrl"));
+		}
+	};
 
 	useEffect(() => {
 		setRenderInput(true)
 		setErrorMsg('')
 	}, [])
+
+	useEffect(() => {
+		setErrorMsg('')
+	}, [otp])
 
 	return (
 		<div className={`${styles.auth} ${styles.no_pd_top}`}>

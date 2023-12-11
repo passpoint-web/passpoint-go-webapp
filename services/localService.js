@@ -215,6 +215,6 @@ export const  savePinCreated = (val) => save2Local('pin_created', val)
 
 export const getPinCreated = () => get4rmLocal('pin_created')
 
-export const saveTuEfAyRef = () => save2Local('tuEfAyRef')
+export const saveTuEfAyToken = (val) => save2Local('tuEfAyToken', val)
 
-export const getTuEfAyRef = () => get4rmLocal('tuEfAyRef')
+export const getTuEfAyToken = () => get4rmLocal('tuEfAyToken')
