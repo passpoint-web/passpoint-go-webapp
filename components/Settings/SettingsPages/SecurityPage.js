@@ -24,7 +24,7 @@ const Security = () => {
 	const { push } = useRouter();
 	const searchParams = useSearchParams();
 	const [show2FAModal, setShow2FAModal] = useState(false)
-	const [tuEfAy, setTuEfAy] = useState(false)
+	// const [tuEfAy, setTuEfAy] = useState(false)
 	const notify = useNotify();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
