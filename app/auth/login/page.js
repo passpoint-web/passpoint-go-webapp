@@ -47,7 +47,6 @@ const Login = () => {
 		setIsLoading(true);
 		try {
 			const response = await login(payload);
-			console.log(response.data)
 			const { data, token, mesg } = response.data
 			if (data!== undefined) {
 				saveCredentials(data)

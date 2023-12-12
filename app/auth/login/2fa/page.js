@@ -14,8 +14,6 @@ import { authenticate } from '@/services/restService'
 import { getTuEfAyToken, saveCredentials, saveToken } from '@/services/localService'
 
 const LoginTuEfAy = () => {
-	// console.log(getTuEfAyRef)
-	// eslint-disable-next-line no-unused-vars
 	const { push, back } = useRouter()
 	const [otp, setOtp] = useState('')
 	const searchParams = useSearchParams();
@@ -43,7 +41,7 @@ const LoginTuEfAy = () => {
 			saveCredentials(data)
 			directUser(data)
 			saveToken(token)
-			notify("success", `You're logged in as ${payload.email}`)
+			notify("success", `You're logged in as ${data.email}`)
 		} catch (_err) {
 			const { message, msg } = _err.response?.data || _err
 			notify('error', message || msg)
