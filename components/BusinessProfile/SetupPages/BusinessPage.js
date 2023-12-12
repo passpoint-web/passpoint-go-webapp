@@ -170,7 +170,7 @@ const BusinessPage = ({styles}) => {
 			if (data.aboutBusiness) {
 				const {aboutBusiness, desc} = data.aboutBusiness
 				// setBusinessLogo(data.logo)
-				setAboutBusiness(aboutBusiness)
+				setAboutBusiness(aboutBusiness ?? '')
 				setFeatures(desc.map((d)=>{
 					let obj = {...d,
 						id: useId(),

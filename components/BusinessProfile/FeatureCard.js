@@ -1,5 +1,5 @@
 import { CancelIcon_border } from "@/constants/icons"
-import styles from '@/app/dashboard/business-profile-setup/business-profile.module.css'
+import styles from '@/app/(dashboard)/business-profile-setup/business-profile.module.css'
 
 const FeatureCard = ({feature, removeFeature, editFeature}) => {
 	return (
