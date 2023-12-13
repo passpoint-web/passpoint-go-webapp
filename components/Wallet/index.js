@@ -187,12 +187,12 @@ const Wallet = () => {
 	return (
 		<div className={styles.wallet_page}>
 			{
-			pinCreated === false ? 
-				<CreatePinModal handlePinCreation={()=>handlePinCreation()}
-				topClose={false}
-				cancelBtnDisabled={true}
-				reference={reference}
-				onClose={''} /> : <></>
+				pinCreated === false ?
+					<CreatePinModal handlePinCreation={()=>handlePinCreation()}
+						topClose={false}
+						cancelBtnDisabled={true}
+						reference={reference}
+						onClose={''} /> : <></>
 			}
 			{
 				walletState === 'pending' || walletState === 'no-wallet' ?
@@ -203,7 +203,7 @@ const Wallet = () => {
 							<FullScreenLoader />
 							:
 							walletState === 'pending' ?
-									WalletProcessing() :
+								WalletProcessing() :
 								walletState === 'no-wallet' ?
 									<CreateWallet wallet={wallet}
 										styles={styles}

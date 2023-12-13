@@ -133,6 +133,9 @@ export const authenticate = {
 	resendOtp: (data) => {
 		return restAgent.post("resendOtp", data)
 	},
+	validate2faOtp: (data) => {
+		return restAgent.post("validate2faOtp", data)
+	},
 }
 
 export const metrics = () => {
@@ -279,5 +282,20 @@ export const travel = {
 export const notifyAndAccess = {
 	getNotifications: () => {
 		return notifyAndAccessRestAgent.get("notify/page", setConfig())
+	},
+}
+
+export const security = {
+	getTuEfAyDetails: () => {
+		return restAgent.get("/get2faDetails", setConfig())
+	},
+	validatePassword: (data) => {
+		return restAgent.post("/validatePassword", data, setConfig())
+	},
+	verifyTuEfAy: (data) => {
+		return restAgent.post("/update2faOtp", data, setConfig())
+	},
+	updateTuEfAyStatus: (data) => {
+		return restAgent.post("/update2faStaus", data, setConfig())
 	},
 }

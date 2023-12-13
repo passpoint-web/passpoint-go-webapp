@@ -31,7 +31,7 @@ module.exports = {
 		'react/prop-types': 'off',
 		// indent: ['error','tab'],
 		// 'linebreak-style': ['error','unix'],
-		// 'semi': 0,
+		'semi': 0,
 		// 'no-trailing-spaces': ['error', { 'skipBlankLines': false }],
 		// 'react/jsx-max-props-per-line': [1, {'maximum': 1}],
 		'react/react-in-jsx-scope': 'off'

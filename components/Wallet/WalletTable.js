@@ -10,7 +10,7 @@ import WalletTransactionModal from "./WalletTransactionModal";
 import { useEffect, useState } from "react";
 // import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
-import CopyValue from "../CopyValue";
+import CopyValue from "../Copy/CopyValue";
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import Input from "../Dashboard/Input";

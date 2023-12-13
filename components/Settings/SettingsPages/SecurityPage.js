@@ -16,7 +16,7 @@ import { accountProfile } from '@/services/restService'
 import ForgotPasswordFlow from '@/components/Settings/ForgotPasswordFlow'
 import { wallet } from "@/services/restService/wallet";
 import CreatePinModal from "@/components/Modal/CreatePin";
-import { savePinCreated, getPinCreated } from "@/services/localService";
+import { savePinCreated, getPinCreated, getCredentials } from "@/services/localService";
 import Toggle2FA from "../2FA";
 // import Link from 'next/link'
 const Security = () => {
@@ -24,7 +24,7 @@ const Security = () => {
 	const { push } = useRouter();
 	const searchParams = useSearchParams();
 	const [show2FAModal, setShow2FAModal] = useState(false)
-	const [tuEfAy, setTuEfAy] = useState(false)
+	// const [tuEfAy, setTuEfAy] = useState(false)
 	const notify = useNotify();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +35,7 @@ const Security = () => {
 	const [showPinCreationModal, setShowPinCreationModal] = useState(false);
 	const [pinCreated, setPinCreated] = useState(null);
 	const [reference, setReference] = useState('');
+	const [is2faEnabled, setIs2faEnabled] = useState(false)
 	const [payload, setPayload] = useState({
 		password: "",
 		newPassword: "",
@@ -47,6 +48,10 @@ const Security = () => {
 			[name]: value,
 		}));
 	};
+
+	useEffect(()=>{
+		setIs2faEnabled(getCredentials().is2faEnable)
+	},[])
 
 	const handleForgotPasswordModals = (e) => {
 		e.preventDefault();
@@ -253,10 +258,8 @@ const Security = () => {
 	return (
 		<div className={styles.security_page}>
 			{show2FAModal ?
-				<Toggle2FA onClose={(val)=>{
-					setTuEfAy(!!val)
-					setShow2FAModal(false)
-				}}
+				<Toggle2FA onClose={()=>setShow2FAModal(false)}
+					onSuccess={(val)=>setIs2faEnabled(!val)}
 				/> :
 				<></>
 			}
@@ -285,13 +288,13 @@ const Security = () => {
 			<div className={`${styles.border_box} ${styles.privacy}`}>
 				<h3>2-Factor Authentication</h3>
 				<div className={`${styles.inner} ${styles.flex}`}>
-					<h4>Enable 2FA</h4>
+					<h4>{is2faEnabled ? 'Dis' : 'En'}able 2FA</h4>
 					<button onClick={()=>{
 						setShow2FAModal(true)
 					}}>
 						<Switch disabled
-							checked={tuEfAy}
-							onChange={()=>setTuEfAy(!tuEfAy)} />
+							checked={is2faEnabled}
+							onChange={()=>setIs2faEnabled(!is2faEnabled)} />
 					</button>
 				</div>
 			</div>

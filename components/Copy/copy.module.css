@@ -1,0 +1,24 @@
+.copy_ctn {
+  background-color: #fff;
+  border: 1px solid var(--input-border);
+  height: var(--input-height);
+  border-radius: var(--input-br);
+  padding: 0 0 0 var(--input-padding);
+  box-shadow: var(--input-box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  transition: var(--input-transition);
+}
+
+.copy_ctn p {
+  width: 60%;
+  text-align: start;
+}
+
+.copy_ctn button {
+  width: 40%;
+  justify-content: flex-start;
+  padding: calc(var(--btn-padding)/2);
+}

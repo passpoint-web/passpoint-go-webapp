@@ -4,7 +4,7 @@ import BorderIconBtn from '../Btn/BorderIconBtn'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AddMoneyModal from './AddMoneyModal'
 import TransferModals from './TransferModals'
-import CopyValue from '../CopyValue'
+import CopyValue from '../Copy/CopyValue'
 import { AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
 import { useNotify } from "@/utils/hooks";
@@ -100,22 +100,22 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 				!dataLoading ? <div className={`${styles.balance_card} wallet_balance_card`}>
 					<div className={styles.lhs}>
 						<div className={styles.balance_ctn}>
-						<div className={styles.available_balance}>
-							<h4>Available Balance</h4>
-							<div className={styles.balance}>
-								<h1 className={!showBalance ? styles.hide_balance : ''}>
-									{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
-								</h1>
-								<div className={styles.card_action}>
-									<button onClick={()=>setShowBalance(!showBalance)}>
-										{!showBalance ? <EyeOpen /> : <EyeClose />}
-									</button>
-									{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
+							<div className={styles.available_balance}>
+								<h4>Available Balance</h4>
+								<div className={styles.balance}>
+									<h1 className={!showBalance ? styles.hide_balance : ''}>
+										{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
+									</h1>
+									<div className={styles.card_action}>
+										<button onClick={()=>setShowBalance(!showBalance)}>
+											{!showBalance ? <EyeOpen /> : <EyeClose />}
+										</button>
+										{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
+									</div>
 								</div>
-							</div>
 
-						</div>
-						{/* <div className={styles.ledger_balance}>
+							</div>
+							{/* <div className={styles.ledger_balance}>
 							<h4>Ledger Balance</h4>
 							<div className={styles.balance}>
 								<h3 className={!showBalance ? styles.hide_balance : ''}>
