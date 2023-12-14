@@ -4,9 +4,8 @@ import styles from './team.module.css'
 import { useState } from 'react'
 import { AddNewMembersIcon } from '@/constants/icons'
 import Link from 'next/link'
-import RoleCard from './RoleCard'
 import RoleTypeCard from './RoleTypeCard'
-import { Flex, Stack } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import AddNewRoleModal from './AddNewRoleModal'
 
 const TeamRolePage = () => {

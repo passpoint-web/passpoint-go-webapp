@@ -9,7 +9,7 @@ const CopyInputValue = ({value}) => {
 		setCopied(true)
 		setTimeout(() => {
 			setCopied(false)
-      // onCopied()
+			// onCopied()
 		}, 2000)
 	}
 	const CopyIcon = () => (

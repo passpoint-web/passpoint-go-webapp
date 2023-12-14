@@ -69,8 +69,10 @@ const PreviewPage = () => {
 	return (
 		<>
 			{dataLoading ? <FullScreenLoader /> : <></>}
-			<div className="p-relative" ref={previewRef}>
-				<PreviewNav togglePreview={togglePreview} data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
+			<div className="p-relative"
+				ref={previewRef}>
+				<PreviewNav togglePreview={togglePreview}
+					data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
 				<PreviewMain data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
 				<PreviewFooter data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
 			</div>

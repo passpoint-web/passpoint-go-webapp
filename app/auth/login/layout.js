@@ -6,33 +6,33 @@
 // import FullScreenLoader from "@/components/Modal/FullScreenLoader"
 
 const LoginLayout = ({ children }) => {
-  // const {back} = useRouter()
-  // const pathname = usePathname()
-  // const [loading, setLoading] = useState(true)
+	// const {back} = useRouter()
+	// const pathname = usePathname()
+	// const [loading, setLoading] = useState(true)
 
-  // const checkAuth = async () => {
-  //   const auth = await getToken()
-  //   console.log(pathname)
-  //   if (auth && !pathname.includes('/auth/signup')) {
-  //     back()
-  //   } else {
-  //     setLoading(false)
-  //   }
-  // }
+	// const checkAuth = async () => {
+	//   const auth = await getToken()
+	//   console.log(pathname)
+	//   if (auth && !pathname.includes('/auth/signup')) {
+	//     back()
+	//   } else {
+	//     setLoading(false)
+	//   }
+	// }
 
-  // useEffect(()=>{
-  //   // checkAuth()
-  // },[])
+	// useEffect(()=>{
+	//   // checkAuth()
+	// },[])
 
-  // if (loading) {
-  //   return <FullScreenLoader /> 
-  // }
+	// if (loading) {
+	//   return <FullScreenLoader />
+	// }
 
-  return (
-    <>
-      {children}
-    </>
-  )
+	return (
+		<>
+			{children}
+		</>
+	)
 }
 
 export default LoginLayout

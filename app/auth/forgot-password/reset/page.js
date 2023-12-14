@@ -29,7 +29,7 @@ export default function ResetPassword () {
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [ctaClicked, setCtaClicked] = useState(false)
-	
+
 	const notify = useNotify()
 
 	const handleResetPasswordSubmit = async (e) => {

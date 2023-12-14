@@ -1,9 +1,9 @@
 "use client"
 import styles from "../../assets/styles/flight.module.css"
 // eslint-disable-next-line no-unused-vars
-import { FaChevronDown, FaTrashAlt } from "react-icons/fa"
+import { FaChevronDown } from "react-icons/fa"
 // eslint-disable-next-line no-unused-vars
-import { GreenCheckIcon, PlusIcon, ProfileEditIcon } from "@/constants/icons"
+import { GreenCheckIcon, PlusIcon } from "@/constants/icons"
 import { useEffect, useState } from "react"
 import Input from "../Dashboard/Input"
 // import Textarea from "../Dashboard/Textarea"

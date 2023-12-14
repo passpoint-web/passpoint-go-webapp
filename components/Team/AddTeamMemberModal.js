@@ -3,9 +3,8 @@ import { useState } from "react"
 import ModalWrapper from "../Modal/ModalWrapper"
 import Loader from "../Btn/Loader"
 // import PaymentSuccessful from "./PaymentSuccessful"
-import Tab from "../Tab"
 import flightStyles from '@/assets/styles/flight.module.css'
-import { Button, Stack } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
 import Input from "../Dashboard/Input"
 import Select from "../Dashboard/Select"
 
