@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCredentials } from '../localService';
 const walletRestAgent = axios.create({
-	baseURL: "https://payment-sandbox.mypasspoint.com/passpoint-payserv/v1",
+	baseURL:  process.env.NEXT_PUBLIC_USERMGT_BASE_URL,
 	headers: {
 		'Content-Type': 'application/json'
 	}
@@ -11,8 +11,8 @@ const getRequestConfig = () => {
 	const {merchantId} = getCredentials()
 	return {
 		headers: {
-			'x-channel-id' : 2,
-			'x-channel-code' : 'passpoint-infra-user',
+			'x-channel-id' :  process.env.NEXT_PUBLIC_PAYMENT_CHANNEL_ID,
+			'x-channel-code' : process.env.NEXT_PUBLIC_PAYMENT_CHANNEL_CODE,
 			'x-merchant-id' : merchantId
 		},
 		params: {},
