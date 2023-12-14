@@ -7,6 +7,9 @@
   z-index: var(--z-index-overlay);
   display: grid;
   place-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* padding-top: 25vh; */
 }
 
 .loader_overlay_screen {
@@ -23,7 +26,8 @@
 .overlay_screen {
   min-height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  inset: 0;
   background: rgba(28, 17, 50, 0.6);
   cursor: unset;
 }
@@ -66,7 +70,7 @@
   width: 100%;
   z-index: calc(var(--z-index-overlay)+ 1);
   background: #fff;
-  position: relative;
+  /* position: relative; */
   border-radius: var(--input-br);
   min-height: 200px;
   max-height: calc(100vh - 100px);
@@ -84,6 +88,11 @@
 .top {
   position: relative;
   margin-bottom: var(--inner-component-gap);
+}
+
+.top .sub_heading,
+.top .sub_heading div {
+  color: var(--grey-3);
 }
 
 .child_ctn.contains_tab .top {
@@ -118,7 +127,6 @@
 
 .close_btn {
   position: absolute;
-  position: absolute;
   right: var(--inner-component-mg);
   top: var(--inner-component-mg);
   height: 34px;
@@ -130,7 +138,8 @@
   height: 30px;
   padding: 5px;
   border-radius: 5px;
-  z-index: 30;
+  z-index: 60;
+  background-color: #fff;
 }
 
 .close_btn:hover {

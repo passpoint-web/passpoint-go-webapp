@@ -1,4 +1,4 @@
-'use client'
+
 import VerifyEmail from "@/components/Verify"
 import { getForgotPasswordEmail } from "@/services/localService"
 

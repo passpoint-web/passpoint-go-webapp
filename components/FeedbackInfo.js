@@ -1,9 +1,9 @@
 import styles from '@/assets/styles/form.module.css'
 import { WarningIcon, NoteIcon, SuccessIcon } from '@/constants/icons'
-const FeedbackInfo = ({message, styleProps, center, type = 'error'}) => {
+const FeedbackInfo = ({message, styleProps, center, type = 'error', border=false}) => {
 	return (
 		<>
-			<div className={`${styles.feedback_info_ctn} ${styles[type]} ${center ? styles.center : ''}`}
+			<div className={`${styles.feedback_info_ctn} ${styles[type]} ${border ? styles.border : ''} ${center ? styles.center : ''}`}
 				style={styleProps?.ctn}>
 				<div className={styles.icon}>
 					{type === 'error' ? <WarningIcon /> : type === 'info' ? <NoteIcon /> :  type === 'success' ? <SuccessIcon /> : <NoteIcon /> }

@@ -14,72 +14,75 @@ import {
 	SideIcon8,
 	SideIcon9,
 } from "@/constants/icons";
+import { getCredentials } from "@/services/localService";
+const userType = getCredentials()?.userType
 
 export const sidebarData = [
 	{
 		title: "Dashboard",
 		icon: SideIcon1,
-		path: "/dashboard",
+		path: "/dashboard"
 	},
 	{
 		title: "Travel Services",
 		icon: SideIcon2,
-		path: "/dashboard/travel",
+		path: "/travel",
 	},
 	// {
 	// 	title: "Marketplace",
 	// 	icon: SideIcon3,
-	// 	path: "/dashboard/marketplace",
+	// 	path: "/marketplace",
 	// },
 	// {
 	// 	title: "Invoices and Paylinks",
 	// 	icon: SideIcon4,
-	// 	path: "/dashboard/invoice",
+	// 	path: "/invoice",
 	// },
 	// {
 	// 	title: "Customer Management",
 	// 	icon: SideIcon5,
-	// 	path: "/dashboard/customer",
+	// 	path: "/customer",
 	// },
 	{
 		title: "Wallet",
 		icon: SideIcon6,
-		path: "/dashboard/wallet",
+		path: "/wallet",
 	},
-	// {
-	// 	title: "Team Setup",
-	// 	icon: SideIcon7,
-	// 	path: "/dashboard/team",
-	// },
+	{
+		title: "Team Setup",
+		icon: SideIcon7,
+		path: "/team",
+		hide: userType !== '2'
+	},
 	{
 		title: "Settings",
 		icon: SideIcon8,
-		path: "/dashboard/settings",
+		path: "/settings",
 	},
 	{
 		title: "Help & Support",
 		icon: SideIcon9,
-		path: "/dashboard/help",
+		path: "/help",
 	},
 ];
 
 export const menuItems = (handleLogout, setOpenNotify) => [
 	{
 		type: "link",
-		href: "/dashboard/profile",
+		href: "/profile",
 		icon: <ProfileIcon />,
 		label: "Profile",
 	},
 	// {
 	// 	type: "button",
-	// 	// href: "/dashboard/notifications",
+	// 	// href: "/notifications",
 	// 	onClick: () => setOpenNotify(true),
 	// 	icon: <NewNotificationIcon />,
 	// 	label: "Notifications",
 	// },
 	{
 		type: "link",
-		href: "/dashboard/settings",
+		href: "/settings",
 		icon: <SettingProfile />,
 		label: "Account Settings",
 	},

@@ -14,28 +14,28 @@ const nextConfig = {
 				permanent: true,
 			},
 			{
-				source: '/dashboard/kyc/individual',
-				destination: '/dashboard/kyc/individual/identity',
+				source: '/kyc/individual',
+				destination: '/kyc/individual/identity',
 				permanent: true,
 			},
 			{
-				source: '/dashboard/kyc/corporate',
-				destination: '/dashboard/kyc/corporate/business',
+				source: '/kyc/corporate',
+				destination: '/kyc/corporate/business',
 				permanent: true,
 			},
 			{
-				source: '/dashboard/business-profile-setup',
-				destination: '/dashboard/business-profile-setup/identity',
+				source: '/business-profile-setup',
+				destination: '/business-profile-setup/identity',
 				permanent: true,
 			},
 			{
-				source: '/dashboard/settings',
-				destination: '/dashboard/settings/activity',
+				source: '/settings',
+				destination: '/settings/activity',
 				permanent: true,
 			},
 			{
-				source: '/dashboard/business-profile',
-				destination: '/dashboard/business-profile/preview',
+				source: '/business-profile',
+				destination: '/business-profile/preview',
 				permanent: true,
 			},
 		]
@@ -55,6 +55,12 @@ const nextConfig = {
 				hostname: 's3-alpha-sig.figma.com',
 				port: '',
 				pathname: '/img/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'chart.googleapis.com',
+				port: '',
+				pathname: '/chart',
 			},
 			{
 				protocol: 'http',

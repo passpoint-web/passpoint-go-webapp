@@ -1,12 +1,23 @@
 .tab_group {
   display: flex;
   border-bottom: 2px solid var(--grey-6);
-  overflow-x: auto;
+  /* overflow-x: auto; */
+  margin-bottom: var(--outer-component-gap);
 }
 
 .tab_group button {
+  position: relative;
+  bottom: -2px;
+  z-index: 50;
+}
+
+.tab_group button > div {
   height: 40px;
   padding: 0 2rem;
+  margin: 0 0.5rem;
+  font-size: 14px;
+  font-family: var(--grapikRegular);
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,8 +29,8 @@
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
 }
-.tab_group button.active,
-.tab_group button:hover {
+.tab_group button.active > div,
+.tab_group button:hover > div {
   border-color: var(--sky-blue);
   color: var(--sky-blue);
 }

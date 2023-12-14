@@ -1,5 +1,4 @@
 "use client"
-
 import styles from "../../assets/styles/flight.module.css"
 // eslint-disable-next-line no-unused-vars
 import { FaChevronDown, FaTrashAlt } from "react-icons/fa"
@@ -9,11 +8,13 @@ import { useEffect, useState } from "react"
 import Input from "../Dashboard/Input"
 // import Textarea from "../Dashboard/Textarea"
 import PrimaryBtn from "../Btn/Primary"
-import CustomSelect from "../Custom/Select"
+// import CustomSelect from "../Custom/Select"
 import Link from "next/link"
 import { getMostRecentFlightSearchURL } from "@/services/localService"
 import { useNotify } from "@/utils/hooks"
 import functions from "@/utils/functions"
+import Select from "../Dashboard/Select"
+import FeedbackInfo from "../FeedbackInfo"
 
 const FlightPassengers = ({
   passengersParent,
@@ -22,10 +23,12 @@ const FlightPassengers = ({
 }) => {
   const [passengers, setPassengers] = useState([])
   const [passengerGenders, setPassengerGenders] = useState([])
+  const [passengerPassportIssue, setPassengerPassportIssue] = useState([])
   const [activePassenger, setActivePassenger] = useState(1)
   const tempPassengers = [...passengersParent]
   const [collapsed, setCollapsed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isPassengerNameSimilar, setIsPassengerNameSimilar] = useState(false)
   const [activePassengersFieldsValid, setActivePassengersFieldsValid] =
     useState(false)
   const mostRecentFlightSearchURL = getMostRecentFlightSearchURL()
@@ -60,6 +63,33 @@ const FlightPassengers = ({
       tempGenders[passengerIndex] = temp[label] = value
       setPassengerGenders(tempGenders)
     }
+
+    if (label === "passport_issue") {
+      const tempPassengerPassportIssue = [...passengerPassportIssue]
+      tempPassengerPassportIssue[passengerIndex] = temp[label] = value
+      setPassengerPassportIssue(tempPassengerPassportIssue)
+    }
+
+    // CHECK IF PASSENGER HAS A SIMILAR NAME AS OTHER PASSENGERS
+    let similarityCount = 0
+    passengers?.forEach((passenger) => {
+      const tempPassengerFullName =
+        `${temp.first_name} ${temp.last_name}`.trim()
+      const passengerFullName =
+        `${passenger.first_name} ${passenger.last_name}`.trim()
+      if (
+        passengerFullName === tempPassengerFullName &&
+        passenger.id !== temp.id
+      ) {
+        similarityCount += 1
+      }
+    })
+    if (similarityCount > 0) {
+      setIsPassengerNameSimilar(true)
+    } else {
+      setIsPassengerNameSimilar(false)
+    }
+
     setActivePassengersFieldsValid(isActivePassengersFieldsValid())
   }
 
@@ -78,7 +108,6 @@ const FlightPassengers = ({
 
   const isActivePassengersFieldsValid = () => {
     const ap = passengers?.at(activePassenger - 1)
-    // console.log(functions.validEmail(ap?.email))
     if (documentsRequired) {
       return (
         ap?.first_name?.length > 1 &&
@@ -170,7 +199,7 @@ const FlightPassengers = ({
             onClick={() => notify("info", "Update Passenger details here")}
           >
             <PlusIcon />
-            Add Another Passenger
+            Edit Flight Details
           </Link>
         </div>
         <div className={styles.rhs}>
@@ -186,6 +215,12 @@ const FlightPassengers = ({
               }
               onSubmit={(e) => e.preventDefault()}
             >
+              {isPassengerNameSimilar && (
+                <FeedbackInfo
+                  border={true}
+                  message="A passenger has a similar name as another passenger"
+                />
+              )}
               <div className="form-row">
                 <Input
                   label="First Name"
@@ -215,16 +250,24 @@ const FlightPassengers = ({
                   updateValue("email", e.target.value, passenger?.id)
                 }
               />
-              <div className="form-row bottom">
-                <CustomSelect
+              <div className={`form-row`}>
+                <Select
+                  label="Select Gender"
                   id="class"
+                  styleProps={{
+                    dropdown: {
+                      height: 100,
+                    },
+                  }}
                   selectOptions={["male", "female"]}
                   selectedOption={passengerGenders[index]}
                   emitSelect={(e) => updateValue("gender", e, passenger?.id)}
                   placeholder="Select Gender"
                 />
-                <CustomSelect
+                <Select
+                  label="Passenger Type"
                   id="type"
+                  selectDisabled={true}
                   selectOptions={["adult", "child", "infant"]}
                   selectedOption={passenger.passenger_type}
                   disabled
@@ -234,7 +277,7 @@ const FlightPassengers = ({
                   placeholder="Select Passenger Type"
                 />
               </div>
-              <div className="form-row">
+              <div className={`form-row ${documentsRequired ? "" : "bottom"}`}>
                 <Input
                   label="Date of Birth"
                   type="date"
@@ -267,7 +310,6 @@ const FlightPassengers = ({
                     label="Passport Issue Date"
                     type="date"
                     name="passport-issue"
-                    // value={passenger.last_name}
                     onChange={(e) =>
                       updateValue(
                         "passport_issue",
@@ -280,7 +322,9 @@ const FlightPassengers = ({
                     label="Passport Expiry Date"
                     type="date"
                     name="passport-expiry"
-                    // value={passenger.last_name}
+                    min={functions.formattedTodayDate(
+                      passengerPassportIssue[index]?.toString()
+                    )}
                     onChange={(e) =>
                       updateValue(
                         "passport_expiry",
@@ -291,7 +335,7 @@ const FlightPassengers = ({
                   />
                 </div>
               )}
-              <div className="form-row mt-12">
+              <div className={`form-row ${documentsRequired ? "bottom" : ""}`}>
                 {documentsRequired && (
                   <Input
                     label="Passport Number"
@@ -311,13 +355,17 @@ const FlightPassengers = ({
                   <PrimaryBtn
                     loading={isLoading}
                     text="Confirm Booking Cost"
-                    disabled={!activePassengersFieldsValid}
+                    disabled={
+                      !(activePassengersFieldsValid && !isPassengerNameSimilar)
+                    }
                     onClick={() => saveAndContinue(index)}
                   />
                 ) : (
                   <PrimaryBtn
                     text="Continue"
-                    disabled={!activePassengersFieldsValid}
+                    disabled={
+                      !(activePassengersFieldsValid && !isPassengerNameSimilar)
+                    }
                     onClick={() => saveAndContinue(index)}
                   />
                 )}

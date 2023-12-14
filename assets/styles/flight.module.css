@@ -23,8 +23,13 @@
 
 .travel__dashboard_header .row_one .quick__filter {
   display: flex;
-  gap: 1rem;
+  column-gap: 1rem;
   margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.travel__dashboard_header .row_one .quick__filter > * {
+  min-width: 150px;
 }
 .travel__dashboard_header .row_one .quick__filter input {
   background: var(--grey-6);
@@ -126,6 +131,9 @@
   -o-border-radius: 12px;
   border: 1px solid var(--grey-grey-5, #e5e7ef);
   height: fit-content;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0px;
 }
 .fs__row .rhs {
   flex-basis: 100%;
@@ -369,8 +377,8 @@
   width: 100%;
   margin-top: 1.2rem;
 }
-.filter__input_col_two > div {
-}
+/* .filter__input_col_two > div { */
+/* } */
 .filter__input_col_two > button {
   font-size: 1rem;
   color: var(--sky-blue);
@@ -537,6 +545,9 @@
   width: 250px;
   margin: 2rem auto;
   padding: 0 2rem;
+}
+.payment__successful svg {
+  display: inline-block;
 }
 
 /* FLIGHT DETAILS */

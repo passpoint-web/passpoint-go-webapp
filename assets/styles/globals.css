@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 @font-face {
@@ -213,6 +217,8 @@ button:disabled {
   opacity: 0.8;
 }
 
+
+
 .skeleton {
   background: var(--grey-5) !important;
   /* background: linear-gradient(90deg, rgba(238, 238, 238, 0.0), rgba(137, 135, 135, 0.3), rgba(235, 235, 235, 0.0)) !important; */
@@ -231,6 +237,7 @@ button .loading {
   display: inline-block;
   position: relative;
 }
+
 button .loading::after,
 button .loading::before {
   content: "";
@@ -625,6 +632,14 @@ button.tertiary:hover,
   position: relative;
 }
 
+.page_main_card {
+  background-color: #fff;
+  border-radius: 16px;
+  min-height: 80vh;
+  padding: var(--inner-component-mg);
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05), 0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+}
+
 /* end of buttons */
 
 /* Chrome, Safari, Edge, Opera */
@@ -890,12 +905,17 @@ form {
 
 .primary-tag,
 .success-tag,
+.paid-tag,
 .completed-tag,
 .confirmed-tag,
 .successful-tag,
 .pending-tag,
 .failed-tag,
 .failure-tag,
+.processing-tag,
+.issued-tag,
+.reserved-tag,
+.cancelled-tag,
 .processing-tag {
   font-family: var(--graphikRegular);
   padding: 0.4rem 0.8rem;
@@ -915,20 +935,29 @@ form {
 
 .successful-tag,
 .success-tag,
+.paid-tag,
 .confirmed-tag,
-.completed-tag {
+.completed-tag,
+.issued-tag {
   background: #e9f9f4;
   color: #23c38e;
 }
 
+.reserved-tag {
+  background: var(--grey-6);
+  color: var(--grey-3);
+}
+
 .pending-tag,
+.processing-tag .reserved-tag,
 .processing-tag {
   background: #fffae7;
   color: #e9b500;
 }
 
 .failure-tag,
-.failed-tag {
+.failed-tag,
+.cancelled-tag {
   background: #fee8e8;
   color: #f21818;
 }

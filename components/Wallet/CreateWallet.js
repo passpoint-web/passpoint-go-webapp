@@ -16,9 +16,7 @@ const CreateWallet = ({wallet, styles, setWalletState}) => {
 			const response = await wallet.createWallet({
 				currency: "NGN"
 			})
-			console.log(response)
 			notify("success", response.responseMessage || 'We have confirmed your wallet creation');
-			// window.location.reload()
 			setWalletState('pending')
 		} catch (_err) {
 			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err;
@@ -51,13 +49,7 @@ const CreateWallet = ({wallet, styles, setWalletState}) => {
 		</div>
 	)
 
-	return (
-		<div className={styles.create_wallet}>
-			<h3>Wallet</h3>
-			<h4>Manage your wallet here</h4>
-			<CreateWalletCard />
-		</div>
-	)
+	return (<CreateWalletCard />)
 }
 
 export default CreateWallet

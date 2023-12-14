@@ -14,15 +14,22 @@ import formStyles from "@/assets/styles/auth-screens.module.css"
 import PaymentFail from "./PaymentFail"
 import Link from "next/link"
 import WarningModal from "./WarningModal"
+import { payment } from "@/services/restService/payment"
 
 const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
-  const paymentOptions = ["My Passpoint Wallet", "Credit/Debit Card"]
+  const paymentOptions = [
+    "My Passpoint Wallet",
+    // "Credit/Debit Card"
+  ]
   const [paymentOption, setPaymentOption] = useState(paymentOptions[0])
   const [paymentSuccessful, setPaymentSuccessful] = useState(false)
   const [paymentFailure, setPaymentFailure] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [warningModalVisible, setWarningModalVisible] = useState(false)
+  const [paymentResponse, setPaymentResponse] = useState({})
   const [walletAccount, setWalletAccount] = useState({})
+  const [paymentCharges, setPaymentCharges] = useState({})
+  const [walletLoading, setWalletLoading] = useState(false)
   const [pins, setPins] = useState({
     pin: "",
   })
@@ -38,7 +45,8 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
   const makePayment = async (pin) => {
     setIsLoading(true)
     const promise = await makeFlightBooking(pin)
-    if (promise === "success") {
+    setPaymentResponse(promise)
+    if (promise.type === "success") {
       setPaymentSuccessful(true)
     } else {
       setPaymentFailure(true)
@@ -49,15 +57,35 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 
   const getWallet = async () => {
     try {
+      setWalletLoading(true)
       const response = await wallet.getWalletDetails()
       setWalletAccount({
         ...response.data.data.walletAccount["NGN"],
         pinCreated: response.data.data.pinCreated,
       })
+      getPaymentCharges()
     } catch (_err) {
       console.log(_err)
+      setWalletLoading(false)
     } finally {
-      // setDataLoading(false)
+      // setWalletLoading(false)
+    }
+  }
+
+  const getPaymentCharges = async () => {
+    try {
+      setWalletLoading(true)
+      const response = await payment.getCharges({
+        currency: "NGN",
+        amount: totalAmount,
+      })
+      setPaymentCharges(response.data.data)
+      setWalletLoading(false)
+    } catch (_err) {
+      console.log(_err)
+      setWalletLoading(false)
+    } finally {
+      // setWalletLoading(false)
     }
   }
 
@@ -88,7 +116,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
       )}
       <button className={styles.row__header}>
         <div className="texts">
-          <h3 className="capitalize"> Payment Options</h3>
+          <h3 className=""> Payment Option(s)</h3>
           {/* <p>Manage your bookings here</p> */}
         </div>
         <FaChevronDown />
@@ -128,6 +156,14 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                     <div className="balance">
                       <div>Booking Cost</div>
                       <h2>({functions.formatMoney(totalAmount, "NGN")})</h2>
+                      <div>
+                        incl. fees:{" "}
+                        {functions.formatMoney(
+                          Number(paymentCharges.fee) +
+                            Number(paymentCharges.vat),
+                          "NGN"
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -151,7 +187,13 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                   </Input>
                   <PrimaryBtn
                     loading={isLoading}
-                    disabled={walletAccount?.availableBalance < totalAmount}
+                    disabled={
+                      !(
+                        !walletLoading &&
+                        walletAccount?.availableBalance >= totalAmount &&
+                        pins.pin?.length >= 4
+                      )
+                    }
                     text={
                       walletAccount?.availableBalance < totalAmount
                         ? `Insufficient Funds`
@@ -161,7 +203,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                   />
                   {walletAccount?.availableBalance < totalAmount && (
                     <Link
-                      href="/dashboard/wallet?add-money=true"
+                      href="/wallet?add-money=true"
                       className={styles.wallet__link}
                     >
                       Top-up Wallet
@@ -169,9 +211,14 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                   )}
                 </div>
               )}
-              {paymentSuccessful && !isLoading && <PaymentSuccessful />}
+              {paymentSuccessful && !isLoading && (
+                <PaymentSuccessful message={paymentResponse.message} />
+              )}
               {paymentFailure && !isLoading && (
-                <PaymentFail restartPayment={restartPayment} />
+                <PaymentFail
+                  message={paymentResponse.message}
+                  restartPayment={restartPayment}
+                />
               )}
             </form>
           )}

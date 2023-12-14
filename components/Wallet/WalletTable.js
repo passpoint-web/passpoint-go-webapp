@@ -10,7 +10,7 @@ import WalletTransactionModal from "./WalletTransactionModal";
 import { useEffect, useState } from "react";
 // import ngBanks from "@/utils/ng-banks";
 import Button from "../Btn/Button";
-import CopyValue from "../CopyValue";
+import CopyValue from "../Copy/CopyValue";
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import Input from "../Dashboard/Input";
@@ -49,55 +49,6 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		startDate: '2023-09-01',
 		endDate: numericalDateDashReversed(new Date())
 	})
-	// eslint-disable-next-line no-unused-vars
-	const getTransactions = async (
-		pageNumber,
-		currency = 'NGN' ,
-		startDate,
-		endDate,
-		pageSize,
-		type,
-		loading=false
-	) => {
-		let filters = {
-			pageNumber,
-			currency,
-			startDate,
-			endDate,
-			pageSize
-		}
-
-		if (filters.startDate === '') {
-			delete filters.startDate
-		}
-		if (filters.endDate === '') {
-			delete filters.endDate
-		}
-		setGetDataLoading(loading)
-		try {
-			const response = await wallet.transactions({data: filters, type: type==='Incoming' ? 'collection' : type==='Outgoing' ? 'payout' : type==='Payment' ? 'billpayment' : 'all'})
-			const {data} = response.data
-			const {
-				currentPage,
-				pageCount,
-				pageSize,
-				totalCount
-			} = response.data
-			setPagination((prev)=>({
-				...prev,
-				currentPage,
-				totalPages: pageCount,
-				limit: pageSize,
-				pageDataLength: data.length || 0,
-				totalData: totalCount
-			}))
-			setTransactions(data)
-		} catch (_err) {
-			// 
-		} finally {
-			setGetDataLoading(false)
-		}
-	}
 	// eslint-disable-next-line no-unused-vars
 	const getAllTransactions = async (
 		pageNumber,
@@ -208,24 +159,24 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 				{
 					// activeTab === 'Wallet' ?
 					<Select
-					placeholder='Transaction Type'
-					// selectDisabled={activeTab === 'Payments'}
-					selectPlaceHolder='Transaction Type'
-					styleProps={{
-						option: {
-							height: 40
-						},
-						dropdown: {
-							height: 100
-						}
-					}}
-					selectOptions={transactionTypes}
-					selectedOption={transactionType}
-					emitSelect={(val)=>handleTransactionType(val)}
-				/> 
+						placeholder='Transaction Type'
+						// selectDisabled={activeTab === 'Payments'}
+						selectPlaceHolder='Transaction Type'
+						styleProps={{
+							option: {
+								height: 40
+							},
+							dropdown: {
+								height: 100
+							}
+						}}
+						selectOptions={transactionTypes}
+						selectedOption={transactionType}
+						emitSelect={(val)=>handleTransactionType(val)}
+					/>
 				// : <></>
 				}
-				</div>
+			</div>
 		</div>
 	)
 
@@ -233,121 +184,113 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		<>
 			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
 				transaction={currentTransaction}
-				styles={styles} /> : <></>}
+				styles={styles} tableStyles={tableStyles} /> : <></>}
 
 			<div className={tableStyles.table_container}>
-			{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}
-			<div className={`table-ctn ${tableStyles.wallet}`}>
-				<div className={tableStyles.table__outer}>
-					<div className={tableStyles.table__header}>
-						<div className={tableStyles.top}>
-							<div className="texts">
-								<h3 className="capitalize"> Transaction History</h3>
-								<p>Manage your 
-									{/* {activeTab} */}
+				{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}
+				<div className={`table-ctn ${tableStyles.wallet}`}>
+					<div className={tableStyles.table__outer}>
+						<div className={tableStyles.table__header}>
+							<div className={tableStyles.top}>
+								<div className="texts">
+									<h3 className="capitalize"> Transaction History</h3>
+									<p>Manage your
+										{/* {activeTab} */}
 									transaction here</p>
+								</div>
+								{Filters()}
 							</div>
-							{Filters()}
 						</div>
+						<div className={tableStyles.table__main}>
+							{!getDataLoading ?
+								<table>
+									<thead>
+										<tr className="table__header">
+
+											<th>BENEFICIARY DETAILS</th>
+											<th>BENEFICIARY BANK</th>
+
+											<th>AMOUNT</th>
+											<th>TYPE</th>
+											<th>DATE &amp; TIME</th>
+											<th>STATUS</th>
+											<th>ACTION</th>
+										</tr>
+									</thead>
+									<tbody>
+										{transactions.map((data, id) => (
+											<tr key={id}>
+												<td className={tableStyles.td_4}>
+													{
+														<div className={tableStyles.col}>
+															<h4>{data.beneficiaryAccountName?.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
+															{
+																data.beneficiaryAccountNumber !== 'PFL0000000' ?
+																	<div className={tableStyles.accountNum}
+																		style={{display: 'flex', gap: 10}}>
+																		<p>{data.beneficiaryWalletId || data.beneficiaryAccountNumber}</p>
+																		<CopyValue color="#009ec4"
+																			value={data.beneficiaryWalletId || data.beneficiaryAccountNumber} />
+
+																	</div>
+																	:<></>
+															}
+														</div>
+													}
+												</td>
+												<td className={tableStyles.td_3}>{data.beneficiaryBankName }</td>
+
+												<td className={`${tableStyles.td_3} text-bold`}>
+													{formatMoney(data.amount, data.currency)}
+												</td>
+												<td className={tableStyles.td_2}>
+													{data.transactionCategory ==='PAYOUT' ?
+														<>
+															<span className="outgoing-circle" /> Outgoing
+														</> : data.transactionCategory ==='COLLECTION' ?
+															<>
+																<span className="incoming-circle" /> Incoming
+															</>
+															: data.transactionCategory ==='BILL_PAYMENT' ?
+																<>
+																	<span className="payment-circle" /> Payment
+																</> : <></>
+													}
+												</td>
+												<td className={tableStyles.td_3}>
+													<div className="date-time">
+														<div className="date">
+															{detailedDate(data.dateCreated)}
+														</div>
+														<div className="time">
+															{timeFromDate(data.dateCreated)}
+														</div>
+													</div>
+												</td>
+												<td className={tableStyles.td_2}>
+													{ <div className={`${data.transactionStatus?.toLowerCase()}-tag`}>{data.transactionStatus}</div>}
+												</td>
+												<td className={tableStyles.td_3}>
+													<Button
+														className="secondary_btn outline_btn"
+														text="View Details"
+														onClick={()=>handleCurrentTransaction(data)}
+														// href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}
+													/>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</table> :
+								<TableLoader rowLength={7} />
+							}
+						</div>
+						<Pagination tableStyles={tableStyles}
+							handleEntry={(val)=>handleEntry(val)}
+							setPage={(val)=>setPage(val)}
+							pagination={pagination} />
 					</div>
-					<div className={tableStyles.table__main}>
-						{!getDataLoading ?
-						<table>
-							<thead>
-								<tr className="table__header">
-								
-									<th>BENEFICIARY DETAILS</th>
-									<th>BENEFICIARY BANK</th>
-									
-									<th>AMOUNT</th>
-									<th>TYPE</th>
-									<th>DATE &amp; TIME</th>
-									<th>STATUS</th>
-									<th>ACTION</th>
-								</tr>
-							</thead>
-							<tbody>
-								{transactions.map((data, id) => (
-									<tr key={id}>
-										{data.transactionCategory !== 'BILL_PAYMENT' ?
-										<>
-											<td className={tableStyles.td_4}>
-											{
-												<div className={tableStyles.col}>
-												<h4>{data.beneficiaryAccountName?.length > 20 ? `${data.beneficiaryAccountName.substring(0, 18)}...` : data.beneficiaryAccountName}</h4>
-												<div className={tableStyles.accountNum}
-													style={{display: 'flex', gap: 10}}>
-													<p>{data.beneficiaryWalletId || data.beneficiaryAccountNumber}</p>
-													<CopyValue color="#009ec4"
-														value={data.beneficiaryWalletId || data.beneficiaryAccountNumber} />
-												</div>
-											</div>
-											}
-										</td>
-										<td className={tableStyles.td_3}>{data.transactionCategory !== 'BILL_PAYMENT' ? data.beneficiaryBankName : '-'}</td>
-										</> : 
-										<>
-											{/* <td className={tableStyles.td_4}>
-												<div style={{display: 'flex', gap: 10}}>
-												<h5>{data.transactionId.substring(0, 20)}...</h5>
-											<CopyValue color="#009ec4"
-														value={data.transactionId} />
-												</div>
-												</td> */}
-											<td className={tableStyles.td_4}>-</td>
-											<td className={tableStyles.td_3}>-</td>
-										</>}
-										<td className={`${tableStyles.td_3} text-bold`}>
-											{formatMoney(data.amount, data.currency)}
-										</td>
-										<td className={tableStyles.td_2}>
-											{data.transactionCategory ==='PAYOUT' ?
-												<>
-													<span className="outgoing-circle" /> Outgoing
-												</> : data.transactionCategory ==='COLLECTION' ?
-												<>
-													<span className="incoming-circle" /> Incoming
-												</> 
-												: data.transactionCategory ==='BILL_PAYMENT' ?
-												<>
-												<span className="payment-circle" /> Payment
-												</> : <></>
-											}
-										</td>
-										<td className={tableStyles.td_3}>
-											<div className="date-time">
-												<div className="date">
-													{detailedDate(data.dateCreated)}
-												</div>
-												<div className="time">
-													{timeFromDate(data.dateCreated)}
-												</div>
-											</div>
-										</td>
-										<td className={tableStyles.td_2}>
-											{ <div className={`${data.transactionStatus?.toLowerCase()}-tag`}>{data.transactionStatus}</div>}
-										</td>
-										<td className={tableStyles.td_3}>
-											<Button
-												className="secondary_btn outline_btn"
-												text="View Details"
-												onClick={()=>handleCurrentTransaction(data)}
-												// href={`/dashboard/wallet?transactionModal=transaction&transactionId=${id}`}
-											/>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table> : 
-						<TableLoader rowLength={7} />
-						}
-					</div>
-					<Pagination tableStyles={tableStyles}
-						handleEntry={(val)=>handleEntry(val)}
-						setPage={(val)=>setPage(val)}
-						pagination={pagination} />
 				</div>
-			</div>
 			</div>
 		</>
 	);

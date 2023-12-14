@@ -2,13 +2,14 @@
 
 import { AirplaneIcon, FlightExchangeIcon } from "@/constants/icons"
 import Link from "next/link"
-import CustomSelect from "@/components/Custom/Select"
+// import CustomSelect from "@/components/Custom/Select"
 import Input from "../Dashboard/Input"
 import { useEffect, useState } from "react"
 import { travel } from "@/services/restService"
 import { getAirportsState, setAirportsState } from "@/services/localService"
 import CustomObjectSelect from "../Custom/CustomObjectSelect"
 import { useSearchParams } from "next/navigation"
+import Select from "../Dashboard/Select"
 
 const FlightPageHeader = ({ styles }) => {
   const searchParams = useSearchParams()
@@ -28,30 +29,30 @@ const FlightPageHeader = ({ styles }) => {
   )
 
   const queryParams = {
-    adults: searchParams.get("adults"),
-    cabin: searchParams.get("cabin"),
-    children: searchParams.get("children"),
-    departureDate: searchParams.get("departureDate"),
-    destination: searchParams.get("destination"),
-    infants: searchParams.get("infants"),
-    origin: searchParams.get("origin"),
-    returnDate: searchParams.get("returnDate"),
-    tripType: searchParams.get("tripType"),
+    adults: searchParams?.get("adults"),
+    cabin: searchParams?.get("cabin"),
+    children: searchParams?.get("children"),
+    departureDate: searchParams?.get("departureDate"),
+    destination: searchParams?.get("destination"),
+    infants: searchParams?.get("infants"),
+    origin: searchParams?.get("origin"),
+    returnDate: searchParams?.get("returnDate"),
+    tripType: searchParams?.get("tripType"),
   }
-  console.log(queryParams?.tripType)
+  // console.log(queryParams?.tripType)
 
   const today = new Date().toISOString().split("T")[0]
 
-  const [fromAirport, setFromAirport] = useState(queryParams.origin || "")
-  const [toAirport, setToAirport] = useState(queryParams.destination || "")
+  const [fromAirport, setFromAirport] = useState(queryParams?.origin || "")
+  const [toAirport, setToAirport] = useState(queryParams?.destination || "")
   const [departureDate, setDepartureDate] = useState(
-    queryParams.departureDate || ""
+    queryParams?.departureDate || ""
   )
-  const [returnDate, setReturnDate] = useState(queryParams.returnDate || "")
-  const [tripType, setTripType] = useState(queryParams.tripType || "One Way")
-  const [infants, setInfants] = useState(queryParams.infants || "")
-  const [children, setChildren] = useState(queryParams.children || "")
-  const [adult, setAdult] = useState(queryParams.adults || 1)
+  const [returnDate, setReturnDate] = useState(queryParams?.returnDate || "")
+  const [tripType, setTripType] = useState(queryParams?.tripType || "One Way")
+  const [infants, setInfants] = useState(queryParams?.infants || "")
+  const [children, setChildren] = useState(queryParams?.children || "")
+  const [adult, setAdult] = useState(queryParams?.adults || 1)
   const [flightClass, setFlightClass] = useState(
     queryParams?.cabin || "Economy"
   )
@@ -74,12 +75,13 @@ const FlightPageHeader = ({ styles }) => {
           <h3>Flights</h3>
           <p>
             {" "}
-            <Link href="/dashboard/travel">Travel Services</Link> {">>"} Flights{" "}
+            <Link href="/travel">Travel Services</Link> {">>"} Flights{" "}
           </p>
         </div>
         <div className={`${styles.quick__filter} quick__filter`}>
-          <CustomSelect
+          <Select
             id="trip-type"
+            // label='Trip'
             selectOptions={["Round Trip", "One way"]}
             selectedOption={tripType}
             styleProps={{
@@ -96,15 +98,21 @@ const FlightPageHeader = ({ styles }) => {
           <Input
             id="passengers"
             name="passengers"
+            // label='No. Adults'
             type="number"
+            min="0"
+            max="20"
             placeholder="Adults"
             value={adult}
             onChange={(e) => setAdult(e.target.value)}
           />
           <Input
             id="passengers"
+            // label='No. Children'
             name="passengers"
             type="number"
+            min="0"
+            max="20"
             placeholder="Children"
             value={children}
             onChange={(e) => setChildren(e.target.value)}
@@ -112,13 +120,17 @@ const FlightPageHeader = ({ styles }) => {
           <Input
             id="passengers"
             name="passengers"
+            // label='No. Infants'
             type="number"
+            min="0"
+            max="20"
             placeholder="Infants"
             value={infants}
             onChange={(e) => setInfants(e.target.value)}
           />
-          <CustomSelect
+          <Select
             id="class"
+            // label="Type"
             selectOptions={["Economy", "Premium Economy", "Business", "First"]}
             selectedOption={flightClass}
             styleProps={{
@@ -196,7 +208,7 @@ const FlightPageHeader = ({ styles }) => {
         </div>
         <Link
           className="primary_btn"
-          href={`/dashboard/travel/flights/search?adults=${adult || ""}&cabin=${
+          href={`/travel/flights/search?adults=${adult || ""}&cabin=${
             flightClass || ""
           }&children=${children || ""}&departureDate=${
             departureDate || ""

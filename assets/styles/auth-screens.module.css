@@ -562,6 +562,8 @@
 .receive_otp_text {
   font-variant-numeric: tabular-nums;
   color: var(--grey-1);
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .otp_count_down {

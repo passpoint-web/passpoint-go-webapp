@@ -55,12 +55,12 @@ const Ownership = ({ styles }) => {
       });
       console.log(response);
       notify("success", "Your ownership has been saved");
-      push("/dashboard/kyc/success");
+      push("/kyc/success");
     } catch (_err) {
       const { message } = _err.response?.data || _err;
       notify("error", message);
       if (message?.toLowerCase().includes("already uploaded")) {
-        push("/dashboard/kyc/success");
+        push("/kyc/success");
       }
     } finally {
       setIsLoading(false);
@@ -100,7 +100,7 @@ const Ownership = ({ styles }) => {
             type="sd"
             text="Back"
             className="half"
-            onClick={() => push("/dashboard/kyc/corporate/address")}
+            onClick={() => push("/kyc/corporate/address")}
           />
           <Button
             className="primary sd half"

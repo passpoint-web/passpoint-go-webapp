@@ -16,14 +16,14 @@ const SelectFlight = () => {
   const [isLoading, setIsLoading] = useState(true)
   const searchParams = useSearchParams()
   const queryParams = {
-    adults: searchParams.get("adults"),
-    cabin: searchParams.get("cabin"),
-    children: searchParams.get("children"),
-    departureDate: searchParams.get("departureDate"),
-    destination: searchParams.get("destination"),
-    infants: searchParams.get("infants"),
-    origin: searchParams.get("origin"),
-    returnDate: searchParams.get("returnDate"),
+    adults: searchParams?.get("adults"),
+    cabin: searchParams?.get("cabin"),
+    children: searchParams?.get("children"),
+    departureDate: searchParams?.get("departureDate"),
+    destination: searchParams?.get("destination"),
+    infants: searchParams?.get("infants"),
+    origin: searchParams?.get("origin"),
+    returnDate: searchParams?.get("returnDate"),
   }
 
   // FILTER PRICE
@@ -167,7 +167,6 @@ const SelectFlight = () => {
       <button className={styles.row__header}>
         <div className="texts">
           <h3 className="capitalize">
-            {" "}
             Select Flights ({sortedFlights?.length})
           </h3>
           {/* <p>Manage your bookings here</p> */}
@@ -299,7 +298,7 @@ const SelectFlight = () => {
                   <div>11:59PM</div>
                 </div>
               </label>
-              {queryParams.returnDate && (
+              {queryParams?.returnDate && (
                 <label
                   className={`${styles.filter__input} ${styles.range__input}`}
                 >
@@ -405,11 +404,13 @@ const SelectFlight = () => {
               quickest={flight.id === quickestFlight}
             />
           ))}
-          {sortedFlights?.length === 0 && (
+          {sortedFlights?.length === 0 && !isLoading ? (
             <div className="empty-state">
               <h2>✈️</h2>
               <h3>No Flights Available</h3>
             </div>
+          ) : (
+            <></>
           )}
         </div>
       </div>

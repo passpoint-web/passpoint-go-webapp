@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import MetricCard from "./MetricCard";
+// import MetricCard from "./MetricCard";
 const TravelServicesPage = ({ styles }) => {
   const travelServices = [
     {
@@ -37,19 +37,19 @@ const TravelServicesPage = ({ styles }) => {
   return (
     <div className={`${styles.inner} travel-services`}>
       <div className={styles.travel__dashboard_header}>
-        <div className={styles.row_one}>
+        <div className={`${styles.row_one} mb-[200px]`}>
           <div>
             <h3>Travel Services</h3>
             <p>Kindly select your preferred service</p>
           </div>
-          {/* <Link className="primary_btn" href="/dashboard/travel/manage">
+          {/* <Link className="primary_btn" href="/travel/manage">
             <BriefcaseIcon />
             Manage Services
           </Link> */}
         </div>
         <div className={styles.row_two}>
           {travelServices.map((t, id) => (
-            <Link key={id} className={`${!t.active ? styles.in_active : ''}`} href={`/dashboard/travel/${t.active ? t.link : '#'}`}>
+            <Link key={id} className={`${!t.active ? styles.in_active : ''}`} href={`/travel/${t.active ? t.link : '#'}`}>
               <div>
                 {t.icon}
                 <h4>{t.name}</h4>
@@ -60,8 +60,8 @@ const TravelServicesPage = ({ styles }) => {
           ))}
         </div>
       </div>
-      <MetricCard />
-      {/* <CustomTable action="/dashboard/travel/flights?id=AH12345678" /> */}
+      {/* <MetricCard /> */}
+      {/* <CustomTable action="/travel/flights?id=AH12345678" /> */}
     </div>
   );
 };

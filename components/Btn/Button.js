@@ -1,12 +1,13 @@
 import Loader from "./Loader"
 
-const Button = ({text,loading=false, ...props}) => {
+const Button = ({text, icon, loading=false, ...props}) => {
 	return (
 		<button
 			{...props}
 			disabled={loading || props.disabled}
+			style={icon && {display: 'flex', gap: '10px', alignItems: 'center'}}
 		>
-			{!loading ? text : <Loader />}
+			{icon || ''} {!loading ? `${text || ''}` : <Loader size={20} />}
 		</button>
 	)
 }
