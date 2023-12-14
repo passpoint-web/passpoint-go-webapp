@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCredentials } from '../localService';
 const walletRestAgent = axios.create({
-	baseURL:  process.env.NEXT_PUBLIC_USERMGT_BASE_URL,
+	baseURL:  process.env.NEXT_PUBLIC_PAYMENT_BASE_URL,
 	headers: {
 		'Content-Type': 'application/json'
 	}
