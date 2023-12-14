@@ -7,7 +7,7 @@ const StatusInput = ({
 	// error = false,
 	// errorMsg,
 	msgPositionCenter,
-  feedback={},
+	feedback={},
 	styleProps,
 	toolTipMessage,
 	label_center = false,
@@ -15,9 +15,12 @@ const StatusInput = ({
 }) => {
 	return (
 		<>
-			<div className={`${styles.form_group} input__ctn ${feedback.status === 'error' ? "error" : ''}`} style={styleProps}>
-				{label ? <div className={styles.label_ctn} style={{display: 'flex'}}>
-					<label htmlFor={props.id} style={{margin: label_center ? '0 auto 8px' : ''}}>
+			<div className={`${styles.form_group} input__ctn ${feedback.status === 'error' ? "error" : ''}`}
+				style={styleProps}>
+				{label ? <div className={styles.label_ctn}
+					style={{display: 'flex'}}>
+					<label htmlFor={props.id}
+						style={{margin: label_center ? '0 auto 8px' : ''}}>
 						{label}
 					</label>
 					{toolTipMessage ? <ToolTip message={toolTipMessage} /> : <></>}
@@ -25,7 +28,8 @@ const StatusInput = ({
 				{children || <input {...props} />}
 				{feedback.msg  ? (
 					<FeedbackInfo center={msgPositionCenter}
-						message={feedback.msg} type={feedback.status}  />
+						message={feedback.msg}
+						type={feedback.status}  />
 				) : <></>}
 			</div>
 		</>

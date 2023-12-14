@@ -14,7 +14,6 @@ import { useNotify } from "@/utils/hooks";
 import CustomSelect from "../Custom/Select";
 import { businessIndustries, businessTypes, CS } from "@/utils/CONSTANTS";
 // eslint-disable-next-line no-unused-vars
-import CountrySelect from "../Custom/CountrySelect";
 
 const AccountProfile = () => {
 	const [savedCredentials, setSavedCredentials] = useState({});

@@ -184,7 +184,8 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 		<>
 			{showTransactionModal ? <WalletTransactionModal onClose={()=>setShowTransactionModal(false)}
 				transaction={currentTransaction}
-				styles={styles} tableStyles={tableStyles} /> : <></>}
+				styles={styles}
+				tableStyles={tableStyles} /> : <></>}
 
 			<div className={tableStyles.table_container}>
 				{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}

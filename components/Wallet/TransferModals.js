@@ -95,7 +95,7 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 			setFeedbackError(responseMessage || message)
 			// console.log(responseMessage || message)
 			// if (responseMessage === 'Pin has already been set') {
-				// setCurrentModal('transfer')
+			// setCurrentModal('transfer')
 			// }
 		} finally {
 			setPinResetLoading(false)
@@ -307,7 +307,10 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 			<div style={{marginBottom: 10}}>
 				{/* <AccountTypeDropDown selectedOption={accountType}
 					emitSelect={(e)=>setAccountType(e)} /> */}
-					<Tab tabs={accountTypes} objKey={'name'} setActiveTab={(e)=>setAccountType(e)} activeTab={accountType} />
+				<Tab tabs={accountTypes}
+					objKey={'name'}
+					setActiveTab={(e)=>setAccountType(e)}
+					activeTab={accountType} />
 			</div>
 			{/* <Tab tabs={accountTypes} objKey={'name'} /> */}
 			{/* wallet id || account number */}
@@ -349,7 +352,7 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 					onChange={(e) => handleChange("walletID", e.target.value)}
 					errorMsg={feedbackError.toLowerCase().includes('number')? 'Wallet ID is not valid' : 'Wallet ID is required'}
 				/>}
-				{accountNameRetrieved ?
+			{accountNameRetrieved ?
 				<>
 					<Input
 						disabled
@@ -491,7 +494,9 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 							/>
 						</div>
 					</Input>
-					<p>Forgot your PIN? <TertiaryBtn text={!pinResetLoading ? 'Reset PIN' : 'Loading...'} disabled={pinResetLoading} onClick={(e)=>initiatePinReset(e)}/></p>
+					<p>Forgot your PIN? <TertiaryBtn text={!pinResetLoading ? 'Reset PIN' : 'Loading...'}
+						disabled={pinResetLoading}
+						onClick={(e)=>initiatePinReset(e)}/></p>
 				</div>
 			</section>
 		</>
@@ -499,46 +504,46 @@ const TransferModals = ({ onClose, styles, updateWalletState }) => {
 
 	return (
 		<>
-		{currentLevel === 'reset pin' ?
-		<CreatePinModal handlePinCreation={()=>setCurrentLevel('pin')}
-		reference={reference}
-		onClose={()=>setCurrentLevel('pin')} /> : 
-		<ModalWrapper
-			ctaDisabled={currentLevel === 'account' ? !allFieldsValid : tranferPin.length !== 4}
-			ctaBtnType={accountOrPin ? 'md' : 'sd'}
-			ctaBtnText={currentLevel === 'account' ? 'Continue' : currentLevel === 'pin' ? 'Confirm' : currentLevel === 'success' ? 'Go Back' : currentLevel === 'failure' ? 'Try Again' : ''}
-			heading={accountOrPin ? 'Transfer Money' : ''}
-			topClose={accountOrPin}
-			loading={accountTranferLoading}
-			subHeading={accountOrPin ? 'Kindly provide details below' : ''}
-			onClose={() => currentLevel === 'pin' ? setCurrentLevel('account') : onClose()}
-			bottomCancelNeeded={accountOrPin}
-			handleCta={handleModalCta}
-		>
-			<form style={{ minHeight: 250 }}>
-				{currentLevel === 'account' ?
-					GetBanksFlow()
-					: currentLevel === 'pin' ?
-					TransferPin() :
-						currentLevel === 'success' ?
-							<ActionFeedbackCard content={{
-								status: 'success',
-								title: 'Transfer Successful',
-								// value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} was successful and they will receive it promptly`
-								value: statusMessage
-							}}/> : 	currentLevel === 'failure' ?
-								<ActionFeedbackCard
-									content={{
-										status: 'failure',
-										title: 'Transfer Failed',
+			{currentLevel === 'reset pin' ?
+				<CreatePinModal handlePinCreation={()=>setCurrentLevel('pin')}
+					reference={reference}
+					onClose={()=>setCurrentLevel('pin')} /> :
+				<ModalWrapper
+					ctaDisabled={currentLevel === 'account' ? !allFieldsValid : tranferPin.length !== 4}
+					ctaBtnType={accountOrPin ? 'md' : 'sd'}
+					ctaBtnText={currentLevel === 'account' ? 'Continue' : currentLevel === 'pin' ? 'Confirm' : currentLevel === 'success' ? 'Go Back' : currentLevel === 'failure' ? 'Try Again' : ''}
+					heading={accountOrPin ? 'Transfer Money' : ''}
+					topClose={accountOrPin}
+					loading={accountTranferLoading}
+					subHeading={accountOrPin ? 'Kindly provide details below' : ''}
+					onClose={() => currentLevel === 'pin' ? setCurrentLevel('account') : onClose()}
+					bottomCancelNeeded={accountOrPin}
+					handleCta={handleModalCta}
+				>
+					<form style={{ minHeight: 250 }}>
+						{currentLevel === 'account' ?
+							GetBanksFlow()
+							: currentLevel === 'pin' ?
+								TransferPin() :
+								currentLevel === 'success' ?
+									<ActionFeedbackCard content={{
+										status: 'success',
+										title: 'Transfer Successful',
+										// value: `Your transfer of ${formatMoney(bankDetail.amount, 'NGN')} to ${bankDetail.accountName} was successful and they will receive it promptly`
 										value: statusMessage
-									}} /> : <></>
-				}
-			</form>
-		</ModalWrapper>
+									}}/> : 	currentLevel === 'failure' ?
+										<ActionFeedbackCard
+											content={{
+												status: 'failure',
+												title: 'Transfer Failed',
+												value: statusMessage
+											}} /> : <></>
+						}
+					</form>
+				</ModalWrapper>
 
-		}
-			
+			}
+
 		</>
 	);
 };

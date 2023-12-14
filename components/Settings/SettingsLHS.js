@@ -4,7 +4,7 @@ import styles from './settings.module.css'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 // eslint-disable-next-line no-unused-vars
-import { NotificationIcon, AccountProfileIcon, AccountSecurityIcon } from '@/constants/icons'
+import { AccountProfileIcon, AccountSecurityIcon } from '@/constants/icons'
 const SettingsLHS = () => {
 	const pathname = usePathname()
 	return (

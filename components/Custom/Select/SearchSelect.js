@@ -39,22 +39,22 @@ const CustomSearchSelect = ({
 		}, 200)
 	}
 
-  const searchOptions = (item) => {
+	const searchOptions = (item) => {
 		setSearch(item)
-    const result = 	!objKey ? options.filter((c) => {
-      return c.toLowerCase().includes(item.toLowerCase())
-    }) :  options.filter((c) => {
-      return c[objKey].toLowerCase().includes(item.toLowerCase())
-    })
+		const result = 	!objKey ? options.filter((c) => {
+			return c.toLowerCase().includes(item.toLowerCase())
+		}) :  options.filter((c) => {
+			return c[objKey].toLowerCase().includes(item.toLowerCase())
+		})
 		setFilteredOptions(result)
 		const selectCtn = document.getElementById('search_select_ctn')
 		selectCtn.scrollTop = 0
 	}
 
-  useEffect(()=>{
-    setOptions(selectOptions)
-    setFilteredOptions(selectOptions)
-  },[selectOptions])
+	useEffect(()=>{
+		setOptions(selectOptions)
+		setFilteredOptions(selectOptions)
+	},[selectOptions])
 
 	return (
 		<>
@@ -78,7 +78,7 @@ const CustomSearchSelect = ({
 				</button>
 				{showSelect ? (
 					<div
-            id={'search_select_ctn'}
+						id={'search_select_ctn'}
 						className={`${styles.select} ${dropDownTop ? styles.top : ''} dropdown`}
 						style={{ ...styleProps?.dropdown }}>
 
@@ -90,7 +90,7 @@ const CustomSearchSelect = ({
 						/>
 						{filteredOptions.map((option, index) => (
 							<div
-							style={{ ...styleProps?.option }}
+								style={{ ...styleProps?.option }}
 								key={index}
 								className={`${styles.content} ${(objKey ? option?.[objKey] === selectedOption?.[objKey] : option === selectedOption) ? styles.content_selected : ''
 								}`}

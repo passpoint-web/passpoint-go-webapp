@@ -5,7 +5,7 @@ import Loader from "../Btn/Loader"
 // import PaymentSuccessful from "./PaymentSuccessful"
 import Tab from "../Tab"
 import flightStyles from '@/assets/styles/flight.module.css'
-import { Button, Stack } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
 import Select from "../Dashboard/Select"
 
 const TeamMemberModal = ({ styles, closeModal }) => {

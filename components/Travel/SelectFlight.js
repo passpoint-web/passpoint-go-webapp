@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 "use client"
 
 import styles from "../../assets/styles/flight.module.css"
@@ -386,16 +387,9 @@ const SelectFlight = () => {
 				</div>
 				<div className={styles.rhs}>
 					{isLoading &&
-            [1, 2, 3, 4].map((key) => (
-            	<div
-            		key={key}
-            		className={`${styles.dashMetric_content} skeleton`}
-            		style={{
-            			borderRadius: "16px",
-            			height: "200px",
-            			boxShadow: "none",
-            		}}
-            	/>
+            [1, 2, 3, 4].map((key) => (<div key={key}
+            	className={`${styles.dashMetric_content} skeleton`}
+            	style={{borderRadius: "16px",height: "200px",boxShadow: "none",}}/>
             ))}
 					{sortedFlights?.map((flight) => (
 						<FlightCard

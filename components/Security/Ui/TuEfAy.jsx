@@ -1,11 +1,11 @@
 import React from 'react'
 
 const TuEfAy = () => {
-  return (
-    <>
-    
-    </>
-  )
+	return (
+		<>
+
+		</>
+	)
 }
 
 export default TuEfAy

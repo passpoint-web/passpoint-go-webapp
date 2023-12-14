@@ -6,7 +6,8 @@ const Notification = ({ setOpenNotify, openNotify }) => {
 	return (
 		<main className={`${style.main} ${openNotify ? style.showNotify : ""}`}>
 			<header className={style.notifyHeader}>
-				<button className={style.closeBtn} onClick={() => setOpenNotify(false)}>
+				<button className={style.closeBtn}
+					onClick={() => setOpenNotify(false)}>
 					<CancelIcon />
 				</button>
 				<h2>

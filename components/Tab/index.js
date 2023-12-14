@@ -16,7 +16,7 @@ const Tab = ({tabs, objKey, setActiveTab, activeTab, tabStyle}) => {
 					style={{width: `calc(100%/${tabs.length})`}}
 				>
 					<div>
-					{objKey ? tab[objKey] : tab}
+						{objKey ? tab[objKey] : tab}
 					</div>
 				</button>
 			))}

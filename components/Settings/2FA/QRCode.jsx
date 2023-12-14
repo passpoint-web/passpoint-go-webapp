@@ -1,9 +1,6 @@
 // import { useQRCode } from 'next-qrcode';
-import Button from '@/components/Btn/Button';
 import CopyInputValue from '@/components/Copy/CopyInputValue';
-import Input from '@/components/Dashboard/Input';
 import Image from 'next/image';
-import { useEffect } from 'react';
 
 const QRCode = ({styles, qr}) => {
 	// const { Canvas } = useQRCode();
