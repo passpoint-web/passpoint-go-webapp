@@ -3,21 +3,20 @@ import { getToken, setLogout, getCredentials } from "./localService"
 // import cookies from '@/plugins/cookies';
 // eslint-disable-next-line no-unused-vars
 const restAgent = axios.create({
-	baseURL: "https://webapi-dev.mypasspoint.com/v1/",
+	baseURL: process.env.NEXT_PUBLIC_USERMGT_BASE_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
 })
 
 const kycBvnRestAgent = axios.create({
-	baseURL: "https://client-sandbox.mypasspoint.com/passpoint-usr/v1/kyc-app/",
+	baseURL: process.env.NEXT_PUBLIC_KYC_USERMGT_BASE_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
 })
 const flightRestAgent = axios.create({
-	// baseURL: "https://travelapi.mypasspoint.com/api/v1/",
-	baseURL: "https://travelapi-sandbox.mypasspoint.com/api/v1/",
+	baseURL: process.env.NEXT_PUBLIC_FLIGHTS_BASE_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -75,8 +74,8 @@ const setKycBvnConfig = () => {
 	const encodedToken = btoa(token)
 	const config = getRequestConfig()
 	config.headers.Authorization = `Basic ${encodedToken}`
-	config.headers["x-channel-id"] = "2"
-	config.headers["x-channel-code"] = "passpoint-infra-user"
+	config.headers["x-channel-id"] = process.env.NEXT_PUBLIC_PAYMENT_CHANNEL_ID
+	config.headers["x-channel-code"] = process.env.NEXT_PUBLIC_PAYMENT_CHANNEL_CODE
 	config.headers["x-merchant-id"] = merchantId
 
 	return config

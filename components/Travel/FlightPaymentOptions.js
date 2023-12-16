@@ -28,7 +28,10 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
   const [warningModalVisible, setWarningModalVisible] = useState(false)
   const [paymentResponse, setPaymentResponse] = useState({})
   const [walletAccount, setWalletAccount] = useState({})
+	const [walletBalance, setWalletBalance] = useState({})
   const [paymentCharges, setPaymentCharges] = useState({})
+	// eslint-disable-next-line no-unused-vars
+	const [balanceLoading, setBalanceLoading] = useState(true)
   const [walletLoading, setWalletLoading] = useState(false)
   const [pins, setPins] = useState({
     pin: "",
@@ -72,6 +75,19 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
     }
   }
 
+	const getWalletBalanceInNGN = async () => {
+		setBalanceLoading(true)
+		try {
+			const response = await wallet.getWalletBalance('NGN')
+			const {data} = response.data
+			setWalletBalance(data?.find(w=>w.currency==='NGN'))
+		} catch (_err) {
+			// console.log(_err)
+		} finally {
+			setBalanceLoading(false)
+		}
+	}
+
   const getPaymentCharges = async () => {
     try {
       setWalletLoading(true)
@@ -98,6 +114,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 
   useEffect(() => {
     getWallet()
+    getWalletBalanceInNGN()
   }, [])
 
   useEffect(() => {
@@ -148,7 +165,7 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                       <div>Wallet Balance</div>
                       <h2>
                         {functions.formatMoney(
-                          walletAccount?.availableBalance,
+                          walletBalance?.availableBalance,
                           "NGN"
                         )}
                       </h2>
@@ -190,18 +207,18 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                     disabled={
                       !(
                         !walletLoading &&
-                        walletAccount?.availableBalance >= totalAmount &&
+                        walletBalance?.availableBalance >= totalAmount &&
                         pins.pin?.length >= 4
                       )
                     }
                     text={
-                      walletAccount?.availableBalance < totalAmount
+                      walletBalance?.availableBalance < totalAmount
                         ? `Insufficient Funds`
                         : `Complete Booking`
                     }
                     onClick={() => makePayment(pins.pin)}
                   />
-                  {walletAccount?.availableBalance < totalAmount && (
+                  {walletBalance?.availableBalance < totalAmount && (
                     <Link
                       href="/wallet?add-money=true"
                       className={styles.wallet__link}
