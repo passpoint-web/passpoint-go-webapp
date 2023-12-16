@@ -11,10 +11,8 @@ import { useNotify } from "@/utils/hooks";
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
-// import RefreshBtn from '../Btn/RefreshBtn';
 
-// eslint-disable-next-line no-unused-vars
-const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles, updateWalletState}) => {
+const BalanceCard = ({ dataLoading, walletBalance, walletDetails, walletAccount, wallet, styles, updateWalletState}) => {
 	const notify = useNotify();
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
@@ -22,31 +20,8 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 	const [showBalance, setShowBalance] = useState(true)
 	const [pinResetLoading, setPinResetLoading] = useState(false)
 	const [reference, setReference] = useState('')
-	// const [feedbackError, setFeedbackError] = useState('')
 	const [currentModal, setCurrentModal] = useState(null)
-	// const [pinCheckLoading, setPinCheckLoading] = useState(false)
 
-	// const initiatePinForTransfer = async () => {
-	// 	setPinCheckLoading(true)
-	// 	try {
-	// 		const response = await wallet.initiatePin()
-	// 		const {reference} = response.data
-	// 		if (reference) {
-	// 			setReference(reference)
-	// 			setCurrentModal('create pin')
-	// 		} else {
-	// 			setCurrentModal('transfer')
-	// 		}
-	// 	} catch (_err) {
-	// 		const {responseMessage = undefined } = _err.response?.data || _err;
-	// 		// setFeedbackError(responseMessage || message)
-	// 		if (responseMessage === 'Pin has already been set') {
-	// 			setCurrentModal('transfer')
-	// 		}
-	// 	} finally {
-	// 		setPinCheckLoading(false)
-	// 	}
-	// }
 
 	const initiatePinReset = async (e, boo) => {
 		e.preventDefault()
@@ -104,7 +79,7 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 								<h4>Available Balance</h4>
 								<div className={styles.balance}>
 									<h1 className={!showBalance ? styles.hide_balance : ''}>
-										{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
+										{showBalance ? formatMoney(walletBalance.availableBalance, walletBalance.currency) : maskValue(walletAccount.availableBalance)}
 									</h1>
 									<div className={styles.card_action}>
 										<button onClick={()=>setShowBalance(!showBalance)}>

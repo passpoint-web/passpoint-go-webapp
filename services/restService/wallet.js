@@ -36,6 +36,9 @@ export const wallet = {
 	getWalletDetails: () => {
 		return walletRestAgent.get('wallet-app/get-wallet-details', setConfig())
 	},
+	getWalletBalance: () => {
+		return walletRestAgent.get('wallet-app/get-wallet-balance/NGN', setConfig())
+	},
 	initiatePin: (val=false) => {
 		return walletRestAgent.get(`wallet-app/init-pin-reset?forgotpin=${val}`, setConfig())
 	},

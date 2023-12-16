@@ -22,6 +22,7 @@ const Wallet = () => {
 	const [walletState, setWalletState] = useState('') // no-wallet, pending, created
 	const [walletDetails, setWalletDetails] = useState({})
 	const [walletAccount, setWalletAccount] = useState({})
+	const [walletBalance, setWalletBalance] = useState({})
 	const [dataLoading, setDataLoading] = useState(true)
 	const [balanceLoading, setBalanceLoading] = useState(true)
 	const [updateKey, setUpdateKey] = useState(new Date().getTime())
@@ -35,7 +36,6 @@ const Wallet = () => {
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
-			console.log(Object.keys(data.walletAccount).length)
 			if (Object.keys(data.walletAccount).length) {
 				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				const {pinCreated} = data
@@ -60,6 +60,20 @@ const Wallet = () => {
 		}
 	}
 
+	const getWalletBalanceInNGN = async () => {
+		setBalanceLoading(true)
+		try {
+			const response = await wallet.getWalletBalance('NGN')
+			const {data} = response.data
+			console.log(data)
+			setWalletBalance(data?.find(w=>w.currency==='NGN'))
+		} catch (_err) {
+			// console.log(_err)
+		} finally {
+			setBalanceLoading(false)
+		}
+	}
+
 	const getBanksAndCache = async() => {
 		if (!getBanks().length) {
 			try {
@@ -80,6 +94,7 @@ const Wallet = () => {
 	const updateWalletState = () => {
 		setUpdateKey(new Date().getTime())
 		getWallet(false)
+		getWalletBalanceInNGN()
 	}
 
 	const initiatePinCreation = async() =>{
@@ -98,16 +113,19 @@ const Wallet = () => {
 	const updateBalanceState = () => {
 		setUpdateBalanceKey(new Date().getTime())
 		getWallet(false)
+		getWalletBalanceInNGN()
 	}
 
 	const handlePinCreation = () => {
 		setPinCreated(true)
 		setWalletState('created')
 		getWallet()
+		getWalletBalanceInNGN()
 	}
 
 	useEffect(()=>{
 		getWallet(false)
+		getWalletBalanceInNGN()
 		getBanksAndCache()
 	},[updateKey])
 
@@ -128,20 +146,8 @@ const Wallet = () => {
 
 	useEffect(()=>{
 		getWallet(false)
+		getWalletBalanceInNGN()
 	},[updateBalanceKey])
-
-	// useEffect(()=>{
-	// setWalletState(getWalletState())
-	// 	getWallet(true)
-	// },[])
-
-	// useEffect(()=>{
-	// 	console.log(walletState)
-	// },[walletState])
-
-	// useEffect(()=>{
-	// console.log(walletState)
-	// },[])
 
 	const WalletProcessing = () => (
 		<div className={styles.wallet_processing}>
@@ -160,6 +166,7 @@ const Wallet = () => {
 			<div className={styles.top}>
 				<BalanceCard wallet={wallet}
 					dataLoading={dataLoading}
+					walletBalance={walletBalance}
 					balanceLoading={balanceLoading}
 					walletDetails={walletDetails}
 					walletAccount={walletAccount}
