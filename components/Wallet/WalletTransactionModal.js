@@ -9,7 +9,7 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import FileUpload from "../FileUpload";
 import { detailedDate, timeFromDate } from "@/utils/date-formats";
 import ActionFeedbackCard from "../ActionFeedbackCard";
-import CopyValue from "../CopyValue";
+import CopyValue from "../Copy/CopyValue";
 import Tab from "../Tab";
 // import FlightTimeline from "../Travel/FlightTimeline";
 

@@ -14,12 +14,14 @@ import {
 	SideIcon8,
 	SideIcon9,
 } from "@/constants/icons";
+import { getCredentials } from "@/services/localService";
+const userType = getCredentials()?.userType
 
 export const sidebarData = [
 	{
 		title: "Dashboard",
 		icon: SideIcon1,
-		path: "/dashboard",
+		path: "/dashboard"
 	},
 	{
 		title: "Travel Services",
@@ -46,11 +48,12 @@ export const sidebarData = [
 		icon: SideIcon6,
 		path: "/wallet",
 	},
-	// {
-	// 	title: "Team Setup",
-	// 	icon: SideIcon7,
-	// 	path: "/team",
-	// },
+	{
+		title: "Team Setup",
+		icon: SideIcon7,
+		path: "/team",
+		hide: userType !== '2'
+	},
 	{
 		title: "Settings",
 		icon: SideIcon8,

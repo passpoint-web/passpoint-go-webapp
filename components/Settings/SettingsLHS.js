@@ -1,13 +1,16 @@
 
+'use client'
 import styles from './settings.module.css'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 // eslint-disable-next-line no-unused-vars
 import { NotificationIcon, AccountProfileIcon, AccountSecurityIcon } from '@/constants/icons'
 const SettingsLHS = () => {
+	const pathname = usePathname()
 	return (
 		<div className={styles.settings_lhs}>
 			<Link href='/settings/activity'
-				className={styles.nav_sec}>
+				className={`${styles.nav_sec} ${pathname.includes('activity') ? styles.active : ''}`}>
 				<div className={styles.icon}>
 					<AccountProfileIcon />
 				</div>
@@ -17,7 +20,7 @@ const SettingsLHS = () => {
 				</div>
 			</Link>
 			{/* <Link href='/settings/notification'
-				className={styles.nav_sec}>
+				className={`${styles.nav_sec} $ pathname.includes('notification') ? styles.active : ''}`}>
 				<div className={styles.icon}>
 					<NotificationIcon color="#009EC4" />
 				</div>
@@ -28,7 +31,7 @@ const SettingsLHS = () => {
 				</div>
 			</Link> */}
 			<Link href='/settings/security'
-				className={styles.nav_sec}>
+				className={`${styles.nav_sec} ${pathname.includes('security') ? styles.active : ''}`}>
 				<div className={styles.icon}>
 					<AccountSecurityIcon />
 				</div>

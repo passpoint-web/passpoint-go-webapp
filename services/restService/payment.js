@@ -5,7 +5,7 @@ import axios from "axios"
 // const { returnBase64 } = functions
 import { getCredentials } from "../localService"
 const paymentRestAgent = axios.create({
-  baseURL: "https://payment-sandbox.mypasspoint.com/passpoint-payserv/v1",
+  baseURL: process.env.NEXT_PUBLIC_PAYMENT_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -22,8 +22,8 @@ const getRequestConfig = () => {
     params: {},
   }
 }
-const username = "PVTL3CYSKG"
-const password = "-Zi-pIyZX9Udr0ms-13mS4Z6PcGuzLdvYC9VRgq6"
+const username = process.env.NEXT_PUBLIC_PAYMENT_USERNAME
+const password = process.env.NEXT_PUBLIC_PAYMENT_PASSWORD
 // encode credentials in base64
 const encode = btoa(`${username}:${password}`)
 export const setConfig = () => {

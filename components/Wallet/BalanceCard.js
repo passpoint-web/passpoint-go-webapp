@@ -4,17 +4,15 @@ import BorderIconBtn from '../Btn/BorderIconBtn'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AddMoneyModal from './AddMoneyModal'
 import TransferModals from './TransferModals'
-import CopyValue from '../CopyValue'
+import CopyValue from '../Copy/CopyValue'
 import { AddMoneyIcon, WithdrawMoneyIcon } from '@/constants/icons'
 import CreatePinModal from '../Modal/CreatePin'
 import { useNotify } from "@/utils/hooks";
 import { useEffect, useState } from 'react'
 import functions from "@/utils/functions";
 import { EyeClose, EyeOpen } from '@/constants/icons'
-// import RefreshBtn from '../Btn/RefreshBtn';
 
-// eslint-disable-next-line no-unused-vars
-const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles, updateWalletState}) => {
+const BalanceCard = ({ dataLoading, walletBalance, walletDetails, walletAccount, wallet, styles, updateWalletState}) => {
 	const notify = useNotify();
 	const searchParams = useSearchParams()
 	const {replace} = useRouter()
@@ -22,31 +20,8 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 	const [showBalance, setShowBalance] = useState(true)
 	const [pinResetLoading, setPinResetLoading] = useState(false)
 	const [reference, setReference] = useState('')
-	// const [feedbackError, setFeedbackError] = useState('')
 	const [currentModal, setCurrentModal] = useState(null)
-	// const [pinCheckLoading, setPinCheckLoading] = useState(false)
 
-	// const initiatePinForTransfer = async () => {
-	// 	setPinCheckLoading(true)
-	// 	try {
-	// 		const response = await wallet.initiatePin()
-	// 		const {reference} = response.data
-	// 		if (reference) {
-	// 			setReference(reference)
-	// 			setCurrentModal('create pin')
-	// 		} else {
-	// 			setCurrentModal('transfer')
-	// 		}
-	// 	} catch (_err) {
-	// 		const {responseMessage = undefined } = _err.response?.data || _err;
-	// 		// setFeedbackError(responseMessage || message)
-	// 		if (responseMessage === 'Pin has already been set') {
-	// 			setCurrentModal('transfer')
-	// 		}
-	// 	} finally {
-	// 		setPinCheckLoading(false)
-	// 	}
-	// }
 
 	const initiatePinReset = async (e, boo) => {
 		e.preventDefault()
@@ -99,19 +74,30 @@ const BalanceCard = ({ dataLoading, walletDetails, walletAccount, wallet, styles
 			{
 				!dataLoading ? <div className={`${styles.balance_card} wallet_balance_card`}>
 					<div className={styles.lhs}>
-						<div className={styles.available_balance}>
-							<h4>Available Balance</h4>
-							<div className={styles.balance}>
-								<h1 className={!showBalance ? styles.hide_balance : ''}>
-									{showBalance ? formatMoney(walletAccount.availableBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
-								</h1>
-								<div className={styles.card_action}>
-									<button onClick={()=>setShowBalance(!showBalance)}>
-										{!showBalance ? <EyeOpen /> : <EyeClose />}
-									</button>
-									{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
+						<div className={styles.balance_ctn}>
+							<div className={styles.available_balance}>
+								<h4>Available Balance</h4>
+								<div className={styles.balance}>
+									<h1 className={!showBalance ? styles.hide_balance : ''}>
+										{showBalance ? formatMoney(walletBalance.availableBalance, walletBalance.currency) : maskValue(walletAccount.availableBalance)}
+									</h1>
+									<div className={styles.card_action}>
+										<button onClick={()=>setShowBalance(!showBalance)}>
+											{!showBalance ? <EyeOpen /> : <EyeClose />}
+										</button>
+										{/* <RefreshBtn refreshing={balanceLoading} onClick={()=>updateBalanceState()} /> */}
+									</div>
 								</div>
+
 							</div>
+							{/* <div className={styles.ledger_balance}>
+							<h4>Ledger Balance</h4>
+							<div className={styles.balance}>
+								<h3 className={!showBalance ? styles.hide_balance : ''}>
+									{showBalance ? formatMoney(walletAccount.ledgerBalance, 'NGN') : maskValue(walletAccount.availableBalance)}
+								</h3>
+							</div>
+						</div> */}
 						</div>
 						<div className={styles.btn_sec}>
 							<BorderIconBtn

@@ -12,10 +12,9 @@
 
 .tip_btn_ctn > button {
   font-size: 16px;
-  cursor: unset;
   font-weight: 550;
   transition: .3s;
-  cursor: pointer;
+  cursor: help;
   height: fit-content;
   margin: 0 8px;
 }

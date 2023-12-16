@@ -1,11 +1,7 @@
 import axios from 'axios';
-// import { setConfig } from '../restService';
-// import functions from '@/utils/functions';
-// import { enc } from 'crypto-js';
-// const { returnBase64 } = functions
 import { getCredentials } from '../localService';
 const walletRestAgent = axios.create({
-	baseURL: "https://payment-staging.mypasspoint.com/passpoint-payserv/v1/",
+	baseURL:  process.env.NEXT_PUBLIC_PAYMENT_BASE_URL,
 	headers: {
 		'Content-Type': 'application/json'
 	}
@@ -15,15 +11,16 @@ const getRequestConfig = () => {
 	const {merchantId} = getCredentials()
 	return {
 		headers: {
-			'x-channel-id' : 2,
-			'x-channel-code' : 'passpoint-infra-user',
+			'x-channel-id' :  process.env.NEXT_PUBLIC_PAYMENT_CHANNEL_ID,
+			'x-channel-code' : process.env.NEXT_PUBLIC_PAYMENT_CHANNEL_CODE,
 			'x-merchant-id' : merchantId
 		},
 		params: {},
 	};
 };
-const username = 'PVTL3CYSKG'
-const password = '-Zi-pIyZX9Udr0ms-13mS4Z6PcGuzLdvYC9VRgq6'
+
+const username = process.env.NEXT_PUBLIC_PAYMENT_USERNAME
+const password =  process.env.NEXT_PUBLIC_PAYMENT_PASSWORD
 // encode credentials in base64
 const encode = btoa(`${username}:${password}`)
 export const setConfig = () => {
@@ -38,6 +35,9 @@ export const wallet = {
 	},
 	getWalletDetails: () => {
 		return walletRestAgent.get('wallet-app/get-wallet-details', setConfig())
+	},
+	getWalletBalance: () => {
+		return walletRestAgent.get('wallet-app/get-wallet-balance/NGN', setConfig())
 	},
 	initiatePin: (val=false) => {
 		return walletRestAgent.get(`wallet-app/init-pin-reset?forgotpin=${val}`, setConfig())

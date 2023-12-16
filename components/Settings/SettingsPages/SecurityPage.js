@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Input from "@/components/Dashboard/Input";
 import PasswordField from "@/components/Auth/PasswordField";
 import Button from "@/components/Btn/Button";
-// import Switch from "@/components/Custom/Switch";
+import Switch from "@/components/Custom/Switch";
 // import ModalWrapper from '@/components/Modal/ModalWrapper'
 // import { getCredentials } from '@/services/localService'
 import { useNotify } from "@/utils/hooks";
@@ -14,17 +14,28 @@ import { useRouter, useSearchParams } from "next/navigation";
 import functions from '@/utils/functions'
 import { accountProfile } from '@/services/restService'
 import ForgotPasswordFlow from '@/components/Settings/ForgotPasswordFlow'
+import { wallet } from "@/services/restService/wallet";
+import CreatePinModal from "@/components/Modal/CreatePin";
+import { savePinCreated, getPinCreated, getCredentials } from "@/services/localService";
+import Toggle2FA from "../2FA";
 // import Link from 'next/link'
 const Security = () => {
 	const { createUrl } = functions;
 	const { push } = useRouter();
 	const searchParams = useSearchParams();
+	const [show2FAModal, setShow2FAModal] = useState(false)
+	// const [tuEfAy, setTuEfAy] = useState(false)
 	const notify = useNotify();
 	const [ctaClicked, setCtaClicked] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [feedbackMsg, setFeedbackMsg] = useState("");
 	const [passwordFormKey, setPasswordFormKey] = useState(0);
+	const [pinCreationLoading, setPinCreationLoading] = useState(false);
+	const [showPinCreationModal, setShowPinCreationModal] = useState(false);
+	const [pinCreated, setPinCreated] = useState(null);
+	const [reference, setReference] = useState('');
+	const [is2faEnabled, setIs2faEnabled] = useState(false)
 	const [payload, setPayload] = useState({
 		password: "",
 		newPassword: "",
@@ -37,6 +48,10 @@ const Security = () => {
 			[name]: value,
 		}));
 	};
+
+	useEffect(()=>{
+		setIs2faEnabled(getCredentials().is2faEnable)
+	},[])
 
 	const handleForgotPasswordModals = (e) => {
 		e.preventDefault();
@@ -74,6 +89,33 @@ const Security = () => {
 			setIsLoading(false);
 		}
 	};
+	const getWalletDetails = async () => {
+		try {
+			const response = await wallet.getWalletDetails()
+			const {data} = response.data
+			const {pinCreated} = data
+			setPinCreated(pinCreated)
+			savePinCreated(pinCreated)
+		} catch (_err) {
+			//
+		} finally {
+			//
+		}
+	}
+
+	const initiatePinCreation = async() =>{
+		setPinCreationLoading(true)
+		try {
+			const response = await wallet.initiatePin(pinCreated)
+			setReference(response.data.reference)
+			setShowPinCreationModal(true)
+		} catch (_err) {
+			// console.log(_err)
+		}
+		finally {
+			setPinCreationLoading(false)
+		}
+	}
 
 	useEffect(() => {
 		setCtaClicked(false);
@@ -84,6 +126,11 @@ const Security = () => {
 		});
 		setFeedbackMsg("");
 	}, [passwordFormKey]);
+
+	useEffect(() => {
+		setPinCreated(getPinCreated())
+		getWalletDetails()
+	}, []);
 
 	useEffect(() => {
 		const { newPassword, password, confirm } = payload;
@@ -99,8 +146,9 @@ const Security = () => {
 	}, [payload.password, searchParams]);
 
 	const ChangePassword = () => (
-		<>
+		<div>
 			{searchParams?.get("forgotPasswordLevel") && <ForgotPasswordFlow />}
+			<h3>Change Password</h3>
 			<form
 				key={passwordFormKey}
 				className={formStyles.form}
@@ -200,29 +248,63 @@ const Security = () => {
 							className="tertiary"
 							onClick={handleForgotPasswordModals}
 							text="Reset it"
-						>
-              Reset it
-						</Button>
+						/>
 					</p>
 				</div>
 			</form>
-		</>
+		</div>
 	);
 
 	return (
 		<div className={styles.security_page}>
+			{show2FAModal ?
+				<Toggle2FA onClose={()=>setShow2FAModal(false)}
+					onSuccess={(val)=>setIs2faEnabled(!val)}
+				/> :
+				<></>
+			}
+			{
+				showPinCreationModal ?
+					<CreatePinModal handlePinCreation={()=>{
+						setShowPinCreationModal(false)
+						setPinCreated(true)
+					}}
+					pinCreated={pinCreated}
+					reference={reference}
+					onClose={()=>setShowPinCreationModal(false)}
+					/> : <></>
+			}
 			<h1>Security & Privacy</h1>
 			<div className={styles.border_box}>
-				<h3>Change Password</h3>
 				{ChangePassword()}
+				<div className={`${styles.inner} ${styles.flex}`}>
+					<h3>{pinCreated ? 'Reset' : 'Create'} PIN</h3>
+					<Button className='tertiary'
+						text={pinCreationLoading ? 'Loading...' : pinCreated ? 'Reset PIN' : 'Create PIN'}
+						onClick={()=>initiatePinCreation()} />
+				</div>
 			</div>
-			{/* <div className={`${styles.border_box} ${styles.privacy}`}>
+
+			<div className={`${styles.border_box} ${styles.privacy}`}>
+				<h3>2-Factor Authentication</h3>
+				<div className={`${styles.inner} ${styles.flex}`}>
+					<h4>{is2faEnabled ? 'Dis' : 'En'}able 2FA</h4>
+					<button onClick={()=>{
+						setShow2FAModal(true)
+					}}>
+						<Switch disabled
+							checked={is2faEnabled}
+							onChange={()=>setIs2faEnabled(!is2faEnabled)} />
+					</button>
+				</div>
+			</div>
+			<div className={`${styles.border_box} ${styles.privacy}`}>
 				<h3>Privacy Settings</h3>
 				<div className={`${styles.inner} ${styles.flex}`}>
 					<h4>Bookings updates</h4>
 					<Switch />
 				</div>
-			</div> */}
+			</div>
 		</div>
 	);
 };

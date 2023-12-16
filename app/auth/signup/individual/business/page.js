@@ -87,7 +87,7 @@ const BusinessInformation = () => {
 			})
 			// console.log(response)
 			setBusinessNameCheckVerified(true)
-		} catch (_err) { 
+		} catch (_err) {
 			// const { message } = _err.response?.data || _err
 			// console.log(message)
 			setBusinessNameCheckVerified(false)
@@ -148,17 +148,17 @@ const BusinessInformation = () => {
 									/>
 								</Input>
 								<Input
-								label="Business Name"
-								id="business-name"
-								name="businessName"
-								placeholder="John Travels"
-								value={payload.businessName}
-								onChange={handleChange}
-								error={(ctaClicked && !payload.businessName) ||businessNameCheckVerified === false}
-								errorMsg={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
-								info={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
-								successMsg={businessNameCheckVerified === true && payload.businessName.length ? 'Business name is valid' : ''}
-							/>
+									label="Business Name"
+									id="business-name"
+									name="businessName"
+									placeholder="John Travels"
+									value={payload.businessName}
+									onChange={handleChange}
+									error={(ctaClicked && !payload.businessName) ||businessNameCheckVerified === false}
+									errorMsg={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+									info={(ctaClicked && !payload.businessName) ? 'Business name is required' : businessNameCheckVerified === false ? 'A Business with this name already exists' : businessNameChecking ? 'Checking' : ''}
+									successMsg={businessNameCheckVerified === true && payload.businessName.length ? 'Business name is valid' : ''}
+								/>
 							</div>
 							<div className={styles.action_ctn}>
 								<PrimaryBtn
