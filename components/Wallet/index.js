@@ -65,7 +65,6 @@ const Wallet = () => {
 		try {
 			const response = await wallet.getWalletBalance('NGN')
 			const {data} = response.data
-			console.log(data)
 			setWalletBalance(data?.find(w=>w.currency==='NGN'))
 		} catch (_err) {
 			// console.log(_err)
