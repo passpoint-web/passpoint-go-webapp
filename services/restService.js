@@ -301,6 +301,9 @@ export const teams = {
   getPermissions: () => {
     return restAgent.get("/getPermission", setConfig())
   },
+  getRoles: () => {
+    return restAgent.get("/getTeamRoles", setConfig())
+  },
   createRole: (data) => {
     return restAgent.post("/createNewRole", data, setConfig())
   },
