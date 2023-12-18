@@ -32,7 +32,6 @@
     "react-datetime-picker": "^5.5.2",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.47.0",
-    "react-icons": "^4.10.1",
     "react-ios-time-picker": "^0.2.2",
     "react-otp-input": "^3.0.4",
     "react-phone-input-2": "^2.15.1",

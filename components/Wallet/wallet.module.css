@@ -12,7 +12,8 @@
   border-radius: 16px;
   min-height: 80vh;
   padding: var(--inner-component-mg);
-  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05), 0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
 }
 
 .wallet_processing {
@@ -130,16 +131,16 @@
 }
 
 .balance_card .account {
-  gap: 12px;
+  gap: 2rem;
 }
 
 .balance_card .reset_pin {
   position: absolute;
   bottom: 24px;
   right: 24px;
-  font-size: 14px; 
+  font-size: 14px;
   color: #fff;
-  text-decoration: underline
+  text-decoration: underline;
 }
 
 .virtual_account_card {
@@ -433,11 +434,13 @@
   border: 1px solid var(--grey-5);
   box-shadow: 0px 1px 3px 0px rgba(50, 50, 71, 0.1),
     0px 0px 1px 0px rgba(12, 26, 75, 0.2);
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .tranferPin_pin > div {
-  width: 75%; margin: 0 auto; text-align: center;
+  width: 75%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .tranferPin_pin > div p {

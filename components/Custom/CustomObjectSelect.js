@@ -8,7 +8,7 @@ const CustomObjectSelect = ({
 	emitSelect,
 	selectedOption,
 	selectOptions,
-	objKey,
+	objKey = "value",
 	id,
 	placeholder = "Please Select",
 	fieldError,
@@ -45,8 +45,8 @@ const CustomObjectSelect = ({
 			return selectOptions?.filter(
 				(o) =>
 					o.name?.toLowerCase().includes(tempOptionFilter) ||
-          o.iataCode?.toLowerCase().includes(tempOptionFilter) ||
-          o.city?.toLowerCase().includes(tempOptionFilter)
+					o.iataCode?.toLowerCase().includes(tempOptionFilter) ||
+					o.city?.toLowerCase().includes(tempOptionFilter)
 			)
 		}
 	}
@@ -54,9 +54,8 @@ const CustomObjectSelect = ({
 	return (
 		<>
 			<div
-				className={`custom-select ${styles.custom_select} ${
-					fieldError ? styles.error : ""
-				}`}
+				className={`custom-select ${styles.custom_select} ${fieldError ? styles.error : ""
+					}`}
 			>
 				{showSelect ? <OverlayScreen onClick={hideSelect} /> : <></>}
 				<button
@@ -88,15 +87,14 @@ const CustomObjectSelect = ({
 						{filteredSelectOptions().map((option) => (
 							<div
 								key={option.id}
-								className={`${styles.content} ${
-									(
+								className={`${styles.content} ${(
 										objKey
 											? option?.[objKey] === selectedOption?.[objKey]
 											: option === selectedOption
 									)
 										? styles.content_selected
 										: ""
-								}`}
+									}`}
 								onClick={() => handleSelect(option?.[objKey])}
 							>
 								<p className={styles.option}>
