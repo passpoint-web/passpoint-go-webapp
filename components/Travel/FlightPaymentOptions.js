@@ -17,22 +17,25 @@ import WarningModal from "./WarningModal"
 import { payment } from "@/services/restService/payment"
 
 const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
-	const paymentOptions = [
-		"My Passpoint Wallet",
-		// "Credit/Debit Card"
-	]
-	const [paymentOption, setPaymentOption] = useState(paymentOptions[0])
-	const [paymentSuccessful, setPaymentSuccessful] = useState(false)
-	const [paymentFailure, setPaymentFailure] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
-	const [warningModalVisible, setWarningModalVisible] = useState(false)
-	const [paymentResponse, setPaymentResponse] = useState({})
-	const [walletAccount, setWalletAccount] = useState({})
-	const [paymentCharges, setPaymentCharges] = useState({})
-	const [walletLoading, setWalletLoading] = useState(false)
-	const [pins, setPins] = useState({
-		pin: "",
-	})
+  const paymentOptions = [
+    "My Passpoint Wallet",
+    // "Credit/Debit Card"
+  ]
+  const [paymentOption, setPaymentOption] = useState(paymentOptions[0])
+  const [paymentSuccessful, setPaymentSuccessful] = useState(false)
+  const [paymentFailure, setPaymentFailure] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [warningModalVisible, setWarningModalVisible] = useState(false)
+  const [paymentResponse, setPaymentResponse] = useState({})
+  const [walletAccount, setWalletAccount] = useState({})
+	const [walletBalance, setWalletBalance] = useState({})
+  const [paymentCharges, setPaymentCharges] = useState({})
+	// eslint-disable-next-line no-unused-vars
+	const [balanceLoading, setBalanceLoading] = useState(true)
+  const [walletLoading, setWalletLoading] = useState(false)
+  const [pins, setPins] = useState({
+    pin: "",
+  })
 
 	const handlePinsChange = (e) => {
 		const { name, value } = e.target
@@ -55,20 +58,33 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 		// setDataLoading(false)
 	}
 
-	const getWallet = async () => {
+  const getWallet = async () => {
+    try {
+      setWalletLoading(true)
+      const response = await wallet.getWalletDetails()
+      setWalletAccount({
+        ...response.data.data.walletAccount["NGN"],
+        pinCreated: response.data.data.pinCreated,
+      })
+      getPaymentCharges()
+    } catch (_err) {
+      console.log(_err)
+      setWalletLoading(false)
+    } finally {
+      // setWalletLoading(false)
+    }
+  }
+
+	const getWalletBalanceInNGN = async () => {
+		setBalanceLoading(true)
 		try {
-			setWalletLoading(true)
-			const response = await wallet.getWalletDetails()
-			setWalletAccount({
-				...response.data.data.walletAccount["NGN"],
-				pinCreated: response.data.data.pinCreated,
-			})
-			getPaymentCharges()
+			const response = await wallet.getWalletBalance('NGN')
+			const {data} = response.data
+			setWalletBalance(data?.find(w=>w.currency==='NGN'))
 		} catch (_err) {
-			console.log(_err)
-			setWalletLoading(false)
+			// console.log(_err)
 		} finally {
-			// setWalletLoading(false)
+			setBalanceLoading(false)
 		}
 	}
 
@@ -96,9 +112,10 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 		setPins({ pin: "" })
 	}
 
-	useEffect(() => {
-		getWallet()
-	}, [])
+  useEffect(() => {
+    getWallet()
+    getWalletBalanceInNGN()
+  }, [])
 
 	useEffect(() => {
 		if (walletAccount.pinCreated) {
@@ -106,57 +123,57 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 		}
 	}, [walletAccount])
 
-	return (
-		<div className={`select-flight-wrapper ${styles.row__wrapper}`}>
-			{warningModalVisible && (
-				<WarningModal
-					styles={styles}
-					setModalVisible={setWarningModalVisible}
-				/>
-			)}
-			<button className={styles.row__header}>
-				<div className="texts">
-					<h3 className=""> Payment Option(s)</h3>
-					{/* <p>Manage your bookings here</p> */}
-				</div>
-				<FaChevronDown />
-			</button>
-			<div className={styles.payments__row}>
-				<div className={styles.lhs}>
-					{paymentOptions.map((option, index) => (
-						<button
-							key={option}
-							disabled={index === 1}
-							className={`${styles.payment__option_btn} ${
-								paymentOption === option ? styles.active : ""
-							}`}
-							onClick={() => setPaymentOption(option)}
-						>
-							<div className="check"></div>
-							{option}
-						</button>
-					))}
-				</div>
-				<div className={styles.rhs}>
-					{/* PAYMENT SUCCESSFUL */}
-					{paymentOption === paymentOptions[0] && (
-						<form onSubmit={(e) => e.preventDefault()}>
-							{!paymentSuccessful && !paymentFailure && (
-								<div>
-									<div className={styles.wallet__flex}>
-										<div className="balance">
-											<div>Wallet Balance</div>
-											<h2>
-												{functions.formatMoney(
-													walletAccount?.availableBalance,
-													"NGN"
-												)}
-											</h2>
-										</div>
-										<div className="balance">
-											<div>Booking Cost</div>
-											<h2>({functions.formatMoney(totalAmount, "NGN")})</h2>
-											<div>
+  return (
+    <div className={`select-flight-wrapper ${styles.row__wrapper}`}>
+      {warningModalVisible && (
+        <WarningModal
+          styles={styles}
+          setModalVisible={setWarningModalVisible}
+        />
+      )}
+      <button className={styles.row__header}>
+        <div className="texts">
+          <h3 className=""> Payment Option(s)</h3>
+          {/* <p>Manage your bookings here</p> */}
+        </div>
+        <FaChevronDown />
+      </button>
+      <div className={styles.payments__row}>
+        <div className={styles.lhs}>
+          {paymentOptions.map((option, index) => (
+            <button
+              key={option}
+              disabled={index === 1}
+              className={`${styles.payment__option_btn} ${
+                paymentOption === option ? styles.active : ""
+              }`}
+              onClick={() => setPaymentOption(option)}
+            >
+              <div className="check"></div>
+              {option}
+            </button>
+          ))}
+        </div>
+        <div className={styles.rhs}>
+          {/* PAYMENT SUCCESSFUL */}
+          {paymentOption === paymentOptions[0] && (
+            <form onSubmit={(e) => e.preventDefault()}>
+              {!paymentSuccessful && !paymentFailure && (
+                <div>
+                  <div className={styles.wallet__flex}>
+                    <div className="balance">
+                      <div>Wallet Balance</div>
+                      <h2>
+                        {functions.formatMoney(
+                          walletBalance?.availableBalance,
+                          "NGN"
+                        )}
+                      </h2>
+                    </div>
+                    <div className="balance">
+                      <div>Booking Cost</div>
+                      <h2>({functions.formatMoney(totalAmount, "NGN")})</h2>
+                      <div>
                         incl. fees:{" "}
 												{functions.formatMoney(
 													Number(paymentCharges.fee) +
@@ -167,45 +184,45 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 										</div>
 									</div>
 
-									<Input label={`Enter Wallet Pin`}>
-										<div className={formStyles.otp_input_four_wallet}>
-											<OtpInput
-												value={pins.pin}
-												onChange={(e) =>
-													handlePinsChange({
-														target: { name: "pin", value: e },
-													})
-												}
-												numInputs={4}
-												shouldAutoFocus={true}
-												inputType="password"
-												inputMode={null}
-												renderSeparator={<span />}
-												renderInput={(props) => <input {...props} />}
-											/>
-										</div>
-									</Input>
-									<PrimaryBtn
-										loading={isLoading}
-										disabled={
-											!(
-												!walletLoading &&
-                        walletAccount?.availableBalance >= totalAmount &&
+                  <Input label={`Enter Wallet Pin`}>
+                    <div className={formStyles.otp_input_four_wallet}>
+                      <OtpInput
+                        value={pins.pin}
+                        onChange={(e) =>
+                          handlePinsChange({
+                            target: { name: "pin", value: e },
+                          })
+                        }
+                        numInputs={4}
+                        shouldAutoFocus={true}
+                        inputType="password"
+                        inputMode={null}
+                        renderSeparator={<span />}
+                        renderInput={(props) => <input {...props} />}
+                      />
+                    </div>
+                  </Input>
+                  <PrimaryBtn
+                    loading={isLoading}
+                    disabled={
+                      !(
+                        !walletLoading &&
+                        walletBalance?.availableBalance >= totalAmount &&
                         pins.pin?.length >= 4
-											)
-										}
-										text={
-											walletAccount?.availableBalance < totalAmount
-												? `Insufficient Funds`
-												: `Complete Booking`
-										}
-										onClick={() => makePayment(pins.pin)}
-									/>
-									{walletAccount?.availableBalance < totalAmount && (
-										<Link
-											href="/wallet?add-money=true"
-											className={styles.wallet__link}
-										>
+                      )
+                    }
+                    text={
+                      walletBalance?.availableBalance < totalAmount
+                        ? `Insufficient Funds`
+                        : `Complete Booking`
+                    }
+                    onClick={() => makePayment(pins.pin)}
+                  />
+                  {walletBalance?.availableBalance < totalAmount && (
+                    <Link
+                      href="/wallet?add-money=true"
+                      className={styles.wallet__link}
+                    >
                       Top-up Wallet
 										</Link>
 									)}
