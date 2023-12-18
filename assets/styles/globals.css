@@ -70,6 +70,9 @@
 
   --v600: #00242d;
 
+  --ghc-tint: #54b14b;
+  --usd-tint: #ff3b2d;
+
   --sky-blue: #009ec4;
   --sky-blue-active: #006f89;
   --sky-blue-hover: #cbebf3;
@@ -216,8 +219,6 @@ a:disabled,
 button:disabled {
   opacity: 0.8;
 }
-
-
 
 .skeleton {
   background: var(--grey-5) !important;
@@ -637,7 +638,8 @@ button.tertiary:hover,
   border-radius: 16px;
   min-height: 80vh;
   padding: var(--inner-component-mg);
-  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05), 0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
+    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
 }
 
 /* end of buttons */
@@ -677,6 +679,17 @@ input[type="range"] {
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
+}
+
+.currency-img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 /* Removes default focus */

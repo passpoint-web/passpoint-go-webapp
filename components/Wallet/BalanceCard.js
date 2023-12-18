@@ -11,10 +11,7 @@ import { useNotify } from "@/utils/hooks"
 import { useEffect, useState } from "react"
 import functions from "@/utils/functions"
 import { EyeClose, EyeOpen } from "@/constants/icons"
-import CurrencySelect from "@/components/Custom/CurrencySelect"
-import CustomSelect from "../Custom/Select"
-import CustomObjectSelect from "../Custom/CustomObjectSelect"
-import { Select } from "@chakra-ui/react"
+import Select from "../Dashboard/Select"
 
 const BalanceCard = ({
   dataLoading,
@@ -24,6 +21,8 @@ const BalanceCard = ({
   wallet,
   styles,
   updateWalletState,
+  onUpdateCurrency,
+  currencies,
 }) => {
   const notify = useNotify()
   const searchParams = useSearchParams()
@@ -33,7 +32,7 @@ const BalanceCard = ({
   const [pinResetLoading, setPinResetLoading] = useState(false)
   const [reference, setReference] = useState("")
   const [currentModal, setCurrentModal] = useState(null)
-  const [currencies, setCurrencies] = useState(["NGN", "GHS", "USD"])
+  const [selectedCurrency, setSelectedCurrency] = useState("NGN Wallet")
 
   const initiatePinReset = async (e, boo) => {
     e.preventDefault()
@@ -57,6 +56,11 @@ const BalanceCard = ({
   const closeAddMoneyModal = () => {
     setCurrentModal(null)
     replace("/wallet")
+  }
+
+  const updateCurrency = (currency) => {
+    setSelectedCurrency(currency)
+    onUpdateCurrency(currency?.substring(0, 3))
   }
 
   useEffect(() => {
@@ -90,11 +94,33 @@ const BalanceCard = ({
         <></>
       )}
       {!dataLoading ? (
-        <div className={`${styles.balance_card} wallet_balance_card`}>
+        <div
+          className={`${styles.balance_card} wallet_balance_card ${
+            styles[selectedCurrency?.slice(0, 3)]
+          }`}
+        >
           <div className={styles.lhs}>
             <div className={styles.balance_ctn}>
               <div className={styles.available_balance}>
-                <Select
+                <div className="dropdown-ctn max-w-[180px]">
+                  <Select
+                    label=""
+                    id="class"
+                    styleProps={{
+                      dropdown: {
+                        height: 250,
+                      },
+                    }}
+                    selectOptions={[{ code: "NGN" }, ...currencies]?.map(
+                      (c) => `${c.code} Wallet`
+                    )}
+                    selectedOption={selectedCurrency}
+                    noShadow
+                    countries
+                    emitSelect={(option) => updateCurrency(option)}
+                  />
+                </div>
+                {/* <Select
                   height={50}
                   width={250}
                   color="#000000"
@@ -108,7 +134,7 @@ const BalanceCard = ({
                       {currency} Wallet
                     </option>
                   ))}
-                </Select>
+                </Select> */}
                 <h4 className="mt-4">Available Balance</h4>
                 <div className={styles.balance}>
                   <h1 className={!showBalance ? styles.hide_balance : ""}>

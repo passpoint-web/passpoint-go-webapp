@@ -46,6 +46,26 @@
   display: flex;
   justify-content: space-between;
   position: relative;
+  transition: 0.8s;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+  -ms-transition: 0.8s;
+  -o-transition: 0.8s;
+}
+.balance_card.GHS {
+  background-color: var(--ghc-tint);
+}
+.balance_card.USD {
+  background-color: var(--usd-tint);
+}
+.balance_card.KES {
+  background-color: darkgreen;
+}
+.balance_card.UGX {
+  background-color: lightsalmon;
+}
+.balance_card.ZMW {
+  background-color: darkcyan;
 }
 
 .balance_card * {

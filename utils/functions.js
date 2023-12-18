@@ -9,10 +9,27 @@ function number(num, precision) {
   return value
 }
 
+function getCurrencySymbol(currencyCode) {
+  switch (currencyCode) {
+    case "NGN":
+      return "₦ "
+    case "USD":
+      return "$ "
+    case "GHS":
+      return "₵ "
+    case "KES":
+      return "KSh "
+    case "UGX":
+      return "USh "
+    default:
+      return "$ "
+  }
+}
+
 function formatMoney(num, currency, precision) {
   const n = num ? Number(num).toFixed(precision || 2) : Number(num)
   return n
-    ? `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}${n
+    ? `${getCurrencySymbol(currency)}${n
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`
     : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0.00`
@@ -115,7 +132,8 @@ function getMonth(index) {
 function isValidUrl(url) {
   if (
     // eslint-disable-next-line no-useless-escape
-    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    url.match(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
     )
   ) {
     return true
