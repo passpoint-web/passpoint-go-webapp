@@ -27,8 +27,9 @@ const Wallet = () => {
 	const [balanceLoading, setBalanceLoading] = useState(true)
 	const [updateKey, setUpdateKey] = useState(new Date().getTime())
 	const [updateBalanceKey, setUpdateBalanceKey] = useState(new Date().getTime())
-	const [reference, setReference] = useState('')
+	const [reference, setReference] = useState(undefined)
 	const [pinCreated, setPinCreated] = useState(null)
+	const [vaCreated, setVaCreated] = useState(false)
 
 	const getWallet = async (loading) => {
 		setDataLoading(loading)
@@ -36,16 +37,26 @@ const Wallet = () => {
 		try {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
+			// console.log(data)
 			if (Object.keys(data.walletAccount).length) {
 				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				const {pinCreated} = data
+				const {vaCreated} = data
 				setPinCreated(pinCreated)
-				if (!accountNumber) {
-					setWalletState('pending')
-				} else if (accountNumber) {
-					setWalletState('created')
-				} else {
+				setVaCreated(!!vaCreated)
+				// if (!accountNumber) {
+				// 	setWalletState('pending')
+				// } else if (accountNumber) {
+				// 	setWalletState('created')
+				// } else {
+				// 	setWalletState('no-wallet')
+				// }
+				if (!vaCreated) {
 					setWalletState('no-wallet')
+				} else if (vaCreated && !accountNumber) {
+					setWalletState('pending')
+				} else if (vaCreated && accountNumber) {
+					setWalletState('created')
 				}
 				setWalletDetails(data)
 				setWalletAccount(data.walletAccount['NGN'])
@@ -74,7 +85,7 @@ const Wallet = () => {
 	}
 
 	const getBanksAndCache = async() => {
-		if (!getBanks().length) {
+		if (!getBanks()?.length) {
 			try {
 				const response = await wallet.getBanks()
 				const {data} = response.data
@@ -129,7 +140,7 @@ const Wallet = () => {
 	},[updateKey])
 
 	useEffect(()=>{
-		if (!pinCreated === false) {
+		if (!pinCreated) {
 			initiatePinCreation()
 		}
 	},[walletState])
@@ -147,6 +158,10 @@ const Wallet = () => {
 		getWallet(false)
 		getWalletBalanceInNGN()
 	},[updateBalanceKey])
+
+	// useEffect(()=>{
+	// 	console.log(reference)
+	// },[reference])
 
 	const WalletProcessing = () => (
 		<div className={styles.wallet_processing}>
@@ -193,7 +208,7 @@ const Wallet = () => {
 	return (
 		<div className={styles.wallet_page}>
 			{
-				pinCreated === false ?
+				walletState ==='pending' && !pinCreated && reference ?
 					<CreatePinModal handlePinCreation={()=>handlePinCreation()}
 						topClose={false}
 						cancelBtnDisabled={true}
