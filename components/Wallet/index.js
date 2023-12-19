@@ -12,12 +12,14 @@ import WalletTable from "./WalletTable";
 import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
+import { useNotify } from "@/utils/hooks";
 // eslint-disable-next-line no-unused-vars
 import { saveBanks, getBanks } from "@/services/localService";
 import CreatePinModal from "../Modal/CreatePin";
 // import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
+	const notify = useNotify();
 	const { sortAlphabetically } = functions;
 	const [walletState, setWalletState] = useState('') // no-wallet, pending, created
 	const [walletDetails, setWalletDetails] = useState({})
@@ -38,10 +40,10 @@ const Wallet = () => {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
 			// console.log(data)
-			if (Object.keys(data.walletAccount).length) {
-				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				const {pinCreated} = data
 				const {vaCreated} = data
+			if (Object.keys(data.walletAccount).length) {
+				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				setPinCreated(!!pinCreated)
 				// setVaCreated(!!vaCreated)
 				if (!vaCreated && !accountNumber) {
@@ -54,10 +56,21 @@ const Wallet = () => {
 				setWalletDetails(data)
 				setWalletAccount(data.walletAccount['NGN'])
 			} else {
+				if (!vaCreated) {
+					setPinCreated(!!pinCreated)
+					setWalletState('no-wallet')
+				} else if (vaCreated) {
+					setWalletState('pending')
+				} else if (vaCreated && accountNumber) {
+					setWalletState('created')
+				}
 				setWalletState('no-wallet')
 			}
 		} catch (_err) {
-			// console.log(_err)
+			const {responseMessage = undefined, message = undefined } = _err.response?.data || _err
+			if (responseMessage || message) {
+				setWalletState('no-wallet')
+			}
 		} finally {
 			setDataLoading(false)
 			setBalanceLoading(false)
@@ -122,7 +135,6 @@ const Wallet = () => {
 	const handlePinCreation = () => {
 		setReference(undefined)
 		setPinCreated(true)
-		setWalletState('created')
 		getWallet(false)
 		getWalletBalanceInNGN()
 	}
