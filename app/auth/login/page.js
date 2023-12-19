@@ -74,7 +74,7 @@ const Login = () => {
 			push(`/auth/signup/business/${businessLevels[regStage]}`);
 		} else if (!isActive && Number(userType) == 1) {
 			push(`/auth/signup/individual/${individualLevels[regStage]}`);
-		} else if (kycStatus.toLowerCase() === "pending") {
+		} else if (kycStatus.toLowerCase() === "pending" || kycStatus.toLowerCase() === "submissioninprogress") {
 			if (Number(userType) == 2) {
 				push("/kyc/corporate/business");
 			} else {
