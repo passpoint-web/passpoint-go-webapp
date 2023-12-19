@@ -61,7 +61,7 @@ const PublicProfileSetupLHS = () => {
       <BackBtn text="Dashboard" onClick={() => push("/dashboard")} />
       <div className={styles.lhs_levels_ctn}>
         {levelsToDisplay.map((e, index) => (
-          <FormLevel key={index} auth={{ ...e, level: index + 1 }} />
+          <FormLevel key={index} auth={{ ...e, level: index + 1 }}  w1000={true} />
         ))}
       </div>
     </>

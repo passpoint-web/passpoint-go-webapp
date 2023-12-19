@@ -163,11 +163,12 @@
 /* end  */
 
 /* dashboard main  */
-.dashboard_public {
+.dashboard_top {
   display: flex;
   gap: var(--btn-padding);
   margin-bottom: var(--btn-padding);
 }
+
 .dashboard_chart {
   display: flex;
   gap: var(--btn-padding);
@@ -343,6 +344,22 @@
 @media screen and (max-width: 1024px) {
   .errorPage_content {
     width: 60%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .dashboard_top {
+    flex-direction: column;
+  }
+  .dashboard_top > * {
+    width: 100%;
+  }
+
+  .dashboard_chart {
+    flex-direction: column;
+  }
+
+  .dashboard_chart > main {
+    width: 100%;
   }
 }
 @media screen and (max-width: 768px) {

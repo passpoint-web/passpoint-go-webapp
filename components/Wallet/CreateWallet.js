@@ -16,6 +16,7 @@ const CreateWallet = ({wallet, styles, setWalletState}) => {
 			const response = await wallet.createWallet({
 				currency: "NGN"
 			})
+			console.log(response)
 			notify("success", response.responseMessage || 'We have confirmed your wallet creation');
 			setWalletState('pending')
 		} catch (_err) {
