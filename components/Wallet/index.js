@@ -13,7 +13,7 @@ import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
-import { saveWalletState, getWalletState, saveBanks, getBanks } from "@/services/localService";
+import { saveBanks, getBanks } from "@/services/localService";
 import CreatePinModal from "../Modal/CreatePin";
 // import RefreshBtn from "../Btn/RefreshBtn";
 
@@ -29,7 +29,7 @@ const Wallet = () => {
 	const [updateBalanceKey, setUpdateBalanceKey] = useState(new Date().getTime())
 	const [reference, setReference] = useState(undefined)
 	const [pinCreated, setPinCreated] = useState(null)
-	const [vaCreated, setVaCreated] = useState(false)
+	// const [vaCreated, setVaCreated] = useState(false)
 
 	const getWallet = async (loading) => {
 		setDataLoading(loading)
@@ -42,16 +42,9 @@ const Wallet = () => {
 				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				const {pinCreated} = data
 				const {vaCreated} = data
-				setPinCreated(pinCreated)
-				setVaCreated(!!vaCreated)
-				// if (!accountNumber) {
-				// 	setWalletState('pending')
-				// } else if (accountNumber) {
-				// 	setWalletState('created')
-				// } else {
-				// 	setWalletState('no-wallet')
-				// }
-				if (!vaCreated) {
+				setPinCreated(!!pinCreated)
+				// setVaCreated(!!vaCreated)
+				if (!vaCreated && !accountNumber) {
 					setWalletState('no-wallet')
 				} else if (vaCreated && !accountNumber) {
 					setWalletState('pending')
@@ -129,7 +122,7 @@ const Wallet = () => {
 	const handlePinCreation = () => {
 		setPinCreated(true)
 		setWalletState('created')
-		getWallet()
+		getWallet(false)
 		getWalletBalanceInNGN()
 	}
 
@@ -140,7 +133,7 @@ const Wallet = () => {
 	},[updateKey])
 
 	useEffect(()=>{
-		if (!pinCreated) {
+		if (walletState !== 'no-wallet' && pinCreated === false) {
 			initiatePinCreation()
 		}
 	},[walletState])
@@ -208,7 +201,7 @@ const Wallet = () => {
 	return (
 		<div className={styles.wallet_page}>
 			{
-				walletState ==='pending' && !pinCreated && reference ?
+				pinCreated === false && reference ?
 					<CreatePinModal handlePinCreation={()=>handlePinCreation()}
 						topClose={false}
 						cancelBtnDisabled={true}
