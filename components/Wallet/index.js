@@ -120,6 +120,7 @@ const Wallet = () => {
 	}
 
 	const handlePinCreation = () => {
+		setReference(undefined)
 		setPinCreated(true)
 		setWalletState('created')
 		getWallet(false)
@@ -133,7 +134,7 @@ const Wallet = () => {
 	},[updateKey])
 
 	useEffect(()=>{
-		if (walletState !== 'no-wallet' && pinCreated === false) {
+		if (walletState !== 'no-wallet' && pinCreated === false && !reference) {
 			initiatePinCreation()
 		}
 	},[walletState])
