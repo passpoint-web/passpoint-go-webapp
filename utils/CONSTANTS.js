@@ -3,8 +3,8 @@ export const businessTypes = [
   "Sole Proprietorship",
   "Partnership",
   "Limited Liability Company (LLC)",
-  "Corperation",
-  "Corperative",
+  "Corporation",
+  "Corporative",
   "Limited Liability Partnership (LLP)",
 ];
 
