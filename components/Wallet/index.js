@@ -152,9 +152,7 @@ const Wallet = () => {
 
 	useEffect(function refreshData () {
 		const interval = setInterval(()=>{
-			// if (!balanceLoading) {
 			setUpdateKey(new Date().getTime())
-			// }
 		},45000)
 		return () => clearInterval(interval);
 	},[updateKey])
