@@ -45,7 +45,7 @@ const AccessLayout = ({children}) => {
 
   return (
     <>
-    {/* {showModal ? 
+    {showModal ? 
     <ModalWrapper
     bottomCancelNeeded={false}
     ctaBtnType="sd"
@@ -60,7 +60,7 @@ const AccessLayout = ({children}) => {
         <ActionFeedbackCard content={{status: 'failure', title: 'Access Not Granted', value: 'Please contact support or an admin'}} /> :
         <></>
       }
-    </ModalWrapper> :  */}
+    </ModalWrapper> : 
     {children
     }
     </>
