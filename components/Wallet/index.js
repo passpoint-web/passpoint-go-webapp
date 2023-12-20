@@ -12,12 +12,14 @@ import WalletTable from "./WalletTable";
 import styles from "./wallet.module.css";
 import { wallet } from '@/services/restService/wallet'
 import { useState, useEffect } from "react";
+// import { useNotify } from "@/utils/hooks";
 // eslint-disable-next-line no-unused-vars
 import { saveBanks, getBanks } from "@/services/localService";
 import CreatePinModal from "../Modal/CreatePin";
 // import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
+	// const notify = useNotify();
 	const { sortAlphabetically } = functions;
 	const [walletState, setWalletState] = useState('') // no-wallet, pending, created
 	const [walletDetails, setWalletDetails] = useState({})
@@ -38,12 +40,12 @@ const Wallet = () => {
 			const response = await wallet.getWalletDetails()
 			const {data} = response.data
 			// console.log(data)
-			if (Object.keys(data.walletAccount).length) {
-				const accountNumber = data.walletAccount['NGN']?.accountNumber
 				const {pinCreated} = data
 				const {vaCreated} = data
 				setPinCreated(!!pinCreated)
-				// setVaCreated(!!vaCreated)
+			if (Object.keys(data.walletAccount).length) {
+				const accountNumber = data.walletAccount['NGN']?.accountNumber
+				setPinCreated(!!pinCreated)
 				if (!vaCreated && !accountNumber) {
 					setWalletState('no-wallet')
 				} else if (vaCreated && !accountNumber) {
@@ -53,11 +55,17 @@ const Wallet = () => {
 				}
 				setWalletDetails(data)
 				setWalletAccount(data.walletAccount['NGN'])
-			} else {
+			} else if (!vaCreated) {
+					setWalletState('no-wallet')
+				} else if (vaCreated) {
+					setWalletState('pending')
+				}
+			
+		} catch (_err) {
+			const {responseMessage = undefined } = _err.response?.data || _err
+			if (responseMessage?.toLowerCase()?.includes('wallet')) {
 				setWalletState('no-wallet')
 			}
-		} catch (_err) {
-			// console.log(_err)
 		} finally {
 			setDataLoading(false)
 			setBalanceLoading(false)
@@ -112,6 +120,10 @@ const Wallet = () => {
 			setDataLoading(false)
 		}
 	}
+	const handleWalletCreatedActions = (val) => {
+		setWalletState(val)
+		setPinCreated(false)
+	}
 
 	const updateBalanceState = () => {
 		setUpdateBalanceKey(new Date().getTime())
@@ -122,7 +134,6 @@ const Wallet = () => {
 	const handlePinCreation = () => {
 		setReference(undefined)
 		setPinCreated(true)
-		setWalletState('created')
 		getWallet(false)
 		getWalletBalanceInNGN()
 	}
@@ -137,7 +148,7 @@ const Wallet = () => {
 		if (walletState !== 'no-wallet' && pinCreated === false && !reference) {
 			initiatePinCreation()
 		}
-	},[walletState])
+	},[walletState, pinCreated, reference])
 
 	useEffect(function refreshData () {
 		const interval = setInterval(()=>{
@@ -222,7 +233,7 @@ const Wallet = () => {
 								walletState === 'no-wallet' ?
 									<CreateWallet wallet={wallet}
 										styles={styles}
-										setWalletState={(val)=>setWalletState(val)} /> :
+										setWalletState={(val)=>handleWalletCreatedActions(val)} /> :
 									<></>
 						}
 					</div>
