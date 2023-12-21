@@ -33,39 +33,44 @@ const Wallet = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("NGN")
   const [currencies, setCurrencies] = useState([])
 
-  const getWallet = async (loading) => {
-    setDataLoading(loading)
-    setBalanceLoading(true)
-    try {
-      const response = await wallet.getWalletDetails()
-      const { data } = response.data
-      if (!data.walletAccount[selectedCurrency]) {
-        setWalletState("no-wallet")
-      } else if (Object.keys(data.walletAccount).length) {
-        const accountNumber =
-          data.walletAccount[selectedCurrency]?.accountNumber
-        const { pinCreated } = data
-        setPinCreated(pinCreated)
-        if (!accountNumber) {
-          setWalletState("pending")
-        } else if (accountNumber) {
-          setWalletState("created")
-        } else {
-          setWalletState("no-wallet")
-        }
-        setWalletDetails(data)
-        setWalletAccount(data.walletAccount[selectedCurrency])
-      } else {
-        setWalletState("no-wallet")
-      }
-    } catch (_err) {
-      // console.log(_err)
-    } finally {
-      setDataLoading(false)
-      setBalanceLoading(false)
-    }
-  }
-
+	const getWallet = async (loading) => {
+		setDataLoading(loading)
+		setBalanceLoading(true)
+		try {
+			const response = await wallet.getWalletDetails()
+			const {data} = response.data
+			// console.log(data)
+				const {pinCreated} = data
+				const {vaCreated} = data
+				setPinCreated(!!pinCreated)
+			if (Object.keys(data.walletAccount).length) {
+				const accountNumber = data.walletAccount['NGN']?.accountNumber
+				setPinCreated(!!pinCreated)
+				if (!vaCreated && !accountNumber) {
+					setWalletState('no-wallet')
+				} else if (vaCreated && !accountNumber) {
+					setWalletState('pending')
+				} else if (vaCreated && accountNumber) {
+					setWalletState('created')
+				}
+				setWalletDetails(data)
+				setWalletAccount(data.walletAccount['NGN'])
+			} else if (!vaCreated) {
+					setWalletState('no-wallet')
+				} else if (vaCreated) {
+					setWalletState('pending')
+				}
+			
+		} catch (_err) {
+			const {responseMessage = undefined } = _err.response?.data || _err
+			if (responseMessage?.toLowerCase()?.includes('wallet')) {
+				setWalletState('no-wallet')
+			}
+		} finally {
+			setDataLoading(false)
+			setBalanceLoading(false)
+		}
+	}
   const getWalletBalance = async () => {
     setDataLoading(true)
     setBalanceLoading(true)
@@ -115,10 +120,6 @@ const Wallet = () => {
     getWalletBalance()
   }
 
-  const onUpdateCurrency = (currency) => {
-    setSelectedCurrency(currency)
-  }
-
   const initiatePinCreation = async () => {
     setDataLoading(true)
     try {
@@ -139,8 +140,8 @@ const Wallet = () => {
 
   const handlePinCreation = () => {
     setPinCreated(true)
-    setWalletState("created")
-    getWallet()
+		setReference(undefined)
+    getWallet(false)
     getWalletBalance()
   }
 
@@ -151,11 +152,11 @@ const Wallet = () => {
     getCurrencies()
   }, [updateKey])
 
-  useEffect(() => {
-    if (!pinCreated === false) {
-      initiatePinCreation()
-    }
-  }, [walletState])
+	useEffect(()=>{
+		if (walletState !== 'no-wallet' && pinCreated === false && !reference) {
+			initiatePinCreation()
+		}
+	},[walletState, pinCreated, reference])
 
   useEffect(
     function refreshData() {
@@ -180,6 +181,11 @@ const Wallet = () => {
     getWalletBalance()
   }, [updateBalanceKey])
 
+  function onPendingWalletStateBackButton() {
+    setSelectedCurrency("NGN")
+    setWalletState("")
+  }
+
   const WalletProcessing = () => (
     <div className={styles.wallet_processing}>
       <ActionFeedbackCard
@@ -196,11 +202,6 @@ const Wallet = () => {
     </div>
   )
 
-  function onPendingWalletStateBackButton() {
-    setSelectedCurrency("NGN")
-    setWalletState("")
-  }
-
   const WalletContent = () => (
     <>
       <div className={styles.top}>
@@ -213,7 +214,7 @@ const Wallet = () => {
           walletAccount={walletAccount}
           updateWalletState={() => updateWalletState(true)}
           updateBalanceState={() => updateBalanceState(true)}
-          onUpdateCurrency={onUpdateCurrency}
+          onUpdateCurrency={(currency)=>setSelectedCurrency(currency)}
           styles={styles}
           currencies={currencies}
         />
@@ -238,16 +239,17 @@ const Wallet = () => {
       </div>
     </>
   )
+
   return (
     <div className={styles.wallet_page}>
-      {pinCreated === false ? (
-        <CreatePinModal
-          handlePinCreation={() => handlePinCreation()}
-          topClose={false}
-          cancelBtnDisabled={true}
-          reference={reference}
-          onClose={""}
-        />
+      {pinCreated === false && reference ? (
+       <CreatePinModal 
+       handlePinCreation={()=>handlePinCreation()}
+       initiatePinCreation={()=>initiatePinCreation()}
+       topClose={false}
+       cancelBtnDisabled={true}
+       reference={reference}
+       onClose={''} />
       ) : (
         <></>
       )}
