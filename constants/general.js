@@ -48,12 +48,12 @@ export const sidebarData = [
 		icon: SideIcon6,
 		path: "/wallet",
 	},
-	{
-		title: "Team Setup",
-		icon: SideIcon7,
-		path: "/team",
-		hide: userType !== '2'
-	},
+	// {
+	// 	title: "Team Setup",
+	// 	icon: SideIcon7,
+	// 	path: "/team",
+	// 	hide: userType !== '2'
+	// },
 	{
 		title: "Settings",
 		icon: SideIcon8,

@@ -35,7 +35,8 @@ const BusinessInformation = () => {
 		const { name, value } = e.target
 		setPayload((prevState) => ({
 			...prevState,
-			[name]: value,
+				// prevent special characters for business name
+				[name]: name === 'businessName' ? value.replace(/[^\w\s]/gi, '') : value,
 		}))
 	}
 

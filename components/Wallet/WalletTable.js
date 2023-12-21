@@ -304,12 +304,7 @@ const WalletTable = ({ wallet, currency, styles, updateKey }) => {
                         </td>
 
                         <td className={`${tableStyles.td_3} text-bold`}>
-                          {formatMoney(
-                            data.currency === "NGN"
-                              ? data.totalAmount
-                              : data.amount,
-                            data.currency
-                          )}
+                          {formatMoney(data.amount, data.currency)}
                         </td>
                         <td className={tableStyles.td_2}>
                           {data.transactionCategory === "PAYOUT" ? (

@@ -1,7 +1,7 @@
 
 import styles from './index.module.css'
 import formStyles from '@/assets/styles/auth-screens.module.css'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import functions from '@/utils/functions'
 // eslint-disable-next-line no-unused-vars
 import { CancelIcon, PDFIcon, UploadIcon } from '@/constants/icons'
@@ -10,16 +10,31 @@ import Image from 'next/image'
 import { useNotify } from '@/utils/hooks'
 import TertiaryBtn from '../Btn/Tertiary'
 
-const FileUpload = ({styleProps, disabled, error, errorMsg, id="file", accept="image/png, image/jpeg, image/svg, application/pdf", handlefileUpload, title, subTitle, smTitle, base64}) => {
+const FileUpload = ({
+	styleProps, 
+	disabled, 
+	error, 
+	errorMsg, 
+	id="file", 
+	accept="image/png, image/jpeg, image/svg, application/pdf", 
+	handlefileUpload, 
+	title, 
+	subTitle, 
+	smTitle, 
+	base64
+}) => {
 	const notify = useNotify()
+	const logoFileUpload = useRef()
+	const [updateFileInput, setUpdateFileInput] = useState(1)
+
 	const onUploadClick = (e) => {
 		e.preventDefault()
 		logoFileUpload.current.click();
 	};
-	const logoFileUpload = useRef()
 	const { returnBase64 } = functions
 
 	const onFileUpload = async (e) => {
+		console.log(e)
 		const fileObj = e.target.files[0]
 		if (!fileObj) {
 			return
@@ -30,6 +45,8 @@ const FileUpload = ({styleProps, disabled, error, errorMsg, id="file", accept="i
 		}
 		const result = await returnBase64(fileObj)
 		handlefileUpload(result)
+		// to rerender file input and remove lingering files in pipeline
+		setUpdateFileInput(updateFileInput+1)
 	}
 
 	const removeFile = () => {
@@ -57,6 +74,7 @@ const FileUpload = ({styleProps, disabled, error, errorMsg, id="file", accept="i
 					<label>Upload</label>
 					<input
 						type="file"
+						key={updateFileInput}
 						id={id}
 						disabled={disabled}
 						name={id}
