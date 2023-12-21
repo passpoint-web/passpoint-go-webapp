@@ -32,7 +32,7 @@ function formatMoney(num, currency, precision) {
     ? `${getCurrencySymbol(currency)}${n
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`
-    : `${currency === "USD" ? "$" : currency === "NGN" ? "₦" : "#"}0.00`
+    : `${getCurrencySymbol(currency)}0.00`
 }
 const createUrl = (pathname, params) => {
   const paramsString = params.toString()
@@ -319,6 +319,7 @@ const functions = {
   eighteenYearsAgo,
   maskedPhoneNo,
   formattedTodayDate,
+  getCurrencySymbol,
   // encryptData,
   // decryptData
 }

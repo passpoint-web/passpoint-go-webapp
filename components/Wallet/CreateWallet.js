@@ -20,7 +20,7 @@ const CreateWallet = ({
     setCreateWalletLoading(true)
     try {
       const response = await wallet.createWallet({
-        currency: "NGN",
+        currency,
       })
       notify(
         "success",
@@ -58,10 +58,12 @@ const CreateWallet = ({
         icon={<CreateWalletIcon />}
         text={`Create Your ${currency || ""} Wallet`}
       />
-      <Button
-        text="Use NGN Wallet"
-        onClick={() => changeToDefaultCurrency("NGN")}
-      />
+      {currency !== "NGN" && (
+        <Button
+          text="Back to NGN Wallet"
+          onClick={() => changeToDefaultCurrency("NGN")}
+        />
+      )}
     </div>
   )
 

@@ -15,6 +15,7 @@ import { useState, useEffect } from "react"
 // eslint-disable-next-line no-unused-vars
 import { saveBanks, getBanks } from "@/services/localService"
 import CreatePinModal from "../Modal/CreatePin"
+import Button from "../Btn/Button"
 // import RefreshBtn from "../Btn/RefreshBtn";
 
 const Wallet = () => {
@@ -66,6 +67,7 @@ const Wallet = () => {
   }
 
   const getWalletBalance = async () => {
+    setDataLoading(true)
     setBalanceLoading(true)
     try {
       const response = await wallet.getWalletBalance(selectedCurrency)
@@ -74,6 +76,7 @@ const Wallet = () => {
     } catch (_err) {
       // console.log(_err)
     } finally {
+      setDataLoading(false)
       setBalanceLoading(false)
     }
   }
@@ -186,8 +189,17 @@ const Wallet = () => {
           status: "pending",
         }}
       />
+      <Button
+        text="Back to NGN Wallet"
+        onClick={() => onPendingWalletStateBackButton()}
+      />
     </div>
   )
+
+  function onPendingWalletStateBackButton() {
+    setSelectedCurrency("NGN")
+    setWalletState("")
+  }
 
   const WalletContent = () => (
     <>
@@ -217,7 +229,12 @@ const Wallet = () => {
 					</section>
 				</div> */}
       <div className={styles.bottom}>
-        <WalletTable wallet={wallet} updateKey={updateKey} styles={styles} />
+        <WalletTable
+          wallet={wallet}
+          currency={selectedCurrency}
+          updateKey={updateKey}
+          styles={styles}
+        />
       </div>
     </>
   )

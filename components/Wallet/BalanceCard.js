@@ -87,6 +87,8 @@ const BalanceCard = ({
       ) : currentModal === "transfer" ? (
         <TransferModals
           styles={styles}
+          currencies={Object.keys(walletDetails?.walletAccount)}
+          walletAccounts={walletDetails.walletAccount}
           onClose={() => setCurrentModal(null)}
           updateWalletState={() => updateWalletState()}
         />
@@ -111,9 +113,7 @@ const BalanceCard = ({
                         height: 250,
                       },
                     }}
-                    selectOptions={[{ code: "NGN" }, ...currencies]?.map(
-                      (c) => `${c.code} Wallet`
-                    )}
+                    selectOptions={currencies?.map((c) => `${c.code} Wallet`)}
                     selectedOption={selectedCurrency}
                     noShadow
                     countries
@@ -140,10 +140,10 @@ const BalanceCard = ({
                   <h1 className={!showBalance ? styles.hide_balance : ""}>
                     {showBalance
                       ? formatMoney(
-                          walletBalance.availableBalance,
-                          walletBalance.currency
+                          walletBalance?.availableBalance,
+                          walletBalance?.currency
                         )
-                      : maskValue(walletAccount.availableBalance)}
+                      : maskValue(walletAccount?.availableBalance)}
                   </h1>
                   <div className={styles.card_action}>
                     <button onClick={() => setShowBalance(!showBalance)}>
@@ -173,11 +173,11 @@ const BalanceCard = ({
               <BorderIconBtn
                 bgColor="#fff"
                 classProps="no-border i sd"
-                styleProps={{ color: "#009EC4" }}
+                styleProps={{ color: "#000" }}
                 // loading={pinCheckLoading}
                 onClick={() => setCurrentModal("transfer")}
                 icon={<WithdrawMoneyIcon />}
-                text="Withdraw"
+                text="Transfer"
               />
             </div>
           </div>

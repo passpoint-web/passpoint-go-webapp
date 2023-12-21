@@ -58,7 +58,7 @@ const CustomSelect = ({
               >
                 {countries && (
                   <img
-                    className="currency-img"
+                    className="currency-img mb-1"
                     src={`https://asset.mypasspoint.com/img/payoutCurrency/${selectedOption.substring(
                       0,
                       3
@@ -99,7 +99,7 @@ const CustomSelect = ({
               >
                 {countries && (
                   <img
-                    className="currency-img"
+                    className="currency-img mb-1"
                     src={`https://asset.mypasspoint.com/img/payoutCurrency/${option.substring(
                       0,
                       3

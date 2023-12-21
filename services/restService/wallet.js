@@ -90,8 +90,19 @@ export const wallet = {
   },
   getCurrencies: () => {
     return walletRestAgent.get(
-      "wallet-app/currency-list?type=fiat",
+      "wallet-app/currency-list?type=fiat&filter=no",
       setConfig()
     )
+  },
+  /**
+   * Endpoint to get conversation rates between two currencies
+   * Also doubles as endpoint to get fees from a transaction (only when the [data.amount] is included)
+   * @param {*} data
+   */
+  getExchangeRateOrFees: (data) => {
+    return walletRestAgent.post("ft-app/get-rate", data, setConfig())
+  },
+  convertFunds: (data) => {
+    return walletRestAgent.post("ft-app/convert-funds", data, setConfig())
   },
 }
