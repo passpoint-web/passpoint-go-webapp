@@ -12,7 +12,7 @@ export const metadata = {
 export default function Dashboard() {
 	return (
 		<main className={styles.dashboard}>
-			<section className={styles.dashboard_public}>
+			<section className={styles.dashboard_top}>
 				<PublicProfileCard />
 				<KycCard />
 			</section>

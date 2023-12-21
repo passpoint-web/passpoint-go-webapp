@@ -241,7 +241,7 @@ const WalletTable = ({wallet,  styles, updateKey }) => {
 												<td className={tableStyles.td_3}>{data.beneficiaryBankName }</td>
 
 												<td className={`${tableStyles.td_3} text-bold`}>
-													{formatMoney(data.amount, data.currency)}
+													{formatMoney(data.totalAmount, data.currency)}
 												</td>
 												<td className={tableStyles.td_2}>
 													{data.transactionCategory ==='PAYOUT' ?

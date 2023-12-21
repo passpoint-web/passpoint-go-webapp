@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const LayoutLogic = ({ children }) => {
   const pathname = usePathname();
-  const [pathnamees, setPathnames] = useState([]);
+  const [pathnames, setPathnames] = useState([]);
   useEffect(() => {
     setPathnames([
       "/kyc/corporate/verify-bvn",
@@ -15,7 +15,7 @@ const LayoutLogic = ({ children }) => {
   }, [pathname]);
   return (
     <>
-      {pathnamees.includes(pathname) ? (
+      {pathnames.includes(pathname) ? (
         <>{children}</>
       ) : (
         <div className={styles.overlay_screen}>
