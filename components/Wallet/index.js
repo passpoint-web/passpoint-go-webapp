@@ -113,8 +113,9 @@ const Wallet = () => {
 		try {
 			const response = await wallet.initiatePin()
 			setReference(response.data.reference)
+			return 'success'
 		} catch (_err) {
-			// console.log(_err)
+			return 'failure'
 		}
 		finally {
 			setDataLoading(false)
@@ -152,9 +153,7 @@ const Wallet = () => {
 
 	useEffect(function refreshData () {
 		const interval = setInterval(()=>{
-			// if (!balanceLoading) {
 			setUpdateKey(new Date().getTime())
-			// }
 		},45000)
 		return () => clearInterval(interval);
 	},[updateKey])
@@ -214,7 +213,9 @@ const Wallet = () => {
 		<div className={styles.wallet_page}>
 			{
 				pinCreated === false && reference ?
-					<CreatePinModal handlePinCreation={()=>handlePinCreation()}
+					<CreatePinModal 
+						handlePinCreation={()=>handlePinCreation()}
+						initiatePinCreation={()=>initiatePinCreation()}
 						topClose={false}
 						cancelBtnDisabled={true}
 						reference={reference}

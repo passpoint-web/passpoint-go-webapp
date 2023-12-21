@@ -14,7 +14,8 @@ import { useNotify } from "@/utils/hooks";
 import CustomSelect from "../Custom/Select";
 import { businessIndustries, businessTypes, CS } from "@/utils/CONSTANTS";
 // eslint-disable-next-line no-unused-vars
-import CountrySelect from "../Custom/CountrySelect";
+// import CountrySelect from "../Custom/CountrySelect";
+// import CopyInputValue from "../Copy/CopyInputValue";
 
 const AccountProfile = () => {
 	const [savedCredentials, setSavedCredentials] = useState({});
@@ -75,14 +76,16 @@ const AccountProfile = () => {
 		}
 	}, [payload.state]);
 
-	// const BusinessProfileCard = () => (
-	// 	<div className={styles.profile_card}>
-	// 		<div className={styles.top}>
-	// 			<h3>Business Profile is ready!</h3>
-	// 		</div>
-	// 		<div className={styles.business_profile_content}>{/* <Input /> */}</div>
-	// 	</div>
-	// );
+	const BusinessProfileCard = () => (
+		<div className={styles.profile_card}>
+			<div className={styles.top}>
+				<h3>Business Profile is ready!</h3>
+			</div>
+			<div className={styles.business_profile_content}>
+				<Input />
+				</div>
+		</div>
+	);
 
 	const PersonalInfo = () => (
 		<>
@@ -380,7 +383,7 @@ const AccountProfile = () => {
 
 	return (
 		<div className={styles.profile_ctn}>
-			{/* {savedCredentials.hasPublicProfile ? BusinessProfileCard() : <></>} */}
+			{savedCredentials.hasPublicProfile ? BusinessProfileCard() : <></>}
 			{PersonalInfo()}
 			{BusinessInfo()}
 			{AddressInfo()}

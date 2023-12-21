@@ -16,10 +16,6 @@ const ResendOTP = ({ email, otpType='email', endpoint, clearOtp }) => {
 		}
 	};
 
-	useEffect(()=>{
-		console.log(endpoint)
-	},[])
-
 	const notify = useNotify();
 
 	useEffect(() => {
