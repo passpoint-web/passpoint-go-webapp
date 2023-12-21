@@ -3,6 +3,6 @@
 
 import { ChakraProvider } from '@chakra-ui/react'
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }) {
   return <ChakraProvider>{children}</ChakraProvider>
 }
