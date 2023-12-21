@@ -1,9 +1,14 @@
 
+'use client'
 import VerifyEmail from "@/components/Verify"
 import { getForgotPasswordEmail } from "@/services/localService"
+import { useEffect, useState } from "react"
 
 const ForgotPasswordVerifyEmail = () => {
-	const email = getForgotPasswordEmail()
+	const [email, setEmail] = useState('')
+	useEffect(()=>{
+		setEmail(getForgotPasswordEmail())
+	},[])
 	return (
 		<>
 			<VerifyEmail email={email}

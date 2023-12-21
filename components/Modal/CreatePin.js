@@ -4,6 +4,7 @@ import ModalWrapper from './ModalWrapper'
 import Input from "@/components/Dashboard/Input";
 // import PasswordField from "@/components/Auth/PasswordField"
 import functions from "@/utils/functions"
+import TertiaryBtn from "@/components/Btn/Tertiary";
 import OtpInput from 'react-otp-input'
 import formStyles from '@/assets/styles/auth-screens.module.css'
 import { useNotify } from "@/utils/hooks";
@@ -11,8 +12,7 @@ import { useNotify } from "@/utils/hooks";
 import { getCredentials, savePinCreated } from '@/services/localService';
 // import { saveCredentials, saveToken } from "@/services/localService";
 import { wallet } from '@/services/restService/wallet';
-
-const CreatePinModal = ({ handlePinCreation, pinCreated, topClose, cancelBtnDisabled, onClose, reference }) => {
+const CreatePinModal = ({ initiatePinCreation, handlePinCreation, pinCreated, topClose, cancelBtnDisabled, onClose, reference }) => {
 	const notify = useNotify();
 	const {maskedEmail} = functions
 	const {email} = getCredentials()
@@ -61,11 +61,61 @@ const CreatePinModal = ({ handlePinCreation, pinCreated, topClose, cancelBtnDisa
 			}
 			if (responseMessage === 'pin reset code mis-match') {
 				setCurrentLevel('otp')
+			} else if (responseMessage?.toLowerCase() === 'invalid pin reset reference') {
+				resendOtp()
+				setCurrentLevel('otp')
 			}
 		} finally {
 			setIsLoading(false)
 		}
 	}
+
+	// resend otp section
+	const [resendOTPStatus, setResendOTPStatus] = useState("Resend OTP");
+	const [countDown, setCountDown] = useState(0);
+
+	const resendOtp = async () => {
+		setResendOTPStatus("Resending...");
+		const response = await initiatePinCreation()
+		console.log(response)
+		if (response === 'success') {
+			const  message = `OTP Resent Successfully to ${email}`;
+			notify("success", message);
+			handlePinsChange({ target: { name: 'otp', value: ''} })
+			setCountDown(59);
+		}
+		setResendOTPStatus("Resend OTP");
+	}
+
+	const countDownTimer = () => {
+		if (countDown > 0) {
+			window.setTimeout(() => {
+				setCountDown(countDown - 1);
+			}, 1000);
+		} else {
+			setResendOTPStatus("Resend OTP");
+		}
+	};
+
+	useEffect(() => {
+		countDownTimer();
+	}, [countDown]);
+
+	const ResendOTP = () =>  (
+			<p className={formStyles.receive_otp_text}>
+				Didn’t receive any code?{" "}
+				{!countDown && resendOTPStatus === "Resend OTP" ? (
+					<TertiaryBtn text="Resend OTP"
+						onClick={resendOtp} />
+				) : !countDown && resendOTPStatus === "Resending..." ? (
+					<span className={formStyles.otp_count_down}>Resending...</span>
+				) : (
+					<span className={formStyles.otp_count_down}>
+						Resend OTP(0.{countDown}s)
+					</span>
+				)}
+			</p>
+		)
 
 	useEffect(()=>{
 		if (feedbackError.toLowerCase().includes('otp')) {
@@ -93,6 +143,7 @@ const CreatePinModal = ({ handlePinCreation, pinCreated, topClose, cancelBtnDisa
 		>
 			<form>
 				{currentLevel === 'otp' ?
+				<>
 					<Input label={`Enter the OTP sent to ${maskedEmail(email)}`}
 						error={ctaClicked && (feedbackError?.toLowerCase().includes('otp') || feedbackError?.toLowerCase().includes('mis-match'))}
 						errorMsg={feedbackError?.toLowerCase().includes('otp') ? 'OTP is not valid' : feedbackError?.toLowerCase().includes('mis-match') ? feedbackError : ''}>
@@ -108,7 +159,11 @@ const CreatePinModal = ({ handlePinCreation, pinCreated, topClose, cancelBtnDisa
 								renderInput={(props) => <input {...props} />}
 							/>
 						</div>
-					</Input> :
+						
+					</Input>
+					
+					<ResendOTP />
+					</> :
 					<div style={{width: '80%', margin: '0 auto'}}>
 						<Input label={'Create Pin'}
 							label_center={false}>
