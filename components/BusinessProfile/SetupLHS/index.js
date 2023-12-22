@@ -58,7 +58,8 @@ const PublicProfileSetupLHS = () => {
   }, [publicProfileState])
   return (
     <>
-      <BackBtn text="Dashboard" onClick={() => push("/dashboard")} />
+      <BackBtn text="Dashboard"
+        onClick={() => push("/dashboard")} />
       <div className={styles.lhs_levels_ctn}>
         {levelsToDisplay.map((e, index) => (
           <FormLevel

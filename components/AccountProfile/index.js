@@ -10,7 +10,7 @@ import Input from "../Dashboard/Input"
 import formStyles from "@/assets/styles/auth-screens.module.css"
 import PhoneInput from "react-phone-input-2"
 import "react-phone-input-2/lib/style.css"
-import { useNotify } from "@/utils/hooks"
+// import { useNotify } from "@/utils/hooks"
 import CustomSelect from "../Custom/Select"
 import { businessIndustries, businessTypes, CS } from "@/utils/CONSTANTS"
 // eslint-disable-next-line no-unused-vars
@@ -23,16 +23,16 @@ const AccountProfile = () => {
   const [businessInfoEdit, setBusinessInfoEdit] = useState(false)
   const [addressInfoEdit, setAddressInfoEdit] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [ctaClicked, setCtaClicked] = useState(false)
+  // const [ctaClicked, setCtaClicked] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [states, setStates] = useState([])
+  // const [states, setStates] = useState([])
   // const [allFieldsValid, setAllFieldsValid] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [lgas, setLgas] = useState([])
+  // const [lgas, setLgas] = useState([])
   const [payload, setPayload] = useState({})
 
   // eslint-disable-next-line no-unused-vars
-  const notify = useNotify()
+  // const notify = useNotify()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -64,15 +64,15 @@ const AccountProfile = () => {
   }, [])
 
   useEffect(() => {
-    setStates(CS.getStatesByShort(payload?.country?.cca2)) // cca2: country's shortname
+    // setStates(CS.getStatesByShort(payload?.country?.cca2)) // cca2: country's shortname
   }, [payload.country?.name?.common])
 
   useEffect(() => {
     const cities = CS.getCities(payload?.country?.cca2, payload.state) || []
     if (cities.length) {
-      setLgas(cities)
+      // setLgas(cities)
     } else {
-      setLgas([payload.state])
+      // setLgas([payload.state])
     }
   }, [payload.state])
 
@@ -116,7 +116,7 @@ const AccountProfile = () => {
             <Input
               id="phone"
               label="Phone Number"
-              error={ctaClicked && !payload.phoneNumber}
+              // error={ctaClicked && !payload.phoneNumber}
               errorMsg={!payload.phoneNumber && "Phone is required"}
             >
               <PhoneInput
@@ -195,7 +195,7 @@ const AccountProfile = () => {
                 <Input
                   id="business-type"
                   label="Business Type"
-                  error={ctaClicked && !payload.businessType}
+                  // error={ctaClicked && !payload.businessType}
                   errorMsg="Business Type is required"
                 >
                   <CustomSelect
@@ -203,7 +203,7 @@ const AccountProfile = () => {
                     disabled
                     selectOptions={businessTypes}
                     selectedOption={payload.businessType}
-                    fieldError={ctaClicked && !payload.businessType}
+                    // fieldError={ctaClicked && !payload.businessType}
                     emitSelect={(option) =>
                       handleChange({
                         target: { name: "businessType", value: option },
@@ -214,7 +214,7 @@ const AccountProfile = () => {
                 <Input
                   id="business-industry"
                   label="Business Industry"
-                  error={ctaClicked && !payload.businessIndustry}
+                  // error={ctaClicked && !payload.businessIndustry}
                   errorMsg="Business Industry is required"
                 >
                   <CustomSelect
@@ -222,7 +222,7 @@ const AccountProfile = () => {
                     disabled
                     selectOptions={businessIndustries}
                     selectedOption={payload.businessIndustry}
-                    fieldError={ctaClicked && !payload.businessIndustry}
+                    // fieldError={ctaClicked && !payload.businessIndustry}
                     emitSelect={(option) =>
                       handleChange({
                         target: { name: "businessIndustry", value: option },
@@ -355,7 +355,7 @@ const AccountProfile = () => {
                 placeholder="91, Lagos road"
                 value={payload.address}
                 onChange={handleChange}
-                error={ctaClicked && !payload.streetNo}
+                // error={ctaClicked && !payload.streetNo}
                 errorMsg="Street No. is required"
               />
             </div>
