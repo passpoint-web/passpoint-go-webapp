@@ -47,7 +47,8 @@ const Wallet = () => {
       if (!data.walletAccount[selectedCurrency]) {
         setWalletState("no-wallet")
       } else if (Object.keys(data.walletAccount).length) {
-        const accountNumber = data.walletAccount["NGN"]?.accountNumber
+        const accountNumber =
+          data.walletAccount[selectedCurrency]?.accountNumber
         setPinCreated(!!pinCreated)
         if (!vaCreated && !accountNumber) {
           setWalletState("no-wallet")
@@ -57,7 +58,7 @@ const Wallet = () => {
           setWalletState("created")
         }
         setWalletDetails(data)
-        setWalletAccount(data.walletAccount["NGN"])
+        setWalletAccount(data.walletAccount[selectedCurrency])
       } else if (!vaCreated) {
         setWalletState("no-wallet")
       } else if (vaCreated) {
