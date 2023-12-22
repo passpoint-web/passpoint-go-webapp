@@ -21,6 +21,8 @@ function getCurrencySymbol(currencyCode) {
       return "KSh "
     case "UGX":
       return "USh "
+    case "ZMW":
+      return "Zk "
     default:
       return "$ "
   }

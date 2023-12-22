@@ -44,7 +44,9 @@ const Wallet = () => {
       const { pinCreated } = data
       const { vaCreated } = data
       setPinCreated(!!pinCreated)
-      if (Object.keys(data.walletAccount).length) {
+      if (!data.walletAccount[selectedCurrency]) {
+        setWalletState("no-wallet")
+      } else if (Object.keys(data.walletAccount).length) {
         const accountNumber = data.walletAccount["NGN"]?.accountNumber
         setPinCreated(!!pinCreated)
         if (!vaCreated && !accountNumber) {
