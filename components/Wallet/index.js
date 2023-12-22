@@ -34,44 +34,43 @@ const Wallet = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("NGN")
   const [currencies, setCurrencies] = useState([])
 
-	const getWallet = async (loading) => {
-		setDataLoading(loading)
-		setBalanceLoading(true)
-		try {
-			const response = await wallet.getWalletDetails()
-			const {data} = response.data
-			// console.log(data)
-				const {pinCreated} = data
-				const {vaCreated} = data
-				setPinCreated(!!pinCreated)
-			if (Object.keys(data.walletAccount).length) {
-				const accountNumber = data.walletAccount['NGN']?.accountNumber
-				setPinCreated(!!pinCreated)
-				if (!vaCreated && !accountNumber) {
-					setWalletState('no-wallet')
-				} else if (vaCreated && !accountNumber) {
-					setWalletState('pending')
-				} else if (vaCreated && accountNumber) {
-					setWalletState('created')
-				}
-				setWalletDetails(data)
-				setWalletAccount(data.walletAccount['NGN'])
-			} else if (!vaCreated) {
-					setWalletState('no-wallet')
-				} else if (vaCreated) {
-					setWalletState('pending')
-				}
-			
-		} catch (_err) {
-			const {responseMessage = undefined } = _err.response?.data || _err
-			if (responseMessage?.toLowerCase()?.includes('wallet')) {
-				setWalletState('no-wallet')
-			}
-		} finally {
-			setDataLoading(false)
-			setBalanceLoading(false)
-		}
-	}
+  const getWallet = async (loading) => {
+    setDataLoading(loading)
+    setBalanceLoading(true)
+    try {
+      const response = await wallet.getWalletDetails()
+      const { data } = response.data
+      // console.log(data)
+      const { pinCreated } = data
+      const { vaCreated } = data
+      setPinCreated(!!pinCreated)
+      if (Object.keys(data.walletAccount).length) {
+        const accountNumber = data.walletAccount["NGN"]?.accountNumber
+        setPinCreated(!!pinCreated)
+        if (!vaCreated && !accountNumber) {
+          setWalletState("no-wallet")
+        } else if (vaCreated && !accountNumber) {
+          setWalletState("pending")
+        } else if (vaCreated && accountNumber) {
+          setWalletState("created")
+        }
+        setWalletDetails(data)
+        setWalletAccount(data.walletAccount["NGN"])
+      } else if (!vaCreated) {
+        setWalletState("no-wallet")
+      } else if (vaCreated) {
+        setWalletState("pending")
+      }
+    } catch (_err) {
+      const { responseMessage = undefined } = _err.response?.data || _err
+      if (responseMessage?.toLowerCase()?.includes("wallet")) {
+        setWalletState("no-wallet")
+      }
+    } finally {
+      setDataLoading(false)
+      setBalanceLoading(false)
+    }
+  }
   const getWalletBalance = async () => {
     setDataLoading(true)
     setBalanceLoading(true)
@@ -141,7 +140,7 @@ const Wallet = () => {
 
   const handlePinCreation = () => {
     setPinCreated(true)
-		setReference(undefined)
+    setReference(undefined)
     getWallet(false)
     getWalletBalance()
   }
@@ -153,11 +152,11 @@ const Wallet = () => {
     getCurrencies()
   }, [updateKey])
 
-	useEffect(()=>{
-		if (walletState !== 'no-wallet' && pinCreated === false && !reference) {
-			initiatePinCreation()
-		}
-	},[walletState, pinCreated, reference])
+  useEffect(() => {
+    if (walletState !== "no-wallet" && pinCreated === false && !reference) {
+      initiatePinCreation()
+    }
+  }, [walletState, pinCreated, reference])
 
   useEffect(
     function refreshData() {
@@ -215,7 +214,7 @@ const Wallet = () => {
           walletAccount={walletAccount}
           updateWalletState={() => updateWalletState(true)}
           updateBalanceState={() => updateBalanceState(true)}
-          onUpdateCurrency={(currency)=>setSelectedCurrency(currency)}
+          onUpdateCurrency={(currency) => setSelectedCurrency(currency)}
           styles={styles}
           currencies={currencies}
         />
@@ -244,13 +243,14 @@ const Wallet = () => {
   return (
     <div className={styles.wallet_page}>
       {pinCreated === false && reference ? (
-       <CreatePinModal 
-       handlePinCreation={()=>handlePinCreation()}
-       initiatePinCreation={()=>initiatePinCreation()}
-       topClose={false}
-       cancelBtnDisabled={true}
-       reference={reference}
-       onClose={''} />
+        <CreatePinModal
+          handlePinCreation={() => handlePinCreation()}
+          initiatePinCreation={() => initiatePinCreation()}
+          topClose={false}
+          cancelBtnDisabled={true}
+          reference={reference}
+          onClose={""}
+        />
       ) : (
         <></>
       )}
