@@ -16,7 +16,7 @@ import SearchSelect from '@/components/Dashboard/SearchSelect'
 
 const BusinessAddress = () => {
 	// eslint-disable-next-line no-unused-vars
-	const { push, back } = useRouter()
+	const { push } = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [states, setStates] = useState([])
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
