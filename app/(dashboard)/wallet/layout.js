@@ -6,11 +6,11 @@ export const metadata = () => {
   };
 };
 const WalletLayout = ({children}) => {
-  return (
-    <AccessLayout>
-      {children}
-    </AccessLayout>
-  )
+	return (
+		<AccessLayout>
+			{children}
+		</AccessLayout>
+	)
 }
 
 export default WalletLayout

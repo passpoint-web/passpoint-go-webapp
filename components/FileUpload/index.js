@@ -4,7 +4,7 @@ import formStyles from '@/assets/styles/auth-screens.module.css'
 import { useRef, useState } from 'react'
 import functions from '@/utils/functions'
 // eslint-disable-next-line no-unused-vars
-import { CancelIcon, PDFIcon, UploadIcon, FileIcon } from '@/constants/icons'
+import { CancelIcon, PDFIcon, UploadIcon } from '@/constants/icons'
 import FeedbackInfo from '../FeedbackInfo'
 import Image from 'next/image'
 import { useNotify } from '@/utils/hooks'
@@ -97,17 +97,17 @@ const FileUpload = ({
 								</button>
 								<div className={styles.top}>
 									{base64 ?
-									<div className={styles.file_ctn}>
-										{!base64.includes('application/pdf') ?
-										<Image
-											src={base64}
-											alt="base 64 img"
-											width={100}
-											height={100} /> :
-											<PDFIcon /> }
-										<TertiaryBtn text="Change"
-											onClick={(e)=>onUploadClick(e)} />
-									</div> : <></>}
+										<div className={styles.file_ctn}>
+											{!base64.includes('application/pdf') ?
+												<Image
+													src={base64}
+													alt="base 64 img"
+													width={100}
+													height={100} /> :
+												<PDFIcon /> }
+											<TertiaryBtn text="Change"
+												onClick={(e)=>onUploadClick(e)} />
+										</div> : <></>}
 								</div>
 							</div>
 					}
@@ -116,8 +116,8 @@ const FileUpload = ({
 			{
 				error && errorMsg ?
 					<FeedbackInfo message={errorMsg} /> :
-		<></>
-					
+					<></>
+
 			}
 		</div>
 	)

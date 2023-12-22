@@ -350,9 +350,11 @@ const ContactPage = ({ styles }) => {
 					onChange={handleChange}
 				/>
 			</div>
-			<FormChoice message='Do you want to have web-contact form?' checkValue={payload.hasWebContact} onChange={()=>{handleChange({
-				target: {name: 'hasWebContact', value: payload.hasWebContact === 1 ? 0 : 1}
-			})}}/>
+			<FormChoice message='Do you want to have web-contact form?'
+				checkValue={payload.hasWebContact}
+				onChange={()=>{handleChange({
+					target: {name: 'hasWebContact', value: payload.hasWebContact === 1 ? 0 : 1}
+				})}}/>
 			<div className={AuthStyles.action_ctn}>
 				<PrimaryBtn
 					text="Save and continue"
@@ -380,7 +382,8 @@ const ContactPage = ({ styles }) => {
 			<div style={socials.length ? {borderTop: '1px solid #e5e7ef', paddingTop: '32px'} : {}}>
 				{
 					socials.map((s, id)=> (
-						<div key={id} style={{position: 'relative'}}>
+						<div key={id}
+							style={{position: 'relative'}}>
 							<Input
 								style={{width: '90%'}}
 								label={s.name}

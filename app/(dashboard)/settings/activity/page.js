@@ -1,8 +1,8 @@
 import Activity from "@/components/Settings/SettingsPages/ActivityPage"
 const ActivityPage = () => {
-  return (
-    <Activity />
-  )
+	return (
+		<Activity />
+	)
 }
 
 export default ActivityPage

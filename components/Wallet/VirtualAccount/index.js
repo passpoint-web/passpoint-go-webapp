@@ -9,31 +9,31 @@ import VirtualDetailsModal from "./VirtualDetailsModal";
 import { useState } from "react";
 
 const VirtualAccount = () => {
-  const searchParams = useSearchParams();
-  const [virtualDetailsVisible, setVirtualDetailsVisible] = useState(null);
+	const searchParams = useSearchParams();
+	const [virtualDetailsVisible, setVirtualDetailsVisible] = useState(null);
 
-  useEffect(() => {
-    if (searchParams.get("vat")) {
-      setVirtualDetailsVisible(searchParams.get("vat"));
-    }
-  }, [searchParams]);
+	useEffect(() => {
+		if (searchParams.get("vat")) {
+			setVirtualDetailsVisible(searchParams.get("vat"));
+		}
+	}, [searchParams]);
 
-  return (
-    <div>
-      <VirtualHome styles={styles} />
-      <VirtualTable
-        title="virtual account"
-        action="/wallet/virtual-account?vat=1"
-      />
-      {virtualDetailsVisible && (
-        <VirtualDetailsModal
-          tabStyle={tabStyle}
-          styles={styles}
-          setVirtualDetailsVisible={setVirtualDetailsVisible}
-        />
-      )}
-    </div>
-  );
+	return (
+		<div>
+			<VirtualHome styles={styles} />
+			<VirtualTable
+				title="virtual account"
+				action="/wallet/virtual-account?vat=1"
+			/>
+			{virtualDetailsVisible && (
+				<VirtualDetailsModal
+					tabStyle={tabStyle}
+					styles={styles}
+					setVirtualDetailsVisible={setVirtualDetailsVisible}
+				/>
+			)}
+		</div>
+	);
 };
 
 export default VirtualAccount;

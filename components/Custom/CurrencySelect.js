@@ -122,7 +122,7 @@ const CurrencySelect = ({ emitCurrency, currencyProps, showSearch=true, stylePro
 				{showCountriesSelect ? (
 					<div
 						id={'countries_currency'}
-						className={`${styles.countries} dropdown`}
+						className={`${styles.countries} dropdown mt-12`}
 						style={{...styleProps?.dropdown}}
 					>
 						{showSearch ?
@@ -136,7 +136,7 @@ const CurrencySelect = ({ emitCurrency, currencyProps, showSearch=true, stylePro
 						{filteredCurrencies.map((c, index) => (
 							<div
 								key={index}
-								className={styles.content}
+								className={`${styles.content} pb-12`}
 								onClick={(e) => handleCurrencySelect(e, c)}
 							>
 								{

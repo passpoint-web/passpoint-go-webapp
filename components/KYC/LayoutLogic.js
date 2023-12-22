@@ -1,18 +1,15 @@
-"use client";
-import styles from '@/app/(dashboard)/kyc/kyc.module.css'
-import KycSetupLHS from "@/components/KYC/SetupLHS";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+"use client"
+import styles from "@/app/(dashboard)/kyc/kyc.module.css"
+import KycSetupLHS from "@/components/KYC/SetupLHS"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const LayoutLogic = ({ children }) => {
-  const pathname = usePathname();
-  const [pathnames, setPathnames] = useState([]);
+  const pathname = usePathname()
+  const [pathnames, setPathnames] = useState([])
   useEffect(() => {
-    setPathnames([
-      "/kyc/corporate/verify-bvn",
-      "/kyc/status",
-    ]);
-  }, [pathname]);
+    setPathnames(["/kyc/corporate/verify-bvn", "/kyc/status"])
+  }, [pathname])
   return (
     <>
       {pathnames.includes(pathname) ? (
@@ -28,7 +25,7 @@ const LayoutLogic = ({ children }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default LayoutLogic;
+export default LayoutLogic

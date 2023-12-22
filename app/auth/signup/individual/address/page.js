@@ -136,7 +136,7 @@ const BusinessAddress = () => {
 									}
 								/>
 							</Input>
-							{/* <Select 
+							{/* <Select
 								id="state"
 								label="Select state"
 								error={ctaClicked && !payload.state}
@@ -151,7 +151,7 @@ const BusinessAddress = () => {
 									})
 									}
 							/> */}
-							<SearchSelect 
+							<SearchSelect
 								id="state"
 								label="Select state"
 								error={ctaClicked && !payload.state}
@@ -164,15 +164,15 @@ const BusinessAddress = () => {
 									handleChange({
 										target: { name: "state", value: e },
 									})
-									}
+								}
 							/>
-							<SearchSelect 
-							id="lga"
-							label="Select Local Govt."
-							error={
-								ctaClicked && payload.state && lgas?.length && !payload.lga
-							}
-							errorMsg="lga is required"
+							<SearchSelect
+								id="lga"
+								label="Select Local Govt."
+								error={
+									ctaClicked && payload.state && lgas?.length && !payload.lga
+								}
+								errorMsg="lga is required"
 								selectDisabled={!payload.state}
 								fieldError={
 									ctaClicked && payload.state && lgas?.length && !payload.lga

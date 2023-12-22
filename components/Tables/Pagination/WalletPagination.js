@@ -3,7 +3,7 @@ import functions from "@/utils/functions"
 import { useEffect, useState } from "react"
 const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 	const {makeNumArr} = functions
-  // :current-page-total="pagination.pageDataLength
+	// :current-page-total="pagination.pageDataLength
 	// totalData
 	// pagination.pageDataLength
 	// limit
@@ -34,7 +34,7 @@ const Pagination = ({tableStyles, pagination, handleEntry, setPage}) => {
 	useEffect(()=>{
 		// console.log('current', pagination.currentPage)
 		// console.log('total', pagination.totalPages)
-    // console.log('---------')
+		// console.log('---------')
 	}, [prevPage, nextPage, pagination.currentPage, pagination.totalPages])
 	const Break = ({breakPage}) => (
 		breakPage ? <p>..</p> : <></>
