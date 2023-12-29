@@ -31,6 +31,7 @@ const TransferModals = ({
   updateWalletState,
 }) => {
   const notify = useNotify()
+  const supportedTransferCurrencies = ["USD", "NGN"]
   const { formatMoney, sortAlphabetically } = functions
   const accountTypes = [
     { name: "Account Number", description: "NUBAN" },
@@ -72,6 +73,7 @@ const TransferModals = ({
   const [fromWalletAmount, setFromWalletAmount] = useState(0)
   const [exchangeRate, setExchangeRate] = useState(null)
   const [fees, setFees] = useState(0)
+  const [selectedCurrency, setSelectedCurrency] = useState("NGN")
 
   const handleChange = (name, value) => {
     setBankDetails((prev) => ({
@@ -413,6 +415,24 @@ const TransferModals = ({
       {/* wallet id || account number */}
       {accountType.name === "Account Number" ? (
         <>
+          <div className="dropdown-ctn mb-6">
+            <Select
+              label="Select Currency"
+              id="class"
+              styleProps={{
+                dropdown: {
+                  height: 100,
+                },
+              }}
+              selectOptions={currencies
+                ?.filter((c) => supportedTransferCurrencies.includes(c))
+                ?.map((c) => `${c} Wallet`)}
+              selectedOption={selectedCurrency}
+              noShadow
+              countries
+              emitSelect={(option) => setSelectedCurrency(option)}
+            />
+          </div>
           <SearchSelect
             id="bank"
             label="Select Bank"
@@ -484,16 +504,6 @@ const TransferModals = ({
             value={bankDetail.accountName}
             //   onChange={(e) => handleChange("accountName", e.target.value)}
           />
-          {/* <Input
-						label="Amount"
-						id="amount"
-						name="amount"
-						placeholder="Enter amount here"
-						error={ctaClicked && !bankDetail.amount}
-						value={bankDetail.amount}
-						onChange={(e) => handleChange("amount", e.target.value)}
-						errorMsg="Account number is required"
-					/> */}
           <Input
             label="Amount"
             id="amount"

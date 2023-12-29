@@ -37,6 +37,13 @@ export const wallet = {
       setConfig()
     )
   },
+  createForeignWallet: (data) => {
+    return walletRestAgent.post(
+      "wallet-app/create-wallet/foreign",
+      data,
+      setConfig()
+    )
+  },
   getWalletDetails: () => {
     return walletRestAgent.get("wallet-app/get-wallet-details", setConfig())
   },

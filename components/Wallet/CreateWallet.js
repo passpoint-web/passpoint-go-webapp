@@ -19,9 +19,14 @@ const CreateWallet = ({
   const createWallet = async () => {
     setCreateWalletLoading(true)
     try {
-      const response = await wallet.createWallet({
-        currency,
-      })
+      const response =
+        currency === "USD"
+          ? await wallet.createForeignWallet({
+              currency,
+            })
+          : await wallet.createWallet({
+              currency,
+            })
       notify(
         "success",
         response.responseMessage || "We have confirmed your wallet creation"
