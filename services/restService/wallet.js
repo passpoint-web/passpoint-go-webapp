@@ -37,6 +37,13 @@ export const wallet = {
       setConfig()
     )
   },
+  createForeignWallet: (data) => {
+    return walletRestAgent.post(
+      "wallet-app/create-wallet/foreign",
+      data,
+      setConfig()
+    )
+  },
   getWalletDetails: () => {
     return walletRestAgent.get("wallet-app/get-wallet-details", setConfig())
   },
@@ -104,5 +111,29 @@ export const wallet = {
   },
   convertFunds: (data) => {
     return walletRestAgent.post("ft-app/convert-funds", data, setConfig())
+  },
+  getMomoCollectionCurrencies: () => {
+    return walletRestAgent.get(
+      "ft-app/currency-list/momo?type=collection",
+      setConfig()
+    )
+  },
+  getMomoCollectionNetworks: (currency) => {
+    return walletRestAgent.get(
+      `momo-app/momo-networks/${currency}?type=collection`,
+      setConfig()
+    )
+  },
+  momoRequestToPay: (data) => {
+    return walletRestAgent.post("momo-app/request-payment", data, setConfig())
+  },
+  momoValidateMsisdn: (msisdn) => {
+    return walletRestAgent.get(
+      `momo-app/validate-msisdn?msisdn=${msisdn}`,
+      setConfig()
+    )
+  },
+  momoTransfer: (data) => {
+    return walletRestAgent.post(`momo-app/transfer`, data, setConfig())
   },
 }
