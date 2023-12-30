@@ -68,6 +68,7 @@ const TransferModals = ({
     accountName: "",
     amount: "",
     narration: "",
+    sortCode: "",
   })
   const [walletBalance, setWalletBalance] = useState(0)
   const [toWallet, setToWallet] = useState("")
@@ -225,11 +226,15 @@ const TransferModals = ({
           accountName,
           amount,
           narration,
+          sortCode,
         } = bankDetail
         const response = await wallet.accountTransfer({
-          bankCode: displayCode,
-          transactionCurrency: "NGN",
-          accountName,
+          bankCode: sortCode || displayCode,
+          transactionCurrency: selectedCurrency?.substring(0, 3),
+          accountName:
+            selectedCurrency?.substring(0, 3) === "USD"
+              ? "ACCOUNT NAME N/A"
+              : accountName,
           accountNumber,
           amount: Number(amount),
           channel: "3",
@@ -493,7 +498,10 @@ const TransferModals = ({
         Number(fromWalletAmount || 0) <= Number(walletBalance)
 
       setAllFieldsValid(conditionsMet)
-    } else if (currentLevel === "account") {
+    } else if (
+      currentLevel === "account" &&
+      selectedCurrency?.substring(0, 3) !== "USD"
+    ) {
       const conditionsMet =
         (accountType.name === "Account Number" ? bankDetail?.bankName : true) &&
         (accountType.name === "Account Number"
@@ -502,6 +510,19 @@ const TransferModals = ({
         bankDetail?.accountName &&
         bankDetail?.amount &&
         bankDetail?.narration
+
+      setAllFieldsValid(conditionsMet)
+    } else if (
+      currentLevel === "account" &&
+      selectedCurrency?.substring(0, 3) === "USD"
+    ) {
+      const conditionsMet =
+        bankDetail?.accountNumber &&
+        bankDetail?.sortCode &&
+        bankDetail?.amount &&
+        bankDetail?.narration
+
+      console.log(conditionsMet)
 
       setAllFieldsValid(conditionsMet)
     } else {
@@ -601,21 +622,23 @@ const TransferModals = ({
               emitSelect={(option) => setSelectedCurrency(option)}
             />
           </div>
-          <SearchSelect
-            id="bank"
-            label="Select Bank"
-            error={ctaClicked && !bankDetail.bankName}
-            errorMsg="Bank name is required"
-            selectPlaceholder={
-              getDataLoading && !banks.length ? "Loading..." : "Select Bank"
-            }
-            selectOptions={banks}
-            selectDisabled={banks.length === 0}
-            objKey={"name"}
-            selectedOption={bankDetail.bankName}
-            fieldError={ctaClicked && !bankDetail.bankName}
-            emitSelect={(option) => handleChange("bankName", option)}
-          />
+          {selectedCurrency?.substring(0, 3) !== "USD" && (
+            <SearchSelect
+              id="bank"
+              label="Select Bank"
+              error={ctaClicked && !bankDetail.bankName}
+              errorMsg="Bank name is required"
+              selectPlaceholder={
+                getDataLoading && !banks.length ? "Loading..." : "Select Bank"
+              }
+              selectOptions={banks}
+              selectDisabled={banks.length === 0}
+              objKey={"name"}
+              selectedOption={bankDetail.bankName}
+              fieldError={ctaClicked && !bankDetail.bankName}
+              emitSelect={(option) => handleChange("bankName", option)}
+            />
+          )}
 
           <Input
             type="number"
@@ -639,6 +662,22 @@ const TransferModals = ({
                 : "Account number is required"
             }
           />
+
+          {selectedCurrency?.substring(0, 3) === "USD" && (
+            <Input
+              type="number"
+              label="Sort Code"
+              id="sortCode"
+              name="sortCode"
+              placeholder="Enter Sort Code here"
+              value={bankDetail.sortCode}
+              onChange={(e) =>
+                e.target.value.length <= 6
+                  ? handleChange("sortCode", e.target.value)
+                  : null
+              }
+            />
+          )}
         </>
       ) : (
         <Input
@@ -660,18 +699,20 @@ const TransferModals = ({
           }
         />
       )}
-      {accountNameRetrieved ? (
+      {accountNameRetrieved || selectedCurrency?.substring(0, 3) === "USD" ? (
         <>
-          <Input
-            disabled
-            label="Account Name"
-            id="accountName"
-            name="accountName"
-            placeholder={getDataLoading ? "Loading..." : "Account Name"}
-            // error={ctaClicked && !bankDetail.accountName}
-            value={bankDetail.accountName}
-            //   onChange={(e) => handleChange("accountName", e.target.value)}
-          />
+          {selectedCurrency?.substring(0, 3) !== "USD" && (
+            <Input
+              disabled
+              label="Account Name"
+              id="accountName"
+              name="accountName"
+              placeholder={getDataLoading ? "Loading..." : "Account Name"}
+              // error={ctaClicked && !bankDetail.accountName}
+              value={bankDetail.accountName}
+              //   onChange={(e) => handleChange("accountName", e.target.value)}
+            />
+          )}
           <Input
             label="Amount"
             id="amount"
@@ -682,7 +723,7 @@ const TransferModals = ({
             <MoneyInput
               id="amount"
               placeholder={"Enter amount"}
-              currency={"NGN"}
+              currency={selectedCurrency?.substring(0, 3)}
               value={bankDetail.amount}
               onValueChange={(e) => handleChange("amount", e)}
             />
@@ -902,20 +943,30 @@ const TransferModals = ({
       <section className={styles.transferPin}>
         {accountType.name === "Account Number" ? (
           <div className={styles.transferPin_details}>
-            <label>Bank Name</label>
+            <label>
+              {selectedCurrency?.substring(0, 3) === "USD"
+                ? "Sort Code"
+                : "Bank Name"}
+            </label>
             <div>
-              <p>{bankDetail.bankName.name}</p>
+              <p>
+                {selectedCurrency?.substring(0, 3) === "USD"
+                  ? bankDetail.sortCode
+                  : bankDetail.bankName.name}
+              </p>
             </div>
           </div>
         ) : (
           <></>
         )}
-        <div className={styles.transferPin_details}>
-          <label>Account Name</label>
-          <div>
-            <p>{bankDetail.accountName}</p>
+        {selectedCurrency?.substring(0, 3) !== "USD" && (
+          <div className={styles.transferPin_details}>
+            <label>Account Name</label>
+            <div>
+              <p>{bankDetail.accountName}</p>
+            </div>
           </div>
-        </div>
+        )}
         {accountType.name === "Account Number" ? (
           <div className={styles.transferPin_details}>
             <label>Account Number</label>
@@ -935,7 +986,10 @@ const TransferModals = ({
           <label>Amount</label>
           <div>
             <p className={`${styles.skyBlueCss}`}>
-              {formatMoney(bankDetail.amount, "NGN")}
+              {formatMoney(
+                bankDetail.amount,
+                selectedCurrency?.substring(0, 3)
+              )}
             </p>
           </div>
         </div>
@@ -953,7 +1007,7 @@ const TransferModals = ({
         </div>
       </section>
       <section className={styles.transferPin_pin}>
-        <div style={{}}>
+        <div className="mt-6 w-[300px] mx-auto">
           <Input label={"Enter Pin"} label_center={true}>
             <div className={formStyles.otp_input_four}>
               <OtpInput
