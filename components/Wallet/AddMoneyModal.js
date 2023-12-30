@@ -189,6 +189,7 @@ const AddMoneyModal = ({ styles, walletAccount, onClose }) => {
                 id="msisdn"
                 name="MSISDN"
                 label="MSISDN"
+                type="number"
                 value={msisdn}
                 onChange={(e) => setMsisdn(e.target.value)}
               ></Input>

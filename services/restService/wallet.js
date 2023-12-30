@@ -127,4 +127,13 @@ export const wallet = {
   momoRequestToPay: (data) => {
     return walletRestAgent.post("momo-app/request-payment", data, setConfig())
   },
+  momoValidateMsisdn: (msisdn) => {
+    return walletRestAgent.get(
+      `momo-app/validate-msisdn?msisdn=${msisdn}`,
+      setConfig()
+    )
+  },
+  momoTransfer: (data) => {
+    return walletRestAgent.post(`momo-app/transfer`, data, setConfig())
+  },
 }
