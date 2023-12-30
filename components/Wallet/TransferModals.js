@@ -19,12 +19,10 @@ import {
   GreenCheckIcon,
   MobilePhoneIcon,
   PasspointIcon,
-  PhoneIcon,
 } from "@/constants/icons"
 import Select from "../Dashboard/Select"
 import { Spinner } from "@chakra-ui/react"
 import { useNotify } from "@/utils/hooks"
-import PrimaryBtn from "../Btn/Primary"
 
 const TransferModals = ({
   currencies,
