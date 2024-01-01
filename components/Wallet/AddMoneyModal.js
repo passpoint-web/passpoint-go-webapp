@@ -12,8 +12,13 @@ import walletStyles from "./wallet.module.css"
 // import functions from "@/utils/functions";
 // import { useRouter, useSearchParams } from "next/navigation";
 
-const AddMoneyModal = ({ styles, walletAccount, onClose }) => {
-  const unsupportedCurrencies = []
+const AddMoneyModal = ({
+  styles,
+  activeWalletCurrency,
+  walletAccount,
+  onClose,
+}) => {
+  const unsupportedMomoCurrencies = ["USD", "NGN"]
   const notify = useNotify()
 
   const [transferMode, setTransferMode] = useState(null) // bank, momo
@@ -115,7 +120,10 @@ const AddMoneyModal = ({ styles, walletAccount, onClose }) => {
             <h5 className="text-bold mt-4 text-xl">Bank Account</h5>
             <p>Add money to your Passpoint wallet via a bank transfer</p>
           </button>
-          <button onClick={() => setTransferMode("momo")}>
+          <button
+            disabled={unsupportedMomoCurrencies.includes(activeWalletCurrency)}
+            onClick={() => setTransferMode("momo")}
+          >
             <div className={walletStyles.check__svg}>
               <BlueCheckIcon />
             </div>

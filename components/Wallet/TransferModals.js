@@ -27,12 +27,14 @@ import { useNotify } from "@/utils/hooks"
 const TransferModals = ({
   currencies,
   walletAccounts,
+  activeWalletCurrency,
   onClose,
   styles,
   updateWalletState,
 }) => {
   const notify = useNotify()
   const supportedTransferCurrencies = ["USD", "NGN"]
+  const unsupportedMomoCurrencies = ["USD", "NGN"]
   const { formatMoney, sortAlphabetically } = functions
   const accountTypes = [
     { name: "Account Number", description: "NUBAN" },
@@ -71,14 +73,15 @@ const TransferModals = ({
   const [walletBalance, setWalletBalance] = useState(0)
   const [toWallet, setToWallet] = useState("")
   const [toWalletAmount, setToWalletAmount] = useState(0)
-  const [fromWallet, setFromWallet] = useState("")
+  const [fromWallet, setFromWallet] = useState(`${activeWalletCurrency} Wallet`)
   const [fromWalletAmount, setFromWalletAmount] = useState(0)
   const [exchangeRate, setExchangeRate] = useState(null)
   const [fees, setFees] = useState(0)
-  const [selectedCurrency, setSelectedCurrency] = useState("NGN")
+  const [selectedCurrency, setSelectedCurrency] = useState(activeWalletCurrency)
 
   const [msisdn, setMsisdn] = useState("")
-  const [momoSelectedCurrency, setMomoSelectedCurrency] = useState("NGN")
+  const [momoSelectedCurrency, setMomoSelectedCurrency] =
+    useState(activeWalletCurrency)
   const [momoTransferAmount, setMomoTransferAmount] = useState("")
   const [networkCode, setNetworkCode] = useState("")
   const [collectionNetworks, setCollectionNetworks] = useState([])
@@ -516,6 +519,7 @@ const TransferModals = ({
     ) {
       const conditionsMet =
         bankDetail?.accountNumber &&
+        bankDetail?.accountName &&
         bankDetail?.sortCode &&
         bankDetail?.amount &&
         bankDetail?.narration
@@ -617,6 +621,7 @@ const TransferModals = ({
               selectedOption={selectedCurrency}
               noShadow
               countries
+              selectDisabled
               emitSelect={(option) => setSelectedCurrency(option)}
             />
           </div>
@@ -649,6 +654,7 @@ const TransferModals = ({
               feedbackError.toLowerCase().includes("number")
             }
             value={bankDetail.accountNumber}
+            loading={getDataLoading}
             onChange={(e) =>
               e.target.value.length <= 10
                 ? handleChange("accountNumber", e.target.value)
@@ -662,19 +668,35 @@ const TransferModals = ({
           />
 
           {selectedCurrency?.substring(0, 3) === "USD" && (
-            <Input
-              type="number"
-              label="Sort Code"
-              id="sortCode"
-              name="sortCode"
-              placeholder="Enter Sort Code here"
-              value={bankDetail.sortCode}
-              onChange={(e) =>
-                e.target.value.length <= 6
-                  ? handleChange("sortCode", e.target.value)
-                  : null
-              }
-            />
+            <>
+              <Input
+                type="text"
+                label="Account Name"
+                id="accountName"
+                name="accountName"
+                placeholder="Enter Account Name here"
+                value={bankDetail.accountName}
+                onChange={(e) => handleChange("accountName", e.target.value)}
+                errorMsg={
+                  feedbackError.toLowerCase().includes("number")
+                    ? "Account name is not valid"
+                    : "Account name is required"
+                }
+              />
+              <Input
+                type="number"
+                label="Sort Code"
+                id="sortCode"
+                name="sortCode"
+                placeholder="Enter Sort Code here"
+                value={bankDetail.sortCode}
+                onChange={(e) =>
+                  e.target.value.length <= 6
+                    ? handleChange("sortCode", e.target.value)
+                    : null
+                }
+              />
+            </>
           )}
         </>
       ) : (
@@ -752,10 +774,11 @@ const TransferModals = ({
             height: 100,
           },
         }}
-        selectOptions={currencies?.map((c) => `${c} Wallet`)}
+        selectOptions={[activeWalletCurrency]?.map((c) => `${c} Wallet`)}
         selectedOption={fromWallet}
         noShadow
         countries
+        selectDisabled
         emitSelect={(option) => setFromWallet(option)}
       />
       <Input
@@ -795,7 +818,9 @@ const TransferModals = ({
             height: 100,
           },
         }}
-        selectOptions={currencies?.map((c) => `${c} Wallet`)}
+        selectOptions={currencies
+          ?.filter((c) => c !== activeWalletCurrency)
+          .map((c) => `${c} Wallet`)}
         selectedOption={toWallet}
         noShadow
         countries
@@ -908,21 +933,16 @@ const TransferModals = ({
   const SelectTransferMode = () => {
     return (
       <div className={styles.transfer__btns}>
-        <button onClick={() => setCurrentLevel("account")}>
+        <button
+          disabled={!unsupportedMomoCurrencies.includes(activeWalletCurrency)}
+          onClick={() => setCurrentLevel("account")}
+        >
           <div className={styles.check__svg}>
             <BlueCheckIcon />
           </div>
           <BankIcon />
           <h5 className="text-bold mt-4 text-xl">Bank Account</h5>
           <p>Transfer funds to your local bank account</p>
-        </button>
-        <button onClick={() => setCurrentLevel("momo")}>
-          <div className={styles.check__svg}>
-            <BlueCheckIcon />
-          </div>
-          <MobilePhoneIcon />
-          <h5 className="text-bold mt-4 text-xl">MoMo Wallet</h5>
-          <p>Transfer funds to your Momo wallet</p>
         </button>
         <button onClick={() => setCurrentLevel("wallet")}>
           <div className={styles.check__svg}>
@@ -931,6 +951,17 @@ const TransferModals = ({
           <PasspointIcon />
           <h5 className="text-bold mt-4 text-xl">My Passpoint Wallet</h5>
           <p>Transfer from one Passpoint wallet to another</p>
+        </button>
+        <button
+          disabled={unsupportedMomoCurrencies.includes(activeWalletCurrency)}
+          onClick={() => setCurrentLevel("momo")}
+        >
+          <div className={styles.check__svg}>
+            <BlueCheckIcon />
+          </div>
+          <MobilePhoneIcon />
+          <h5 className="text-bold mt-4 text-xl">MoMo Wallet</h5>
+          <p>Transfer funds to your Momo wallet</p>
         </button>
       </div>
     )
@@ -957,14 +988,12 @@ const TransferModals = ({
         ) : (
           <></>
         )}
-        {selectedCurrency?.substring(0, 3) !== "USD" && (
-          <div className={styles.transferPin_details}>
-            <label>Account Name</label>
-            <div>
-              <p>{bankDetail.accountName}</p>
-            </div>
+        <div className={styles.transferPin_details}>
+          <label>Account Name</label>
+          <div>
+            <p>{bankDetail.accountName}</p>
           </div>
-        )}
+        </div>
         {accountType.name === "Account Number" ? (
           <div className={styles.transferPin_details}>
             <label>Account Number</label>

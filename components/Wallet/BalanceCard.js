@@ -81,6 +81,7 @@ const BalanceCard = ({
       ) : currentModal === "add money" ? (
         <AddMoneyModal
           walletAccount={walletAccount}
+          activeWalletCurrency={selectedCurrency.substring(0, 3)}
           styles={styles}
           onClose={() => closeAddMoneyModal()}
         />
@@ -91,6 +92,7 @@ const BalanceCard = ({
           walletAccounts={walletDetails.walletAccount}
           onClose={() => setCurrentModal(null)}
           updateWalletState={() => updateWalletState()}
+          activeWalletCurrency={selectedCurrency.substring(0, 3)}
         />
       ) : (
         <></>
