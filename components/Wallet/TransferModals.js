@@ -23,6 +23,7 @@ import {
 import Select from "../Dashboard/Select"
 import { Spinner } from "@chakra-ui/react"
 import { useNotify } from "@/utils/hooks"
+import Tab from "../Tab"
 
 const TransferModals = ({
   currencies,
@@ -50,7 +51,7 @@ const TransferModals = ({
   const [allFieldsValid, setAllFieldsValid] = useState(false)
   const [accountNameRetrieved, setAccountNameRetrieved] = useState(false)
   // const [isLoading, setIsLoading] = useState(false);
-  const [currentLevel, setCurrentLevel] = useState("select-mode") // select-mode, account, wallet, momo, pin, wallet-pin, momo-pin, success, failure, reset pin
+  const [currentLevel, setCurrentLevel] = useState("select-mode") // select-mode, account, wallet, wallet-others, momo, pin, wallet-pin, momo-pin, success, failure, reset pin
   const [mode, setMode] = useState("") // bank, account
   const [feedbackError, setFeedbackError] = useState("")
   const [statusMessage, setStatusMessage] = useState("")
@@ -70,6 +71,11 @@ const TransferModals = ({
     narration: "",
     sortCode: "",
   })
+  const [transferFee, setTransferFee] = useState(0)
+
+  const [walletTab, setWalletTab] = useState('My Wallet') // My Wallet, Others' Wallet
+  const [othersWalletId, setOthersWalletId] = useState('')
+  const [othersWalletName, setOthersWalletName] = useState('')
   const [walletBalance, setWalletBalance] = useState(0)
   const [toWallet, setToWallet] = useState("")
   const [toWalletAmount, setToWalletAmount] = useState(0)
@@ -105,6 +111,14 @@ const TransferModals = ({
     setCtaClicked(true)
     if (!allFieldsValid) {
       return
+    }
+  }
+
+  const handleOthersWalletID = async (val) => {
+    setOthersWalletId(val)
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (emailRegex.test(val)) {
+      passpointWalletEnquiry(val)
     }
   }
 
@@ -286,17 +300,32 @@ const TransferModals = ({
   const handleFinalSubmitWallet = async () => {
     setAccountTransferLoading(true)
     try {
-      const response = await wallet.convertFunds({
-        amount: exchangeRate?.srcAmount,
-        pin: transferPin,
-        srcCurrency: fromWallet.substring(0, 3),
-        destCurrency: toWallet.substring(0, 3),
-        narration: "CONVERT_FUNDS",
-      })
-      console.log(response.data)
-      setStatusMessage(response.data.responseMessage)
-      // console.log(response)
-      setCurrentLevel("success")
+      if (walletTab === 'My Wallet') {
+        const response = await wallet.convertFunds({
+          amount: exchangeRate?.srcAmount,
+          pin: transferPin,
+          srcCurrency: fromWallet.substring(0, 3),
+          destCurrency: toWallet.substring(0, 3),
+          narration: "CONVERT_FUNDS",
+        })
+        console.log(response.data)
+        setStatusMessage(response.data.responseMessage)
+        // console.log(response)
+        setCurrentLevel("success")
+      } else {
+        const response = await wallet.accountTransfer({
+          amount: fromWalletAmount,
+          narration: "TRANSFER_FUNDS",
+          pin: transferPin,
+          transactionCurrency: fromWallet.substring(0, 3),
+          accountName: othersWalletName,
+          bankCode:"000000",
+          accountId: othersWalletId,
+          channel: "3"
+        })
+        setStatusMessage(response.data.responseMessage)
+        setCurrentLevel('success')
+      }
     } catch (err) {
       setStatusMessage(err.response?.data?.responseMessage)
       notify("error", err.response?.data?.responseMessage)
@@ -376,6 +405,24 @@ const TransferModals = ({
     } finally {
       setGetDataLoading(false)
       //
+    }
+  }
+
+  const passpointWalletEnquiry = async (val) => {
+    try {
+      setGetDataLoading(true)
+      const resp = await wallet.passpointWalletEnquiry({
+        walletId: val || othersWalletId,
+        currency: fromWallet.substring(0, 3)
+      })
+      setOthersWalletName(resp.data.data.accountName)
+    } catch (err) {
+      setOthersWalletName('')
+      const { responseMessage = undefined, message = undefined } =
+        err.response?.data || err
+      notify('error', responseMessage || message)
+    } finally {
+      setGetDataLoading(false)
     }
   }
 
@@ -466,18 +513,28 @@ const TransferModals = ({
     }
   }
 
-  const getExchangeRateOrFees = async () => {
+  const getExchangeRateOrFees = async (localTransfer) => {
     setFeesLoading(true)
     try {
-      const response = await wallet.getExchangeRateOrFees({
-        srcCurrency: fromWallet.substring(0, 3),
-        destCurrency: toWallet.substring(0, 3),
-        amount: fromWalletAmount,
-      })
-      const { data } = response.data
-      setFees(data.fee)
-      setExchangeRate(data)
-      setToWalletAmount(data?.destAmount)
+      if (!localTransfer) {
+        const response = await wallet.getExchangeRateOrFees({
+          srcCurrency: fromWallet.substring(0, 3),
+          destCurrency: toWallet.substring(0, 3),
+          amount: fromWalletAmount,
+        })
+        const { data } = response.data
+        setFees(data.fee)
+        setExchangeRate(data)
+        setToWalletAmount(data?.destAmount)
+      } else {
+        const response = await wallet.getExchangeRateOrFees({
+          srcCurrency: selectedCurrency?.substring(0, 3),
+          destCurrency: selectedCurrency?.substring(0, 3),
+          amount: bankDetail.amount,
+        })
+        const { data } = response.data
+        setFees(Number(data?.fee) + Number(data?.vat))
+      }
     } catch (err) {
       console.log(err)
       notify("error", err?.response?.data?.responseMessage)
@@ -490,7 +547,18 @@ const TransferModals = ({
   }
 
   useEffect(() => {
-    if (currentLevel === "wallet") {
+    if (currentLevel === "wallet" && walletTab === 'Others\' Wallet') {
+      const conditionsMet =
+        fromWallet &&
+        fromWalletAmount &&
+        othersWalletId &&
+        othersWalletName &&
+        Number(fromWalletAmount || 0) <= Number(walletBalance)
+
+      setAllFieldsValid(conditionsMet)
+    } else if (
+      currentLevel === "wallet"
+    ) {
       const conditionsMet =
         fromWallet &&
         fromWalletAmount &&
@@ -547,6 +615,9 @@ const TransferModals = ({
     toWalletAmount,
     momoTransferAmount,
     msisdnValid,
+    walletTab,
+    othersWalletId,
+    othersWalletName
   ])
 
   useEffect(() => {
@@ -557,6 +628,7 @@ const TransferModals = ({
         "wallet-pin",
         "select-mode",
         "wallet",
+        "wallet-others",
         "momo",
         "momo-pin",
       ].includes(currentLevel)
@@ -586,9 +658,11 @@ const TransferModals = ({
 
   useEffect(() => {
     if (toWallet && fromWallet && fromWalletAmount) {
-      getExchangeRateOrFees()
+      getExchangeRateOrFees(false)
+    } else {
+      getExchangeRateOrFees(true)
     }
-  }, [toWallet, fromWallet, fromWalletAmount])
+  }, [toWallet, fromWallet, fromWalletAmount, bankDetail.amount])
 
   useEffect(() => {
     const { accountNumber, bankName, walletID } = bankDetail
@@ -602,7 +676,6 @@ const TransferModals = ({
 
   const GetBanksFlow = () => (
     <>
-      {/* <Tab tabs={accountTypes} objKey={'name'} /> */}
       {/* wallet id || account number */}
       {accountType.name === "Account Number" ? (
         <>
@@ -766,110 +839,186 @@ const TransferModals = ({
   )
 
   const GetWalletsFlow = () => (
-    <div className="pb-6">
-      <Select
-        label="From my"
-        styleProps={{
-          dropdown: {
-            height: 100,
-          },
-        }}
-        selectOptions={[activeWalletCurrency]?.map((c) => `${c} Wallet`)}
-        selectedOption={fromWallet}
-        noShadow
-        countries
-        selectDisabled
-        emitSelect={(option) => setFromWallet(option)}
-      />
-      <Input
-        label="I want to send"
-        id="amount"
-        name="amount"
-        errorMsg="Amount is required"
-      >
-        <MoneyInput
-          id="from-wallet"
-          placeholder={"Enter amount"}
-          currency={fromWallet.substring(0, 3)}
-          value={fromWalletAmount}
-          onValueChange={(e) => setFromWalletAmount(e)}
+    <div className="wallets-flow-ctn">
+
+      <Tab tabs={['My Wallet', 'Others\' Wallet']}
+        activeTab={walletTab}
+        setActiveTab={(val) => setWalletTab(val)} />
+
+      {walletTab === 'My Wallet' && <div className="pb-6 pt-4">
+
+        <Select
+          label="From my"
+          styleProps={{
+            dropdown: {
+              height: 100,
+            },
+          }}
+          selectOptions={[activeWalletCurrency]?.map((c) => `${c} Wallet`)}
+          selectedOption={fromWallet}
+          noShadow
+          countries
+          selectDisabled
+          emitSelect={(option) => setFromWallet(option)}
         />
-      </Input>
-      {fromWallet && (
-        <div className="flex justify-between items-center mb-6">
-          {Number(walletBalance) >= Number(fromWalletAmount || 0) ? (
-            <div className="success-tag flex justify-between gap-2 text-bold">
-              <GreenCheckIcon /> Wallet Balance:{" "}
-              {functions.formatMoney(walletBalance, fromWallet.substring(0, 3))}
-            </div>
-          ) : (
-            <div className="pending-tag flex justify-between gap-2 text-bold">
-              Wallet Balance:{" "}
-              {functions.formatMoney(walletBalance, fromWallet.substring(0, 3))}
-            </div>
-          )}
-          {balanceLoading && <Spinner size="sm" />}
-        </div>
-      )}
-      <Select
-        label="To my"
-        styleProps={{
-          dropdown: {
-            height: 100,
-          },
-        }}
-        selectOptions={currencies
-          ?.filter((c) => c !== activeWalletCurrency)
-          .map((c) => `${c} Wallet`)}
-        selectedOption={toWallet}
-        noShadow
-        countries
-        emitSelect={(option) => setToWallet(option)}
-      />
-      {toWallet && (
         <Input
-          label="I will receive"
+          label="I want to send"
           id="amount"
           name="amount"
-          loading={feesLoading}
-          disabled
+          errorMsg="Amount is required"
         >
           <MoneyInput
-            id="to-wallet"
-            placeholder={"Amount to be received"}
-            currency={toWallet.substring(0, 3)}
-            value={toWalletAmount}
-            disabled
+            id="from-wallet"
+            placeholder={"Enter amount"}
+            currency={fromWallet.substring(0, 3)}
+            value={fromWalletAmount}
             onValueChange={(e) => setFromWalletAmount(e)}
           />
         </Input>
-      )}
-      {exchangeRate?.rate && (
-        <Input label="Exchange Rate" id="amount" name="amount">
-          <div className="stylish-box px-5 py-6 flex align-top justify-between">
-            <div className="lhs">
-              <h5 className="mb-3 text-bold">
-                {formatMoney(1, fromWallet.substring(0, 3), 1)} ~{" "}
-                {formatMoney(
-                  1 / exchangeRate?.rate,
-                  toWallet.substring(0, 3),
-                  3
-                )}
-              </h5>
-              <h5 className="text-bold">
-                {formatMoney(1, toWallet.substring(0, 3), 1)} ~{" "}
-                {formatMoney(exchangeRate?.rate, fromWallet.substring(0, 3))}
-              </h5>
-            </div>
-            <div className="rhs">
-              <p className="text text-gray-400">Service fee</p>
-              <h5 className="text-bold">
-                {formatMoney(fees, exchangeRate?.srcCurrency)}
-              </h5>
-            </div>
+        {fromWallet && (
+          <div className="flex justify-between items-center mb-6">
+            {Number(walletBalance) >= Number(fromWalletAmount || 0) ? (
+              <div className="success-tag flex justify-between gap-2 text-bold">
+                <GreenCheckIcon /> Wallet Balance:{" "}
+                {functions.formatMoney(walletBalance, fromWallet.substring(0, 3))}
+              </div>
+            ) : (
+              <div className="pending-tag flex justify-between gap-2 text-bold">
+                Wallet Balance:{" "}
+                {functions.formatMoney(walletBalance, fromWallet.substring(0, 3))}
+              </div>
+            )}
+            {balanceLoading && <Spinner size="sm" />}
           </div>
+        )}
+        <Select
+          label="To my"
+          styleProps={{
+            dropdown: {
+              height: 100,
+            },
+          }}
+          selectOptions={currencies
+            ?.filter((c) => c !== activeWalletCurrency)
+            .map((c) => `${c} Wallet`)}
+          selectedOption={toWallet}
+          noShadow
+          countries
+          emitSelect={(option) => setToWallet(option)}
+        />
+        {toWallet && (
+          <Input
+            label="I will receive"
+            id="amount"
+            name="amount"
+            loading={feesLoading}
+            disabled
+          >
+            <MoneyInput
+              id="to-wallet"
+              placeholder={"Amount to be received"}
+              currency={toWallet.substring(0, 3)}
+              value={toWalletAmount}
+              disabled
+              onValueChange={(e) => setFromWalletAmount(e)}
+            />
+          </Input>
+        )}
+        {exchangeRate?.rate && (
+          <Input label="Exchange Rate"
+  id="amount"
+  name="amount">
+            <div className="stylish-box px-5 py-6 flex align-top justify-between">
+              <div className="lhs">
+                <h5 className="mb-3 text-bold">
+                  {formatMoney(1, fromWallet.substring(0, 3), 1)} ~{" "}
+                  {formatMoney(
+                    1 / exchangeRate?.rate,
+                    toWallet.substring(0, 3),
+                    3
+                  )}
+                </h5>
+                <h5 className="text-bold">
+                  {formatMoney(1, toWallet.substring(0, 3), 1)} ~{" "}
+                  {formatMoney(exchangeRate?.rate, fromWallet.substring(0, 3))}
+                </h5>
+              </div>
+              <div className="rhs">
+                <p className="text text-gray-400">Service fee</p>
+                <h5 className="text-bold">
+                  {formatMoney(fees, exchangeRate?.srcCurrency)}
+                </h5>
+              </div>
+            </div>
+          </Input>
+        )}
+      </div>}
+
+      {walletTab === 'Others\' Wallet' && <div className="pb-6 pt-4">
+
+        <Input
+          label="Recipient Wallet ID"
+          id="walletID"
+          name="walletID"
+          placeholder="Enter Wallet ID"
+          value={othersWalletId}
+          loading={getDataLoading}
+          onChange={(e) => handleOthersWalletID(e.target.value)}
+        >
         </Input>
-      )}
+        {othersWalletName && <Input
+          label="Recipient Name"
+          id="walletAccountName"
+          name="walletAccountName"
+          disabled
+          value={othersWalletName}
+        >
+        </Input>}
+        <Select
+          label="From my"
+          styleProps={{
+            dropdown: {
+              height: 100,
+            },
+          }}
+          selectOptions={[activeWalletCurrency]?.map((c) => `${c} Wallet`)}
+          selectedOption={fromWallet}
+          noShadow
+          countries
+          selectDisabled
+          emitSelect={(option) => setFromWallet(option)}
+        />
+        <Input
+          label="I want to send"
+          id="amount"
+          name="amount"
+          errorMsg="Amount is required"
+        >
+          <MoneyInput
+            id="from-wallet"
+            placeholder={"Enter amount"}
+            currency={fromWallet.substring(0, 3)}
+            value={fromWalletAmount}
+            onValueChange={(e) => setFromWalletAmount(e)}
+          />
+        </Input>
+        {fromWallet && (
+          <div className="flex justify-between items-center mb-6">
+            {Number(walletBalance) >= Number(fromWalletAmount || 0) ? (
+              <div className="success-tag flex justify-between gap-2 text-bold">
+                <GreenCheckIcon /> Wallet Balance:{" "}
+                {functions.formatMoney(walletBalance, fromWallet.substring(0, 3))}
+              </div>
+            ) : (
+              <div className="pending-tag flex justify-between gap-2 text-bold">
+                Wallet Balance:{" "}
+                {functions.formatMoney(walletBalance, fromWallet.substring(0, 3))}
+              </div>
+            )}
+            {balanceLoading && <Spinner size="sm" />}
+          </div>
+        )}
+      </div>}
     </div>
   )
 
@@ -904,7 +1053,9 @@ const TransferModals = ({
       />
       {networkCode && (
         <>
-          <Input id="amount" name="amount" label="Amount">
+          <Input id="amount"
+name="amount"
+label="Amount">
             <MoneyInput
               id="to-wallet"
               placeholder={"Amount to be received"}
@@ -1023,7 +1174,7 @@ const TransferModals = ({
         <div className={styles.transferPin_details}>
           <label>Transfer Fee</label>
           <div>
-            <p className={`${styles.skyBlueCss}`}>{formatMoney("0", "NGN")}</p>
+            <p className={`${styles.skyBlueCss}`}>{formatMoney(fees, "NGN")}</p>
           </div>
         </div>
         <div className={styles.transferPin_details}>
@@ -1035,7 +1186,8 @@ const TransferModals = ({
       </section>
       <section className={styles.transferPin_pin}>
         <div className="mt-6 w-[300px] mx-auto">
-          <Input label={"Enter Pin"} label_center={true}>
+          <Input label={"Enter Pin"}
+label_center={true}>
             <div className={formStyles.otp_input_four}>
               <OtpInput
                 value={transferPin}
@@ -1091,7 +1243,7 @@ const TransferModals = ({
               </p>
             </div>
           </div>
-          <div className={styles.transferPin_details}>
+          {walletTab === 'My Wallet' && <div className={styles.transferPin_details}>
             <label>Recipient Wallet</label>
             <div>
               <p className="flex align-items-center gap-2 text-bold">
@@ -1106,15 +1258,31 @@ const TransferModals = ({
                 {toWallet}
               </p>
             </div>
-          </div>
-          <div className={styles.transferPin_details}>
+          </div>}
+          {walletTab === 'My Wallet' &&<div className={styles.transferPin_details}>
             <label>Amount to be received</label>
             <div>
               <p className={`${styles.skyBlueCss}`}>
                 {formatMoney(toWalletAmount, toWallet?.substring(0, 3))}
               </p>
             </div>
-          </div>
+          </div>}
+          {walletTab !== 'My Wallet' &&<div className={styles.transferPin_details}>
+            <label>Recipient Wallet ID</label>
+            <div>
+              <p className={`${styles.skyBlueCss}`}>
+                {othersWalletId}
+              </p>
+            </div>
+          </div>}
+          {walletTab !== 'My Wallet' &&<div className={styles.transferPin_details}>
+            <label>Recipient Name</label>
+            <div>
+              <p className={`${styles.skyBlueCss}`}>
+                {othersWalletName}
+              </p>
+            </div>
+          </div>}
           <div className={styles.transferPin_details}>
             <label>Service fee</label>
             <div>
@@ -1171,7 +1339,8 @@ const TransferModals = ({
       )}
       <section className={styles.transferPin_pin}>
         <div className="mt-6 w-[300px] mx-auto">
-          <Input label={"Enter Pin"} label_center={true}>
+          <Input label={"Enter Pin"}
+label_center={true}>
             <div className={formStyles.otp_input_four}>
               <OtpInput
                 value={transferPin}
@@ -1203,7 +1372,8 @@ const TransferModals = ({
       ctaDisabled={
         currentLevel === "account" ||
         currentLevel === "momo" ||
-        currentLevel === "wallet"
+        currentLevel === "wallet"||
+        currentLevel === "wallet-others"
           ? !allFieldsValid
           : transferPin.length !== 4
       }
@@ -1212,6 +1382,8 @@ const TransferModals = ({
         currentLevel === "account"
           ? "Continue"
           : currentLevel === "wallet"
+          ? "Continue"
+          : currentLevel === "wallet-others"
           ? "Continue"
           : currentLevel === "momo"
           ? "Continue"
@@ -1246,7 +1418,7 @@ const TransferModals = ({
           SelectTransferMode()
         ) : currentLevel === "account" ? (
           GetBanksFlow()
-        ) : currentLevel === "wallet" ? (
+        ) : currentLevel === "wallet" || currentLevel === 'wallet-others' ? (
           GetWalletsFlow()
         ) : currentLevel === "momo" ? (
           GetMomoFlow()
