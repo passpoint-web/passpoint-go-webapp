@@ -2,9 +2,10 @@
 // import { days } from "@/utils/CONSTANTS";
 import { useState, useEffect, useRef } from "react";
 // import functions from "@/utils/functions";
-import PreviewNav from "./PreviewNav";
-import PreviewMain from "./PreviewMain";
-import PreviewFooter from "./PreviewFooter";
+import PreviewNav from "./Nav";
+import PreviewMain from "./Main";
+import styles from './public-profile-preview.module.css'
+import PreviewFooter from "./Footer";
 import { publicProfile } from "@/services/restService";
 import { getCredentials } from "@/services/localService";
 import FullScreenLoader from "@/components/Modal/FullScreenLoader";
@@ -21,7 +22,6 @@ const PreviewPage = () => {
 	const getPubProfile = async () => {
 		try {
 			const response = await publicProfile.getPublicProfile()
-			// console.log(response.data.data)
 			console.log(response)
 			setPubProfile(response.data.data)
 		} catch (_err) {
@@ -71,9 +71,9 @@ const PreviewPage = () => {
 		<>
 			{dataLoading ? <FullScreenLoader /> : <></>}
 			<div className="p-relative" ref={previewRef}>
-				<PreviewNav togglePreview={togglePreview} data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
-				<PreviewMain data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
-				<PreviewFooter data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
+				<PreviewNav styles={styles} togglePreview={togglePreview} data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
+				<PreviewMain styles={styles} data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
+				<PreviewFooter styles={styles} data={{ ...pubProfile, dataLoading, businessName: savedCredentials?.businessName }} />
 			</div>
 		</>
 	)

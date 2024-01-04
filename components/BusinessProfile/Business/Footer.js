@@ -1,9 +1,10 @@
 import { InstagramIcon, LocationIcon, MailIcon, PhoneIcon, TwitterIcon, WhatsappIcon, YoutubeIcon } from "@/constants/icons";
 import Link from "next/link";
-import styles from "../Preview/public-profile-preview.module.css";
-import PreviewLogo from "./PreviewLogo";
+import PreviewLogo from "./Logo";
 
-const PreviewFooter = ({ data }) => {
+const PreviewFooter = ({ data, styles }) => {
+  // eslint-disable-next-line no-unused-vars
+  const {services, aboutBusiness, businessIdentity, contactInfo} = data
 	return (
 		<div className={`${styles.footer} ${styles.section}`} >
 			<div className={styles.footer__absolute_wrapper}>
@@ -13,7 +14,7 @@ const PreviewFooter = ({ data }) => {
 				<div className={styles.col}>
 					<PreviewLogo logo={data?.logo} />
 					<p>
-						{data?.aboutBusiness}
+						{aboutBusiness?.aboutBusiness}
 					</p>
 
 					<ul className={styles.footer__social_actions}>
@@ -61,15 +62,15 @@ const PreviewFooter = ({ data }) => {
 					<ul>
 						<li>
 							<MailIcon />
-							<a href={`mailto:${data?.companyEmail}`}>{data?.companyEmail}</a>
+							<a href={`mailto:${contactInfo?.companyEmail}`}>{contactInfo?.companyEmail}</a>
 						</li>
 						<li>
 							<PhoneIcon />
-							<a href={`tel:${data?.companyPhone}`}>+{data?.companyPhone}</a>
+							<a href={`tel:${contactInfo?.companyPhone}`}>+{contactInfo?.companyPhone}</a>
 						</li>
 						<li>
 							<LocationIcon />
-							{data?.companyAddress}
+							{contactInfo?.companyAddress}
 						</li>
 					</ul>
 				</div>

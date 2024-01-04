@@ -4,51 +4,54 @@ import Textarea from "@/components/Dashboard/Textarea";
 import { ReasonIcon } from "@/constants/icons";
 import { useFormat24HourTime } from "@/utils/hooks";
 import Link from "next/link";
-import styles from "../Preview/public-profile-preview.module.css";
-
-const PreviewMain = ({ data }) => {
+const PreviewMain = ({ data, styles }) => {
+  // eslint-disable-next-line no-unused-vars
+  const {services, aboutBusiness, businessIdentity, contactInfo} = data
+  const businessName = businessIdentity?.businessName?.toLowerCase().replaceAll(' ','-')
+  // console.log(businessIdentity)
   const offerings = [
-    { name: 'Flights', description: 'We provide flights that are punctual, comfortable, and safe, catering to passengers\' needs during their journey.', featured: true },
+    { name: 'Flights', description: 'We provide flights that are punctual, comfortable, and safe, catering to passengers\' needs during their journey.', featured: true, link: `flights`},
     { name: 'Hotels', description: 'We provide amenities such as comfortable rooms, dining options, and concierge services to ensure a pleasant stay.', featured: true },
-    { name: 'Taxi', description: 'We provide on-demand rides, with licensed drivers, to transport passengers to their desired destinations quickly and efficiently.', featured: false }
+    { name: 'Taxi', description: 'We provide on-demand rides, with licensed drivers, to transport passengers to their desired destinations quickly and efficiently.', featured: false}
   ]
   const reasons = [
-    { name: 'Reliability', description: 'We pride ourselves on being a reliable choice. Our track record of punctuality, safety, and consistent quality service sets us apart.' },
+    { name: 'Reliability', description: 'We pride ourselves on being a reliable choice. Our track record of punctuality, safety, and consistent quality service sets us apart.'},
     {
       name: 'Exceptional Customer Care', description: 'We prioritize our customers\' satisfaction above all else.As we have friendly and professional staffs dedicated to give the best customer satisfaction'
     },
     { name: 'Competitive Pricing', description: 'We offer competitive pricing without compromising on the quality of service, ensuring access to wide range of travelers. ' }
   ]
-  const testimonials = [
-    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, consectur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
-    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, conctetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
-    { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, cnsecteur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },]
+  // const testimonials = [
+  //   { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, consectur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
+  //   { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, conctetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
+  //   { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, cnsecteur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
+  // ]
   return (
     <div className={`${styles.main}`}>
       {/* HERO SECTION */}
       <div className={`${styles.section} ${styles.hero}`}>
         <div className={`${styles.inner}`} >
           <div className={styles.hero__texts}>
-            <h1>{data?.businessName}</h1>
-            {/* <p>{data?.aboutBusiness}</p> */}
+            <h1>{businessIdentity?.businessName}</h1>
+            <p>{aboutBusiness?.aboutBusiness}</p>
             <Link href="#" className={`primary_btn ${styles.book__btn}`}>
               Book Now
             </Link>
           </div>
           <div className={styles.hero__schedule}>
             <div className={styles.hero__schedule_col}>
-              <h5>{data?.openingDay} - {data?.closingDay}s</h5>
+              <h5>{contactInfo?.openingDay} - {contactInfo?.closingDay}s</h5>
               <p>Business Opening and Closing Days</p>
             </div>
             <div className={styles.hero__schedule_col}>
-              <h5>{useFormat24HourTime(data?.openingHour)} - {useFormat24HourTime(data?.closingHour)}</h5>
+              <h5>{useFormat24HourTime(contactInfo?.openingHour)} - {useFormat24HourTime(contactInfo?.closingHour)}</h5>
               <p>Business Opening and Closing Hours</p>
             </div>
           </div>
         </div>
       </div>
       {/* OFFERINGS SECTION */}
-      <div className={`${styles.section} ${styles.offering}`} >
+      <div id="services" className={`${styles.section} ${styles.offering}`} >
         <div className={`${styles.inner}`} >
           <div className={styles.text__header}>
             <h2>What We Offer</h2>
@@ -61,7 +64,7 @@ const PreviewMain = ({ data }) => {
               <div className={styles.offerings__card_texts}>
                 <h5>{offering.name}</h5>
                 <p>{offering.description}</p>
-                <Link href="#" className={`primary_btn ${styles.book__btn}`}>
+                <Link href={`/business/${businessName}/${offering.link}`} className={`primary_btn ${styles.book__btn}`}>
                   Book Now
                 </Link>
               </div>
@@ -70,7 +73,7 @@ const PreviewMain = ({ data }) => {
         </div>
       </div>
       {/* REASONS SECTION */}
-      <div className={`${styles.section} ${styles.reasons}`} >
+      <div className={`${styles.section} ${styles.reasons}`}>
         <div className={`${styles.inner}`} >
           <div className={styles.text__header}>
             <h2>Why Choose Us</h2>
@@ -87,7 +90,7 @@ const PreviewMain = ({ data }) => {
         </div>
       </div>
       {/* TESTIMONIALS SECTION */}
-      <div className={`${styles.section} ${styles.testimonials}`} >
+      {/* <div className={`${styles.section} ${styles.testimonials}`} >
         <div className={`${styles.inner}`} >
           <div className={styles.text__header}>
             <h2>What Our Happy Clients Say</h2>
@@ -108,13 +111,13 @@ const PreviewMain = ({ data }) => {
             </div>)}
           </div>
         </div>
-      </div>
+      </div> */}
       {/* CONTACT SECTION */}
       <div className={`${styles.section} ${styles.contact}`} >
         <div className={`${styles.inner}`} >
           <div className={styles.text__header}>
             <h2>Your Thoughts, Our Action!</h2>
-            <p>{`Your message matters.Fill out the form below, and we'll be in touch to make it happen.`}</p>
+            <p>{`Your message matters. Fill out the form below, and we'll be in touch to make it happen.`}</p>
           </div>
 
           <form>

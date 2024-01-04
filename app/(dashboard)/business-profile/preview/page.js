@@ -1,4 +1,4 @@
-import PreviewPage from "@/components/BusinessProfile/Preview";
+import PreviewPage from "@/components/BusinessProfile/Business";
 
 export const metadata = () => {
 	return {

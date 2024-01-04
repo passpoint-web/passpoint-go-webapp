@@ -3,6 +3,7 @@
   background: var(--white);
   padding: 0 2%;
   position: relative;
+  scroll-behavior: smooth;
 }
 .section > .inner {
   max-width: var(--desktop-width);

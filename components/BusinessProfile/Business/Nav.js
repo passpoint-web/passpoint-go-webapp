@@ -1,9 +1,12 @@
 import { ExpandIcon, InstagramIcon, TwitterIcon, WhatsappIcon, YoutubeIcon } from "@/constants/icons";
-import styles from "../Preview/public-profile-preview.module.css";
-import PreviewLogo from "./PreviewLogo";
+import PreviewLogo from "./Logo";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const PreviewNav = ({ togglePreview, data }) => {
+const PreviewNav = ({ togglePreview, data, styles, preview=true }) => {
+	const {businessIdentity} = data
+	console.log(businessIdentity)
+	console.log(data)
 	const {push} = useRouter()
 	return (
 		<div className={`${styles.nav} ${styles.section}`} >
@@ -31,9 +34,10 @@ const PreviewNav = ({ togglePreview, data }) => {
 					</li>
 				</ul>
 				<div className={styles.nav__logo}>
-					<PreviewLogo logo={data?.logo} />
+					<PreviewLogo logo={businessIdentity?.logo} styles={styles} />
 				</div>
-				<ul className={styles.nav__actions}>
+			{preview ?
+					<ul className={styles.nav__actions}>
 					<li>
 						<button className={`primary_btn`}>
               Save
@@ -49,7 +53,15 @@ const PreviewNav = ({ togglePreview, data }) => {
 							<ExpandIcon />
 						</button>
 					</li>
+				</ul> : 
+				<ul className={styles.nav__actions}>
+					<li>
+					<Link href='#services' className={`primary_btn`}>
+					Book Now
+				</Link>
+					</li>
 				</ul>
+			}
 			</div>
 		</div>
 	)
