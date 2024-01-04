@@ -24,24 +24,24 @@ const PreviewMain = ({ data }) => {
     { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, conctetur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },
     { author: 'Jane Cooper', portfolio: 'CEO of ABC Corporation', content: 'Lorem ipsum dolor sit amet, cnsecteur adipiscing elit. Auctor neque sed imperdiet nibh lectus feugiat nunc sem. Auctor neque sed imperdiet nibh lectus feugiat nunc sem.' },]
   return (
-    <div className={`${styles.main}`} >
+    <div className={`${styles.main}`}>
       {/* HERO SECTION */}
-      <div className={`${styles.section} ${styles.hero}`} >
+      <div className={`${styles.section} ${styles.hero}`}>
         <div className={`${styles.inner}`} >
           <div className={styles.hero__texts}>
-            <h1>{data.businessName}</h1>
-            <p>{data.aboutBusiness}</p>
+            <h1>{data?.businessName}</h1>
+            {/* <p>{data?.aboutBusiness}</p> */}
             <Link href="#" className={`primary_btn ${styles.book__btn}`}>
               Book Now
             </Link>
           </div>
           <div className={styles.hero__schedule}>
             <div className={styles.hero__schedule_col}>
-              <h5>{data.openingDay} - {data.closingDay}s</h5>
+              <h5>{data?.openingDay} - {data?.closingDay}s</h5>
               <p>Business Opening and Closing Days</p>
             </div>
             <div className={styles.hero__schedule_col}>
-              <h5>{useFormat24HourTime(data.openingHour)} - {useFormat24HourTime(data.closingHour)}</h5>
+              <h5>{useFormat24HourTime(data?.openingHour)} - {useFormat24HourTime(data?.closingHour)}</h5>
               <p>Business Opening and Closing Hours</p>
             </div>
           </div>

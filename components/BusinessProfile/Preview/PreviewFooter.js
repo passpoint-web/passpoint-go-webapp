@@ -7,13 +7,13 @@ const PreviewFooter = ({ data }) => {
 	return (
 		<div className={`${styles.footer} ${styles.section}`} >
 			<div className={styles.footer__absolute_wrapper}>
-				<PreviewLogo logo={data.logo} />
+				<PreviewLogo logo={data?.logo} />
 			</div>
 			<div className={styles.inner}>
 				<div className={styles.col}>
-					<PreviewLogo logo={data.logo} />
+					<PreviewLogo logo={data?.logo} />
 					<p>
-						{data.aboutBusiness}
+						{data?.aboutBusiness}
 					</p>
 
 					<ul className={styles.footer__social_actions}>
@@ -61,15 +61,15 @@ const PreviewFooter = ({ data }) => {
 					<ul>
 						<li>
 							<MailIcon />
-							<a href={`mailto:${data.companyEmail}`}>{data.companyEmail}</a>
+							<a href={`mailto:${data?.companyEmail}`}>{data?.companyEmail}</a>
 						</li>
 						<li>
 							<PhoneIcon />
-							<a href={`tel:${data.companyPhone}`}>+{data.companyPhone}</a>
+							<a href={`tel:${data?.companyPhone}`}>+{data?.companyPhone}</a>
 						</li>
 						<li>
 							<LocationIcon />
-							{data.companyAddress}
+							{data?.companyAddress}
 						</li>
 					</ul>
 				</div>

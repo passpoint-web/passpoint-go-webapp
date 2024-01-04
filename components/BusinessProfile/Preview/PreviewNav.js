@@ -31,7 +31,7 @@ const PreviewNav = ({ togglePreview, data }) => {
 					</li>
 				</ul>
 				<div className={styles.nav__logo}>
-					<PreviewLogo logo={data.logo} />
+					<PreviewLogo logo={data?.logo} />
 				</div>
 				<ul className={styles.nav__actions}>
 					<li>

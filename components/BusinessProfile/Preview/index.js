@@ -22,6 +22,7 @@ const PreviewPage = () => {
 		try {
 			const response = await publicProfile.getPublicProfile()
 			// console.log(response.data.data)
+			console.log(response)
 			setPubProfile(response.data.data)
 		} catch (_err) {
 			console.log(_err)
