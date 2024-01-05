@@ -218,50 +218,96 @@ const BalanceCard = ({
           </div>
         </div>
       ) : (
-        <div className={styles.balance_card}>
-          <div className={styles.lhs}>
-            <h4>Available Balance</h4>
-            <h1>--</h1>
-            <div className={styles.btn_sec}>
-              <BorderIconBtn
-                bdColor="#fff"
-                classProps="border i sd"
-                icon={<AddMoneyIcon />}
-                disabled={true}
-                text="Add money"
-              />
-              <BorderIconBtn
-                bgColor="#fff"
-                disabled={true}
-                classProps="no-border i sd"
-                styleProps={{ color: "#009EC4" }}
-                icon={<WithdrawMoneyIcon />}
-                text="Withdraw"
-              />
-            </div>
-          </div>
-          <div className={styles.rhs}>
-            {/* <div className={styles.top}>
-							<BorderIconBtn
-								classProps='no-border i sd'
-							>
-								<AlertIcon /> Set Alert
-							</BorderIconBtn>
-						</div> */}
-            <div className={styles.account}>
-              <div>
-                <h4>Account Name</h4>
-                <h3>--</h3>
+        <div
+        className={`${styles.balance_card} wallet_balance_card ${
+          styles[selectedCurrency?.slice(0, 3)]
+        }`}
+      >
+        <div className={styles.lhs}>
+          <div className={styles.balance_ctn}>
+            <div className={styles.available_balance}>
+              <div className="dropdown-ctn max-w-[180px]">
+                <Select
+                  styleProps={{
+                    dropdown: {
+                      height: 250,
+                    },
+                  }}
+                  selectDisabled={true}
+                  selectOptions={[]}
+                  selectedOption={selectedCurrency}
+                  noShadow
+                  countries
+                  emitSelect={(option) => updateCurrency(option)}
+                />
               </div>
-              <div>
-                <h4>--</h4>
-                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                  <h3>--</h3>
+              {/* <Select
+                height={50}
+                width={250}
+                color="#000000"
+                focusBorderColor="#FFF"
+                variant="filled"
+                textColor="#000000"
+                iconColor="#000000"
+              >
+                {currencies?.map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency} Wallet
+                  </option>
+                ))}
+              </Select> */}
+              <h4 className="mt-4">Available Balance</h4>
+              <div className={styles.balance}>
+                <h1>
+                 --
+                 </h1>
+                <div className={styles.card_action}>
+                  <button disabled>
+                    {!showBalance ? <EyeOpen /> : <EyeClose />}
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+          <div className={styles.btn_sec}>
+            <BorderIconBtn
+              bdColor="#fff"
+              classProps="border i sd"
+              disabled
+              icon={<AddMoneyIcon />}
+              text="Add money"
+            />
+            <BorderIconBtn
+              bgColor="#fff"
+              classProps="no-border i sd"
+              styleProps={{ color: "#000" }}
+              disabled
+              icon={<WithdrawMoneyIcon />}
+              text="Transfer"
+            />
+          </div>
         </div>
+        <div className={styles.rhs}>
+          <div className={styles.account}>
+            <div>
+              <h4>Account Name</h4>
+              <h3>--</h3>
+            </div>
+            <div className="mb-8">
+              <h4>{walletAccount.bankName}</h4>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <h3>{walletAccount.accountNumber}</h3>
+                <CopyValue value={walletAccount.accountNumber} />
+              </div>
+            </div>
+            <Button
+              className={`${styles.reset_pin} tertiary pt-6`}
+              disabled
+              text={'Reset Pin'}
+            />
+          </div>
+        </div>
+      </div>
       )}
     </>
   )
