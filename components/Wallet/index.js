@@ -187,7 +187,7 @@ const Wallet = () => {
     },
     [updateKey]
   )
-
+// allRendered is to show loading once on page load
   useEffect(
     function setAllDataNowLoading() {
       const interval = setInterval(() => {
