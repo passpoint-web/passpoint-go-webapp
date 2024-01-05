@@ -25,7 +25,7 @@ import Select from "../Dashboard/Select"
 import TableLoader from "../Tables/Loader"
 // import Tab from "../Tab";
 
-const WalletTable = ({ wallet, currency, styles, updateKey }) => {
+const WalletTable = ({ wallet, currency, styles, updateKey, allRendered }) => {
   const { formatMoney } = functions
   const [transactions, setTransactions] = useState([])
   const [getDataLoading, setGetDataLoading] = useState(true)
@@ -57,7 +57,7 @@ const WalletTable = ({ wallet, currency, styles, updateKey }) => {
     pageSize,
     type
   ) => {
-    setGetDataLoading(true)
+    setGetDataLoading(!allRendered)
     let filters = {
       pageNumber,
       currency,

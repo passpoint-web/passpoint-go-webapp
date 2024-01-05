@@ -33,10 +33,11 @@ const Wallet = () => {
   const [pinCreated, setPinCreated] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState("NGN")
   const [currencies, setCurrencies] = useState([])
+  const [allRendered, setAllRendered] = useState(false)
 
-  const getWallet = async (loading) => {
-    setDataLoading(loading)
-    setBalanceLoading(true)
+  const getWallet = async () => {
+    setDataLoading(!allRendered)
+    setBalanceLoading(!allRendered)
     try {
       const response = await wallet.getWalletDetails()
       const { data } = response.data
@@ -75,8 +76,8 @@ const Wallet = () => {
     }
   }
   const getWalletBalance = async () => {
-    setDataLoading(true)
-    setBalanceLoading(true)
+    setDataLoading(!allRendered)
+    setBalanceLoading(!allRendered)
     try {
       const response = await wallet.getWalletBalance(selectedCurrency)
       const { data } = response.data
@@ -149,11 +150,27 @@ const Wallet = () => {
   }
 
   useEffect(() => {
-    getWallet(false)
+    if(allRendered) {
+      getWallet(false)
+      getWalletBalance()
+      getBanksAndCache()
+      getCurrencies()
+    }
+  }, [updateKey])
+
+  useEffect(() => {
+    if(allRendered) {
+      getWallet(false)
+      getWalletBalance()
+    }
+  }, [updateBalanceKey])
+
+  useEffect(() => {
+    getWallet()
     getWalletBalance()
     getBanksAndCache()
     getCurrencies()
-  }, [updateKey])
+  }, [])
 
   useEffect(() => {
     if (walletState !== "no-wallet" && pinCreated === false && !reference) {
@@ -164,25 +181,27 @@ const Wallet = () => {
   useEffect(
     function refreshData() {
       const interval = setInterval(() => {
-        // if (!balanceLoading) {
         setUpdateKey(new Date().getTime())
-        // }
       }, 45000)
       return () => clearInterval(interval)
     },
     [updateKey]
   )
 
+  useEffect(
+    function setAllDataNowLoading() {
+      const interval = setInterval(() => {
+        setAllRendered(true)
+      }, 2000)
+      return () => clearInterval(interval)
+    },
+    [])
+
   useEffect(() => {
     setWalletState("created")
     getWalletBalance()
     getWallet()
   }, [selectedCurrency])
-
-  useEffect(() => {
-    getWallet(false)
-    getWalletBalance()
-  }, [updateBalanceKey])
 
   function onPendingWalletStateBackButton() {
     setSelectedCurrency("NGN")
@@ -234,6 +253,7 @@ const Wallet = () => {
 				</div> */}
       <div className={styles.bottom}>
         <WalletTable
+          allRendered={allRendered}
           wallet={wallet}
           currency={selectedCurrency}
           updateKey={updateKey}
