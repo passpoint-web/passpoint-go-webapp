@@ -930,6 +930,7 @@ form {
 .failure-tag,
 .processing-tag,
 .issued-tag,
+.new-tag,
 .reserved-tag,
 .cancelled-tag,
 .processing-tag {
@@ -964,7 +965,8 @@ form {
   color: #23c38e;
 }
 
-.reserved-tag {
+.reserved-tag,
+.new-tag {
   background: var(--grey-6);
   color: var(--grey-3);
 }
