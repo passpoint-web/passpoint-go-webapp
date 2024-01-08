@@ -10,22 +10,30 @@ const PreviewNav = ({ togglePreview, data }) => {
 			<div className={styles.inner}>
 				<ul className={styles.nav__social_actions}>
 					<li>
-						<a target="_blank" href="#" aria-description="Instagram Link">
+						<a target="_blank"
+							href="#"
+							aria-description="Instagram Link">
 							<InstagramIcon />
 						</a>
 					</li>
 					<li>
-						<a target="_blank" href="#" aria-description="Whatsapp Link">
+						<a target="_blank"
+							href="#"
+							aria-description="Whatsapp Link">
 							<WhatsappIcon />
 						</a>
 					</li>
 					<li>
-						<a target="_blank" href="#" aria-description="Twitter Link">
+						<a target="_blank"
+							href="#"
+							aria-description="Twitter Link">
 							<TwitterIcon />
 						</a>
 					</li>
 					<li>
-						<a target="_blank" href="#" aria-description="Youtube Link">
+						<a target="_blank"
+							href="#"
+							aria-description="Youtube Link">
 							<YoutubeIcon />
 						</a>
 					</li>
@@ -40,12 +48,14 @@ const PreviewNav = ({ togglePreview, data }) => {
 						</button>
 					</li>
 					<li>
-						<button className={`primary_btn ${styles.fade__btn}`} onClick={()=>push('/business-profile-setup/identity')}>
+						<button className={`primary_btn ${styles.fade__btn}`}
+							onClick={()=>push('/business-profile-setup/identity')}>
               Edit
 						</button>
 					</li>
 					<li>
-						<button className={`primary_btn ${styles.icon__btn} ${styles.fade__btn}`} onClick={togglePreview}>
+						<button className={`primary_btn ${styles.icon__btn} ${styles.fade__btn}`}
+							onClick={togglePreview}>
 							<ExpandIcon />
 						</button>
 					</li>

@@ -13,7 +13,7 @@ import { useNotify } from "@/utils/hooks";
 
 const BusinessPersonalInfo = () => {
 	// eslint-disable-next-line no-unused-vars
-	const { push, back } = useRouter();
+	const { push } = useRouter();
 
 	const [allFieldsValid, setAllFieldsValid] = useState(false);
 	const [ctaClicked, setCtaClicked] = useState(false);

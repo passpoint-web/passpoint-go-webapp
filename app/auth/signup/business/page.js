@@ -96,7 +96,7 @@ const BusinessInformation = () => {
 			})
 			// console.log(response)
 			setBusinessNameCheckVerified(true)
-		} catch (_err) { 
+		} catch (_err) {
 			// const { message } = _err.response?.data || _err
 			// console.log(message)
 			setBusinessNameCheckVerified(false)

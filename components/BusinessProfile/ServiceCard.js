@@ -75,7 +75,7 @@ const ServiceCard = ({service, removeService, editService}) => {
 					service?.servicePriceModel === 'fixedPrice' ?
 						FixedPrice() :
 						service?.servicePriceModel === 'packagedPrice' ?
-						PackagedPrice() : <></>
+							PackagedPrice() : <></>
 				}
 			</div>
 		</div>

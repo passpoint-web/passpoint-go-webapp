@@ -18,22 +18,30 @@ const PreviewFooter = ({ data }) => {
 
 					<ul className={styles.footer__social_actions}>
 						<li>
-							<a target="_blank" href="#" aria-description="Instagram Link">
+							<a target="_blank"
+								href="#"
+								aria-description="Instagram Link">
 								<InstagramIcon />
 							</a>
 						</li>
 						<li>
-							<a target="_blank" href="#" aria-description="Whatsapp Link">
+							<a target="_blank"
+								href="#"
+								aria-description="Whatsapp Link">
 								<WhatsappIcon />
 							</a>
 						</li>
 						<li>
-							<a target="_blank" href="#" aria-description="Twitter Link">
+							<a target="_blank"
+								href="#"
+								aria-description="Twitter Link">
 								<TwitterIcon />
 							</a>
 						</li>
 						<li>
-							<a target="_blank" href="#" aria-description="Youtube Link">
+							<a target="_blank"
+								href="#"
+								aria-description="Youtube Link">
 								<YoutubeIcon />
 							</a>
 						</li>

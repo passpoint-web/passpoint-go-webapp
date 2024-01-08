@@ -1,19 +1,19 @@
-"use client";
-import { usePathname, useRouter } from "next/navigation";
-import FormLevel from "../../FormLevel/FormLevel";
-import { useEffect, useState } from "react";
-import BackBtn from "@/components/Btn/Back";
-import { getPublicProfile } from "@/services/localService";
-import styles from "@/app/dashboard/business-profile-setup/business-profile.module.css";
+"use client"
+import { usePathname, useRouter } from "next/navigation"
+import FormLevel from "../../FormLevel/FormLevel"
+import { useEffect, useState } from "react"
+import BackBtn from "@/components/Btn/Back"
+import { getPublicProfile } from "@/services/localService"
+import styles from "@/app/dashboard/business-profile-setup/business-profile.module.css"
 
 const PublicProfileSetupLHS = () => {
   // const savedPublicProfile = getPublicProfile()
   // console.log(savedPublicProfile)
-  const pathname = usePathname();
-  const { push } = useRouter();
+  const pathname = usePathname()
+  const { push } = useRouter()
 
-  const [levelsToDisplay, setLevelsToDisplay] = useState([]);
-  const [publicProfileState, setPublicProfileState] = useState({});
+  const [levelsToDisplay, setLevelsToDisplay] = useState([])
+  const [publicProfileState, setPublicProfileState] = useState({})
 
   const levels = [
     {
@@ -42,30 +42,35 @@ const PublicProfileSetupLHS = () => {
       active: pathname === "/business-profile-setup/contact",
       completed: publicProfileState?.isCompleted,
     },
-  ];
+  ]
 
   useEffect(() => {
-    setPublicProfileState(getPublicProfile());
-    setLevelsToDisplay(levels);
-  }, [pathname]);
+    setPublicProfileState(getPublicProfile())
+    setLevelsToDisplay(levels)
+  }, [pathname])
 
   useEffect(() => {
-    setPublicProfileState(getPublicProfile());
-  }, []);
+    setPublicProfileState(getPublicProfile())
+  }, [])
 
   useEffect(() => {
-    setLevelsToDisplay(levels);
-  }, [publicProfileState]);
+    setLevelsToDisplay(levels)
+  }, [publicProfileState])
   return (
     <>
-      <BackBtn text="Dashboard" onClick={() => push("/dashboard")} />
+      <BackBtn text="Dashboard"
+        onClick={() => push("/dashboard")} />
       <div className={styles.lhs_levels_ctn}>
         {levelsToDisplay.map((e, index) => (
-          <FormLevel key={index} auth={{ ...e, level: index + 1 }}  w1000={true} />
+          <FormLevel
+            key={index}
+            auth={{ ...e, level: index + 1 }}
+            w1000={true}
+          />
         ))}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default PublicProfileSetupLHS;
+export default PublicProfileSetupLHS

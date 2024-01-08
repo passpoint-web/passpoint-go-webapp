@@ -29,12 +29,24 @@
 
 .card_ctn .drop_down {
   position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
   top: var(--inner-component-gap);
   right: var(--inner-component-gap);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.card_ctn .drop_down:hover {
+  background: #fff;
 }
 
 .card_ctn .card {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   border-radius: 8px;
   padding: var(--inner-component-gap);
   width: 300px;
@@ -61,18 +73,34 @@
 
 .co-administrator .role,
 .card.co-administrator .initials {
-  background-color: #F2F0FF;
-  color: #7B61FF;
+  background-color: #f2f0ff;
+  color: #7b61ff;
 }
 
 .team-member .role,
 .team-member .initials {
-  color: #DF752B;
-  background-color: #FCF2EA;
+  color: #df752b;
+  background-color: #fcf2ea;
 }
 
 .support-agent .role,
 .support-agent .initials {
-  color: #07B463;
-  background-color: #E7F8F0;
+  color: #07b463;
+  background-color: #e7f8f0;
+}
+
+/* TEAM MEMBER MODAL */
+
+.filter__input {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--grey-2);
+  font-weight: 700;
+}
+.filter__input input {
+  position: relative;
+  top: 6px;
 }

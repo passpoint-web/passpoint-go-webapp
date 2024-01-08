@@ -16,7 +16,7 @@ import SearchSelect from '@/components/Dashboard/SearchSelect'
 
 const BusinessAddress = () => {
 	// eslint-disable-next-line no-unused-vars
-	const { push, back } = useRouter()
+	const { push } = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [states, setStates] = useState([])
 	const [allFieldsValid, setAllFieldsValid] = useState(false)
@@ -129,7 +129,7 @@ const BusinessAddress = () => {
 										})}
 								/>
 							</Input>
-							<SearchSelect 
+							<SearchSelect
 								id="state"
 								label="Select state"
 								error={ctaClicked && !payload.state}
@@ -142,15 +142,15 @@ const BusinessAddress = () => {
 									handleChange({
 										target: { name: "state", value: e },
 									})
-									}
+								}
 							/>
-							<SearchSelect 
-							id="lga"
-							label="Select Local Govt."
-							error={
-								ctaClicked && payload.state && lgas?.length && !payload.lga
-							}
-							errorMsg="lga is required"
+							<SearchSelect
+								id="lga"
+								label="Select Local Govt."
+								error={
+									ctaClicked && payload.state && lgas?.length && !payload.lga
+								}
+								errorMsg="lga is required"
 								selectDisabled={!payload.state}
 								fieldError={
 									ctaClicked && payload.state && lgas?.length && !payload.lga

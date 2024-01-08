@@ -1,10 +1,10 @@
 import styles from './icon.module.css'
 const RefreshIcon = ({refreshing}) => {
-  return (
-    <span className={`material-icons ${refreshing ? 'rotate-infinite' : ''} ${styles.refresh}`}>
+	return (
+		<span className={`material-icons ${refreshing ? 'rotate-infinite' : ''} ${styles.refresh}`}>
     refresh
-  </span>
-  )
+		</span>
+	)
 }
 
 export default RefreshIcon

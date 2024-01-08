@@ -37,26 +37,26 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
     pin: "",
   })
 
-  const handlePinsChange = (e) => {
-    const { name, value } = e.target
-    setPins((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
+	const handlePinsChange = (e) => {
+		const { name, value } = e.target
+		setPins((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
+	}
 
-  const makePayment = async (pin) => {
-    setIsLoading(true)
-    const promise = await makeFlightBooking(pin)
-    setPaymentResponse(promise)
-    if (promise.type === "success") {
-      setPaymentSuccessful(true)
-    } else {
-      setPaymentFailure(true)
-    }
-    setIsLoading(false)
-    // setDataLoading(false)
-  }
+	const makePayment = async (pin) => {
+		setIsLoading(true)
+		const promise = await makeFlightBooking(pin)
+		setPaymentResponse(promise)
+		if (promise.type === "success") {
+			setPaymentSuccessful(true)
+		} else {
+			setPaymentFailure(true)
+		}
+		setIsLoading(false)
+		// setDataLoading(false)
+	}
 
   const getWallet = async () => {
     try {
@@ -88,40 +88,40 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
 		}
 	}
 
-  const getPaymentCharges = async () => {
-    try {
-      setWalletLoading(true)
-      const response = await payment.getCharges({
-        currency: "NGN",
-        amount: totalAmount,
-      })
-      setPaymentCharges(response.data.data)
-      setWalletLoading(false)
-    } catch (_err) {
-      console.log(_err)
-      setWalletLoading(false)
-    } finally {
-      // setWalletLoading(false)
-    }
-  }
+	const getPaymentCharges = async () => {
+		try {
+			setWalletLoading(true)
+			const response = await payment.getCharges({
+				currency: "NGN",
+				amount: totalAmount,
+			})
+			setPaymentCharges(response.data.data)
+			setWalletLoading(false)
+		} catch (_err) {
+			console.log(_err)
+			setWalletLoading(false)
+		} finally {
+			// setWalletLoading(false)
+		}
+	}
 
-  const restartPayment = () => {
-    setIsLoading(false)
-    setPaymentFailure(false)
-    setPaymentSuccessful(false)
-    setPins({ pin: "" })
-  }
+	const restartPayment = () => {
+		setIsLoading(false)
+		setPaymentFailure(false)
+		setPaymentSuccessful(false)
+		setPins({ pin: "" })
+	}
 
   useEffect(() => {
     getWallet()
     getWalletBalanceInNGN()
   }, [])
 
-  useEffect(() => {
-    if (walletAccount.pinCreated) {
-      setWarningModalVisible(!walletAccount.pinCreated)
-    }
-  }, [walletAccount])
+	useEffect(() => {
+		if (walletAccount.pinCreated) {
+			setWarningModalVisible(!walletAccount.pinCreated)
+		}
+	}, [walletAccount])
 
   return (
     <div className={`select-flight-wrapper ${styles.row__wrapper}`}>
@@ -175,14 +175,14 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                       <h2>({functions.formatMoney(totalAmount, "NGN")})</h2>
                       <div>
                         incl. fees:{" "}
-                        {functions.formatMoney(
-                          Number(paymentCharges.fee) +
+												{functions.formatMoney(
+													Number(paymentCharges.fee) +
                             Number(paymentCharges.vat),
-                          "NGN"
-                        )}
-                      </div>
-                    </div>
-                  </div>
+													"NGN"
+												)}
+											</div>
+										</div>
+									</div>
 
                   <Input label={`Enter Wallet Pin`}>
                     <div className={formStyles.otp_input_four_wallet}>
@@ -224,50 +224,54 @@ const FlightPaymentOptions = ({ makeFlightBooking, totalAmount }) => {
                       className={styles.wallet__link}
                     >
                       Top-up Wallet
-                    </Link>
-                  )}
-                </div>
-              )}
-              {paymentSuccessful && !isLoading && (
-                <PaymentSuccessful message={paymentResponse.message} />
-              )}
-              {paymentFailure && !isLoading && (
-                <PaymentFail
-                  message={paymentResponse.message}
-                  restartPayment={restartPayment}
-                />
-              )}
-            </form>
-          )}
-          {/* PAYMENT OPTIONS */}
-          {paymentOption === paymentOptions[1] && (
-            <form>
-              <Input label="Cardholder Name" placeholder="John" name="name" />
-              <Input
-                label="Card Number"
-                placeholder="**** **** **** ****"
-                name="name"
-              />
-              <div className="form-triple-row">
-                <Input
-                  label="Card Expiry Month"
-                  placeholder="John"
-                  name="name"
-                />
-                <Input
-                  label="Card Expiry Year"
-                  placeholder="2025"
-                  name="name"
-                />
-                <Input label="CVV" placeholder="123" name="name" />
-              </div>
-              <PrimaryBtn text="Pay ₦890,000" />
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
-  )
+										</Link>
+									)}
+								</div>
+							)}
+							{paymentSuccessful && !isLoading && (
+								<PaymentSuccessful message={paymentResponse.message} />
+							)}
+							{paymentFailure && !isLoading && (
+								<PaymentFail
+									message={paymentResponse.message}
+									restartPayment={restartPayment}
+								/>
+							)}
+						</form>
+					)}
+					{/* PAYMENT OPTIONS */}
+					{paymentOption === paymentOptions[1] && (
+						<form>
+							<Input label="Cardholder Name"
+								placeholder="John"
+								name="name" />
+							<Input
+								label="Card Number"
+								placeholder="**** **** **** ****"
+								name="name"
+							/>
+							<div className="form-triple-row">
+								<Input
+									label="Card Expiry Month"
+									placeholder="John"
+									name="name"
+								/>
+								<Input
+									label="Card Expiry Year"
+									placeholder="2025"
+									name="name"
+								/>
+								<Input label="CVV"
+									placeholder="123"
+									name="name" />
+							</div>
+							<PrimaryBtn text="Pay ₦890,000" />
+						</form>
+					)}
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default FlightPaymentOptions

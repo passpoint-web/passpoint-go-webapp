@@ -2,7 +2,7 @@
   display: flex;
   border-bottom: 2px solid var(--grey-6);
   /* overflow-x: auto; */
-  margin-bottom: var(--outer-component-gap);
+  /* margin-bottom: var(--outer-component-gap); */
 }
 
 .tab_group button {

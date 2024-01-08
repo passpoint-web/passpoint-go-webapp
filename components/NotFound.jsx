@@ -26,7 +26,8 @@ const NotFound = () => {
 						{/* <Button className="primary"
 							text="Go Back"
 							onClick={back()} /> */}
-							<PrimaryLink text='Go Back' href="/dashboard" />
+						<PrimaryLink text='Go Back'
+							href="/dashboard" />
 					</div>
 				</div>
 			</section>

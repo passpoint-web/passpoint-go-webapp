@@ -5,15 +5,15 @@ const FlightPage = ({ styles }) => {
 
 
 
-  return (
-    <div className={`${styles.inner} flight-services`}>
-      <FlightPageHeader styles={styles} />
-      <FlightTable
-        modalStyles={styles}
-        title="flight"
-      />
-    </div>
-  )
+	return (
+		<div className={`${styles.inner} flight-services`}>
+			<FlightPageHeader styles={styles} />
+			<FlightTable
+				modalStyles={styles}
+				title="flight"
+			/>
+		</div>
+	)
 }
 
 export default FlightPage

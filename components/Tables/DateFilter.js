@@ -68,9 +68,9 @@ const DateFilter = ({
 							<p className={styles.option}>{objKey ? option?.[objKey] : option}</p>
 						</div> */}
 						{/* <Input label='From'> */}
-							<DatePicker selected={startDate}
-								dateFormat='yyyy-mm-dd'
-								onChange={(date) => setStartDate(date)} />
+						<DatePicker selected={startDate}
+							dateFormat='yyyy-mm-dd'
+							onChange={(date) => setStartDate(date)} />
 						{/* </Input> */}
 						<Input label='To'>
 							<DatePicker selected={endDate}

@@ -102,15 +102,15 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 
 	// const FlightTimeline = () => (
 
-// airlineLogo
-// airlineName
-// arrivalCode
-// arrivalTime
-// cabinType
-// departureCode
-// departureTime
-// flightNumber
-{/* <></> */}
+	// airlineLogo
+	// airlineName
+	// arrivalCode
+	// arrivalTime
+	// cabinType
+	// departureCode
+	// departureTime
+	// flightNumber
+	{/* <></> */}
 	// )
 
 	// flight service details
@@ -129,73 +129,73 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 	// )
 	const FlightServiceDetails = () => (
 		<div className={styles.modal__wallet_details_section}>
-		<div className={styles.row}>
-			<div className={styles.label}>Service Type</div>
-			<div className={`${styles.value} capitalize`}>
-				<span>
-					{metadata?.serviceType}
-				</span>
+			<div className={styles.row}>
+				<div className={styles.label}>Service Type</div>
+				<div className={`${styles.value} capitalize`}>
+					<span>
+						{metadata?.serviceType}
+					</span>
+				</div>
 			</div>
-		</div>
-		<div className={styles.row}>
-			<div className={styles.label}>Amount</div>
-			<div className={styles.value}>
-				<span className="text-blue uppercase">
-					{formatMoney(transaction.amount, transaction.currency)}
-				</span>
+			<div className={styles.row}>
+				<div className={styles.label}>Amount</div>
+				<div className={styles.value}>
+					<span className="text-blue uppercase">
+						{formatMoney(transaction.amount, transaction.currency)}
+					</span>
+				</div>
 			</div>
-		</div>
-		<div className={styles.row}>
-			<div className={styles.label}>Booking Status</div>
-			<div className={styles.value}>
-				{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
+			<div className={styles.row}>
+				<div className={styles.label}>Booking Status</div>
+				<div className={styles.value}>
+					{<div className={`${transaction.transactionStatus?.toLowerCase()}-tag`}>{transaction.transactionStatus}</div>}
+				</div>
 			</div>
-		</div>
-		<div className={styles.row}>
-			<div className={styles.label}>Date Issued</div>
-			<div className={styles.value}>
-				<span>
-					{detailedDate(metadata?.dateFlightIssued)}
-				</span>
+			<div className={styles.row}>
+				<div className={styles.label}>Date Issued</div>
+				<div className={styles.value}>
+					<span>
+						{detailedDate(metadata?.dateFlightIssued)}
+					</span>
+				</div>
 			</div>
-		</div>
-		<div className={styles.row}>
-			<div className={styles.label}>Ticket Status</div>
-			<div className={styles.value}>
-				<span className={`${metadata?.ticketStatus}-tag`}>
-					{metadata?.ticketStatus}
-				</span>
+			<div className={styles.row}>
+				<div className={styles.label}>Ticket Status</div>
+				<div className={styles.value}>
+					<span className={`${metadata?.ticketStatus}-tag`}>
+						{metadata?.ticketStatus}
+					</span>
+				</div>
 			</div>
-		</div>
-		<div className={styles.row}>
-			<div className={styles.label}>PNR</div>
-			<div className={styles.value}>
-				<span>
-					{metadata?.pnr}
-				</span>
+			<div className={styles.row}>
+				<div className={styles.label}>PNR</div>
+				<div className={styles.value}>
+					<span>
+						{metadata?.pnr}
+					</span>
+				</div>
 			</div>
-		</div>
-		<div className={styles.row}>
-			<div className={styles.label}>Biller Reference</div>
-			<div className={styles.value}>
-				<span>
-					{metadata?.billerRef}
-				</span>
+			<div className={styles.row}>
+				<div className={styles.label}>Biller Reference</div>
+				<div className={styles.value}>
+					<span>
+						{metadata?.billerRef}
+					</span>
+				</div>
 			</div>
-		</div>
-		{/* <FlightInfo /> */}
-		<div className={tableStyles.table_container}>
-			{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}
-			<div className={`table-ctn ${tableStyles.wallet}`}>
-				<div className={tableStyles.table__outer}>
-					<div className={tableStyles.table__header}>
-						<div className={tableStyles.top}>
-							<div className="texts">
-								<h3 className="capitalize"> Passenger Details</h3>
+			{/* <FlightInfo /> */}
+			<div className={tableStyles.table_container}>
+				{/* <Tab tabStyle={{marginLeft: 20}} setActiveTab={(tab)=>setActiveTab(tab)} activeTab={activeTab} tabs={tabs} /> */}
+				<div className={`table-ctn ${tableStyles.wallet}`}>
+					<div className={tableStyles.table__outer}>
+						<div className={tableStyles.table__header}>
+							<div className={tableStyles.top}>
+								<div className="texts">
+									<h3 className="capitalize"> Passenger Details</h3>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div className={tableStyles.table__main}>
+						<div className={tableStyles.table__main}>
 							<table>
 								<thead>
 									<tr className="table__header">
@@ -220,133 +220,135 @@ const WalletTransactionModal = ({onClose, tableStyles, styles, transaction}) => 
 									))}
 								</tbody>
 							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	)
 
 	const TransactionDetails = () => (
 		<>
-		{
-			transaction.transactionCategory === 'BILL_PAYMENT' ? <Tab tabs={tabs} activeTab={activeTab} setActiveTab={(e)=>setActiveTab(e)} /> : <></>
-		}
-		{ activeTab === 'General Info' ?
-			<div className={styles.modal__wallet_details_section}>
-			<div className={styles.row}>
-				<div className={styles.label}>Amount</div>
-				<div className={styles.value}>
-					<span className="text-blue uppercase">
-						{formatMoney(transaction.amount, transaction.currency)}
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Service fee</div>
-				<div className={styles.value}>{formatMoney(transaction.charges, transaction.currency)}</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Date & Time</div>
-				<div className={styles.value}>
-					<span>
-						{detailedDate(transaction.dateCreated)},
-						<span>
-							{timeFromDate(transaction.dateCreated)}
-						</span>
-					</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Transaction ID</div>
-				<div className={styles.value}>
-					{transaction.transactionId}
-				</div>
-			</div>
-			{transaction.transactionCategory !== 'BILL_PAYMENT' ?
-				<>
-					<div className={styles.row}>
-						<div className={styles.label}>Beneficiary Name</div>
-						<div className={styles.value}>
-							<span>{transaction.beneficiaryAccountName}</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>{transaction.beneficiaryWalletId ? 'Beneficiary Wallet ID' : 'Beneficiary Account'}</div>
-						<div className={styles.value}
-							style={{display: 'flex', gap: 10, alignItems: 'center'}}>
-							<span>{transaction.beneficiaryWalletId || transaction.beneficiaryAccountNumber}</span>
-							<CopyValue color="#009ec4"
-								value={transaction.beneficiaryWalletId || transaction.beneficiaryAccountNumber} />
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>Beneficiary Institution</div>
-						<div className={styles.value}>
-							<span>{transaction.beneficiaryBankName}</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>Sender Details</div>
-						<div className={styles.value}>
-							<span>{transaction.senderAccountName} / {transaction.senderAccountNumber} / {transaction.senderBankName}</span>
-						</div>
-					</div>
-					<div className={styles.row}>
-						<div className={styles.label}>Sender Account Name</div>
-						<div className={styles.value}>
-							<span>{transaction.senderAccountName}</span>
-						</div>
-					</div>
-				</> :
-				<>
-					<div className={styles.row}>
-						<div className={styles.label}>Payment Ref</div>
-						<div className={styles.value}>
-							<span>{transaction.paymentRef}</span>
-						</div>
-					</div>
-				</>
+			{
+				transaction.transactionCategory === 'BILL_PAYMENT' ? <Tab tabs={tabs}
+					activeTab={activeTab}
+					setActiveTab={(e)=>setActiveTab(e)} /> : <></>
 			}
-			<div className={styles.row}>
-				<div className={styles.label}>Transaction Type</div>
-				<div className={styles.value}>
-					{transaction.transactionCategory ==='PAYOUT' ?
+			{ activeTab === 'General Info' ?
+				<div className={styles.modal__wallet_details_section}>
+					<div className={styles.row}>
+						<div className={styles.label}>Amount</div>
+						<div className={styles.value}>
+							<span className="text-blue uppercase">
+								{formatMoney(transaction.amount, transaction.currency)}
+							</span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>Service fee</div>
+						<div className={styles.value}>{formatMoney(transaction.charges, transaction.currency)}</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>Date & Time</div>
+						<div className={styles.value}>
+							<span>
+								{detailedDate(transaction.dateCreated)},
+								<span>
+									{timeFromDate(transaction.dateCreated)}
+								</span>
+							</span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>Transaction ID</div>
+						<div className={styles.value}>
+							{transaction.transactionId}
+						</div>
+					</div>
+					{transaction.transactionCategory !== 'BILL_PAYMENT' ?
 						<>
-							<div className="outgoing-circle" /> Outgoing
-						</> : transaction.transactionCategory ==='COLLECTION' ?
-							<>
-								<div className="incoming-circle" /> Incoming
-							</> : transaction.transactionCategory ==='BILL_PAYMENT' ?
-								<>
-									<div className="payment-circle" /> Payment
-								</> : <></>
+							<div className={styles.row}>
+								<div className={styles.label}>Beneficiary Name</div>
+								<div className={styles.value}>
+									<span>{transaction.beneficiaryAccountName}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>{transaction.beneficiaryWalletId ? 'Beneficiary Wallet ID' : 'Beneficiary Account'}</div>
+								<div className={styles.value}
+									style={{display: 'flex', gap: 10, alignItems: 'center'}}>
+									<span>{transaction.beneficiaryWalletId || transaction.beneficiaryAccountNumber}</span>
+									<CopyValue color="#009ec4"
+										value={transaction.beneficiaryWalletId || transaction.beneficiaryAccountNumber} />
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Beneficiary Institution</div>
+								<div className={styles.value}>
+									<span>{transaction.beneficiaryBankName}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Sender Details</div>
+								<div className={styles.value}>
+									<span>{transaction.senderAccountName} / {transaction.senderAccountNumber} / {transaction.senderBankName}</span>
+								</div>
+							</div>
+							<div className={styles.row}>
+								<div className={styles.label}>Sender Account Name</div>
+								<div className={styles.value}>
+									<span>{transaction.senderAccountName}</span>
+								</div>
+							</div>
+						</> :
+						<>
+							<div className={styles.row}>
+								<div className={styles.label}>Payment Ref</div>
+								<div className={styles.value}>
+									<span>{transaction.paymentRef}</span>
+								</div>
+							</div>
+						</>
 					}
-				</div>
-			</div>
-			{ transaction.transactionCategory === 'BILL_PAYMENT' ?
-				<div className={styles.row}>
-					<div className={styles.label}>Service Type</div>
-					<div className={`${styles.value} capitalize`}>
-						<span>{metadata?.serviceType}</span>
+					<div className={styles.row}>
+						<div className={styles.label}>Transaction Type</div>
+						<div className={styles.value}>
+							{transaction.transactionCategory ==='PAYOUT' ?
+								<>
+									<div className="outgoing-circle" /> Outgoing
+								</> : transaction.transactionCategory ==='COLLECTION' ?
+									<>
+										<div className="incoming-circle" /> Incoming
+									</> : transaction.transactionCategory ==='BILL_PAYMENT' ?
+										<>
+											<div className="payment-circle" /> Payment
+										</> : <></>
+							}
+						</div>
 					</div>
-				</div> : <></>
+					{ transaction.transactionCategory === 'BILL_PAYMENT' ?
+						<div className={styles.row}>
+							<div className={styles.label}>Service Type</div>
+							<div className={`${styles.value} capitalize`}>
+								<span>{metadata?.serviceType}</span>
+							</div>
+						</div> : <></>
+					}
+					<div className={styles.row}>
+						<div className={styles.label}>Transaction Method</div>
+						<div className={styles.value}>
+							<span>Bank Transfer</span>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<div className={styles.label}>Narration</div>
+						<div className={styles.value}>
+							{transaction.narration}
+						</div>
+					</div>
+				</div> :
+				<FlightServiceDetails />
 			}
-			<div className={styles.row}>
-				<div className={styles.label}>Transaction Method</div>
-				<div className={styles.value}>
-					<span>Bank Transfer</span>
-				</div>
-			</div>
-			<div className={styles.row}>
-				<div className={styles.label}>Narration</div>
-				<div className={styles.value}>
-					{transaction.narration}
-				</div>
-			</div>
-		</div> :
-	<FlightServiceDetails />
-		}
 		</>
 	);
 
