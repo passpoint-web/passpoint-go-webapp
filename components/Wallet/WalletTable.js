@@ -302,7 +302,6 @@ const WalletTable = ({ wallet, currency, styles, updateKey, allRendered }) => {
                         <td className={tableStyles.td_3}>
                           {data.beneficiaryBankName}
                         </td>
-
                         <td className={`${tableStyles.td_3} text-bold`}>
                           {formatMoney(data.amount, data.currency)}
                         </td>

@@ -15,6 +15,7 @@ const kycBvnRestAgent = axios.create({
     "Content-Type": "application/json",
   },
 })
+
 const flightRestAgent = axios.create({
   baseURL: process.env.NEXT_PUBLIC_FLIGHTS_BASE_URL,
   headers: {
